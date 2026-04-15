@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Messaging</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;}
+.page-hdr{text-align:center;padding:40px 20px 4px;}
+.page-hdr h1{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-.8px;}
+.page-hdr p{color:#555;font-size:12px;margin-top:4px;}
+.stage{display:flex;justify-content:center;gap:30px;padding:20px 20px 80px;flex-wrap:wrap;align-items:flex-start;}
+.phone-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.phone-label{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px;}
+
+.phone{width:375px;height:812px;border-radius:52px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 40px 100px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.02);}
+.notch{width:126px;height:36px;background:#000;border-radius:20px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:54px;padding:14px 30px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;position:relative;z-index:10;}
+.sbar .r{font-size:12px;display:flex;gap:5px;align-items:center;opacity:.5;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:5;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* CRITICAL: Theme background colors */
+.lt{background:#faf9f6 !important;}
+.dk{background:#0c0c0c !important;}
+
+/* TAB BAR */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:88px;z-index:40;}
+.tbar-bg{position:absolute;bottom:0;left:0;right:0;height:83px;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-top:1px solid #ece8e0;}
+.tbar-items{position:relative;display:flex;align-items:flex-start;padding-top:10px;height:83px;z-index:2;width:100%;}
+.tbar .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding-bottom:34px;position:relative;color:#c0bdb6;}
+.tbar .t svg{width:22px;height:22px;}
+.tbar .t.act{color:#2d5245;}
+.tbar .t .dot{width:4px;height:4px;border-radius:99px;margin-top:1px;background:#2d5245;}
+.tbar .cb{flex:1;display:flex;justify-content:center;position:relative;}
+.tbar .pb{width:58px;height:58px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:-22px;box-shadow:0 6px 24px rgba(0,0,0,.2);background:#2d5245;}
+.tbar .pb svg{width:26px;height:26px;}
+.tbar .pl{position:absolute;top:42px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;color:#2d5245;}
+
+/* TOP BAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 8px;}
+.topbar-title{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px;}
+.topbar-icons{display:flex;gap:8px;}
+.topbar-icon{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #ece8e0;}
+.topbar-icon svg{width:18px;height:18px;fill:none;stroke:#6b7280;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* INBOX THREAD LIST */
+.thread-list{padding:0 16px;}
+.thread-row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;margin-bottom:2px;position:relative;}
+.thread-row.unread{background:rgba(45,82,69,.04);}
+.thread-av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.thread-av img{width:100%;height:100%;object-fit:cover;}
+.thread-mid{flex:1;min-width:0;}
+.thread-top{display:flex;align-items:center;gap:6px;margin-bottom:2px;}
+.pill{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 7px;border-radius:6px;flex-shrink:0;}
+.pill-game{background:#e8f4ef;color:#2d5245;}
+.pill-group{background:#f0e8f8;color:#7c3aed;}
+.pill-dm{background:#f0efed;color:#888;}
+.thread-title{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.thread-preview{font-size:12px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:0;}
+.thread-preview .time{flex-shrink:0;color:#bbb;margin-left:4px;}
+.thread-right{display:flex;align-items:center;flex-shrink:0;margin-left:4px;}
+.unread-badge{width:20px;height:20px;border-radius:50%;background:#2d5245;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.read-check svg{width:16px;height:16px;stroke:#ccc;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.muted-icon svg{width:14px;height:14px;stroke:#ccc;fill:none;stroke-width:2;stroke-linecap:round;}
+
+/* CHAT SCREEN */
+.chat-nav{display:flex;align-items:center;padding:6px 16px 8px;gap:10px;}
+.chat-back{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #ece8e0;flex-shrink:0;}
+.chat-back svg{width:18px;height:18px;fill:none;stroke:#6b7280;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.chat-av{width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.chat-av img{width:100%;height:100%;object-fit:cover;}
+.chat-info{flex:1;min-width:0;}
+.chat-title{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;letter-spacing:-.3px;}
+.chat-sub{font-size:11px;color:#999;}
+.chat-more{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #ece8e0;flex-shrink:0;}
+.chat-more svg{width:18px;height:18px;fill:none;stroke:#6b7280;stroke-width:2;stroke-linecap:round;}
+
+.messages{padding:8px 16px 100px;display:flex;flex-direction:column;gap:6px;}
+.msg-system{text-align:center;padding:8px 0;font-size:11px;color:#aaa;font-style:italic;}
+.msg-left{display:flex;align-items:flex-end;gap:6px;max-width:80%;}
+.msg-left-av{width:24px;height:24px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.msg-left-av img{width:100%;height:100%;object-fit:cover;}
+.msg-left-content{}
+.msg-left-name{font-size:10px;font-weight:700;margin-bottom:2px;padding-left:4px;}
+.msg-bubble-left{background:#fff;border:1px solid #ece8e0;border-radius:16px 16px 16px 4px;padding:9px 13px;font-size:13px;line-height:1.45;}
+.msg-bubble-left .msg-time{font-size:10px;color:#bbb;margin-top:3px;}
+.msg-right{display:flex;justify-content:flex-end;max-width:80%;margin-left:auto;}
+.msg-bubble-right{background:#2d5245;border-radius:16px 16px 4px 16px;padding:9px 13px;font-size:13px;line-height:1.45;color:#fff;}
+.msg-bubble-right .msg-time{font-size:10px;color:rgba(255,255,255,.5);margin-top:3px;}
+
+.chat-input-bar{position:absolute;bottom:0;left:0;right:0;padding:8px 16px 34px;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-top:1px solid #ece8e0;display:flex;align-items:center;gap:8px;z-index:40;}
+.chat-input-bar .cam-btn{width:32px;height:32px;border-radius:50%;background:#f5f3ee;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chat-input-bar .cam-btn svg{width:16px;height:16px;fill:none;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.chat-input{flex:1;height:36px;border-radius:18px;border:1px solid #ece8e0;background:#fff;padding:0 14px;font-size:13px;font-family:'Inter',sans-serif;color:#999;}
+.send-btn{width:32px;height:32px;border-radius:50%;background:#2d5245;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.send-btn svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ACTIVITY SCREEN */
+.filter-tabs{display:flex;gap:6px;padding:4px 16px 8px;}
+.ftab{font-size:12px;font-weight:600;padding:6px 14px;border-radius:10px;background:#fff;border:1px solid #ece8e0;color:#999;}
+.ftab.act{background:#2d5245;border-color:#2d5245;color:#fff;}
+.ftab .badge{display:inline-block;background:rgba(255,255,255,.3);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;margin-left:4px;}
+
+.notif-list{padding:0 16px;}
+.notif-row{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:14px;margin-bottom:2px;}
+.notif-row.unread{background:rgba(45,82,69,.04);}
+.notif-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.notif-dot.green{background:#2d5245;}
+.notif-dot.purple{background:#7c3aed;}
+.notif-dot.gray{background:#ccc;}
+.notif-mid{flex:1;min-width:0;}
+.notif-title{font-size:13px;font-weight:700;margin-bottom:1px;}
+.notif-body{font-size:12px;color:#999;margin-bottom:2px;}
+.notif-time{font-size:10px;color:#bbb;}
+.notif-chevron{flex-shrink:0;margin-top:4px;}
+.notif-chevron svg{width:14px;height:14px;fill:none;stroke:#ccc;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1 style="color:#fff;">Messaging &amp; Notifications</h1>
+  <p style="color:#555;">Inbox, Chat, and Activity — BamBuddies iOS</p>
+</div>
+
+<div class="stage">
+
+<!-- ==================== PHONE 1: INBOX ==================== -->
+<div class="phone-wrap">
+<div class="phone-label" style="color:#fff;">Inbox</div>
+<div class="phone">
+<div class="lt" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="notch"></div>
+  <div class="sbar"><span style="color:#000;">9:41</span><div class="r"><span style="color:#000;">5G</span><span style="color:#000;">100%</span></div></div>
+  <div class="scr">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="topbar-title" style="color:#000;">Inbox</div>
+      <div class="topbar-icons">
+        <div class="topbar-icon">
+          <svg viewBox="0 0 24 24"><path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35"/></svg>
+        </div>
+        <div class="topbar-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thread List -->
+    <div class="thread-list">
+
+      <!-- Thread 1: GAME - Unread -->
+      <div class="thread-row unread">
+        <div class="thread-av"><img src="https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=80&h=80&fit=crop&crop=faces" alt=""></div>
+        <div class="thread-mid">
+          <div class="thread-top">
+            <span class="pill pill-game" style="color:#2d5245;">GAME</span>
+            <span class="thread-title" style="color:#000;">Saturday Mahjong</span>
+          </div>
+          <div class="thread-preview" style="color:#999;">Lisa: I'll bring the tile set!<span class="time" style="color:#bbb;"> · 2m</span></div>
+        </div>
+        <div class="thread-right"><div class="unread-badge" style="color:#fff;">3</div></div>
+      </div>
+
+      <!-- Thread 2: GROUP - Unread -->
+      <div class="thread-row unread">
+        <div class="thread-av"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=80&h=80&fit=crop&crop=faces" alt=""></div>
+        <div class="thread-mid">
+          <div class="thread-top">
+            <span class="pill pill-group" style="color:#7c3aed;">GROUP</span>
+            <span class="thread-title" style="color:#000;">Saturday Regulars</span>
+          </div>
+          <div class="thread-preview" style="color:#999;">Mike: See everyone Saturday!<span class="time" style="color:#bbb;"> · 1h</span></div>
+        </div>
+        <div class="thread-right"><div class="unread-badge" style="color:#fff;">1</div></div>
+      </div>
+
+      <!-- Thread 3: GAME - Read -->
+      <div class="thread-row">
+        <div class="thread-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces" alt=""></div>
+        <div class="thread-mid">
+          <div class="thread-top">
+            <span class="pill pill-game" style="color:#2d5245;">GAME</span>
+            <span class="thread-title" style="color:#000;">Lisa's Practice Game</span>
+          </div>
+          <div class="thread-preview" style="color:#999;">You: Sounds good, see you th...<span class="time" style="color:#bbb;"> · 3h</span></div>
+        </div>
+        <div class="thread-right">
+          <div class="read-check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Thread 4: DM - Read -->
+      <div class="thread-row">
+        <div class="thread-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=faces" alt=""></div>
+        <div class="thread-mid">
+          <div class="thread-top">
+            <span class="pill pill-dm" style="color:#888;">DM</span>
+            <span class="thread-title" style="color:#000;">Sarah Chen</span>
+          </div>
+          <div class="thread-preview" style="color:#999;">Sarah: Thanks for the invite!<span class="time" style="color:#bbb;"> · 1d</span></div>
+        </div>
+        <div class="thread-right">
+          <div class="read-check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Thread 5: GAME - Read, Muted -->
+      <div class="thread-row">
+        <div class="thread-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces" alt=""></div>
+        <div class="thread-mid">
+          <div class="thread-top">
+            <span class="pill pill-game" style="color:#2d5245;">GAME</span>
+            <span class="thread-title" style="color:#000;">Weekend Warriors</span>
+          </div>
+          <div class="thread-preview" style="color:#999;">System: Game confirmed<span class="time" style="color:#bbb;"> · 2d</span></div>
+        </div>
+        <div class="thread-right">
+          <div class="muted-icon"><svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- spacer for tab bar -->
+    <div style="height:100px;"></div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tbar">
+    <div class="tbar-bg"></div>
+    <div class="tbar-items">
+      <div class="t act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span style="color:#2d5245;">Home</span><div class="dot"></div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span style="color:#c0bdb6;">Discover</span></div>
+      <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl" style="color:#2d5245;">New Game</div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span style="color:#c0bdb6;">Games</span></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span style="color:#c0bdb6;">Groups</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ==================== PHONE 2: CHAT ==================== -->
+<div class="phone-wrap">
+<div class="phone-label" style="color:#fff;">Chat</div>
+<div class="phone">
+<div class="lt" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="notch"></div>
+  <div class="sbar"><span style="color:#000;">9:41</span><div class="r"><span style="color:#000;">5G</span><span style="color:#000;">100%</span></div></div>
+  <div class="scr">
+
+    <!-- Chat Nav -->
+    <div class="chat-nav">
+      <div class="chat-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+      <div class="chat-av"><img src="https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=64&h=64&fit=crop&crop=faces" alt=""></div>
+      <div class="chat-info">
+        <div class="chat-title" style="color:#000;">Saturday Mahjong</div>
+        <div class="chat-sub" style="color:#999;">4 participants</div>
+      </div>
+      <div class="chat-more"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="#6b7280"/><circle cx="12" cy="12" r="1" fill="#6b7280"/><circle cx="12" cy="19" r="1" fill="#6b7280"/></svg></div>
+    </div>
+
+    <!-- Messages -->
+    <div class="messages">
+
+      <!-- System -->
+      <div class="msg-system" style="color:#aaa;">Game created by Jake R. · Apr 12</div>
+
+      <!-- System -->
+      <div class="msg-system" style="color:#aaa;">Lisa Park joined the game</div>
+
+      <!-- Lisa -->
+      <div class="msg-left">
+        <div class="msg-left-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=48&h=48&fit=crop&crop=faces" alt=""></div>
+        <div class="msg-left-content">
+          <div class="msg-left-name" style="color:#2d5245;">Lisa Park</div>
+          <div class="msg-bubble-left">
+            <div style="color:#000;">Hey everyone! Excited for Saturday 🀄</div>
+            <div class="msg-time" style="color:#bbb;">2:15 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mike -->
+      <div class="msg-left">
+        <div class="msg-left-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=48&h=48&fit=crop&crop=faces" alt=""></div>
+        <div class="msg-left-content">
+          <div class="msg-left-name" style="color:#6366f1;">Mike Torres</div>
+          <div class="msg-bubble-left">
+            <div style="color:#000;">Me too! Should I bring snacks?</div>
+            <div class="msg-time" style="color:#bbb;">2:18 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jake/You (right) -->
+      <div class="msg-right">
+        <div class="msg-bubble-right">
+          <div style="color:#fff;">Yes please! I've got the tile set covered</div>
+          <div class="msg-time" style="color:rgba(255,255,255,.5);">2:20 PM</div>
+        </div>
+      </div>
+
+      <!-- System -->
+      <div class="msg-system" style="color:#aaa;">Sarah Chen joined the game</div>
+
+      <!-- Sarah -->
+      <div class="msg-left">
+        <div class="msg-left-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=48&h=48&fit=crop&crop=faces" alt=""></div>
+        <div class="msg-left-content">
+          <div class="msg-left-name" style="color:#e67e22;">Sarah Chen</div>
+          <div class="msg-bubble-left">
+            <div style="color:#000;">Hi all! First time playing, any tips?</div>
+            <div class="msg-time" style="color:#bbb;">3:05 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lisa again -->
+      <div class="msg-left">
+        <div class="msg-left-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=48&h=48&fit=crop&crop=faces" alt=""></div>
+        <div class="msg-left-content">
+          <div class="msg-left-name" style="color:#2d5245;">Lisa Park</div>
+          <div class="msg-bubble-left">
+            <div style="color:#000;">I'll bring the tile set! We can practice winds first</div>
+            <div class="msg-time" style="color:#bbb;">3:08 PM</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Chat Input Bar -->
+  <div class="chat-input-bar">
+    <div class="cam-btn"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+    <div class="chat-input" style="color:#999;display:flex;align-items:center;">Type a message...</div>
+    <div class="send-btn"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ==================== PHONE 3: ACTIVITY ==================== -->
+<div class="phone-wrap">
+<div class="phone-label" style="color:#fff;">Activity</div>
+<div class="phone">
+<div class="lt" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="notch"></div>
+  <div class="sbar"><span style="color:#000;">9:41</span><div class="r"><span style="color:#000;">5G</span><span style="color:#000;">100%</span></div></div>
+  <div class="scr">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="topbar-title" style="color:#000;">Activity</div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <div class="ftab act" style="color:#fff;">All</div>
+      <div class="ftab" style="color:#999;">Notifications<span class="badge" style="color:#fff;background:#2d5245;">3</span></div>
+      <div class="ftab" style="color:#999;">Messages</div>
+    </div>
+
+    <!-- Notification Feed -->
+    <div class="notif-list">
+
+      <!-- 1: GAME invite - UNREAD -->
+      <div class="notif-row unread">
+        <div class="notif-dot green"></div>
+        <div class="notif-mid">
+          <div class="notif-title" style="color:#000;">You were invited to Mike's Tuesday Game</div>
+          <div class="notif-body" style="color:#999;">Tue, Apr 22 at 6:30 PM</div>
+          <div class="notif-time" style="color:#bbb;">5m ago</div>
+        </div>
+        <div class="notif-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- 2: GAME confirmed - UNREAD -->
+      <div class="notif-row unread">
+        <div class="notif-dot green"></div>
+        <div class="notif-mid">
+          <div class="notif-title" style="color:#000;">Saturday Mahjong is confirmed!</div>
+          <div class="notif-body" style="color:#999;">All 4 players accepted</div>
+          <div class="notif-time" style="color:#bbb;">1h ago</div>
+        </div>
+        <div class="notif-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- 3: GROUP invite - UNREAD -->
+      <div class="notif-row unread">
+        <div class="notif-dot purple"></div>
+        <div class="notif-mid">
+          <div class="notif-title" style="color:#000;">Brooklyn Tiles Club invited you</div>
+          <div class="notif-body" style="color:#999;">12 members · Sarah K.</div>
+          <div class="notif-time" style="color:#bbb;">3h ago</div>
+        </div>
+        <div class="notif-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- 4: GAME join - read -->
+      <div class="notif-row">
+        <div class="notif-dot green" style="opacity:.3;"></div>
+        <div class="notif-mid">
+          <div class="notif-title" style="color:#000;font-weight:500;">Lisa joined Lisa's Practice Game</div>
+          <div class="notif-body" style="color:#999;">3 of 4 players</div>
+          <div class="notif-time" style="color:#bbb;">1d ago</div>
+        </div>
+        <div class="notif-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- 5: GAME needs players - read -->
+      <div class="notif-row">
+        <div class="notif-dot green" style="opacity:.3;"></div>
+        <div class="notif-mid">
+          <div class="notif-title" style="color:#000;font-weight:500;">Weekend Warriors needs 3 more players</div>
+          <div class="notif-body" style="color:#999;">Share with friends</div>
+          <div class="notif-time" style="color:#bbb;">1d ago</div>
+        </div>
+        <div class="notif-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- 6: SYSTEM welcome - read -->
+      <div class="notif-row">
+        <div class="notif-dot gray" style="opacity:.3;"></div>
+        <div class="notif-mid">
+          <div class="notif-title" style="color:#000;font-weight:500;">Welcome to BamBuddies!</div>
+          <div class="notif-body" style="color:#999;">Create your first game to get started</div>
+          <div class="notif-time" style="color:#bbb;">3d ago</div>
+        </div>
+        <div class="notif-chevron"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+    </div>
+
+    <!-- spacer for tab bar -->
+    <div style="height:100px;"></div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tbar">
+    <div class="tbar-bg"></div>
+    <div class="tbar-items">
+      <div class="t act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span style="color:#2d5245;">Home</span><div class="dot"></div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span style="color:#c0bdb6;">Discover</span></div>
+      <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl" style="color:#2d5245;">New Game</div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span style="color:#c0bdb6;">Games</span></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span style="color:#c0bdb6;">Groups</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+</div><!-- /stage -->
+
+</body>
+</html>

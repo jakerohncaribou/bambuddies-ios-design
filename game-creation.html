@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Game Creation Wizard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;}
+.page-hdr{text-align:center;padding:40px 20px 4px;}
+.page-hdr h1{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-.8px;}
+.page-hdr p{color:#555;font-size:12px;margin-top:4px;}
+.stage{display:flex;justify-content:center;gap:32px;padding:18px 20px 80px;flex-wrap:wrap;}
+
+/* PHONE FRAME */
+.phone-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.phone-label{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:#888;letter-spacing:.5px;}
+.phone{width:375px;height:812px;border-radius:52px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 40px 100px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.02);}
+.notch{width:126px;height:36px;background:#000;border-radius:20px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:54px;padding:14px 30px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;position:relative;z-index:10;}
+.sbar .r{font-size:12px;display:flex;gap:5px;align-items:center;opacity:.5;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:5;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* CRITICAL: Theme background colors */
+.lt{background:#faf9f6 !important;}
+.dk{background:#0c0c0c !important;}
+
+/* NAV BAR */
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:6px 16px 8px;height:44px;}
+.nav-back{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;border:1px solid #ece8e0;}
+.nav-back svg{width:18px;height:18px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke:#6b7280;}
+.nav-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;}
+.step-ind{font-size:11px;font-weight:500;color:#9b9890;letter-spacing:.2px;}
+
+/* PROGRESS BAR */
+.progress-wrap{padding:4px 16px 8px;}
+.progress-bar{height:4px;border-radius:99px;background:#ece8e0;overflow:hidden;}
+.progress-fill{height:100%;border-radius:99px;background:#2d5245;transition:width .3s;}
+
+/* CONTENT AREA */
+.content{padding:0 16px 100px;}
+.sec-label{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#1a1a1a;margin:14px 0 8px;letter-spacing:-.2px;}
+.sub-label{font-size:12px;font-weight:600;color:#9b9890;margin:10px 0 6px;}
+
+/* DATE CHIPS */
+.date-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;}
+.date-row::-webkit-scrollbar{display:none;}
+.date-chip{min-width:52px;padding:8px 6px;border-radius:12px;text-align:center;border:1px solid #ece8e0;background:#fff;cursor:pointer;flex-shrink:0;}
+.date-chip .day{font-size:10px;font-weight:600;color:#9b9890;display:block;}
+.date-chip .num{font-size:16px;font-weight:700;color:#1a1a1a;display:block;margin-top:2px;}
+.date-chip.sel{background:#2d5245;border-color:#2d5245;}
+.date-chip.sel .day{color:rgba(255,255,255,.7);}
+.date-chip.sel .num{color:#fff;}
+.date-chip.more{display:flex;align-items:center;justify-content:center;min-width:52px;}
+.date-chip.more span{font-size:11px;font-weight:600;color:#2d5245;}
+
+/* TIME CHIPS */
+.time-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.time-chip{padding:8px 10px;border-radius:10px;font-size:12px;font-weight:600;border:1px solid #ece8e0;background:#fff;color:#1a1a1a;cursor:pointer;}
+.time-chip.sel{background:#2d5245;border-color:#2d5245;color:#fff;}
+.time-chip.custom{border-style:dashed;color:#2d5245;}
+
+/* DROPDOWN */
+.dropdown{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:12px;border:1px solid #ece8e0;background:#fff;font-size:13px;font-weight:600;color:#1a1a1a;}
+.dropdown svg{width:14px;height:14px;stroke:#9b9890;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* LOCATION CARDS */
+.loc-card{padding:12px 14px;border-radius:14px;border:1px solid #ece8e0;background:#fff;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;}
+.loc-card.sel{border-color:#2d5245;border-width:2px;background:#f4faf7;}
+.loc-icon{font-size:18px;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#f5f3ee;flex-shrink:0;}
+.loc-card.sel .loc-icon{background:#e8f4ef;}
+.loc-name{font-size:13px;font-weight:700;color:#1a1a1a;}
+.loc-addr{font-size:11px;color:#9b9890;margin-top:1px;}
+.loc-radio{width:20px;height:20px;border-radius:50%;border:2px solid #d0cdc6;margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.loc-card.sel .loc-radio{border-color:#2d5245;background:#2d5245;}
+.loc-card.sel .loc-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;}
+
+/* BOTTOM BUTTONS */
+.bottom-bar{position:absolute;bottom:0;left:0;right:0;padding:10px 16px 34px;display:flex;gap:10px;background:linear-gradient(0deg,#faf9f6 80%,transparent);z-index:20;}
+.btn-ghost{flex:1;padding:14px;border-radius:14px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;text-align:center;border:1px solid #ece8e0;background:#fff;color:#1a1a1a;cursor:pointer;}
+.btn-primary{flex:1;padding:14px;border-radius:14px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;text-align:center;border:none;background:#2d5245;color:#fff;cursor:pointer;}
+.btn-primary.full{flex:unset;width:100%;}
+
+/* STEPPER */
+.stepper-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.stepper-label{font-size:13px;font-weight:600;color:#1a1a1a;}
+.stepper{display:flex;align-items:center;gap:0;border-radius:10px;border:1px solid #ece8e0;overflow:hidden;background:#fff;}
+.stepper button{width:34px;height:34px;border:none;background:transparent;font-size:16px;font-weight:700;color:#2d5245;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.stepper .val{width:30px;text-align:center;font-size:14px;font-weight:700;color:#1a1a1a;border-left:1px solid #ece8e0;border-right:1px solid #ece8e0;}
+.stepper-note{font-size:11px;color:#9b9890;margin-bottom:12px;}
+
+/* TYPE CARDS */
+.type-card{padding:12px 14px;border-radius:14px;border:1px solid #ece8e0;background:#fff;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;}
+.type-card.sel{border-color:#2d5245;border-width:2px;background:#f4faf7;}
+.type-icon{font-size:18px;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#f5f3ee;flex-shrink:0;}
+.type-card.sel .type-icon{background:#e8f4ef;}
+.type-name{font-size:13px;font-weight:700;color:#1a1a1a;}
+.type-desc{font-size:11px;color:#9b9890;margin-top:1px;}
+.type-radio{width:20px;height:20px;border-radius:50%;border:2px solid #d0cdc6;margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.type-card.sel .type-radio{border-color:#2d5245;background:#2d5245;}
+.type-card.sel .type-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;}
+
+/* CONFIRM CHIPS */
+.confirm-chips{display:flex;flex-direction:column;gap:6px;}
+.confirm-chip{padding:10px 14px;border-radius:12px;border:1px solid #ece8e0;background:#fff;cursor:pointer;}
+.confirm-chip.sel{border-color:#2d5245;border-width:2px;background:#f4faf7;}
+.cc-name{font-size:12px;font-weight:700;color:#1a1a1a;}
+.confirm-chip.sel .cc-name{color:#2d5245;}
+.cc-desc{font-size:10px;color:#9b9890;margin-top:1px;}
+
+/* TABLE CHIPS */
+.table-chips{display:flex;gap:6px;}
+.table-chip{width:42px;height:42px;border-radius:12px;border:1px solid #ece8e0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#1a1a1a;cursor:pointer;}
+.table-chip.sel{background:#2d5245;border-color:#2d5245;color:#fff;}
+
+/* BRING ITEMS GRID */
+.items-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.item-chip{padding:8px 12px;border-radius:10px;border:1px solid #ece8e0;background:#fff;font-size:12px;font-weight:600;color:#1a1a1a;cursor:pointer;display:flex;align-items:center;gap:5px;}
+.item-chip.sel{background:#2d5245;border-color:#2d5245;color:#fff;}
+.item-chip .emoji{font-size:14px;}
+.item-chip.custom{border-style:dashed;color:#2d5245;}
+
+/* SEARCH INPUT */
+.search-input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #ece8e0;background:#fff;font-size:13px;color:#1a1a1a;font-family:'Inter',sans-serif;outline:none;}
+.search-input::placeholder{color:#c0bdb6;}
+
+/* CONTACT ROW */
+.contact-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f5f3ee;}
+.contact-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.contact-name{font-size:13px;font-weight:600;color:#1a1a1a;}
+.contact-level{font-size:11px;color:#9b9890;}
+.contact-check{width:22px;height:22px;border-radius:6px;border:2px solid #d0cdc6;margin-left:auto;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.contact-check.checked{border-color:#2d5245;background:#2d5245;}
+.contact-check.checked svg{display:block;}
+.contact-check svg{display:none;width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+
+/* INVITE LINK */
+.invite-link{display:flex;align-items:center;gap:8px;padding:10px 0;font-size:13px;font-weight:600;color:#2d5245;cursor:pointer;}
+.invite-link svg{width:16px;height:16px;stroke:#2d5245;fill:none;stroke-width:2;stroke-linecap:round;}
+</style>
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>Game Creation Wizard</h1>
+  <p>BamBuddies iOS &mdash; 3-Step Flow (Light Mode)</p>
+</div>
+
+<div class="stage">
+
+<!-- ==================== STEP 1: WHEN & WHERE ==================== -->
+<div class="phone-wrap">
+  <div class="phone-label">Step 1: When &amp; Where</div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="sbar" style="color:#000;">
+      <span style="color:#000;">9:41</span>
+      <span class="r" style="color:#000;">
+        <svg width="16" height="12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#000" opacity=".3"/><rect x="4" y="2" width="3" height="10" rx="1" fill="#000" opacity=".5"/><rect x="8" y="1" width="3" height="11" rx="1" fill="#000" opacity=".7"/><rect x="12" y="0" width="3" height="12" rx="1" fill="#000"/></svg>
+        <svg width="16" height="12" fill="none"><path d="M1 4.5C3 1.5 13 1.5 15 4.5" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 7C5 5 11 5 12.5 7" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="9.5" r="1.5" fill="#000"/></svg>
+        <svg width="27" height="13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="#000" opacity=".3"/><rect x="2" y="2" width="18" height="9" rx="2" fill="#000"/><rect x="25" y="4" width="2" height="5" rx="1" fill="#000" opacity=".3"/></svg>
+      </span>
+    </div>
+    <div class="scr lt">
+      <!-- Nav -->
+      <div class="navbar">
+        <div class="nav-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+        <div>
+          <div class="nav-title" style="color:#000;">New Game</div>
+          <div class="step-ind" style="text-align:center;">Step 1 of 3</div>
+        </div>
+        <div style="width:36px;"></div>
+      </div>
+      <!-- Progress -->
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" style="width:33%;"></div></div>
+      </div>
+
+      <div class="content">
+        <!-- WHEN -->
+        <div class="sec-label" style="color:#000;">When</div>
+        <div class="date-row">
+          <div class="date-chip"><span class="day" style="color:#9b9890;">Today</span><span class="num" style="color:#000;">15</span></div>
+          <div class="date-chip"><span class="day" style="color:#9b9890;">Wed</span><span class="num" style="color:#000;">16</span></div>
+          <div class="date-chip"><span class="day" style="color:#9b9890;">Thu</span><span class="num" style="color:#000;">17</span></div>
+          <div class="date-chip"><span class="day" style="color:#9b9890;">Fri</span><span class="num" style="color:#000;">18</span></div>
+          <div class="date-chip sel"><span class="day">Sat</span><span class="num">19</span></div>
+          <div class="date-chip more"><span>More...</span></div>
+        </div>
+
+        <!-- START TIME -->
+        <div class="sub-label" style="color:#000;">Start Time</div>
+        <div class="time-grid">
+          <div class="time-chip" style="color:#000;">10 AM</div>
+          <div class="time-chip" style="color:#000;">11 AM</div>
+          <div class="time-chip" style="color:#000;">12 PM</div>
+          <div class="time-chip" style="color:#000;">1 PM</div>
+          <div class="time-chip sel">2 PM</div>
+          <div class="time-chip" style="color:#000;">3 PM</div>
+          <div class="time-chip" style="color:#000;">4 PM</div>
+          <div class="time-chip" style="color:#000;">5 PM</div>
+          <div class="time-chip" style="color:#000;">6 PM</div>
+          <div class="time-chip" style="color:#000;">7 PM</div>
+          <div class="time-chip" style="color:#000;">8 PM</div>
+          <div class="time-chip" style="color:#000;">9 PM</div>
+          <div class="time-chip custom" style="color:#2d5245;">Custom</div>
+        </div>
+
+        <!-- DURATION -->
+        <div class="sub-label" style="color:#000;">Estimated Length</div>
+        <div class="dropdown" style="color:#000;">
+          <span>2 hours</span>
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+
+        <!-- WHERE -->
+        <div class="sec-label" style="color:#000;margin-top:18px;">Where</div>
+        <div class="loc-card sel">
+          <div class="loc-icon">🏠</div>
+          <div>
+            <div class="loc-name" style="color:#000;">My Home</div>
+            <div class="loc-addr">456 Oak Ave, Brooklyn</div>
+          </div>
+          <div class="loc-radio"></div>
+        </div>
+        <div class="loc-card">
+          <div class="loc-icon">📍</div>
+          <div>
+            <div class="loc-name" style="color:#000;">Custom Address</div>
+            <div class="loc-addr">Enter an address</div>
+          </div>
+          <div class="loc-radio"></div>
+        </div>
+        <div class="loc-card">
+          <div class="loc-icon">💾</div>
+          <div>
+            <div class="loc-name" style="color:#000;">Saved: Mom's House</div>
+            <div class="loc-addr">123 Maple St, Queens</div>
+          </div>
+          <div class="loc-radio"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Buttons -->
+      <div class="bottom-bar">
+        <div class="btn-ghost" style="color:#000;">Back</div>
+        <div class="btn-primary">Next</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== STEP 2: PLAYERS & TYPE ==================== -->
+<div class="phone-wrap">
+  <div class="phone-label">Step 2: Players &amp; Type</div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="sbar" style="color:#000;">
+      <span style="color:#000;">9:41</span>
+      <span class="r" style="color:#000;">
+        <svg width="16" height="12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#000" opacity=".3"/><rect x="4" y="2" width="3" height="10" rx="1" fill="#000" opacity=".5"/><rect x="8" y="1" width="3" height="11" rx="1" fill="#000" opacity=".7"/><rect x="12" y="0" width="3" height="12" rx="1" fill="#000"/></svg>
+        <svg width="16" height="12" fill="none"><path d="M1 4.5C3 1.5 13 1.5 15 4.5" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 7C5 5 11 5 12.5 7" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="9.5" r="1.5" fill="#000"/></svg>
+        <svg width="27" height="13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="#000" opacity=".3"/><rect x="2" y="2" width="18" height="9" rx="2" fill="#000"/><rect x="25" y="4" width="2" height="5" rx="1" fill="#000" opacity=".3"/></svg>
+      </span>
+    </div>
+    <div class="scr lt">
+      <!-- Nav -->
+      <div class="navbar">
+        <div class="nav-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+        <div>
+          <div class="nav-title" style="color:#000;">New Game</div>
+          <div class="step-ind" style="text-align:center;">Step 2 of 3</div>
+        </div>
+        <div style="width:36px;"></div>
+      </div>
+      <!-- Progress -->
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" style="width:66%;"></div></div>
+      </div>
+
+      <div class="content">
+        <!-- PLAYERS -->
+        <div class="sec-label" style="color:#000;">Players</div>
+        <div class="stepper-row">
+          <div class="stepper-label" style="color:#000;">Min players</div>
+          <div class="stepper">
+            <button style="color:#2d5245;">−</button>
+            <div class="val" style="color:#000;">4</div>
+            <button style="color:#2d5245;">+</button>
+          </div>
+        </div>
+        <div class="stepper-row">
+          <div class="stepper-label" style="color:#000;">Max players</div>
+          <div class="stepper">
+            <button style="color:#2d5245;">−</button>
+            <div class="val" style="color:#000;">4</div>
+            <button style="color:#2d5245;">+</button>
+          </div>
+        </div>
+        <div class="stepper-note">4 players per table</div>
+
+        <!-- GAME TYPE -->
+        <div class="sec-label" style="color:#000;">Game Type</div>
+        <div class="type-card sel">
+          <div class="type-icon">🌐</div>
+          <div>
+            <div class="type-name" style="color:#000;">Open Public</div>
+            <div class="type-desc">Anyone can find and join</div>
+          </div>
+          <div class="type-radio"></div>
+        </div>
+        <div class="type-card">
+          <div class="type-icon">👥</div>
+          <div>
+            <div class="type-name" style="color:#000;">Group Game</div>
+            <div class="type-desc">For group members only</div>
+          </div>
+          <div class="type-radio"></div>
+        </div>
+        <div class="type-card">
+          <div class="type-icon">🔒</div>
+          <div>
+            <div class="type-name" style="color:#000;">Invite Only</div>
+            <div class="type-desc">Only invited players can join</div>
+          </div>
+          <div class="type-radio"></div>
+        </div>
+
+        <!-- CONFIRMATION -->
+        <div class="sec-label" style="color:#000;">Confirmation</div>
+        <div class="confirm-chips">
+          <div class="confirm-chip sel">
+            <div class="cc-name" style="color:#2d5245;">Pre-Confirmed</div>
+            <div class="cc-desc">Players confirmed on creation</div>
+          </div>
+          <div class="confirm-chip">
+            <div class="cc-name" style="color:#000;">Auto-Confirm</div>
+            <div class="cc-desc">Auto-confirm when min players reached</div>
+          </div>
+          <div class="confirm-chip">
+            <div class="cc-name" style="color:#000;">Manual</div>
+            <div class="cc-desc">You approve each player</div>
+          </div>
+        </div>
+
+        <!-- TABLES -->
+        <div class="sec-label" style="color:#000;">Tables</div>
+        <div class="table-chips">
+          <div class="table-chip sel">1</div>
+          <div class="table-chip" style="color:#000;">2</div>
+          <div class="table-chip" style="color:#000;">3</div>
+          <div class="table-chip" style="color:#000;">4</div>
+          <div class="table-chip" style="color:#000;">5+</div>
+        </div>
+      </div>
+
+      <!-- Bottom Buttons -->
+      <div class="bottom-bar">
+        <div class="btn-ghost" style="color:#000;">Back</div>
+        <div class="btn-primary">Next</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== STEP 3: EXTRAS ==================== -->
+<div class="phone-wrap">
+  <div class="phone-label">Step 3: Extras</div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="sbar" style="color:#000;">
+      <span style="color:#000;">9:41</span>
+      <span class="r" style="color:#000;">
+        <svg width="16" height="12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="#000" opacity=".3"/><rect x="4" y="2" width="3" height="10" rx="1" fill="#000" opacity=".5"/><rect x="8" y="1" width="3" height="11" rx="1" fill="#000" opacity=".7"/><rect x="12" y="0" width="3" height="12" rx="1" fill="#000"/></svg>
+        <svg width="16" height="12" fill="none"><path d="M1 4.5C3 1.5 13 1.5 15 4.5" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 7C5 5 11 5 12.5 7" stroke="#000" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="9.5" r="1.5" fill="#000"/></svg>
+        <svg width="27" height="13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="#000" opacity=".3"/><rect x="2" y="2" width="18" height="9" rx="2" fill="#000"/><rect x="25" y="4" width="2" height="5" rx="1" fill="#000" opacity=".3"/></svg>
+      </span>
+    </div>
+    <div class="scr lt">
+      <!-- Nav -->
+      <div class="navbar">
+        <div class="nav-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div>
+        <div>
+          <div class="nav-title" style="color:#000;">New Game</div>
+          <div class="step-ind" style="text-align:center;">Step 3 of 3</div>
+        </div>
+        <div style="width:36px;"></div>
+      </div>
+      <!-- Progress -->
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;"></div></div>
+      </div>
+
+      <div class="content">
+        <!-- BRING ITEMS -->
+        <div class="sec-label" style="color:#000;">What to Bring</div>
+        <div class="items-grid">
+          <div class="item-chip sel"><span class="emoji">🀄</span> Tile Set</div>
+          <div class="item-chip" style="color:#000;"><span class="emoji">🧮</span> Game Mat</div>
+          <div class="item-chip" style="color:#000;"><span class="emoji">🍷</span> Wine</div>
+          <div class="item-chip" style="color:#000;"><span class="emoji">🍺</span> Beer</div>
+          <div class="item-chip" style="color:#000;"><span class="emoji">🥤</span> Drinks</div>
+          <div class="item-chip" style="color:#000;"><span class="emoji">🍿</span> Snacks</div>
+          <div class="item-chip" style="color:#000;"><span class="emoji">🪙</span> Chips/Tokens</div>
+          <div class="item-chip" style="color:#000;"><span class="emoji">🪑</span> Card Table</div>
+          <div class="item-chip custom"><span class="emoji">➕</span> Other</div>
+        </div>
+
+        <!-- Bring toggle for selected item -->
+        <div style="margin:8px 0 4px;padding:8px 12px;border-radius:10px;background:#f4faf7;border:1px solid #d8efe3;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:12px;font-weight:600;color:#000;">🀄 Tile Set provided by:</span>
+          <div style="display:flex;gap:4px;">
+            <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;background:#2d5245;color:#fff;">Organizer</span>
+            <span style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;background:#fff;color:#9b9890;border:1px solid #ece8e0;">Players</span>
+          </div>
+        </div>
+
+        <!-- INVITE PLAYERS -->
+        <div class="sec-label" style="color:#000;margin-top:16px;">Invite Players</div>
+        <input class="search-input" type="text" placeholder="Search by name or email..." style="color:#000;">
+
+        <!-- Contacts -->
+        <div class="contact-row">
+          <div class="contact-av" style="background:linear-gradient(135deg,#e8a87c,#d66d75);">LP</div>
+          <div>
+            <div class="contact-name" style="color:#000;">Lisa Park</div>
+            <div class="contact-level">Intermediate</div>
+          </div>
+          <div class="contact-check checked">
+            <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-av" style="background:linear-gradient(135deg,#667eea,#764ba2);">MK</div>
+          <div>
+            <div class="contact-name" style="color:#000;">Mike Kim</div>
+            <div class="contact-level">Advanced</div>
+          </div>
+          <div class="contact-check">
+            <svg viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Invite link -->
+        <div class="invite-link">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          <span style="color:#2d5245;">Invite by phone or email</span>
+        </div>
+      </div>
+
+      <!-- Bottom Buttons -->
+      <div class="bottom-bar">
+        <div class="btn-ghost" style="color:#000;">Back</div>
+        <div class="btn-primary">Create Game</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /stage -->
+
+</body>
+</html>

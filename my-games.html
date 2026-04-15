@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — My Games</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;}
+.page-hdr{text-align:center;padding:40px 20px 4px;}
+.page-hdr h1{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-.8px;}
+.page-hdr p{color:#555;font-size:12px;margin-top:4px;}
+.mode-toggle{display:flex;justify-content:center;gap:8px;padding:12px 20px 6px;}
+.mt-btn{padding:8px 18px;border-radius:10px;border:1.5px solid #1a1a1a;background:#111;color:#666;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .25s;}
+.mt-btn:hover{border-color:#2a2a2a;color:#aaa;}
+.mt-btn.act{background:linear-gradient(135deg,#0f2a20,#0a1a14);border-color:#2d5245;color:#5fcea0;}
+.stage{display:flex;justify-content:center;padding:18px 20px 80px;}
+
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 40px 100px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.02);}
+.notch{width:126px;height:36px;background:#000;border-radius:20px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:54px;padding:14px 30px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;position:relative;z-index:10;}
+.sbar .r{font-size:12px;display:flex;gap:5px;align-items:center;opacity:.5;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:5;}
+.scr::-webkit-scrollbar{display:none;}
+
+.lt{background:#faf9f6 !important;}
+.dk{background:#0c0c0c !important;}
+
+/* TAB BAR */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:88px;z-index:40;}
+.tbar-bg{position:absolute;bottom:0;left:0;right:0;height:83px;}
+.tbar-items{position:relative;display:flex;align-items:flex-start;padding-top:10px;height:83px;z-index:2;width:100%;}
+.tbar .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding-bottom:34px;position:relative;}
+.tbar .t svg{width:22px;height:22px;}
+.tbar .t .dot{width:4px;height:4px;border-radius:99px;margin-top:1px;}
+.tbar .cb{flex:1;display:flex;justify-content:center;position:relative;}
+.tbar .pb{width:58px;height:58px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:-22px;box-shadow:0 6px 24px rgba(0,0,0,.2);}
+.tbar .pb svg{width:26px;height:26px;}
+.tbar .pl{position:absolute;top:42px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;}
+.lt .tbar-bg{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-top:1px solid #ece8e0;}
+.lt .tbar .t{color:#c0bdb6;}
+.lt .tbar .t.act{color:#2d5245;}
+.lt .tbar .t .dot{background:#2d5245;}
+.lt .tbar .pb{background:#2d5245;}
+.lt .tbar .pl{color:#2d5245;}
+.dk .tbar-bg{background:rgba(15,15,15,.92);backdrop-filter:blur(30px);border-top:1px solid #1a1a1a;}
+.dk .tbar .t{color:#444;}
+.dk .tbar .t.act{color:#5fcea0;}
+.dk .tbar .t .dot{background:#5fcea0;}
+.dk .tbar .pb{background:linear-gradient(145deg,#3d6b5b,#5fcea0);}
+.dk .tbar .pl{color:#5fcea0;}
+
+/* PAGE TOP BAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 8px;}
+.tb-right{display:flex;gap:6px;}
+.tb-btn{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;position:relative;}
+.lt .tb-btn{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid #f0ede6;}
+.dk .tb-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);}
+.tb-btn svg{width:18px;height:18px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.lt .tb-btn svg{stroke:#6b7280;}
+.dk .tb-btn svg{stroke:#555;}
+
+/* FILTER TABS */
+.filters{display:flex;gap:8px;padding:8px 20px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.filters::-webkit-scrollbar{display:none;}
+.fpill{padding:7px 16px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap;border:none;cursor:pointer;font-family:'Inter',sans-serif;}
+.lt .fpill{background:#fff;color:#9ca3af;border:1px solid #ece8e0;}
+.dk .fpill{background:#161616;color:#555;border:1px solid #1e1e1e;}
+.lt .fpill.act{background:#2d5245;color:#fff;border-color:#2d5245;}
+.dk .fpill.act{background:rgba(95,206,160,.12);color:#5fcea0;border-color:rgba(95,206,160,.15);}
+
+/* GAME ROWS */
+.glist{padding:0 16px;}
+.grow{display:flex;gap:10px;align-items:center;padding:10px;border-radius:14px;margin-bottom:6px;}
+.lt .grow{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.02);border:1px solid #f0ede6;}
+.dk .grow{background:#161616;border:1px solid #1e1e1e;}
+.g-thumb{width:50px;height:50px;border-radius:12px;flex-shrink:0;position:relative;overflow:hidden;}
+.g-thumb img{width:100%;height:100%;object-fit:cover;}
+.g-thumb-pastel{width:100%;height:100%;}
+.g-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.lt .g-overlay{background:rgba(255,255,255,.55);backdrop-filter:blur(2px);}
+.dk .g-overlay{background:rgba(0,0,0,.4);backdrop-filter:blur(2px);}
+.lt .g-mon{font-size:8px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px;}
+.dk .g-mon{font-size:8px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.6px;}
+.lt .g-day{font-size:17px;font-weight:900;color:#1a1a1a;font-family:'Outfit';line-height:1;letter-spacing:-.7px;}
+.dk .g-day{font-size:17px;font-weight:900;color:#fff;font-family:'Outfit';line-height:1;letter-spacing:-.7px;}
+.g-crown-sm{position:absolute;top:-1px;right:-1px;width:16px;height:16px;border-radius:5px;display:flex;align-items:center;justify-content:center;}
+.lt .g-crown-sm{background:#fff;border:1.5px solid #ece8e0;}
+.dk .g-crown-sm{background:#1e1e1e;border:1.5px solid #2a2a2a;}
+.g-crown-sm svg{width:9px;height:9px;}
+.g-info{flex:1;min-width:0;}
+.lt .g-name{font-family:'Outfit';font-size:13px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;}
+.dk .g-name{font-family:'Outfit';font-size:13px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.g-time{font-size:11px;margin-top:1px;}
+.lt .g-time{color:#9ca3af;}
+.dk .g-time{color:#555;}
+.g-loc{font-size:10px;margin-top:1px;display:flex;align-items:center;gap:2px;}
+.lt .g-loc{color:#b0ada6;}
+.dk .g-loc{color:#444;}
+.g-loc svg{width:10px;height:10px;fill:none;stroke-width:2;}
+.lt .g-loc svg{stroke:#c0bdb6;}
+.dk .g-loc svg{stroke:#444;}
+.g-avatars{display:flex;margin-top:3px;}
+.g-av{width:18px;height:18px;border-radius:50%;margin-right:-3px;overflow:hidden;}
+.lt .g-av{border:1.5px solid #fff;}
+.dk .g-av{border:1.5px solid #161616;}
+.g-av img{width:100%;height:100%;object-fit:cover;}
+.g-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.g-pcount{font-size:12px;font-weight:800;letter-spacing:-.3px;}
+.lt .ok{color:#2d5245;}
+.dk .ok{color:#5fcea0;}
+.lt .warn{color:#854f0b;}
+.dk .warn{color:#f0c060;}
+.g-pill{font-size:9px;font-weight:600;padding:2px 6px;border-radius:5px;white-space:nowrap;}
+.lt .pill-ok{background:#e8f4ef;color:#3d6b5b;}
+.dk .pill-ok{background:rgba(95,206,160,.1);color:#5fcea0;}
+.lt .pill-warn{background:#faeeda;color:#7a5c2e;}
+.dk .pill-warn{background:rgba(240,192,96,.08);color:#f0c060;}
+.lt .pill-purple{background:#ede8f5;color:#6b4f9e;}
+.dk .pill-purple{background:rgba(160,120,220,.1);color:#b89adf;}
+.lt .pill-coral{background:#fde8e4;color:#c04530;}
+.dk .pill-coral{background:rgba(232,90,44,.1);color:#e85a2c;}
+
+/* Pastel fallback BGs */
+.gi-sage{background:linear-gradient(145deg,#c5e0d3,#a8d5c2,#d3eade);position:relative;}
+.gi-lavender{background:linear-gradient(145deg,#d8cef0,#c5b8e8,#e2daf5);position:relative;}
+.gi-peach{background:linear-gradient(145deg,#f0dcc8,#e8d0b8,#f5e4d2);position:relative;}
+.gi-sky{background:linear-gradient(145deg,#c0d8ee,#a8c8e0,#d0e2f2);position:relative;}
+.dk .gi-sage{background:linear-gradient(145deg,#1a3327,#253f33,#1a3327);}
+.dk .gi-lavender{background:linear-gradient(145deg,#251a33,#332548,#251a33);}
+.dk .gi-peach{background:linear-gradient(145deg,#332b1a,#483c22,#332b1a);}
+.dk .gi-sky{background:linear-gradient(145deg,#1a2a3a,#253848,#1a2a3a);}
+.gi-sage::after,.gi-lavender::after,.gi-peach::after,.gi-sky::after{content:'';position:absolute;inset:0;opacity:.12;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Crect x='8' y='8' width='34' height='34' rx='5' fill='none' stroke='%23000' stroke-width='.6' opacity='.12'/%3E%3C/svg%3E") repeat;}
+
+/* FAB */
+.fab{position:absolute;bottom:100px;right:20px;width:52px;height:52px;border-radius:99px;display:flex;align-items:center;justify-content:center;z-index:35;box-shadow:0 6px 20px rgba(0,0,0,.2);}
+.lt .fab{background:#2d5245;}
+.dk .fab{background:linear-gradient(145deg,#3d6b5b,#5fcea0);}
+.fab svg{width:24px;height:24px;}
+</style>
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>My Games</h1>
+  <p>Game list screen with filter tabs, mixed statuses</p>
+</div>
+<div class="mode-toggle">
+  <button class="mt-btn act" onclick="setMode('light')">Light Mode</button>
+  <button class="mt-btn" onclick="setMode('dark')">Dark Mode</button>
+</div>
+
+<div class="stage">
+<div class="phone" id="phone">
+<div class="notch"></div>
+<div class="lt" id="inner" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="sbar"><span style="color:#000;">9:41</span><span class="r" style="color:#000;">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+  <div class="scr">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px;"><span style="color:#000;" class="pg-title">My Games</span></div>
+      <div class="tb-right">
+        <div class="tb-btn"><svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+      </div>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div class="filters">
+      <button class="fpill act">All</button>
+      <button class="fpill">Upcoming</button>
+      <button class="fpill">Past</button>
+      <button class="fpill">Cancelled</button>
+    </div>
+
+    <!-- GAME LIST -->
+    <div class="glist">
+
+      <!-- 1. Saturday Mahjong — CONFIRMED, photo, crown -->
+      <div class="grow">
+        <div class="g-thumb">
+          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=120" alt>
+          <div class="g-overlay"><div class="g-mon" style="color:#000;">Apr</div><div class="g-day" style="color:#000;">19</div></div>
+          <div class="g-crown-sm"><svg viewBox="0 0 10 10" fill="#d4a030"><path d="M1 8l1.5-4 2 2 .5-3.5.5 3.5 2-2L9 8z"/></svg></div>
+        </div>
+        <div class="g-info">
+          <div class="g-name" style="color:#000;">Saturday Mahjong</div>
+          <div class="g-time" style="color:#000;">2:00 – 4:00 PM</div>
+          <div class="g-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> <span style="color:#000;">123 Main St, Brooklyn</span></div>
+          <div class="g-avatars">
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt></div>
+          </div>
+        </div>
+        <div class="g-right"><div class="g-pcount ok">4/4</div><div class="g-pill pill-ok">Confirmed</div></div>
+      </div>
+
+      <!-- 2. Lisa's Practice Game — NEEDS 1, pastel lavender -->
+      <div class="grow">
+        <div class="g-thumb">
+          <div class="g-thumb-pastel gi-lavender"></div>
+          <div class="g-overlay"><div class="g-mon" style="color:#000;">Apr</div><div class="g-day" style="color:#000;">21</div></div>
+        </div>
+        <div class="g-info">
+          <div class="g-name" style="color:#000;">Lisa's Practice Game</div>
+          <div class="g-time" style="color:#000;">7:00 – 9:00 PM</div>
+          <div class="g-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> <span style="color:#000;">Lisa's Apartment</span></div>
+          <div class="g-avatars">
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt></div>
+          </div>
+        </div>
+        <div class="g-right"><div class="g-pcount warn">3/4</div><div class="g-pill pill-warn">Needs 1</div></div>
+      </div>
+
+      <!-- 3. Mike's Tuesday Game — PENDING, pastel peach -->
+      <div class="grow">
+        <div class="g-thumb">
+          <div class="g-thumb-pastel gi-peach"></div>
+          <div class="g-overlay"><div class="g-mon" style="color:#000;">Apr</div><div class="g-day" style="color:#000;">22</div></div>
+        </div>
+        <div class="g-info">
+          <div class="g-name" style="color:#000;">Mike's Tuesday Game</div>
+          <div class="g-time" style="color:#000;">6:30 – 8:30 PM</div>
+          <div class="g-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> <span style="color:#000;">Mike's Place</span></div>
+          <div class="g-avatars">
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt></div>
+          </div>
+        </div>
+        <div class="g-right"><div class="g-pcount warn">2/4</div><div class="g-pill pill-warn">Pending</div></div>
+      </div>
+
+      <!-- 4. Weekend Warriors — NEEDS 3, pastel sky, crown -->
+      <div class="grow">
+        <div class="g-thumb">
+          <div class="g-thumb-pastel gi-sky"></div>
+          <div class="g-overlay"><div class="g-mon" style="color:#000;">Apr</div><div class="g-day" style="color:#000;">26</div></div>
+          <div class="g-crown-sm"><svg viewBox="0 0 10 10" fill="#d4a030"><path d="M1 8l1.5-4 2 2 .5-3.5.5 3.5 2-2L9 8z"/></svg></div>
+        </div>
+        <div class="g-info">
+          <div class="g-name" style="color:#000;">Weekend Warriors</div>
+          <div class="g-time" style="color:#000;">1:00 – 3:00 PM</div>
+          <div class="g-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> <span style="color:#000;">Jake's Place</span></div>
+          <div class="g-avatars">
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt></div>
+          </div>
+        </div>
+        <div class="g-right"><div class="g-pcount warn">1/4</div><div class="g-pill pill-warn">Needs 3</div></div>
+      </div>
+
+      <!-- 5. April Tournament — COMPLETED, photo -->
+      <div class="grow">
+        <div class="g-thumb">
+          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=120" alt>
+          <div class="g-overlay"><div class="g-mon" style="color:#000;">Apr</div><div class="g-day" style="color:#000;">12</div></div>
+        </div>
+        <div class="g-info">
+          <div class="g-name" style="color:#000;">April Tournament</div>
+          <div class="g-time" style="color:#000;">10:00 AM – 2:00 PM</div>
+          <div class="g-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> <span style="color:#000;">Community Center</span></div>
+          <div class="g-avatars">
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt></div>
+            <div class="g-av"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face" alt></div>
+          </div>
+        </div>
+        <div class="g-right"><div class="g-pcount" style="color:#6b4f9e;">8/8</div><div class="g-pill pill-purple">Completed</div></div>
+      </div>
+
+      <!-- 6. Cancelled Game — CANCELLED, pastel sage -->
+      <div class="grow" style="opacity:.6;">
+        <div class="g-thumb">
+          <div class="g-thumb-pastel gi-sage"></div>
+          <div class="g-overlay"><div class="g-mon" style="color:#000;">Apr</div><div class="g-day" style="color:#000;">8</div></div>
+        </div>
+        <div class="g-info">
+          <div class="g-name" style="color:#000;">Cancelled Game</div>
+          <div class="g-time" style="color:#000;">3:00 PM</div>
+          <div class="g-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> <span style="color:#000;">TBD</span></div>
+        </div>
+        <div class="g-right"><div class="g-pcount" style="color:#c04530;">0/4</div><div class="g-pill pill-coral">Cancelled</div></div>
+      </div>
+
+    </div>
+
+    <div style="height:120px;"></div>
+  </div>
+
+  <!-- FAB -->
+  <div class="fab"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
+
+  <!-- TAB BAR -->
+  <div class="tbar">
+    <div class="tbar-bg"></div>
+    <div class="tbar-items">
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span>Home</span></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>Discover</span></div>
+      <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div>
+      <div class="t act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span>Games</span><div class="dot"></div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+function setMode(m){
+  document.querySelectorAll('.mt-btn').forEach(b=>{b.classList.remove('act');if(b.textContent.toLowerCase().includes(m))b.classList.add('act');});
+  const el=document.getElementById('inner');
+  el.className=m==='dark'?'dk':'lt';
+  el.style.cssText='width:100%;height:100%;position:relative;overflow:hidden;';
+  // Update inline text colors for dark mode
+  const isDark=m==='dark';
+  document.querySelectorAll('.pg-title').forEach(e=>e.style.color=isDark?'#fff':'#000');
+  document.querySelectorAll('.g-name').forEach(e=>e.style.color=isDark?'#fff':'#000');
+  document.querySelectorAll('.g-time').forEach(e=>e.style.color=isDark?'#555':'#000');
+  document.querySelectorAll('.g-loc span').forEach(e=>e.style.color=isDark?'#444':'#000');
+  document.querySelectorAll('.g-mon').forEach(e=>e.style.color=isDark?'rgba(255,255,255,.45)':'#000');
+  document.querySelectorAll('.g-day').forEach(e=>e.style.color=isDark?'#fff':'#000');
+  document.querySelectorAll('.sbar span').forEach(e=>{if(!e.classList.contains('r'))e.style.color=isDark?'#fff':'#000';else e.style.color=isDark?'#fff':'#000';});
+  // Completed count color
+  document.querySelectorAll('.g-pcount').forEach(e=>{
+    if(!e.classList.contains('ok')&&!e.classList.contains('warn')){
+      const t=e.textContent;
+      if(t.includes('8/8'))e.style.color=isDark?'#b89adf':'#6b4f9e';
+      if(t.includes('0/4'))e.style.color=isDark?'#e85a2c':'#c04530';
+    }
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Discover</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;}
+.page-hdr{text-align:center;padding:40px 20px 4px;}
+.page-hdr h1{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-.8px;}
+.page-hdr p{color:#555;font-size:12px;margin-top:4px;}
+.stage{display:flex;justify-content:center;gap:40px;padding:18px 20px 80px;flex-wrap:wrap;}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.col-label{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:#888;letter-spacing:.5px;text-transform:uppercase;}
+
+.phone{width:375px;height:812px;border-radius:52px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 40px 100px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.02);}
+.notch{width:126px;height:36px;background:#000;border-radius:20px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:54px;padding:14px 30px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;position:relative;z-index:10;}
+.sbar .r{font-size:12px;display:flex;gap:5px;align-items:center;opacity:.5;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:5;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* CRITICAL: Theme background colors */
+.lt{background:#faf9f6 !important;}
+.dk{background:#0c0c0c !important;}
+
+/* TOP BAR */
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 4px;}
+.top-bar-title{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.3px;}
+.top-bar-icons{display:flex;gap:8px;}
+.top-icon{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #ece8e0;}
+.top-icon svg{width:18px;height:18px;fill:none;stroke:#6b7280;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* FILTER ROW */
+.filter-row{display:flex;gap:8px;padding:8px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.filter-row::-webkit-scrollbar{display:none;}
+.fpill{padding:7px 14px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:4px;border:1px solid #ece8e0;background:#fff;}
+.fpill-active{background:#2d5245;border-color:#2d5245;color:#fff;}
+.fpill svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;gap:0;margin-left:auto;border-radius:10px;overflow:hidden;border:1px solid #ece8e0;}
+.vt-btn{width:34px;height:30px;display:flex;align-items:center;justify-content:center;background:#fff;cursor:pointer;}
+.vt-btn.active{background:#2d5245;}
+.vt-btn svg{width:14px;height:14px;fill:none;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.vt-btn.active svg{stroke:#fff;}
+
+/* MAP AREA */
+.map-area{margin:8px 16px 0;border-radius:18px;height:310px;background:linear-gradient(135deg,#e8efe8 0%,#d4e2d4 30%,#dfe8df 60%,#e0e8e0 100%);position:relative;overflow:hidden;}
+.map-grid{position:absolute;inset:0;opacity:.15;background-image:linear-gradient(#aaa 1px,transparent 1px),linear-gradient(90deg,#aaa 1px,transparent 1px);background-size:40px 40px;}
+.map-road{position:absolute;background:#c8c8c0;border-radius:2px;}
+.map-road-h{height:3px;width:100%;}
+.map-road-v{width:3px;height:100%;}
+.map-pin{position:absolute;width:28px;height:28px;border-radius:50%;background:#2d5245;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25);z-index:5;}
+.map-pin-active{width:38px;height:38px;background:#e85a2c;border:3px solid #fff;box-shadow:0 2px 12px rgba(232,90,44,.4);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 2px 12px rgba(232,90,44,.4);}50%{box-shadow:0 2px 20px rgba(232,90,44,.6),0 0 0 8px rgba(232,90,44,.1);}}
+.map-label{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;color:#555;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;opacity:.5;}
+
+/* BOTTOM SHEET */
+.bsheet{position:absolute;bottom:76px;left:0;right:0;background:#faf9f6;border-radius:20px 20px 0 0;padding:10px 0 10px;box-shadow:0 -4px 20px rgba(0,0,0,.08);z-index:20;}
+.bsheet-handle{width:36px;height:4px;border-radius:99px;background:#d0ccc4;margin:0 auto 8px;}
+.bsheet-label{padding:0 16px 8px;font-size:12px;font-weight:700;letter-spacing:-.2px;}
+.bsheet-scroll{display:flex;gap:12px;padding:0 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.bsheet-scroll::-webkit-scrollbar{display:none;}
+.bs-card{min-width:240px;max-width:240px;border-radius:16px;overflow:hidden;background:#fff;border:1px solid #ece8e0;flex-shrink:0;}
+.bs-card-img{height:72px;background-size:cover;background-position:center;position:relative;}
+.bs-card-body{padding:10px 12px 12px;}
+.bs-card-name{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;letter-spacing:-.2px;}
+.bs-card-meta{font-size:10px;margin-top:3px;display:flex;align-items:center;gap:4px;}
+.bs-card-meta svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
+.bs-card-dist{font-size:10px;margin-top:3px;display:flex;align-items:center;gap:3px;}
+.bs-card-dist svg{width:10px;height:10px;fill:none;stroke:#e85a2c;stroke-width:2;stroke-linecap:round;}
+.bs-card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.bs-card-players{font-size:10px;font-weight:600;display:flex;align-items:center;gap:4px;}
+.bs-pill{font-size:9px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:.3px;}
+.bs-pill-green{background:#e8f4ef;color:#2d5245;}
+.bs-pill-amber{background:#fef3e0;color:#a06020;}
+.bs-join-btn{padding:5px 14px;border-radius:10px;background:#2d5245;color:#fff;font-size:10px;font-weight:700;border:none;cursor:pointer;}
+.bs-applied-pill{padding:5px 14px;border-radius:10px;background:#e8f4ef;color:#2d5245;font-size:10px;font-weight:700;}
+
+/* LIST VIEW CARDS */
+.list-cards{padding:0 16px 16px;}
+.lcard{border-radius:18px;overflow:hidden;background:#fff;border:1px solid #ece8e0;margin-bottom:12px;position:relative;}
+.lcard-img{height:90px;background-size:cover;background-position:center;position:relative;}
+.lcard-status{position:absolute;top:8px;right:8px;font-size:9px;font-weight:700;padding:3px 10px;border-radius:99px;letter-spacing:.3px;}
+.lcard-status-green{background:rgba(255,255,255,.9);color:#2d5245;backdrop-filter:blur(6px);}
+.lcard-body{padding:12px 14px 14px;}
+.lcard-top{display:flex;align-items:center;justify-content:space-between;}
+.lcard-name{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.2px;}
+.lcard-org{display:flex;align-items:center;gap:6px;margin-top:4px;}
+.lcard-org-av{width:20px;height:20px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.lcard-org-av img{width:100%;height:100%;object-fit:cover;}
+.lcard-org-name{font-size:11px;font-weight:600;color:#3d6b5b;}
+.lcard-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.lcard-meta-item{font-size:10px;display:flex;align-items:center;gap:3px;}
+.lcard-meta-item svg{width:11px;height:11px;fill:none;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lcard-badges{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.lbadge{font-size:9px;font-weight:600;padding:3px 10px;border-radius:99px;background:#f5f3ee;letter-spacing:.2px;}
+.lcard-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid #f5f3ee;}
+.lcard-players{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;}
+.lcard-players svg{width:12px;height:12px;fill:none;stroke:#2d5245;stroke-width:2;}
+.lcard-btn{padding:8px 20px;border-radius:12px;font-size:11px;font-weight:700;border:none;cursor:pointer;}
+.lcard-btn-primary{background:#2d5245;color:#fff;}
+.lcard-btn-ghost{background:transparent;color:#2d5245;border:1.5px solid #2d5245;}
+
+/* TAB BAR */
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:76px;display:flex;align-items:flex-start;justify-content:space-around;padding-top:8px;z-index:30;border-top:1px solid #ece8e0;background:#faf9f6;}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;color:#b0ada6;cursor:pointer;}
+.tab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.tab-active{color:#2d5245;}
+.tab-create{width:44px;height:44px;border-radius:14px;background:#2d5245;display:flex;align-items:center;justify-content:center;margin-top:-4px;box-shadow:0 4px 12px rgba(45,82,69,.3);}
+.tab-create svg{stroke:#fff;width:22px;height:22px;}
+</style>
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>Discover Screen</h1>
+  <p>BamBuddies iOS — Map View & List View</p>
+</div>
+
+<div class="stage">
+
+<!-- ======== PHONE 1: MAP VIEW ======== -->
+<div class="col">
+  <div class="col-label">Map View</div>
+  <div class="phone lt">
+    <div class="notch"></div>
+    <div class="sbar" style="color:#000;">
+      <span style="color:#000;">9:41</span>
+      <div class="r" style="color:#000;">
+        <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="5" width="3" height="7" rx="1" fill="#000"/><rect x="4.5" y="3.5" width="3" height="8.5" rx="1" fill="#000"/><rect x="9" y="1.5" width="3" height="10.5" rx="1" fill="#000"/><rect x="13" y="0" width="3" height="12" rx="1" fill="#000"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2C5 2 2.4 3.3 1 5.5L2.5 7C3.6 5.2 5.6 4 8 4s4.4 1.2 5.5 3L15 5.5C13.6 3.3 11 2 8 2z" fill="#000"/><circle cx="8" cy="10" r="2" fill="#000"/></svg>
+        <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="#000" stroke-width="1.2" fill="none"/><rect x="2" y="3" width="12" height="6" rx="1" fill="#000"/><rect x="19" y="4" width="2" height="4" rx="1" fill="#000" opacity=".4"/></svg>
+      </div>
+    </div>
+
+    <div class="scr">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="top-bar-title" style="color:#000;">Discover</div>
+        <div class="top-bar-icons">
+          <div class="top-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+          </div>
+          <div class="top-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M9 18h6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Row -->
+      <div class="filter-row">
+        <div class="fpill fpill-active" style="color:#fff;">📍 Near Me</div>
+        <div class="fpill" style="color:#000;">25 mi <svg viewBox="0 0 10 10"><path d="M2 4l3 3 3-3"/></svg></div>
+        <div class="fpill" style="color:#000;">This Week <svg viewBox="0 0 10 10"><path d="M2 4l3 3 3-3"/></svg></div>
+        <div class="fpill" style="color:#000;">All Levels <svg viewBox="0 0 10 10"><path d="M2 4l3 3 3-3"/></svg></div>
+      </div>
+
+      <!-- Map Area -->
+      <div class="map-area">
+        <div class="map-grid"></div>
+        <!-- Roads -->
+        <div class="map-road map-road-h" style="top:40%;"></div>
+        <div class="map-road map-road-h" style="top:65%;"></div>
+        <div class="map-road map-road-v" style="left:30%;"></div>
+        <div class="map-road map-road-v" style="left:60%;"></div>
+        <div class="map-road map-road-v" style="left:80%;"></div>
+        <div class="map-road map-road-h" style="top:25%;width:60%;left:20%;"></div>
+        <!-- Pins -->
+        <div class="map-pin" style="top:28%;left:25%;"></div>
+        <div class="map-pin" style="top:55%;left:70%;"></div>
+        <div class="map-pin" style="top:70%;left:35%;"></div>
+        <div class="map-pin" style="top:45%;left:50%;"></div>
+        <div class="map-pin map-pin-active" style="top:38%;left:42%;"></div>
+        <div class="map-label">Brooklyn, NY</div>
+      </div>
+
+      <!-- Bottom Sheet -->
+      <div style="position:relative;margin-top:10px;">
+        <div style="background:#faf9f6;border-radius:20px 20px 0 0;padding:10px 0 10px;box-shadow:0 -4px 20px rgba(0,0,0,.08);">
+          <div class="bsheet-handle"></div>
+          <div class="bsheet-label" style="color:#000;">4 games nearby</div>
+          <div class="bsheet-scroll">
+            <!-- Card 1 -->
+            <div class="bs-card">
+              <div class="bs-card-img" style="background-image:url('https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400');"></div>
+              <div class="bs-card-body">
+                <div class="bs-card-name" style="color:#000;">Sunday Social Mahjong</div>
+                <div class="bs-card-meta" style="color:#888;">
+                  <svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>
+                  Sun Apr 20 · 3:00 PM
+                </div>
+                <div class="bs-card-dist" style="color:#e85a2c;">
+                  <svg viewBox="0 0 12 12"><path d="M6 1C3.8 1 2 2.8 2 5c0 3 4 6 4 6s4-3 4-6c0-2.2-1.8-4-4-4z"/><circle cx="6" cy="5" r="1.5" fill="none"/></svg>
+                  1.2 mi away
+                </div>
+                <div class="bs-card-bottom">
+                  <div class="bs-card-players" style="color:#555;">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#555" stroke-width="2"><circle cx="6" cy="4" r="2.5"/><path d="M1.5 11c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/></svg>
+                    3/4 <span class="bs-pill bs-pill-amber">Needs 1</span>
+                  </div>
+                  <button class="bs-join-btn">Join</button>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="bs-card">
+              <div class="bs-card-img" style="background:linear-gradient(135deg,#d4e0d0,#b8ccb0);"></div>
+              <div class="bs-card-body">
+                <div class="bs-card-name" style="color:#000;">Brooklyn Tiles Club</div>
+                <div class="bs-card-meta" style="color:#888;">
+                  <svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>
+                  Tue Apr 22 · 7:00 PM
+                </div>
+                <div class="bs-card-dist" style="color:#e85a2c;">
+                  <svg viewBox="0 0 12 12"><path d="M6 1C3.8 1 2 2.8 2 5c0 3 4 6 4 6s4-3 4-6c0-2.2-1.8-4-4-4z"/><circle cx="6" cy="5" r="1.5" fill="none"/></svg>
+                  2.8 mi away
+                </div>
+                <div class="bs-card-bottom">
+                  <div class="bs-card-players" style="color:#555;">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#555" stroke-width="2"><circle cx="6" cy="4" r="2.5"/><path d="M1.5 11c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/></svg>
+                    6/8 <span class="bs-pill bs-pill-green">Confirmed</span>
+                  </div>
+                  <div class="bs-applied-pill">Applied</div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 (peek) -->
+            <div class="bs-card">
+              <div class="bs-card-img" style="background:linear-gradient(135deg,#d8d0e0,#c4b8d4);"></div>
+              <div class="bs-card-body">
+                <div class="bs-card-name" style="color:#000;">Park Slope Game Night</div>
+                <div class="bs-card-meta" style="color:#888;">
+                  <svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>
+                  Wed Apr 23 · 6:30 PM
+                </div>
+                <div class="bs-card-dist" style="color:#e85a2c;">
+                  <svg viewBox="0 0 12 12"><path d="M6 1C3.8 1 2 2.8 2 5c0 3 4 6 4 6s4-3 4-6c0-2.2-1.8-4-4-4z"/><circle cx="6" cy="5" r="1.5" fill="none"/></svg>
+                  3.5 mi away
+                </div>
+                <div class="bs-card-bottom">
+                  <div class="bs-card-players" style="color:#555;">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#555" stroke-width="2"><circle cx="6" cy="4" r="2.5"/><path d="M1.5 11c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/></svg>
+                    2/4 <span class="bs-pill bs-pill-amber">Needs 2</span>
+                  </div>
+                  <button class="bs-join-btn">Join</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="tabbar">
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1v-9.5z"/></svg>
+        <span style="color:#b0ada6;">Home</span>
+      </div>
+      <div class="tab tab-active">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+        <span style="color:#2d5245;">Discover</span>
+      </div>
+      <div class="tab">
+        <div class="tab-create">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg>
+        <span style="color:#b0ada6;">Games</span>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <span style="color:#b0ada6;">Groups</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== PHONE 2: LIST VIEW ======== -->
+<div class="col">
+  <div class="col-label">List View</div>
+  <div class="phone lt">
+    <div class="notch"></div>
+    <div class="sbar" style="color:#000;">
+      <span style="color:#000;">9:41</span>
+      <div class="r" style="color:#000;">
+        <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="5" width="3" height="7" rx="1" fill="#000"/><rect x="4.5" y="3.5" width="3" height="8.5" rx="1" fill="#000"/><rect x="9" y="1.5" width="3" height="10.5" rx="1" fill="#000"/><rect x="13" y="0" width="3" height="12" rx="1" fill="#000"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2C5 2 2.4 3.3 1 5.5L2.5 7C3.6 5.2 5.6 4 8 4s4.4 1.2 5.5 3L15 5.5C13.6 3.3 11 2 8 2z" fill="#000"/><circle cx="8" cy="10" r="2" fill="#000"/></svg>
+        <svg width="22" height="12" viewBox="0 0 22 12"><rect x="0" y="1" width="18" height="10" rx="2" stroke="#000" stroke-width="1.2" fill="none"/><rect x="2" y="3" width="12" height="6" rx="1" fill="#000"/><rect x="19" y="4" width="2" height="4" rx="1" fill="#000" opacity=".4"/></svg>
+      </div>
+    </div>
+
+    <div class="scr">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="top-bar-title" style="color:#000;">Discover</div>
+        <div class="top-bar-icons">
+          <div class="top-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+          </div>
+          <div class="top-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M9 18h6"/></svg>
+          </div>
+          <!-- View Toggle -->
+          <div class="view-toggle">
+            <div class="vt-btn">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8 2 4.5 5 3 7l1.5 1.5C6 6 8.5 4 12 4s6 2 7.5 4.5L21 7c-1.5-2-5-5-9-5z"/><circle cx="12" cy="14" r="3"/></svg>
+            </div>
+            <div class="vt-btn active">
+              <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Row -->
+      <div class="filter-row">
+        <div class="fpill fpill-active" style="color:#fff;">📍 Near Me</div>
+        <div class="fpill" style="color:#000;">25 mi <svg viewBox="0 0 10 10"><path d="M2 4l3 3 3-3"/></svg></div>
+        <div class="fpill" style="color:#000;">This Week <svg viewBox="0 0 10 10"><path d="M2 4l3 3 3-3"/></svg></div>
+        <div class="fpill" style="color:#000;">All Levels <svg viewBox="0 0 10 10"><path d="M2 4l3 3 3-3"/></svg></div>
+      </div>
+
+      <!-- Game List -->
+      <div class="list-cards">
+        <!-- Game 1 -->
+        <div class="lcard">
+          <div class="lcard-img" style="background-image:url('https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400');">
+            <div class="lcard-status lcard-status-green">Open</div>
+          </div>
+          <div class="lcard-body">
+            <div class="lcard-name" style="color:#000;">Sunday Social Mahjong</div>
+            <div class="lcard-org">
+              <div class="lcard-org-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt=""></div>
+              <span class="lcard-org-name">Sarah Chen</span>
+            </div>
+            <div class="lcard-meta" style="color:#888;">
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+                <span style="color:#888;">Sun Apr 20 · 3:00 PM</span>
+              </div>
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8.5c0 5.5 7 11.5 7 11.5s7-6 7-11.5C19 5 16 2 12 2z"/></svg>
+                <span style="color:#888;">1.2 mi</span>
+              </div>
+            </div>
+            <div class="lcard-badges">
+              <span class="lbadge" style="color:#555;">Intermediate</span>
+              <span class="lbadge" style="color:#555;">Riichi</span>
+            </div>
+            <div class="lcard-footer">
+              <div class="lcard-players" style="color:#000;">
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 014-4h8a4 4 0 014 4v2"/></svg>
+                3/4 players
+              </div>
+              <button class="lcard-btn lcard-btn-primary">Join</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game 2 -->
+        <div class="lcard">
+          <div class="lcard-img" style="background:linear-gradient(135deg,#d4e0d0,#b8ccb0);">
+            <div class="lcard-status lcard-status-green">Open</div>
+          </div>
+          <div class="lcard-body">
+            <div class="lcard-name" style="color:#000;">Brooklyn Tiles Club</div>
+            <div class="lcard-org">
+              <div class="lcard-org-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt=""></div>
+              <span class="lcard-org-name">Marcus Rivera</span>
+            </div>
+            <div class="lcard-meta" style="color:#888;">
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+                <span style="color:#888;">Tue Apr 22 · 7:00 PM</span>
+              </div>
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8.5c0 5.5 7 11.5 7 11.5s7-6 7-11.5C19 5 16 2 12 2z"/></svg>
+                <span style="color:#888;">2.8 mi</span>
+              </div>
+            </div>
+            <div class="lcard-badges">
+              <span class="lbadge" style="color:#555;">All Levels</span>
+              <span class="lbadge" style="color:#555;">American</span>
+            </div>
+            <div class="lcard-footer">
+              <div class="lcard-players" style="color:#000;">
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 014-4h8a4 4 0 014 4v2"/></svg>
+                6/8 players
+              </div>
+              <button class="lcard-btn lcard-btn-ghost">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game 3 -->
+        <div class="lcard">
+          <div class="lcard-img" style="background:linear-gradient(135deg,#d8d0e4,#c4b8d8);">
+            <div class="lcard-status lcard-status-green">Open</div>
+          </div>
+          <div class="lcard-body">
+            <div class="lcard-name" style="color:#000;">Park Slope Game Night</div>
+            <div class="lcard-org">
+              <div class="lcard-org-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt=""></div>
+              <span class="lcard-org-name">Emily Torres</span>
+            </div>
+            <div class="lcard-meta" style="color:#888;">
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+                <span style="color:#888;">Wed Apr 23 · 6:30 PM</span>
+              </div>
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8.5c0 5.5 7 11.5 7 11.5s7-6 7-11.5C19 5 16 2 12 2z"/></svg>
+                <span style="color:#888;">3.5 mi</span>
+              </div>
+            </div>
+            <div class="lcard-badges">
+              <span class="lbadge" style="color:#555;">Beginner</span>
+              <span class="lbadge" style="color:#555;">Hong Kong</span>
+            </div>
+            <div class="lcard-footer">
+              <div class="lcard-players" style="color:#000;">
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 014-4h8a4 4 0 014 4v2"/></svg>
+                2/4 players
+              </div>
+              <button class="lcard-btn lcard-btn-primary">Join</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game 4 -->
+        <div class="lcard">
+          <div class="lcard-img" style="background-image:url('https://images.pexels.com/photos/7594067/pexels-photo-7594067.jpeg?auto=compress&cs=tinysrgb&w=400');">
+            <div class="lcard-status lcard-status-green">Open</div>
+          </div>
+          <div class="lcard-body">
+            <div class="lcard-name" style="color:#000;">Chinatown Mahjong</div>
+            <div class="lcard-org">
+              <div class="lcard-org-av"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" alt=""></div>
+              <span class="lcard-org-name">David Wong</span>
+            </div>
+            <div class="lcard-meta" style="color:#888;">
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+                <span style="color:#888;">Sat Apr 26 · 2:00 PM</span>
+              </div>
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8.5c0 5.5 7 11.5 7 11.5s7-6 7-11.5C19 5 16 2 12 2z"/></svg>
+                <span style="color:#888;">4.1 mi</span>
+              </div>
+            </div>
+            <div class="lcard-badges">
+              <span class="lbadge" style="color:#555;">Advanced</span>
+              <span class="lbadge" style="color:#555;">Riichi</span>
+            </div>
+            <div class="lcard-footer">
+              <div class="lcard-players" style="color:#000;">
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 014-4h8a4 4 0 014 4v2"/></svg>
+                7/8 players
+              </div>
+              <button class="lcard-btn lcard-btn-ghost">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game 5 -->
+        <div class="lcard">
+          <div class="lcard-img" style="background:linear-gradient(135deg,#f0d8c8,#e8c4b0);">
+            <div class="lcard-status lcard-status-green">Open</div>
+          </div>
+          <div class="lcard-body">
+            <div class="lcard-name" style="color:#000;">Prospect Heights Tiles</div>
+            <div class="lcard-org">
+              <div class="lcard-org-av"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt=""></div>
+              <span class="lcard-org-name">Nina Patel</span>
+            </div>
+            <div class="lcard-meta" style="color:#888;">
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+                <span style="color:#888;">Sun Apr 27 · 1:00 PM</span>
+              </div>
+              <div class="lcard-meta-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8.5c0 5.5 7 11.5 7 11.5s7-6 7-11.5C19 5 16 2 12 2z"/></svg>
+                <span style="color:#888;">5.2 mi</span>
+              </div>
+            </div>
+            <div class="lcard-badges">
+              <span class="lbadge" style="color:#555;">All Levels</span>
+              <span class="lbadge" style="color:#555;">American</span>
+            </div>
+            <div class="lcard-footer">
+              <div class="lcard-players" style="color:#000;">
+                <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 014-4h8a4 4 0 014 4v2"/></svg>
+                1/4 players
+              </div>
+              <button class="lcard-btn lcard-btn-primary">Join</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="tabbar">
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1v-9.5z"/></svg>
+        <span style="color:#b0ada6;">Home</span>
+      </div>
+      <div class="tab tab-active">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></svg>
+        <span style="color:#2d5245;">Discover</span>
+      </div>
+      <div class="tab">
+        <div class="tab-create">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg>
+        <span style="color:#b0ada6;">Games</span>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <span style="color:#b0ada6;">Groups</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>

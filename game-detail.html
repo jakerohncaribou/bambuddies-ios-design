@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Game Detail</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;}
+.page-hdr{text-align:center;padding:40px 20px 4px;}
+.page-hdr h1{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:#fff;letter-spacing:-.8px;}
+.page-hdr p{color:#555;font-size:12px;margin-top:4px;}
+.mode-toggle{display:flex;justify-content:center;gap:8px;padding:12px 20px 6px;}
+.mt-btn{padding:8px 18px;border-radius:10px;border:1.5px solid #1a1a1a;background:#111;color:#666;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .25s;}
+.mt-btn:hover{border-color:#2a2a2a;color:#aaa;}
+.mt-btn.act{background:linear-gradient(135deg,#0f2a20,#0a1a14);border-color:#2d5245;color:#5fcea0;}
+.stage{display:flex;justify-content:center;padding:18px 20px 80px;}
+
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 40px 100px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.02);}
+.notch{width:126px;height:36px;background:#000;border-radius:20px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:54px;padding:14px 30px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;position:relative;z-index:10;}
+.sbar .r{font-size:12px;display:flex;gap:5px;align-items:center;opacity:.5;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:5;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* CRITICAL: Theme background colors */
+.lt{background:#faf9f6 !important;}
+.dk{background:#0c0c0c !important;}
+
+/* NAV BAR */
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:6px 16px 8px;height:44px;}
+.nav-back{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.lt .nav-back{background:#fff;border:1px solid #ece8e0;}
+.dk .nav-back{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);}
+.nav-back svg{width:18px;height:18px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lt .nav-back svg{stroke:#6b7280;}
+.dk .nav-back svg{stroke:#555;}
+.lt .nav-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;}
+.dk .nav-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.nav-more{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.lt .nav-more{background:#fff;border:1px solid #ece8e0;}
+.dk .nav-more{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);}
+.nav-more svg{width:18px;height:18px;fill:none;stroke-width:2;stroke-linecap:round;}
+.lt .nav-more svg{stroke:#6b7280;}
+.dk .nav-more svg{stroke:#555;}
+
+/* STATUS PILL */
+.status-row{display:flex;justify-content:center;padding:0 0 6px;}
+.status-pill{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:99px;display:flex;align-items:center;gap:4px;}
+.status-pill svg{width:12px;height:12px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .sp-confirmed{background:#e8f4ef;color:#2d5245;}
+.lt .sp-confirmed svg{stroke:#2d5245;}
+.dk .sp-confirmed{background:rgba(95,206,160,.1);color:#5fcea0;border:1px solid rgba(95,206,160,.08);}
+.dk .sp-confirmed svg{stroke:#5fcea0;}
+
+/* HERO IMAGE */
+.hero{margin:0 16px 0;border-radius:18px;overflow:hidden;position:relative;height:140px;background-size:cover;background-position:center;}
+.hero-photo{background-image:url('https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600');}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.35) 100%);}
+.hero-date{position:absolute;top:10px;left:10px;padding:4px 10px;border-radius:8px;font-family:'Outfit';font-size:11px;font-weight:800;letter-spacing:.3px;}
+.lt .hero-date{color:#2d5245;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);}
+.dk .hero-date{color:#eee;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);}
+.hero-date span{font-weight:500;opacity:.6;margin-right:2px;}
+.hero-crown{position:absolute;top:10px;right:10px;padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px;}
+.lt .hero-crown{background:rgba(255,255,255,.88);backdrop-filter:blur(8px);color:#7a5c2e;}
+.dk .hero-crown{background:rgba(0,0,0,.5);backdrop-filter:blur(8px);color:#f0c060;}
+.hero-crown svg{width:13px;height:13px;}
+.hero-players{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;font-size:12px;font-weight:800;font-family:'Outfit';}
+.lt .hero-players{background:rgba(255,255,255,.88);backdrop-filter:blur(8px);color:#2d5245;}
+.dk .hero-players{background:rgba(0,0,0,.5);backdrop-filter:blur(8px);color:#5fcea0;}
+.hero-players svg{width:14px;height:14px;fill:none;stroke-width:2;}
+.lt .hero-players svg{stroke:#2d5245;}
+.dk .hero-players svg{stroke:#5fcea0;}
+
+/* GAME TITLE AREA */
+.game-header{padding:12px 20px 6px;}
+.lt .game-name{font-family:'DM Serif Display',Georgia,serif;font-size:22px;color:#1a1a1a;line-height:1.2;}
+.dk .game-name{font-family:'DM Serif Display',Georgia,serif;font-size:22px;color:#f0ede6;line-height:1.2;}
+.organizer-row{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.org-av{width:24px;height:24px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.org-av img{width:100%;height:100%;object-fit:cover;}
+.lt .org-name{font-size:13px;font-weight:600;color:#3d6b5b;}
+.dk .org-name{font-size:13px;font-weight:600;color:#5fcea0;}
+.lt .org-label{font-size:11px;color:#b0ada6;margin-left:2px;}
+.dk .org-label{font-size:11px;color:#555;margin-left:2px;}
+
+/* DETAIL CARD */
+.detail-card{margin:10px 16px;border-radius:18px;padding:14px 16px;}
+.lt .detail-card{background:#fff;border:1px solid #ece8e0;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+.dk .detail-card{background:#161616;border:1px solid #1e1e1e;}
+.detail-row{display:flex;align-items:flex-start;gap:12px;padding:9px 0;}
+.detail-row+.detail-row{border-top:1px solid transparent;}
+.lt .detail-row+.detail-row{border-top-color:#f5f3ee;}
+.dk .detail-row+.detail-row{border-top-color:#1e1e1e;}
+.detail-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.lt .detail-icon{background:#f5f3ee;}
+.dk .detail-icon{background:rgba(255,255,255,.04);}
+.detail-icon svg{width:16px;height:16px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.lt .detail-icon svg{stroke:#2d5245;}
+.dk .detail-icon svg{stroke:#5fcea0;}
+.detail-text{flex:1;padding-top:4px;}
+.lt .detail-label{font-size:10px;font-weight:600;color:#b0ada6;text-transform:uppercase;letter-spacing:.6px;}
+.dk .detail-label{font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.6px;}
+.lt .detail-value{font-size:13px;font-weight:600;color:#1a1a1a;margin-top:1px;}
+.dk .detail-value{font-size:13px;font-weight:600;color:#fff;margin-top:1px;}
+
+/* ORGANIZER NOTE */
+.org-note{margin:0 16px 8px;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;}
+.lt .org-note{background:#fdf8f0;border:1px solid #f0e8d8;}
+.dk .org-note{background:rgba(240,192,96,.04);border:1px solid rgba(240,192,96,.08);}
+.org-note-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.lt .org-note-text{font-size:12px;color:#7a5c2e;line-height:1.5;font-weight:500;}
+.dk .org-note-text{font-size:12px;color:#c8a050;line-height:1.5;font-weight:500;}
+
+/* SECTION HEADERS */
+.sec{padding:6px 20px 6px;}
+.sec-top{display:flex;justify-content:space-between;align-items:center;}
+.lt .sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:#1a1a1a;}
+.dk .sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:#f0ede6;}
+.sec-count{font-family:'Outfit';font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;}
+.lt .sec-count{background:#f5f3ee;color:#6b7280;}
+.dk .sec-count{background:rgba(255,255,255,.06);color:#666;}
+.sec-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:6px;}
+.lt .sec-badge{background:#e85a2c;color:#fff;}
+.dk .sec-badge{background:#5fcea0;color:#0a1a14;}
+
+/* ROSTER */
+.roster-card{margin:6px 16px 8px;border-radius:18px;overflow:hidden;}
+.lt .roster-card{background:#fff;border:1px solid #ece8e0;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+.dk .roster-card{background:#161616;border:1px solid #1e1e1e;}
+.roster-item{display:flex;align-items:center;gap:10px;padding:10px 14px;}
+.roster-item+.roster-item{border-top:1px solid transparent;}
+.lt .roster-item+.roster-item{border-top-color:#f5f3ee;}
+.dk .roster-item+.roster-item{border-top-color:#1e1e1e;}
+.roster-av{width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;position:relative;}
+.roster-av img{width:100%;height:100%;object-fit:cover;}
+.roster-crown{position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.lt .roster-crown{background:#fff;border:1.5px solid #ece8e0;}
+.dk .roster-crown{background:#1e1e1e;border:1.5px solid #2a2a2a;}
+.roster-crown svg{width:9px;height:9px;}
+.roster-info{flex:1;min-width:0;}
+.lt .roster-name{font-size:13px;font-weight:700;color:#1a1a1a;}
+.dk .roster-name{font-size:13px;font-weight:700;color:#fff;}
+.lt .roster-level{font-size:11px;color:#b0ada6;margin-top:1px;}
+.dk .roster-level{font-size:11px;color:#555;margin-top:1px;}
+.roster-chip{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;flex-shrink:0;}
+.lt .chip-accepted{background:#e8f4ef;color:#2d5245;}
+.dk .chip-accepted{background:rgba(95,206,160,.1);color:#5fcea0;}
+.lt .chip-invited{background:#faeeda;color:#7a5c2e;}
+.dk .chip-invited{background:rgba(240,192,96,.08);color:#f0c060;}
+
+/* BRING ITEMS */
+.bring-card{margin:6px 16px 8px;border-radius:18px;overflow:hidden;}
+.lt .bring-card{background:#fff;border:1px solid #ece8e0;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+.dk .bring-card{background:#161616;border:1px solid #1e1e1e;}
+.bring-item{display:flex;align-items:center;gap:10px;padding:10px 14px;}
+.bring-item+.bring-item{border-top:1px solid transparent;}
+.lt .bring-item+.bring-item{border-top-color:#f5f3ee;}
+.dk .bring-item+.bring-item{border-top-color:#1e1e1e;}
+.bring-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;}
+.lt .bring-icon{background:#f5f3ee;}
+.dk .bring-icon{background:rgba(255,255,255,.04);}
+.bring-info{flex:1;min-width:0;}
+.lt .bring-name{font-size:13px;font-weight:600;color:#1a1a1a;}
+.dk .bring-name{font-size:13px;font-weight:600;color:#fff;}
+.lt .bring-assign{font-size:11px;color:#b0ada6;margin-top:1px;}
+.dk .bring-assign{font-size:11px;color:#555;margin-top:1px;}
+.bring-action{flex-shrink:0;}
+.bring-covered{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;}
+.lt .bring-covered{background:#e8f4ef;color:#2d5245;}
+.dk .bring-covered{background:rgba(95,206,160,.1);color:#5fcea0;}
+.bring-claim{font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter';}
+.lt .bring-claim{background:#2d5245;color:#fff;}
+.dk .bring-claim{background:rgba(95,206,160,.12);border:1px solid rgba(95,206,160,.1);color:#5fcea0;}
+.bring-claimer{display:flex;align-items:center;gap:4px;}
+.bring-claimer-av{width:20px;height:20px;border-radius:50%;overflow:hidden;}
+.bring-claimer-av img{width:100%;height:100%;object-fit:cover;}
+.lt .bring-claimer-name{font-size:11px;font-weight:600;color:#3d6b5b;}
+.dk .bring-claimer-name{font-size:11px;font-weight:600;color:#5fcea0;}
+
+/* THREAD PREVIEW */
+.thread-card{margin:6px 16px 8px;border-radius:18px;overflow:hidden;}
+.lt .thread-card{background:#fff;border:1px solid #ece8e0;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+.dk .thread-card{background:#161616;border:1px solid #1e1e1e;}
+.thread-msg{display:flex;gap:10px;padding:10px 14px;}
+.thread-msg+.thread-msg{border-top:1px solid transparent;}
+.lt .thread-msg+.thread-msg{border-top-color:#f5f3ee;}
+.dk .thread-msg+.thread-msg{border-top-color:#1e1e1e;}
+.thread-av{width:30px;height:30px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+.thread-av img{width:100%;height:100%;object-fit:cover;}
+.thread-body{flex:1;min-width:0;}
+.thread-top{display:flex;justify-content:space-between;align-items:baseline;}
+.lt .thread-name{font-size:12px;font-weight:700;color:#1a1a1a;}
+.dk .thread-name{font-size:12px;font-weight:700;color:#fff;}
+.lt .thread-time{font-size:10px;color:#b0ada6;}
+.dk .thread-time{font-size:10px;color:#555;}
+.lt .thread-text{font-size:12px;color:#6b7280;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dk .thread-text{font-size:12px;color:#666;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.thread-link{padding:8px 14px;text-align:center;}
+.lt .thread-link a{font-size:12px;font-weight:600;color:#3d6b5b;text-decoration:none;}
+.dk .thread-link a{font-size:12px;font-weight:600;color:#5fcea0;text-decoration:none;}
+
+/* ACTION BUTTONS */
+.actions{padding:10px 16px 8px;display:flex;gap:8px;}
+.act-primary{flex:1;padding:12px;border-radius:14px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter';display:flex;align-items:center;justify-content:center;gap:6px;}
+.lt .act-primary{background:#2d5245;color:#fff;}
+.dk .act-primary{background:linear-gradient(145deg,#3d6b5b,#5fcea0);color:#0a1a14;}
+.act-primary svg{width:16px;height:16px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lt .act-primary svg{stroke:#fff;}
+.dk .act-primary svg{stroke:#0a1a14;}
+.act-secondary{flex:1;padding:12px;border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter';background:transparent;display:flex;align-items:center;justify-content:center;gap:6px;}
+.lt .act-secondary{border:1.5px solid #ece8e0;color:#6b7280;}
+.dk .act-secondary{border:1px solid #222;color:#666;}
+.act-ghost{flex:1;padding:12px;border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter';background:transparent;border:none;display:flex;align-items:center;justify-content:center;gap:6px;}
+.lt .act-ghost{color:#e85a2c;}
+.dk .act-ghost{color:#e85a2c;}
+
+/* TAB BAR */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:88px;z-index:40;}
+.tbar-bg{position:absolute;bottom:0;left:0;right:0;height:83px;}
+.tbar-items{position:relative;display:flex;align-items:flex-start;padding-top:10px;height:83px;z-index:2;width:100%;}
+.tbar .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding-bottom:34px;position:relative;}
+.tbar .t svg{width:22px;height:22px;}
+.tbar .t .dot{width:4px;height:4px;border-radius:99px;margin-top:1px;}
+.tbar .cb{flex:1;display:flex;justify-content:center;position:relative;}
+.tbar .pb{width:58px;height:58px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:-22px;box-shadow:0 6px 24px rgba(0,0,0,.2);}
+.tbar .pb svg{width:26px;height:26px;}
+.tbar .pl{position:absolute;top:42px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;}
+.lt .tbar-bg{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-top:1px solid #ece8e0;}
+.lt .tbar .t{color:#c0bdb6;}
+.lt .tbar .t.act{color:#2d5245;}
+.lt .tbar .t .dot{background:#2d5245;}
+.lt .tbar .pb{background:#2d5245;}
+.lt .tbar .pl{color:#2d5245;}
+.dk .tbar-bg{background:rgba(15,15,15,.92);backdrop-filter:blur(30px);border-top:1px solid #1a1a1a;}
+.dk .tbar .t{color:#444;}
+.dk .tbar .t.act{color:#5fcea0;}
+.dk .tbar .t .dot{background:#5fcea0;}
+.dk .tbar .pb{background:linear-gradient(145deg,#3d6b5b,#5fcea0);}
+.dk .tbar .pl{color:#5fcea0;}
+
+/* DIVIDER */
+.lt .divider{height:1px;background:#ece8e0;margin:3px 20px 0;}
+.dk .divider{height:1px;background:#1a1a1a;margin:3px 20px 0;}
+</style>
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>Game Detail</h1>
+  <p>BamBuddies iOS — Full game detail screen with roster, items, and chat</p>
+</div>
+<div class="mode-toggle">
+  <button class="mt-btn act" onclick="setMode('light')">Light Mode</button>
+  <button class="mt-btn" onclick="setMode('dark')">Dark Mode</button>
+</div>
+
+<div class="stage">
+<div class="phone" id="phone">
+<div class="notch"></div>
+<div class="lt" id="inner" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="sbar"><span style="color:#000;">9:41</span><span class="r" style="color:#000;">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+  <div class="scr">
+
+    <!-- NAV BAR -->
+    <div class="navbar">
+      <div class="nav-back"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+      <span class="nav-title" style="color:#000;">Game Detail</span>
+      <div class="nav-more"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+    </div>
+
+    <!-- STATUS PILL -->
+    <div class="status-row">
+      <div class="status-pill sp-confirmed" style="color:#2d5245;"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> CONFIRMED</div>
+    </div>
+
+    <!-- HERO IMAGE -->
+    <div class="hero hero-photo">
+      <div class="hero-overlay"></div>
+      <div class="hero-date" style="color:#2d5245;"><span>SAT</span> 4/19</div>
+      <div class="hero-crown"><svg viewBox="0 0 16 16" fill="#d4a030"><path d="M2 12l2-6 3 3 1-5 1 5 3-3 2 6z"/></svg> <span style="color:#7a5c2e;">Organizer</span></div>
+      <div class="hero-players"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> <span style="color:#2d5245;">4/4</span></div>
+    </div>
+
+    <!-- GAME TITLE -->
+    <div class="game-header">
+      <div class="game-name" style="color:#1a1a1a;">Saturday Mahjong</div>
+      <div class="organizer-row">
+        <div class="org-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt></div>
+        <span class="org-name" style="color:#3d6b5b;">Jake R.</span>
+        <span class="org-label" style="color:#b0ada6;">Organizer</span>
+      </div>
+    </div>
+
+    <!-- DETAILS CARD -->
+    <div class="detail-card">
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="detail-text">
+          <div class="detail-label" style="color:#b0ada6;">Date &amp; Time</div>
+          <div class="detail-value" style="color:#1a1a1a;">Sat, Apr 19 &middot; 2:00 &ndash; 4:00 PM</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="detail-text">
+          <div class="detail-label" style="color:#b0ada6;">Duration</div>
+          <div class="detail-value" style="color:#1a1a1a;">2 hours</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="detail-text">
+          <div class="detail-label" style="color:#b0ada6;">Location</div>
+          <div class="detail-value" style="color:#1a1a1a;">123 Main St, Brooklyn</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="detail-text">
+          <div class="detail-label" style="color:#b0ada6;">Game Type</div>
+          <div class="detail-value" style="color:#1a1a1a;">Open Public</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <div class="detail-text">
+          <div class="detail-label" style="color:#b0ada6;">Min / Max Players</div>
+          <div class="detail-value" style="color:#1a1a1a;">4 &ndash; 4 players</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORGANIZER NOTE -->
+    <div class="org-note">
+      <div class="org-note-icon">&#128221;</div>
+      <div class="org-note-text" style="color:#7a5c2e;">Bring your A-game! We'll do a few practice rounds for anyone who needs a refresher. Snacks welcome!</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PLAYERS SECTION -->
+    <div class="sec" style="margin-top:8px;">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;"><span class="sec-title" style="color:#1a1a1a;">Players</span></div>
+        <span class="sec-count" style="color:#6b7280;">4/4</span>
+      </div>
+    </div>
+    <div class="roster-card">
+      <!-- Player 1 - Organizer -->
+      <div class="roster-item">
+        <div class="roster-av">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt>
+          <div class="roster-crown"><svg viewBox="0 0 10 10" fill="#d4a030"><path d="M1 8l1.5-4 2 2 .5-3.5.5 3.5 2-2L9 8z"/></svg></div>
+        </div>
+        <div class="roster-info">
+          <div class="roster-name" style="color:#1a1a1a;">Jake R.</div>
+          <div class="roster-level" style="color:#b0ada6;">Intermediate</div>
+        </div>
+        <div class="roster-chip chip-accepted" style="color:#2d5245;">Accepted</div>
+      </div>
+      <!-- Player 2 -->
+      <div class="roster-item">
+        <div class="roster-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt></div>
+        <div class="roster-info">
+          <div class="roster-name" style="color:#1a1a1a;">Lisa P.</div>
+          <div class="roster-level" style="color:#b0ada6;">Advanced</div>
+        </div>
+        <div class="roster-chip chip-accepted" style="color:#2d5245;">Accepted</div>
+      </div>
+      <!-- Player 3 -->
+      <div class="roster-item">
+        <div class="roster-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face" alt></div>
+        <div class="roster-info">
+          <div class="roster-name" style="color:#1a1a1a;">Mike K.</div>
+          <div class="roster-level" style="color:#b0ada6;">Beginner</div>
+        </div>
+        <div class="roster-chip chip-accepted" style="color:#2d5245;">Accepted</div>
+      </div>
+      <!-- Player 4 - Invited -->
+      <div class="roster-item">
+        <div class="roster-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt></div>
+        <div class="roster-info">
+          <div class="roster-name" style="color:#1a1a1a;">Sarah W.</div>
+          <div class="roster-level" style="color:#b0ada6;">Intermediate</div>
+        </div>
+        <div class="roster-chip chip-invited" style="color:#7a5c2e;">Invited</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- BRING ITEMS -->
+    <div class="sec" style="margin-top:8px;">
+      <div class="sec-top">
+        <span class="sec-title" style="color:#1a1a1a;">What to Bring</span>
+      </div>
+    </div>
+    <div class="bring-card">
+      <!-- Item 1 - Covered -->
+      <div class="bring-item">
+        <div class="bring-icon">&#127922;</div>
+        <div class="bring-info">
+          <div class="bring-name" style="color:#1a1a1a;">Tile Set</div>
+          <div class="bring-assign" style="color:#b0ada6;">Assigned to Jake R.</div>
+        </div>
+        <div class="bring-action"><span class="bring-covered" style="color:#2d5245;">Covered</span></div>
+      </div>
+      <!-- Item 2 - Claim -->
+      <div class="bring-item">
+        <div class="bring-icon">&#127839;</div>
+        <div class="bring-info">
+          <div class="bring-name" style="color:#1a1a1a;">Snacks</div>
+          <div class="bring-assign" style="color:#b0ada6;">Open for anyone</div>
+        </div>
+        <div class="bring-action"><button class="bring-claim">Claim</button></div>
+      </div>
+      <!-- Item 3 - Claimed by player -->
+      <div class="bring-item">
+        <div class="bring-icon">&#129380;</div>
+        <div class="bring-info">
+          <div class="bring-name" style="color:#1a1a1a;">Drinks</div>
+          <div class="bring-assign" style="color:#b0ada6;">Claimed</div>
+        </div>
+        <div class="bring-action">
+          <div class="bring-claimer">
+            <div class="bring-claimer-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt></div>
+            <span class="bring-claimer-name" style="color:#3d6b5b;">Lisa P.</span>
+          </div>
+        </div>
+      </div>
+      <!-- Item 4 - Claim -->
+      <div class="bring-item">
+        <div class="bring-icon">&#128176;</div>
+        <div class="bring-info">
+          <div class="bring-name" style="color:#1a1a1a;">Score Cards</div>
+          <div class="bring-assign" style="color:#b0ada6;">Open for anyone</div>
+        </div>
+        <div class="bring-action"><button class="bring-claim">Claim</button></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- GAME CHAT THREAD -->
+    <div class="sec" style="margin-top:8px;">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;"><span class="sec-title" style="color:#1a1a1a;">Game Chat</span><span class="sec-badge">12</span></div>
+      </div>
+    </div>
+    <div class="thread-card">
+      <div class="thread-msg">
+        <div class="thread-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" alt></div>
+        <div class="thread-body">
+          <div class="thread-top">
+            <span class="thread-name" style="color:#1a1a1a;">Lisa P.</span>
+            <span class="thread-time" style="color:#b0ada6;">2:15 PM</span>
+          </div>
+          <div class="thread-text" style="color:#6b7280;">I'll bring the sparkling water and some chips too!</div>
+        </div>
+      </div>
+      <div class="thread-msg">
+        <div class="thread-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face" alt></div>
+        <div class="thread-body">
+          <div class="thread-top">
+            <span class="thread-name" style="color:#1a1a1a;">Mike K.</span>
+            <span class="thread-time" style="color:#b0ada6;">1:48 PM</span>
+          </div>
+          <div class="thread-text" style="color:#6b7280;">Can someone give me a quick refresher on scoring?</div>
+        </div>
+      </div>
+      <div class="thread-link"><a href="#" style="color:#3d6b5b;">View All Messages &rarr;</a></div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="actions">
+      <button class="act-primary"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg> Invite Players</button>
+      <button class="act-secondary" style="color:#6b7280;">Complete Game</button>
+    </div>
+
+    <!-- Spacer for tab bar -->
+    <div style="height:100px;"></div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tbar">
+    <div class="tbar-bg"></div>
+    <div class="tbar-items">
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span style="color:#c0bdb6;">Home</span></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span style="color:#c0bdb6;">Discover</span></div>
+      <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl" style="color:#2d5245;">New Game</div></div>
+      <div class="t act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span style="color:#2d5245;">Games</span><div class="dot"></div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span style="color:#c0bdb6;">Groups</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+function setMode(m){
+  document.querySelectorAll('.mt-btn').forEach(b=>{b.classList.remove('act');if(b.textContent.toLowerCase().includes(m))b.classList.add('act');});
+  const el=document.getElementById('inner');
+  el.className=m==='dark'?'dk':'lt';
+  el.style.cssText='width:100%;height:100%;position:relative;overflow:hidden;';
+  // Update inline colors for dark/light
+  const isDark=m==='dark';
+  // Status bar
+  el.querySelectorAll('.sbar span').forEach(s=>s.style.color=isDark?'#fff':'#000');
+  // Nav title
+  el.querySelectorAll('.nav-title').forEach(s=>s.style.color=isDark?'#fff':'#000');
+  // Status pill
+  el.querySelectorAll('.sp-confirmed').forEach(s=>s.style.color=isDark?'#5fcea0':'#2d5245');
+  // Hero badges
+  el.querySelectorAll('.hero-date').forEach(s=>s.style.color=isDark?'#eee':'#2d5245');
+  el.querySelectorAll('.hero-crown span').forEach(s=>s.style.color=isDark?'#f0c060':'#7a5c2e');
+  el.querySelectorAll('.hero-players span').forEach(s=>s.style.color=isDark?'#5fcea0':'#2d5245');
+  // Game name
+  el.querySelectorAll('.game-name').forEach(s=>s.style.color=isDark?'#f0ede6':'#1a1a1a');
+  // Organizer
+  el.querySelectorAll('.org-name').forEach(s=>s.style.color=isDark?'#5fcea0':'#3d6b5b');
+  el.querySelectorAll('.org-label').forEach(s=>s.style.color=isDark?'#555':'#b0ada6');
+  // Detail labels/values
+  el.querySelectorAll('.detail-label').forEach(s=>s.style.color=isDark?'#555':'#b0ada6');
+  el.querySelectorAll('.detail-value').forEach(s=>s.style.color=isDark?'#fff':'#1a1a1a');
+  // Org note
+  el.querySelectorAll('.org-note-text').forEach(s=>s.style.color=isDark?'#c8a050':'#7a5c2e');
+  // Section titles
+  el.querySelectorAll('.sec-title').forEach(s=>s.style.color=isDark?'#f0ede6':'#1a1a1a');
+  el.querySelectorAll('.sec-count').forEach(s=>s.style.color=isDark?'#666':'#6b7280');
+  // Roster
+  el.querySelectorAll('.roster-name').forEach(s=>s.style.color=isDark?'#fff':'#1a1a1a');
+  el.querySelectorAll('.roster-level').forEach(s=>s.style.color=isDark?'#555':'#b0ada6');
+  el.querySelectorAll('.chip-accepted').forEach(s=>s.style.color=isDark?'#5fcea0':'#2d5245');
+  el.querySelectorAll('.chip-invited').forEach(s=>s.style.color=isDark?'#f0c060':'#7a5c2e');
+  // Bring items
+  el.querySelectorAll('.bring-name').forEach(s=>s.style.color=isDark?'#fff':'#1a1a1a');
+  el.querySelectorAll('.bring-assign').forEach(s=>s.style.color=isDark?'#555':'#b0ada6');
+  el.querySelectorAll('.bring-covered').forEach(s=>s.style.color=isDark?'#5fcea0':'#2d5245');
+  el.querySelectorAll('.bring-claimer-name').forEach(s=>s.style.color=isDark?'#5fcea0':'#3d6b5b');
+  // Thread
+  el.querySelectorAll('.thread-name').forEach(s=>s.style.color=isDark?'#fff':'#1a1a1a');
+  el.querySelectorAll('.thread-time').forEach(s=>s.style.color=isDark?'#555':'#b0ada6');
+  el.querySelectorAll('.thread-text').forEach(s=>s.style.color=isDark?'#666':'#6b7280');
+  el.querySelectorAll('.thread-link a').forEach(s=>s.style.color=isDark?'#5fcea0':'#3d6b5b');
+  // Actions
+  el.querySelectorAll('.act-secondary').forEach(s=>s.style.color=isDark?'#666':'#6b7280');
+  // Tab bar labels
+  el.querySelectorAll('.tbar .t:not(.act) span').forEach(s=>s.style.color=isDark?'#444':'#c0bdb6');
+  el.querySelectorAll('.tbar .t.act span').forEach(s=>s.style.color=isDark?'#5fcea0':'#2d5245');
+  el.querySelectorAll('.tbar .pl').forEach(s=>s.style.color=isDark?'#5fcea0':'#2d5245');
+}
+</script>
+</body>
+</html>
