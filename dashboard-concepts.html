@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — 5 Dashboard Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;}
+
+.page-header{text-align:center;padding:50px 20px 16px;}
+.page-header h1{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;background:linear-gradient(135deg,#5a9b85,#8dc4ad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;letter-spacing:-1px;}
+.page-header p{color:#666;font-size:14px;}
+
+.concepts-nav{display:flex;justify-content:center;gap:6px;padding:20px;flex-wrap:wrap;max-width:900px;margin:0 auto;}
+.concept-btn{padding:12px 24px;border-radius:14px;border:1.5px solid #222;background:#111;color:#888;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .25s;letter-spacing:-.2px;}
+.concept-btn:hover{border-color:#333;color:#ccc;background:#1a1a1a;}
+.concept-btn.active{background:linear-gradient(135deg,#1a3327,#1a2f27);border-color:#3d6b5b;color:#8dc4ad;}
+.concept-label{display:block;font-size:10px;font-weight:400;color:#555;margin-top:2px;letter-spacing:.5px;text-transform:uppercase;}
+.concept-btn.active .concept-label{color:#5a9b85;}
+
+.phone-stage{display:flex;justify-content:center;padding:30px 20px 60px;}
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #2a2a2a;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 30px 80px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.03);}
+.notch{width:126px;height:36px;background:#000;border-radius:20px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:50;}
+.status-bar{height:54px;padding:14px 30px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;position:relative;z-index:10;color:#fff;}
+.status-bar .r{font-size:13px;display:flex;gap:6px;align-items:center;}
+
+/* Shared tab bar base */
+.tab-bar-base{position:absolute;bottom:0;left:0;right:0;height:83px;display:flex;align-items:flex-start;padding-top:10px;z-index:20;}
+.tab-bar-base .ti{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:500;opacity:.4;}
+.tab-bar-base .ti.act{opacity:1;}
+.tab-bar-base .ti .ico{font-size:20px;height:26px;display:flex;align-items:center;}
+.tab-bar-base .ti .badge-dot{width:8px;height:8px;border-radius:99px;position:absolute;top:-2px;right:-8px;}
+
+/* Hide all concepts by default */
+.concept{display:none;width:100%;height:100%;}
+.concept.visible{display:block;}
+
+/* ============================
+   CONCEPT 1: GLASS MORPHISM
+   ============================ */
+.c1{background:linear-gradient(165deg,#0f2920 0%,#0a1a14 40%,#111a16 100%);}
+.c1 .bg-orb{position:absolute;border-radius:50%;filter:blur(80px);z-index:0;}
+.c1 .orb1{width:200px;height:200px;background:rgba(61,107,91,.35);top:-40px;right:-30px;}
+.c1 .orb2{width:160px;height:160px;background:rgba(90,155,133,.2);bottom:200px;left:-40px;}
+.c1 .orb3{width:120px;height:120px;background:rgba(141,196,173,.15);top:300px;right:-20px;}
+.c1-content{position:relative;z-index:1;height:calc(100% - 54px);overflow-y:auto;padding-bottom:90px;-webkit-overflow-scrolling:touch;}
+.c1-content::-webkit-scrollbar{display:none;}
+.c1 .greeting{padding:20px 20px 4px;font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:-.5px;}
+.c1 .subtitle{padding:0 20px 20px;font-size:13px;color:rgba(255,255,255,.4);font-weight:400;}
+.c1 .glass-card{margin:0 16px 12px;padding:18px;border-radius:20px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);}
+.c1 .glass-card-highlight{background:rgba(61,107,91,.15);border-color:rgba(90,155,133,.25);}
+.c1 .stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:0 16px 16px;}
+.c1 .stat-glass{padding:16px 12px;border-radius:16px;background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.06);text-align:center;}
+.c1 .stat-num{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;letter-spacing:-1px;}
+.c1 .stat-num.green{color:#5fcea0;}
+.c1 .stat-num.amber{color:#f0c060;}
+.c1 .stat-num.purple{color:#b09cf0;}
+.c1 .stat-lbl{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;font-weight:500;letter-spacing:.3px;text-transform:uppercase;}
+.c1 .section-hdr{display:flex;justify-content:space-between;align-items:center;padding:4px 20px 10px;}
+.c1 .section-hdr h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:-.3px;}
+.c1 .section-hdr span{font-size:12px;color:#5a9b85;font-weight:600;}
+.c1 .game-row{display:flex;gap:12px;align-items:center;}
+.c1 .av{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
+.c1 .av-g{background:rgba(90,155,133,.2);color:#5fcea0;}
+.c1 .av-p{background:rgba(200,140,180,.2);color:#e8a0c8;}
+.c1 .game-info{flex:1;min-width:0;}
+.c1 .game-name{font-size:15px;font-weight:600;color:#fff;}
+.c1 .game-meta{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;}
+.c1 .game-right{text-align:right;}
+.c1 .player-pill{font-size:12px;font-weight:600;color:#5fcea0;background:rgba(90,155,133,.15);padding:4px 10px;border-radius:99px;}
+.c1 .status-sm{font-size:10px;margin-top:4px;font-weight:500;}
+.c1 .status-confirmed{color:rgba(95,206,160,.6);}
+.c1 .status-pending{color:rgba(240,192,96,.6);}
+.c1 .invite-row{display:flex;gap:12px;align-items:center;}
+.c1 .invite-info{flex:1;}
+.c1 .invite-name{font-size:14px;font-weight:600;color:#fff;}
+.c1 .invite-meta{font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;}
+.c1 .invite-actions{display:flex;gap:6px;}
+.c1 .btn-accept{padding:8px 18px;border-radius:12px;border:none;background:rgba(90,155,133,.25);color:#5fcea0;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c1 .btn-decline{padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.35);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c1 .tab-bar-base{background:rgba(10,20,16,.8);backdrop-filter:blur(30px);border-top:1px solid rgba(255,255,255,.05);}
+.c1 .ti{color:rgba(255,255,255,.5);}
+.c1 .ti.act{color:#5fcea0;}
+.c1 .ti .badge-dot{background:#5fcea0;}
+.c1 .fab{position:absolute;bottom:100px;right:20px;width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#3d6b5b,#5a9b85);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 8px 24px rgba(61,107,91,.4);font-weight:300;}
+
+/* ============================
+   CONCEPT 2: BENTO GRID
+   ============================ */
+.c2{background:#f5f3ee;}
+.c2-content{height:calc(100% - 54px);overflow-y:auto;padding-bottom:90px;-webkit-overflow-scrolling:touch;}
+.c2-content::-webkit-scrollbar{display:none;}
+.c2 .status-bar{color:#1a1a1a;}
+.c2 .top-section{padding:20px 16px 16px;}
+.c2 .greeting2{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:#1a1a1a;letter-spacing:-.8px;line-height:1.15;}
+.c2 .greeting2 span{color:#3d6b5b;}
+.c2 .bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 14px;}
+.c2 .bento-card{border-radius:22px;padding:16px;position:relative;overflow:hidden;}
+.c2 .bento-full{grid-column:1/-1;}
+.c2 .bc-green{background:#2d5245;color:#fff;}
+.c2 .bc-cream{background:#fff;border:1px solid #e8e4dc;}
+.c2 .bc-sage{background:#dce8d4;color:#2d5245;}
+.c2 .bc-warm{background:#f0e6d4;color:#7a5c2e;}
+.c2 .bc-lilac{background:#e8e0f5;color:#5b3d8a;}
+.c2 .bento-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;opacity:.6;margin-bottom:6px;}
+.c2 .bento-num{font-family:'Outfit',sans-serif;font-size:38px;font-weight:800;letter-spacing:-2px;line-height:1;}
+.c2 .bento-title{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.3px;}
+.c2 .bento-sub{font-size:12px;opacity:.6;margin-top:3px;}
+.c2 .bento-game-row{display:flex;align-items:center;gap:10px;padding:8px 0;}
+.c2 .bento-game-row+.bento-game-row{border-top:1px solid rgba(0,0,0,.06);}
+.c2 .bav{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
+.c2 .bav-g{background:rgba(61,107,91,.15);color:#3d6b5b;}
+.c2 .bav-p{background:rgba(200,140,180,.15);color:#993556;}
+.c2 .bento-gname{font-size:14px;font-weight:600;color:#1a1a1a;}
+.c2 .bento-gmeta{font-size:11px;color:#9ca3af;}
+.c2 .bento-gright{margin-left:auto;font-size:12px;font-weight:700;color:#3d6b5b;}
+.c2 .bento-invite{display:flex;align-items:center;gap:10px;padding:10px 0;}
+.c2 .bento-invite+.bento-invite{border-top:1px solid rgba(0,0,0,.06);}
+.c2 .bento-invite-btns{margin-left:auto;display:flex;gap:6px;}
+.c2 .bi-accept{padding:6px 14px;border-radius:10px;border:none;background:#3d6b5b;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c2 .bi-decline{padding:6px 10px;border-radius:10px;border:1px solid #e5e0d8;background:transparent;color:#9ca3af;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c2 .tab-bar-base{background:#fff;border-top:1px solid #e8e4dc;}
+.c2 .ti{color:#9ca3af;}
+.c2 .ti.act{color:#3d6b5b;}
+.c2 .ti .badge-dot{background:#e85a2c;}
+.c2 .fab{position:absolute;bottom:100px;right:18px;width:54px;height:54px;border-radius:16px;background:#3d6b5b;color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 6px 20px rgba(61,107,91,.3);font-weight:300;}
+.c2 .bento-accent{position:absolute;width:80px;height:80px;border-radius:50%;opacity:.1;right:-10px;bottom:-10px;background:currentColor;}
+.c2 .bento-icon{font-size:28px;position:absolute;right:14px;bottom:14px;opacity:.3;}
+
+/* ============================
+   CONCEPT 3: EDITORIAL / MAGAZINE
+   ============================ */
+.c3{background:#faf9f6;}
+.c3-content{height:calc(100% - 54px);overflow-y:auto;padding-bottom:90px;-webkit-overflow-scrolling:touch;}
+.c3-content::-webkit-scrollbar{display:none;}
+.c3 .status-bar{color:#1a1a1a;}
+.c3 .hero{padding:24px 20px 20px;position:relative;}
+.c3 .hero-date{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:8px;}
+.c3 .hero-greeting{font-family:'DM Serif Display',Georgia,serif;font-size:34px;color:#1a1a1a;line-height:1.1;margin-bottom:4px;}
+.c3 .hero-sub{font-size:14px;color:#9ca3af;font-weight:400;}
+.c3 .divider{height:1px;background:#e5e0d8;margin:0 20px;}
+.c3 .next-game{margin:16px 16px 12px;padding:20px;border-radius:24px;background:#2d5245;position:relative;overflow:hidden;}
+.c3 .ng-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;}
+.c3 .ng-name{font-family:'DM Serif Display',Georgia,serif;font-size:22px;color:#fff;margin-bottom:6px;}
+.c3 .ng-detail{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.c3 .ng-players{display:flex;margin-top:14px;gap:-4px;}
+.c3 .ng-av{width:32px;height:32px;border-radius:99px;border:2px solid #2d5245;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-right:-8px;}
+.c3 .ng-av-g{background:#5fcea0;color:#1a3327;}
+.c3 .ng-av-p{background:#F4C0D1;color:#993556;}
+.c3 .ng-av-y{background:#f0d890;color:#7a5c2e;}
+.c3 .ng-av-b{background:#a0c4e8;color:#1e40af;}
+.c3 .ng-count{font-size:12px;color:rgba(255,255,255,.5);margin-left:16px;align-self:center;}
+.c3 .ng-pattern{position:absolute;right:-20px;top:-20px;width:140px;height:140px;border-radius:50%;border:30px solid rgba(255,255,255,.04);}
+.c3 .ng-pattern2{position:absolute;right:30px;bottom:-40px;width:100px;height:100px;border-radius:50%;border:20px solid rgba(255,255,255,.03);}
+.c3 .section3{padding:4px 20px 10px;}
+.c3 .section3-title{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:#1a1a1a;margin-bottom:12px;}
+.c3 .pending-card{padding:16px;border-radius:18px;background:#fff;border:1px solid #e5e0d8;margin-bottom:10px;}
+.c3 .pc-row{display:flex;gap:12px;align-items:center;}
+.c3 .pc-av{width:40px;height:40px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+.c3 .pc-av-g{background:#e8f4ef;color:#3d6b5b;}
+.c3 .pc-av-p{background:#fce8ee;color:#993556;}
+.c3 .pc-info{flex:1;}
+.c3 .pc-name{font-size:15px;font-weight:600;color:#1a1a1a;}
+.c3 .pc-meta{font-size:12px;color:#9ca3af;margin-top:1px;}
+.c3 .pc-actions{display:flex;gap:6px;margin-top:12px;}
+.c3 .pc-accept{flex:1;padding:10px;border-radius:12px;border:none;background:#2d5245;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c3 .pc-decline{flex:1;padding:10px;border-radius:12px;border:1.5px solid #e5e0d8;background:transparent;color:#9ca3af;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c3 .upcoming-row{display:flex;gap:12px;align-items:center;padding:12px 0;}
+.c3 .upcoming-row+.upcoming-row{border-top:1px solid #f0ede6;}
+.c3 .ur-date{width:44px;height:50px;border-radius:12px;background:#f0ede6;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.c3 .ur-mon{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;}
+.c3 .ur-day{font-size:20px;font-weight:800;color:#1a1a1a;letter-spacing:-1px;}
+.c3 .ur-info{flex:1;}
+.c3 .ur-name{font-size:14px;font-weight:600;color:#1a1a1a;}
+.c3 .ur-meta{font-size:12px;color:#9ca3af;margin-top:1px;}
+.c3 .ur-right{font-size:12px;font-weight:600;color:#3d6b5b;}
+.c3 .tab-bar-base{background:#fff;border-top:1px solid #e8e4dc;}
+.c3 .ti{color:#9ca3af;}
+.c3 .ti.act{color:#2d5245;}
+.c3 .ti .badge-dot{background:#e85a2c;}
+.c3 .fab{position:absolute;bottom:100px;right:18px;width:54px;height:54px;border-radius:99px;background:#2d5245;color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 8px 24px rgba(45,82,69,.35);font-weight:300;}
+
+/* ============================
+   CONCEPT 4: DARK LUXE
+   ============================ */
+.c4{background:#0c0c0c;}
+.c4-content{height:calc(100% - 54px);overflow-y:auto;padding-bottom:90px;-webkit-overflow-scrolling:touch;}
+.c4-content::-webkit-scrollbar{display:none;}
+.c4 .hero4{padding:24px 20px 0;margin-bottom:20px;}
+.c4 .h4-greeting{font-family:'Sora',sans-serif;font-size:13px;font-weight:400;color:#555;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.c4 .h4-name{font-family:'Sora',sans-serif;font-size:30px;font-weight:700;color:#fff;letter-spacing:-1px;line-height:1.15;}
+.c4 .h4-name span{background:linear-gradient(135deg,#5fcea0,#40a0c0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.c4 .ticker{display:flex;gap:16px;padding:0 20px 20px;overflow-x:auto;scrollbar-width:none;}
+.c4 .ticker::-webkit-scrollbar{display:none;}
+.c4 .ticker-item{flex-shrink:0;padding:16px;border-radius:18px;background:#161616;border:1px solid #222;min-width:120px;text-align:center;position:relative;overflow:hidden;}
+.c4 .ticker-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:18px 18px 0 0;}
+.c4 .ticker-item.t-green::before{background:linear-gradient(90deg,#3d6b5b,#5fcea0);}
+.c4 .ticker-item.t-amber::before{background:linear-gradient(90deg,#854f0b,#f0c060);}
+.c4 .ticker-item.t-purple::before{background:linear-gradient(90deg,#3c3489,#b09cf0);}
+.c4 .t-num{font-family:'Sora',sans-serif;font-size:36px;font-weight:800;letter-spacing:-2px;margin-bottom:2px;}
+.c4 .t-num.green{color:#5fcea0;}
+.c4 .t-num.amber{color:#f0c060;}
+.c4 .t-num.purple{color:#b09cf0;}
+.c4 .t-label{font-size:10px;font-weight:500;color:#555;text-transform:uppercase;letter-spacing:1px;}
+.c4 .section4{padding:0 20px;}
+.c4 .s4-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.c4 .s4-title{font-family:'Sora',sans-serif;font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px;}
+.c4 .s4-link{font-size:12px;color:#5fcea0;font-weight:500;}
+.c4 .luxe-card{padding:16px;border-radius:18px;background:#161616;border:1px solid #1e1e1e;margin-bottom:10px;position:relative;overflow:hidden;}
+.c4 .luxe-card::after{content:'';position:absolute;top:0;right:0;width:100px;height:100px;background:radial-gradient(circle,rgba(90,155,133,.06),transparent);border-radius:50%;}
+.c4 .lc-row{display:flex;gap:12px;align-items:center;position:relative;z-index:1;}
+.c4 .lc-av{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
+.c4 .lc-av-g{background:rgba(95,206,160,.1);color:#5fcea0;border:1px solid rgba(95,206,160,.15);}
+.c4 .lc-av-p{background:rgba(240,180,210,.1);color:#e8a0c8;border:1px solid rgba(240,180,210,.15);}
+.c4 .lc-info{flex:1;min-width:0;}
+.c4 .lc-name{font-size:15px;font-weight:600;color:#fff;}
+.c4 .lc-meta{font-size:12px;color:#555;margin-top:2px;}
+.c4 .lc-right{text-align:right;}
+.c4 .lc-players{font-size:13px;font-weight:700;color:#5fcea0;}
+.c4 .lc-status{font-size:10px;margin-top:3px;font-weight:500;}
+.c4 .lc-confirmed{color:#3d6b5b;}
+.c4 .lc-pending{color:#854f0b;}
+.c4 .invite4{padding:14px 0;}
+.c4 .invite4+.invite4{border-top:1px solid #1a1a1a;}
+.c4 .i4-row{display:flex;gap:12px;align-items:center;}
+.c4 .i4-info{flex:1;}
+.c4 .i4-name{font-size:14px;font-weight:600;color:#fff;}
+.c4 .i4-meta{font-size:11px;color:#444;margin-top:2px;}
+.c4 .i4-btns{display:flex;gap:6px;}
+.c4 .i4-accept{padding:8px 16px;border-radius:10px;border:none;background:rgba(95,206,160,.12);color:#5fcea0;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:1px solid rgba(95,206,160,.15);}
+.c4 .i4-decline{padding:8px 12px;border-radius:10px;border:1px solid #222;background:transparent;color:#555;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c4 .tab-bar-base{background:#0c0c0c;border-top:1px solid #1a1a1a;}
+.c4 .ti{color:#444;}
+.c4 .ti.act{color:#5fcea0;}
+.c4 .ti .badge-dot{background:#5fcea0;}
+.c4 .fab{position:absolute;bottom:100px;right:20px;width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#3d6b5b,#5fcea0);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 8px 30px rgba(95,206,160,.25);font-weight:300;}
+
+/* ============================
+   CONCEPT 5: PLAYFUL / ROUNDED
+   ============================ */
+.c5{background:#f0ede6;}
+.c5-content{height:calc(100% - 54px);overflow-y:auto;padding-bottom:90px;-webkit-overflow-scrolling:touch;}
+.c5-content::-webkit-scrollbar{display:none;}
+.c5 .status-bar{color:#2d5245;}
+.c5 .hero5{padding:20px 20px 16px;display:flex;align-items:center;gap:14px;}
+.c5 .h5-avatar{width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#C0DD97,#8dc4ad);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#27500A;font-family:'Outfit',sans-serif;box-shadow:0 4px 12px rgba(61,107,91,.15);}
+.c5 .h5-text{flex:1;}
+.c5 .h5-greeting{font-family:'Outfit',sans-serif;font-size:24px;font-weight:800;color:#2d5245;letter-spacing:-.8px;line-height:1.15;}
+.c5 .h5-sub{font-size:13px;color:#9ca3af;font-weight:400;margin-top:2px;}
+.c5 .h5-bell{width:44px;height:44px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);position:relative;}
+.c5 .h5-bell-badge{position:absolute;top:6px;right:6px;width:10px;height:10px;border-radius:99px;background:#e85a2c;border:2px solid #f0ede6;}
+.c5 .scroll-cards{display:flex;gap:12px;padding:0 20px 16px;overflow-x:auto;scrollbar-width:none;}
+.c5 .scroll-cards::-webkit-scrollbar{display:none;}
+.c5 .next-card{flex-shrink:0;width:280px;padding:18px;border-radius:22px;position:relative;overflow:hidden;}
+.c5 .nc-green{background:linear-gradient(145deg,#3d6b5b,#2d5245);color:#fff;}
+.c5 .nc-sage{background:#fff;border:1.5px solid #e5e0d8;color:#1a1a1a;}
+.c5 .nc-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:.5;margin-bottom:10px;}
+.c5 .nc-name{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px;}
+.c5 .nc-meta{font-size:12px;opacity:.6;margin-bottom:3px;display:flex;align-items:center;gap:5px;}
+.c5 .nc-avatars{display:flex;margin-top:12px;}
+.c5 .nc-av{width:28px;height:28px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-right:-4px;}
+.c5 .nc-av-g{background:#5fcea0;color:#1a3327;border:2px solid #3d6b5b;}
+.c5 .nc-av-p{background:#F4C0D1;color:#993556;border:2px solid #3d6b5b;}
+.c5 .nc-av-y{background:#f0d890;color:#7a5c2e;border:2px solid #3d6b5b;}
+.c5 .nc-sage .nc-av-g{border-color:#fff;}
+.c5 .nc-sage .nc-av-p{border-color:#fff;}
+.c5 .nc-sage .nc-av-y{border-color:#fff;}
+.c5 .nc-pattern{position:absolute;right:-15px;bottom:-15px;font-size:80px;opacity:.08;}
+.c5 .quick-actions{display:flex;gap:10px;padding:0 20px 16px;}
+.c5 .qa{flex:1;padding:14px;border-radius:18px;background:#fff;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.c5 .qa-icon{font-size:24px;margin-bottom:4px;}
+.c5 .qa-num{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-1px;}
+.c5 .qa-num.green{color:#3d6b5b;}
+.c5 .qa-num.amber{color:#854f0b;}
+.c5 .qa-num.purple{color:#5b3d8a;}
+.c5 .qa-label{font-size:10px;color:#9ca3af;font-weight:500;text-transform:uppercase;letter-spacing:.5px;}
+.c5 .section5{padding:4px 20px 10px;}
+.c5 .s5-title{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:#2d5245;letter-spacing:-.3px;margin-bottom:10px;}
+.c5 .invite5{padding:14px;border-radius:18px;background:#fff;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.04);}
+.c5 .i5-row{display:flex;gap:10px;align-items:center;}
+.c5 .i5-av{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
+.c5 .i5-av-g{background:#e8f4ef;color:#3d6b5b;}
+.c5 .i5-av-p{background:#fce8ee;color:#993556;}
+.c5 .i5-info{flex:1;}
+.c5 .i5-name{font-size:14px;font-weight:600;color:#1a1a1a;}
+.c5 .i5-meta{font-size:11px;color:#9ca3af;margin-top:1px;}
+.c5 .i5-btns{display:flex;gap:6px;margin-top:10px;}
+.c5 .i5-accept{flex:1;padding:10px;border-radius:12px;border:none;background:#3d6b5b;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c5 .i5-decline{flex:1;padding:10px;border-radius:12px;border:1.5px solid #e5e0d8;background:transparent;color:#9ca3af;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.c5 .tab-bar-base{background:#fff;border-top:1px solid #e8e4dc;box-shadow:0 -4px 20px rgba(0,0,0,.04);}
+.c5 .ti{color:#9ca3af;}
+.c5 .ti.act{color:#3d6b5b;}
+.c5 .ti .badge-dot{background:#e85a2c;}
+.c5 .fab{position:absolute;bottom:100px;right:18px;width:56px;height:56px;border-radius:18px;background:linear-gradient(145deg,#3d6b5b,#5a9b85);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 8px 24px rgba(61,107,91,.3);font-weight:300;transform:rotate(0deg);transition:transform .2s;}
+.c5 .fab:hover{transform:rotate(90deg);}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Dashboard Concepts</h1>
+  <p>5 novel design directions for BamBuddies iOS</p>
+</div>
+
+<div class="concepts-nav">
+  <button class="concept-btn active" data-c="1">Concept 1<span class="concept-label">Glass Morphism</span></button>
+  <button class="concept-btn" data-c="2">Concept 2<span class="concept-label">Bento Grid</span></button>
+  <button class="concept-btn" data-c="3">Concept 3<span class="concept-label">Editorial</span></button>
+  <button class="concept-btn" data-c="4">Concept 4<span class="concept-label">Dark Luxe</span></button>
+  <button class="concept-btn" data-c="5">Concept 5<span class="concept-label">Playful</span></button>
+</div>
+
+<div class="phone-stage">
+<div class="phone">
+  <div class="notch"></div>
+
+  <!-- ======== CONCEPT 1: GLASS MORPHISM ======== -->
+  <div class="concept c1 visible" id="c1">
+    <div class="status-bar"><span class="time">9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+    <div class="c1-content">
+      <div class="greeting">Hey, Jake</div>
+      <div class="subtitle">3 games this week &middot; 2 invites waiting</div>
+
+      <div class="stats-grid">
+        <div class="stat-glass"><div class="stat-num green">3</div><div class="stat-lbl">Upcoming</div></div>
+        <div class="stat-glass"><div class="stat-num amber">2</div><div class="stat-lbl">Pending</div></div>
+        <div class="stat-glass"><div class="stat-num purple">1</div><div class="stat-lbl">Applied</div></div>
+      </div>
+
+      <div class="section-hdr"><h3>Next Up</h3><span>See All</span></div>
+
+      <div class="glass-card glass-card-highlight">
+        <div class="game-row">
+          <div class="av av-g">SM</div>
+          <div class="game-info">
+            <div class="game-name">Saturday Mahjong</div>
+            <div class="game-meta">Sat, Apr 19 &middot; 2:00 PM</div>
+          </div>
+          <div class="game-right">
+            <div class="player-pill">4/4</div>
+            <div class="status-sm status-confirmed">Confirmed</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="game-row">
+          <div class="av av-p">LP</div>
+          <div class="game-info">
+            <div class="game-name">Lisa's Practice Game</div>
+            <div class="game-meta">Mon, Apr 21 &middot; 7:00 PM</div>
+          </div>
+          <div class="game-right">
+            <div class="player-pill" style="color:#f0c060;background:rgba(240,192,96,.15);">3/4</div>
+            <div class="status-sm status-pending">Needs 1</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-hdr" style="margin-top:4px;"><h3>Invites</h3></div>
+
+      <div class="glass-card">
+        <div class="invite-row">
+          <div class="av av-g" style="border-radius:99px;width:38px;height:38px;">MK</div>
+          <div class="invite-info">
+            <div class="invite-name">Mike's Tuesday Game</div>
+            <div class="invite-meta">Tue, Apr 22 &middot; 6:30 PM</div>
+          </div>
+          <div class="invite-actions">
+            <button class="btn-accept">Join</button>
+            <button class="btn-decline">&#10005;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="invite-row">
+          <div class="av av-p" style="border-radius:99px;width:38px;height:38px;">RW</div>
+          <div class="invite-info">
+            <div class="invite-name">Rachel's Open Game</div>
+            <div class="invite-meta">Thu, Apr 24 &middot; 3:00 PM</div>
+          </div>
+          <div class="invite-actions">
+            <button class="btn-accept">Join</button>
+            <button class="btn-decline">&#10005;</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:40px;"></div>
+    </div>
+
+    <div class="bg-orb orb1"></div>
+    <div class="bg-orb orb2"></div>
+    <div class="bg-orb orb3"></div>
+    <div class="fab">+</div>
+    <div class="tab-bar-base">
+      <div class="ti act"><div class="ico">&#127968;</div><span>Home</span></div>
+      <div class="ti"><div class="ico">&#127922;</div><span>Games</span></div>
+      <div class="ti"><div class="ico">&#128101;</div><span>Groups</span></div>
+      <div class="ti"><div class="ico">&#129517;</div><span>Discover</span></div>
+      <div class="ti" style="position:relative;"><div class="ico">&#128172;</div><span>Inbox</span><div class="badge-dot" style="position:absolute;top:-2px;right:calc(50% - 18px);"></div></div>
+    </div>
+  </div>
+
+  <!-- ======== CONCEPT 2: BENTO GRID ======== -->
+  <div class="concept c2" id="c2">
+    <div class="status-bar"><span class="time">9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+    <div class="c2-content">
+      <div class="top-section">
+        <div class="greeting2">Hey Jake,<br>let's <span>play</span>.</div>
+      </div>
+
+      <div class="bento">
+        <div class="bento-card bc-green" style="position:relative;">
+          <div class="bento-label">Upcoming</div>
+          <div class="bento-num" style="color:#fff;">3</div>
+          <div class="bento-sub" style="color:rgba(255,255,255,.5);">games this week</div>
+          <div class="bento-icon">&#127922;</div>
+        </div>
+        <div class="bento-card bc-warm" style="position:relative;">
+          <div class="bento-label">Pending</div>
+          <div class="bento-num">2</div>
+          <div class="bento-sub">invites waiting</div>
+          <div class="bento-icon">&#9203;</div>
+        </div>
+        <div class="bento-card bc-cream bento-full">
+          <div class="bento-title" style="color:#1a1a1a;margin-bottom:10px;">&#127775; Next Up</div>
+          <div class="bento-game-row">
+            <div class="bav bav-g">SM</div>
+            <div style="flex:1;"><div class="bento-gname">Saturday Mahjong</div><div class="bento-gmeta">Sat, Apr 19 &middot; 2:00 PM</div></div>
+            <div class="bento-gright">4/4</div>
+          </div>
+          <div class="bento-game-row">
+            <div class="bav bav-p">LP</div>
+            <div style="flex:1;"><div class="bento-gname">Lisa's Practice</div><div class="bento-gmeta">Mon, Apr 21 &middot; 7:00 PM</div></div>
+            <div class="bento-gright" style="color:#854f0b;">3/4</div>
+          </div>
+        </div>
+        <div class="bento-card bc-lilac" style="position:relative;">
+          <div class="bento-label">Applied</div>
+          <div class="bento-num">1</div>
+          <div class="bento-sub">waiting on response</div>
+          <div class="bento-icon">&#128203;</div>
+        </div>
+        <div class="bento-card bc-sage" style="position:relative;">
+          <div class="bento-label">Groups</div>
+          <div class="bento-num">2</div>
+          <div class="bento-sub">active groups</div>
+          <div class="bento-icon">&#128101;</div>
+        </div>
+        <div class="bento-card bc-cream bento-full">
+          <div class="bento-title" style="color:#1a1a1a;margin-bottom:10px;">&#128140; Invites</div>
+          <div class="bento-invite">
+            <div class="bav bav-g" style="width:34px;height:34px;font-size:12px;">MK</div>
+            <div style="flex:1;"><div class="bento-gname" style="font-size:13px;">Mike's Tuesday Game</div><div class="bento-gmeta">Tue, Apr 22 &middot; 6:30 PM</div></div>
+            <div class="bento-invite-btns">
+              <button class="bi-accept">Join</button>
+              <button class="bi-decline">&#10005;</button>
+            </div>
+          </div>
+          <div class="bento-invite">
+            <div class="bav bav-p" style="width:34px;height:34px;font-size:12px;">RW</div>
+            <div style="flex:1;"><div class="bento-gname" style="font-size:13px;">Rachel's Open Game</div><div class="bento-gmeta">Thu, Apr 24 &middot; 3:00 PM</div></div>
+            <div class="bento-invite-btns">
+              <button class="bi-accept">Join</button>
+              <button class="bi-decline">&#10005;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:40px;"></div>
+    </div>
+    <div class="fab">+</div>
+    <div class="tab-bar-base">
+      <div class="ti act"><div class="ico">&#127968;</div><span>Home</span></div>
+      <div class="ti"><div class="ico">&#127922;</div><span>Games</span></div>
+      <div class="ti"><div class="ico">&#128101;</div><span>Groups</span></div>
+      <div class="ti"><div class="ico">&#129517;</div><span>Discover</span></div>
+      <div class="ti" style="position:relative;"><div class="ico">&#128172;</div><span>Inbox</span><div class="badge-dot" style="position:absolute;top:-2px;right:calc(50% - 18px);background:#e85a2c;"></div></div>
+    </div>
+  </div>
+
+  <!-- ======== CONCEPT 3: EDITORIAL ======== -->
+  <div class="concept c3" id="c3">
+    <div class="status-bar"><span class="time">9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+    <div class="c3-content">
+      <div class="hero">
+        <div class="hero-date">Monday, April 14</div>
+        <div class="hero-greeting">Good evening,<br>Jake.</div>
+        <div class="hero-sub">3 games coming up &middot; 2 invites</div>
+      </div>
+
+      <div class="next-game">
+        <div class="ng-pattern"></div>
+        <div class="ng-pattern2"></div>
+        <div class="ng-label">Next Game</div>
+        <div class="ng-name">Saturday Mahjong</div>
+        <div class="ng-detail"><span>&#128197;</span> Saturday, Apr 19 &middot; 2:00 PM</div>
+        <div class="ng-detail"><span>&#128205;</span> 123 Main St, Brooklyn</div>
+        <div class="ng-players">
+          <div class="ng-av ng-av-g">JR</div>
+          <div class="ng-av ng-av-p">LP</div>
+          <div class="ng-av ng-av-y">MK</div>
+          <div class="ng-av ng-av-b">SM</div>
+          <div class="ng-count">4/4 &middot; Confirmed</div>
+        </div>
+      </div>
+
+      <div class="section3">
+        <div class="section3-title">Invites</div>
+        <div class="pending-card">
+          <div class="pc-row">
+            <div class="pc-av pc-av-g">MK</div>
+            <div class="pc-info"><div class="pc-name">Mike's Tuesday Game</div><div class="pc-meta">Tue, Apr 22 &middot; 6:30 PM &middot; Mike K.</div></div>
+          </div>
+          <div class="pc-actions">
+            <button class="pc-accept">Accept</button>
+            <button class="pc-decline">Decline</button>
+          </div>
+        </div>
+        <div class="pending-card">
+          <div class="pc-row">
+            <div class="pc-av pc-av-p">RW</div>
+            <div class="pc-info"><div class="pc-name">Rachel's Open Game</div><div class="pc-meta">Thu, Apr 24 &middot; 3:00 PM &middot; Open</div></div>
+          </div>
+          <div class="pc-actions">
+            <button class="pc-accept">Accept</button>
+            <button class="pc-decline">Decline</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider" style="margin-top:8px;"></div>
+
+      <div class="section3" style="margin-top:16px;">
+        <div class="section3-title">Coming Up</div>
+        <div class="upcoming-row">
+          <div class="ur-date"><div class="ur-mon">Apr</div><div class="ur-day">21</div></div>
+          <div class="ur-info"><div class="ur-name">Lisa's Practice Game</div><div class="ur-meta">7:00 PM &middot; Lisa P.</div></div>
+          <div class="ur-right">3/4</div>
+        </div>
+        <div class="upcoming-row">
+          <div class="ur-date"><div class="ur-mon">Apr</div><div class="ur-day">26</div></div>
+          <div class="ur-info"><div class="ur-name">Weekend Warriors</div><div class="ur-meta">1:00 PM &middot; Jake R.</div></div>
+          <div class="ur-right">2/4</div>
+        </div>
+      </div>
+      <div style="height:40px;"></div>
+    </div>
+    <div class="fab">+</div>
+    <div class="tab-bar-base">
+      <div class="ti act"><div class="ico">&#127968;</div><span>Home</span></div>
+      <div class="ti"><div class="ico">&#127922;</div><span>Games</span></div>
+      <div class="ti"><div class="ico">&#128101;</div><span>Groups</span></div>
+      <div class="ti"><div class="ico">&#129517;</div><span>Discover</span></div>
+      <div class="ti" style="position:relative;"><div class="ico">&#128172;</div><span>Inbox</span><div class="badge-dot" style="position:absolute;top:-2px;right:calc(50% - 18px);background:#e85a2c;"></div></div>
+    </div>
+  </div>
+
+  <!-- ======== CONCEPT 4: DARK LUXE ======== -->
+  <div class="concept c4" id="c4">
+    <div class="status-bar"><span class="time">9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+    <div class="c4-content">
+      <div class="hero4">
+        <div class="h4-greeting">Good Evening</div>
+        <div class="h4-name">Jake <span>Rohn</span></div>
+      </div>
+
+      <div class="ticker">
+        <div class="ticker-item t-green"><div class="t-num green">3</div><div class="t-label">Upcoming</div></div>
+        <div class="ticker-item t-amber"><div class="t-num amber">2</div><div class="t-label">Invites</div></div>
+        <div class="ticker-item t-purple"><div class="t-num purple">1</div><div class="t-label">Applied</div></div>
+      </div>
+
+      <div class="section4">
+        <div class="s4-header"><div class="s4-title">Next Games</div><div class="s4-link">View all &#8250;</div></div>
+
+        <div class="luxe-card">
+          <div class="lc-row">
+            <div class="lc-av lc-av-g">SM</div>
+            <div class="lc-info"><div class="lc-name">Saturday Mahjong</div><div class="lc-meta">Sat, Apr 19 &middot; 2:00 PM &middot; Brooklyn</div></div>
+            <div class="lc-right"><div class="lc-players">4/4</div><div class="lc-status lc-confirmed">Confirmed</div></div>
+          </div>
+        </div>
+
+        <div class="luxe-card">
+          <div class="lc-row">
+            <div class="lc-av lc-av-p">LP</div>
+            <div class="lc-info"><div class="lc-name">Lisa's Practice Game</div><div class="lc-meta">Mon, Apr 21 &middot; 7:00 PM</div></div>
+            <div class="lc-right"><div class="lc-players" style="color:#f0c060;">3/4</div><div class="lc-status lc-pending">Needs 1</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section4" style="margin-top:20px;">
+        <div class="s4-header"><div class="s4-title">Invites</div></div>
+        <div class="luxe-card" style="padding-top:4px;padding-bottom:4px;">
+          <div class="invite4">
+            <div class="i4-row">
+              <div class="lc-av lc-av-g" style="width:38px;height:38px;font-size:13px;">MK</div>
+              <div class="i4-info"><div class="i4-name">Mike's Tuesday Game</div><div class="i4-meta">Tue, Apr 22 &middot; 6:30 PM</div></div>
+              <div class="i4-btns">
+                <button class="i4-accept">Join</button>
+                <button class="i4-decline">&#10005;</button>
+              </div>
+            </div>
+          </div>
+          <div class="invite4">
+            <div class="i4-row">
+              <div class="lc-av lc-av-p" style="width:38px;height:38px;font-size:13px;">RW</div>
+              <div class="i4-info"><div class="i4-name">Rachel's Open Game</div><div class="i4-meta">Thu, Apr 24 &middot; 3:00 PM</div></div>
+              <div class="i4-btns">
+                <button class="i4-accept">Join</button>
+                <button class="i4-decline">&#10005;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:40px;"></div>
+    </div>
+    <div class="fab">+</div>
+    <div class="tab-bar-base">
+      <div class="ti act"><div class="ico">&#127968;</div><span>Home</span></div>
+      <div class="ti"><div class="ico">&#127922;</div><span>Games</span></div>
+      <div class="ti"><div class="ico">&#128101;</div><span>Groups</span></div>
+      <div class="ti"><div class="ico">&#129517;</div><span>Discover</span></div>
+      <div class="ti" style="position:relative;"><div class="ico">&#128172;</div><span>Inbox</span><div class="badge-dot" style="position:absolute;top:-2px;right:calc(50% - 18px);"></div></div>
+    </div>
+  </div>
+
+  <!-- ======== CONCEPT 5: PLAYFUL ======== -->
+  <div class="concept c5" id="c5">
+    <div class="status-bar"><span class="time">9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+    <div class="c5-content">
+      <div class="hero5">
+        <div class="h5-avatar">JR</div>
+        <div class="h5-text">
+          <div class="h5-greeting">Hey, Jake!</div>
+          <div class="h5-sub">Ready to play?</div>
+        </div>
+        <div class="h5-bell">&#128276;<div class="h5-bell-badge"></div></div>
+      </div>
+
+      <div class="scroll-cards">
+        <div class="next-card nc-green">
+          <div class="nc-tag">Next Game</div>
+          <div class="nc-name">Saturday Mahjong</div>
+          <div class="nc-meta"><span>&#128197;</span> Sat, Apr 19 &middot; 2:00 PM</div>
+          <div class="nc-meta"><span>&#128205;</span> 123 Main St, Brooklyn</div>
+          <div class="nc-avatars">
+            <div class="nc-av nc-av-g">JR</div>
+            <div class="nc-av nc-av-p">LP</div>
+            <div class="nc-av nc-av-y">MK</div>
+            <div class="nc-av nc-av-g">SM</div>
+          </div>
+          <div class="nc-pattern">&#126980;</div>
+        </div>
+        <div class="next-card nc-sage">
+          <div class="nc-tag" style="color:#854f0b;">Needs 1 Player</div>
+          <div class="nc-name">Lisa's Practice</div>
+          <div class="nc-meta" style="color:#9ca3af;"><span>&#128197;</span> Mon, Apr 21 &middot; 7 PM</div>
+          <div class="nc-meta" style="color:#9ca3af;"><span>&#128101;</span> 3/4 players</div>
+          <div class="nc-avatars">
+            <div class="nc-av nc-av-g">LP</div>
+            <div class="nc-av nc-av-p">AB</div>
+            <div class="nc-av nc-av-y">CD</div>
+          </div>
+          <div class="nc-pattern" style="opacity:.04;">&#127922;</div>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <div class="qa"><div class="qa-icon">&#127922;</div><div class="qa-num green">3</div><div class="qa-label">Upcoming</div></div>
+        <div class="qa"><div class="qa-icon">&#128140;</div><div class="qa-num amber">2</div><div class="qa-label">Invites</div></div>
+        <div class="qa"><div class="qa-icon">&#128203;</div><div class="qa-num purple">1</div><div class="qa-label">Applied</div></div>
+      </div>
+
+      <div class="section5">
+        <div class="s5-title">Invites</div>
+        <div class="invite5">
+          <div class="i5-row">
+            <div class="i5-av i5-av-g">MK</div>
+            <div class="i5-info"><div class="i5-name">Mike's Tuesday Game</div><div class="i5-meta">Tue, Apr 22 &middot; 6:30 PM</div></div>
+          </div>
+          <div class="i5-btns">
+            <button class="i5-accept">Accept</button>
+            <button class="i5-decline">Decline</button>
+          </div>
+        </div>
+        <div class="invite5">
+          <div class="i5-row">
+            <div class="i5-av i5-av-p">RW</div>
+            <div class="i5-info"><div class="i5-name">Rachel's Open Game</div><div class="i5-meta">Thu, Apr 24 &middot; 3:00 PM</div></div>
+          </div>
+          <div class="i5-btns">
+            <button class="i5-accept">Accept</button>
+            <button class="i5-decline">Decline</button>
+          </div>
+        </div>
+      </div>
+      <div style="height:40px;"></div>
+    </div>
+    <div class="fab">+</div>
+    <div class="tab-bar-base">
+      <div class="ti act"><div class="ico">&#127968;</div><span>Home</span></div>
+      <div class="ti"><div class="ico">&#127922;</div><span>Games</span></div>
+      <div class="ti"><div class="ico">&#128101;</div><span>Groups</span></div>
+      <div class="ti"><div class="ico">&#129517;</div><span>Discover</span></div>
+      <div class="ti" style="position:relative;"><div class="ico">&#128172;</div><span>Inbox</span><div class="badge-dot" style="position:absolute;top:-2px;right:calc(50% - 18px);background:#e85a2c;"></div></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const btns=document.querySelectorAll('.concept-btn');
+const concepts=document.querySelectorAll('.concept');
+btns.forEach(b=>{
+  b.addEventListener('click',()=>{
+    btns.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const t=b.dataset.c;
+    concepts.forEach(c=>c.classList.remove('visible'));
+    document.getElementById('c'+t).classList.add('visible');
+  });
+});
+</script>
+</body>
+</html>

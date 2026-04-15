@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies iOS — Design Mockups</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;padding:40px 20px 80px;}
+.hdr{max-width:600px;margin:0 auto 40px;text-align:center;}
+.logo{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#2d5245,#5fcea0);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#fff;margin:0 auto 16px;}
+h1{font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:4px;}
+h1 span{color:#5fcea0;}
+.sub{color:#555;font-size:14px;font-weight:400;}
+.updated{color:#333;font-size:11px;margin-top:8px;}
+.grid{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
+a.card{display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:16px;background:#111;border:1px solid #1a1a1a;text-decoration:none;color:#fff;transition:all .2s;}
+a.card:hover{background:#161616;border-color:#2a2a2a;transform:translateY(-1px);}
+.card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;}
+.card-icon.latest{background:linear-gradient(135deg,#0f2a20,#1a3327);color:#5fcea0;border:1px solid rgba(95,206,160,.15);}
+.card-icon.prev{background:#1a1a1a;color:#555;border:1px solid #222;}
+.card-info{flex:1;min-width:0;}
+.card-title{font-size:15px;font-weight:700;letter-spacing:-.2px;}
+.card-desc{font-size:12px;color:#555;margin-top:2px;font-weight:400;}
+.card-arrow{color:#333;font-size:18px;}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-left:8px;}
+.badge-latest{background:rgba(95,206,160,.1);color:#5fcea0;}
+.badge-wip{background:rgba(240,192,96,.1);color:#f0c060;}
+.divider{height:1px;background:#1a1a1a;margin:12px 0;}
+.section-label{font-size:11px;font-weight:600;color:#333;text-transform:uppercase;letter-spacing:1.5px;padding:8px 0 4px;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">B</div>
+  <h1>Bam<span>Buddies</span> iOS</h1>
+  <div class="sub">Design Mockups & Prototypes</div>
+  <div class="updated">Last updated: April 2026</div>
+</div>
+
+<div class="grid">
+  <div class="section-label">Latest — Dashboard with Ads</div>
+
+  <a class="card" href="dashboard-3ads.html">
+    <div class="card-icon latest">AD</div>
+    <div class="card-info">
+      <div class="card-title">Dashboard — 3 Ad Banner Styles <span class="badge badge-latest">Latest</span></div>
+      <div class="card-desc">Single greeting + ad banner + compact cards. 3 ad style variants side by side.</div>
+    </div>
+    <div class="card-arrow">&rsaquo;</div>
+  </a>
+
+  <div class="divider"></div>
+  <div class="section-label">Dashboard Evolution</div>
+
+  <a class="card" href="dashboard-final-v2.html">
+    <div class="card-icon prev">v2</div>
+    <div class="card-info">
+      <div class="card-title">Dashboard Final v2</div>
+      <div class="card-desc">Serif greeting, compact cards, mahjong images, mixed photo/pastel.</div>
+    </div>
+    <div class="card-arrow">&rsaquo;</div>
+  </a>
+
+  <a class="card" href="dashboard-optionA-v2.html">
+    <div class="card-icon prev">A2</div>
+    <div class="card-info">
+      <div class="card-title">Option A — 3 Greeting Variants</div>
+      <div class="card-desc">Light sans-serif vs serif+accent vs minimal chips. Compact cards.</div>
+    </div>
+    <div class="card-arrow">&rsaquo;</div>
+  </a>
+
+  <a class="card" href="dashboard-optionA-refined.html">
+    <div class="card-icon prev">A1</div>
+    <div class="card-info">
+      <div class="card-title">Option A — Refined</div>
+      <div class="card-desc">Real profile pics, game photos, inbox icon added.</div>
+    </div>
+    <div class="card-arrow">&rsaquo;</div>
+  </a>
+
+  <a class="card" href="dashboard-3options.html">
+    <div class="card-icon prev">3x</div>
+    <div class="card-info">
+      <div class="card-title">3 Options Comparison</div>
+      <div class="card-desc">Editorial vs Widget Grid vs Bold Minimal — side by side.</div>
+    </div>
+    <div class="card-arrow">&rsaquo;</div>
+  </a>
+
+  <a class="card" href="dashboard-final.html">
+    <div class="card-icon prev">v1</div>
+    <div class="card-info">
+      <div class="card-title">Dashboard Final v1</div>
+      <div class="card-desc">First editorial + pastel + competitor fusion. Light/dark toggle.</div>
+    </div>
+    <div class="card-arrow">&rsaquo;</div>
+  </a>
+
+  <div class="divider"></div>
+  <div class="section-label">Early Concepts</div>
+
+  <a class="card" href="dashboard-concepts-v2.html">
+    <div class="card-icon prev">C2</div>
+    <div class="card-info">
+      <div class="card-title">Concept Explorations v2</div>
+      <div class="card-desc">5 bold concepts with game images and custom icons.</div>
+    </div>
+    <div class="card-arrow">&rsaquo;</div>
+  </a>
+
+  <a class="card" href="dashboard-concepts.html">
+    <div class="card-icon prev">C1</div>
+    <div class="card-info">
+      <div class="card-title">Concept Explorations v1</div>
+      <div class="card-desc">First 5 design directions — Glassmorphic, Minimal, Editorial, Dashboard, Social.</div>
+    </div>
+    <div class="card-arrow">&rsaquo;</div>
+  </a>
+</div>
+
+</body>
+</html>

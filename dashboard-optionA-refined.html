@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Option A Refined</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;}
+.page-hdr{text-align:center;padding:40px 20px 6px;}
+.page-hdr h1{font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;color:#fff;letter-spacing:-.8px;}
+.page-hdr p{color:#555;font-size:13px;margin-top:4px;}
+.mode-toggle{display:flex;justify-content:center;gap:8px;padding:14px 20px 8px;}
+.mt-btn{padding:8px 18px;border-radius:10px;border:1.5px solid #1a1a1a;background:#111;color:#666;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .25s;}
+.mt-btn:hover{border-color:#2a2a2a;color:#aaa;}
+.mt-btn.act{background:linear-gradient(135deg,#0f2a20,#0a1a14);border-color:#2d5245;color:#5fcea0;}
+.stage{display:flex;justify-content:center;padding:20px 20px 80px;}
+
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 40px 100px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.02);}
+.notch{width:126px;height:36px;background:#000;border-radius:20px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:54px;padding:14px 30px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;position:relative;z-index:10;}
+.sbar .r{font-size:12px;display:flex;gap:5px;align-items:center;opacity:.5;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:5;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* ===== TAB BAR ===== */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:88px;z-index:40;}
+.tbar-bg{position:absolute;bottom:0;left:0;right:0;height:83px;}
+.tbar-items{position:relative;display:flex;align-items:flex-start;padding-top:10px;height:83px;z-index:2;width:100%;}
+.tbar .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding-bottom:34px;position:relative;}
+.tbar .t svg{width:22px;height:22px;}
+.tbar .t .dot{width:4px;height:4px;border-radius:99px;margin-top:1px;}
+.tbar .t .tbadge{position:absolute;top:-4px;right:calc(50% - 18px);min-width:16px;height:16px;border-radius:99px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+.tbar .cb{flex:1;display:flex;justify-content:center;position:relative;}
+.tbar .pb{width:58px;height:58px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:-22px;box-shadow:0 6px 24px rgba(0,0,0,.2);}
+.tbar .pb svg{width:26px;height:26px;}
+.tbar .pl{position:absolute;top:42px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;}
+
+/* Light tab */
+.lt .tbar-bg{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-top:1px solid #ece8e0;}
+.lt .tbar .t{color:#c0bdb6;}
+.lt .tbar .t.act{color:#2d5245;}
+.lt .tbar .t .dot{background:#2d5245;}
+.lt .tbar .t .tbadge{background:#e85a2c;color:#fff;}
+.lt .tbar .pb{background:#2d5245;}
+.lt .tbar .pl{color:#2d5245;}
+/* Dark tab */
+.dk .tbar-bg{background:rgba(15,15,15,.92);backdrop-filter:blur(30px);border-top:1px solid #1a1a1a;}
+.dk .tbar .t{color:#444;}
+.dk .tbar .t.act{color:#5fcea0;}
+.dk .tbar .t .dot{background:#5fcea0;}
+.dk .tbar .t .tbadge{background:#5fcea0;color:#0a1a14;}
+.dk .tbar .pb{background:linear-gradient(145deg,#3d6b5b,#5fcea0);}
+.dk .tbar .pl{color:#5fcea0;}
+
+/* ===== PROFILE PICS — circular avatars with real images ===== */
+.avatar-img{border-radius:50%;object-fit:cover;display:block;}
+
+/* ===== TOP BAR ===== */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 10px;}
+.tb-left{display:flex;align-items:center;gap:10px;}
+.tb-av{width:38px;height:38px;border-radius:13px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;font-family:'Outfit';}
+.lt .tb-av{background:linear-gradient(135deg,#c5e0d3,#a8d5c2);color:#2d5245;}
+.dk .tb-av{background:linear-gradient(135deg,#1a3327,#2d5245);color:#5fcea0;border:1px solid rgba(95,206,160,.15);}
+.tb-av img{width:100%;height:100%;object-fit:cover;}
+.tb-greet{font-family:'Outfit',sans-serif;}
+.lt .tb-hi{font-size:12px;color:#b0ada6;font-weight:400;}
+.dk .tb-hi{font-size:12px;color:#555;font-weight:400;}
+.lt .tb-name{font-size:18px;font-weight:800;color:#1a1a1a;letter-spacing:-.5px;}
+.dk .tb-name{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.5px;}
+.tb-right{display:flex;gap:6px;}
+.tb-btn{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;position:relative;}
+.lt .tb-btn{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.05);border:1px solid #f0ede6;}
+.dk .tb-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);}
+.tb-btn svg{width:18px;height:18px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.lt .tb-btn svg{stroke:#6b7280;}
+.dk .tb-btn svg{stroke:#555;}
+.tb-bdg{position:absolute;top:6px;right:6px;width:9px;height:9px;border-radius:99px;}
+.lt .tb-bdg{background:#e85a2c;border:2px solid #faf9f6;}
+.dk .tb-bdg{background:#5fcea0;border:2px solid #0c0c0c;}
+/* Inbox count badge */
+.tb-cnt-badge{position:absolute;top:3px;right:2px;min-width:17px;height:17px;border-radius:99px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+.lt .tb-cnt-badge{background:#e85a2c;color:#fff;border:2px solid #faf9f6;}
+.dk .tb-cnt-badge{background:#5fcea0;color:#0a1a14;border:2px solid #0c0c0c;}
+
+/* ===== HERO ===== */
+.hero{padding:8px 20px 14px;}
+.lt .hero-date{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#b0ada6;margin-bottom:6px;}
+.dk .hero-date{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:6px;}
+.lt .hero-greeting{font-family:'DM Serif Display',Georgia,serif;font-size:32px;color:#1a1a1a;line-height:1.1;margin-bottom:4px;}
+.dk .hero-greeting{font-family:'DM Serif Display',Georgia,serif;font-size:32px;color:#f0ede6;line-height:1.1;margin-bottom:4px;}
+.lt .hero-sub{font-size:13px;color:#b0ada6;font-weight:400;}
+.dk .hero-sub{font-size:13px;color:#555;font-weight:400;}
+
+/* ===== HERO CARD — with real game photo ===== */
+.hcard{margin:12px 16px 14px;border-radius:22px;overflow:hidden;}
+.lt .hcard{background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.05);border:1px solid #ece8e0;}
+.dk .hcard{background:#161616;border:1px solid #1e1e1e;}
+.hc-img{width:100%;height:150px;position:relative;overflow:hidden;background-size:cover;background-position:center;}
+/* Game photo for hero */
+.hc-img-photo{background-image:url('https://images.unsplash.com/photo-1596451190630-186aff535bf2?w=600&h=300&fit=crop');background-size:cover;background-position:center;}
+.hc-date{position:absolute;top:10px;left:10px;padding:5px 10px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;letter-spacing:.3px;}
+.lt .hc-date{color:#2d5245;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);}
+.dk .hc-date{color:#eee;background:rgba(0,0,0,.45);backdrop-filter:blur(10px);}
+.hc-date span{font-weight:500;opacity:.5;margin-right:3px;}
+.hc-crown{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.lt .hc-crown{background:rgba(255,255,255,.88);backdrop-filter:blur(10px);}
+.dk .hc-crown{background:rgba(0,0,0,.45);backdrop-filter:blur(10px);}
+.hc-crown svg{width:16px;height:16px;}
+.hc-players{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:9px;font-size:12px;font-weight:700;}
+.lt .hc-players{background:rgba(255,255,255,.88);backdrop-filter:blur(10px);color:#2d5245;}
+.dk .hc-players{background:rgba(0,0,0,.45);backdrop-filter:blur(10px);color:#5fcea0;}
+.hc-players svg{width:14px;height:14px;fill:none;stroke-width:2;}
+.lt .hc-players svg{stroke:#2d5245;}
+.dk .hc-players svg{stroke:#5fcea0;}
+.hc-body{padding:14px 16px 12px;}
+.hc-label{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.lt .hc-label{color:#5a9b85;}
+.dk .hc-label{color:#5fcea0;}
+.hc-label::before{content:'';width:6px;height:6px;border-radius:99px;background:currentColor;}
+.lt .hc-time{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:#1a1a1a;letter-spacing:-.5px;margin-bottom:2px;}
+.dk .hc-time{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:2px;}
+.lt .hc-gname{font-size:14px;font-weight:600;color:#3d6b5b;margin-bottom:6px;}
+.dk .hc-gname{font-size:14px;font-weight:600;color:#5fcea0;margin-bottom:6px;}
+.hc-meta{font-size:12px;display:flex;align-items:center;gap:5px;margin-bottom:3px;}
+.lt .hc-meta{color:#9ca3af;}
+.dk .hc-meta{color:#555;}
+.hc-meta svg{width:13px;height:13px;fill:none;stroke-width:2;}
+.lt .hc-meta svg{stroke:#b0ada6;}
+.dk .hc-meta svg{stroke:#444;}
+.hc-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;}
+.lt .hc-bottom{border-top:1px solid #f5f3ee;}
+.dk .hc-bottom{border-top:1px solid #1e1e1e;}
+.hc-avatars{display:flex;align-items:center;}
+.hc-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-right:-6px;overflow:hidden;background-size:cover;background-position:center;}
+.lt .hc-av{border:2.5px solid #fff;}
+.dk .hc-av{border:2.5px solid #161616;}
+.hc-av img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.hc-status{padding:7px 14px;border-radius:10px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px;}
+.hc-status svg{width:14px;height:14px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .hc-status-ok{background:#e8f4ef;color:#2d5245;}
+.lt .hc-status-ok svg{stroke:#2d5245;}
+.dk .hc-status-ok{background:rgba(95,206,160,.1);color:#5fcea0;border:1px solid rgba(95,206,160,.08);}
+.dk .hc-status-ok svg{stroke:#5fcea0;}
+
+/* ===== SECTIONS ===== */
+.sec{padding:4px 20px 8px;}
+.sec-top{display:flex;justify-content:space-between;align-items:baseline;}
+.lt .sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:#1a1a1a;}
+.dk .sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:#f0ede6;}
+.sec-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:8px;}
+.lt .sec-badge{background:#e85a2c;color:#fff;}
+.dk .sec-badge{background:#5fcea0;color:#0a1a14;}
+.lt .sec-link{font-size:12px;font-weight:600;color:#3d6b5b;}
+.dk .sec-link{font-size:12px;font-weight:600;color:#5fcea0;}
+.lt .divider{height:1px;background:#ece8e0;margin:4px 20px 0;}
+.dk .divider{height:1px;background:#1a1a1a;margin:4px 20px 0;}
+
+/* ===== INVITE CARDS — with game photos ===== */
+.inv{margin:0 16px 10px;border-radius:18px;overflow:hidden;}
+.lt .inv{background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.04);border:1px solid #ece8e0;}
+.dk .inv{background:#161616;border:1px solid #1e1e1e;}
+.inv-img{width:100%;height:72px;position:relative;overflow:hidden;background-size:cover;background-position:center;}
+.inv-img-1{background-image:url('https://images.unsplash.com/photo-1609902726285-00668009f004?w=500&h=200&fit=crop');background-size:cover;background-position:center;}
+.inv-img-2{background-image:url('https://images.unsplash.com/photo-1511882150382-421056c89033?w=500&h=200&fit=crop');background-size:cover;background-position:center top;}
+.inv-img-overlay{position:absolute;inset:0;}
+.lt .inv-img-overlay{background:linear-gradient(180deg,transparent 40%,rgba(255,255,255,.3));}
+.dk .inv-img-overlay{background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.3));}
+.inv-lbl{position:absolute;bottom:8px;left:10px;padding:3px 9px;border-radius:7px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:5px;}
+.lt .inv-lbl{color:#fff;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);}
+.dk .inv-lbl{color:#fff;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);}
+.inv-lbl::before{content:'';width:6px;height:6px;border-radius:99px;background:#f0c060;animation:invp 2s infinite;}
+@keyframes invp{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.4);}}
+.inv-body{padding:12px 14px;}
+.inv-row{display:flex;gap:10px;align-items:center;}
+.inv-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center;}
+.inv-av img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.inv-info{flex:1;min-width:0;}
+.lt .inv-name{font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;}
+.dk .inv-name{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.2px;}
+.lt .inv-meta{font-size:11px;color:#b0ada6;margin-top:1px;}
+.dk .inv-meta{font-size:11px;color:#444;margin-top:1px;}
+.inv-btns{display:flex;gap:6px;margin-top:10px;}
+.inv-y{flex:1;padding:9px;border-radius:11px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;}
+.lt .inv-y{background:#2d5245;color:#fff;}
+.dk .inv-y{background:rgba(95,206,160,.12);border:1px solid rgba(95,206,160,.1);color:#5fcea0;}
+.inv-y svg{width:14px;height:14px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .inv-y svg{stroke:#fff;}
+.dk .inv-y svg{stroke:#5fcea0;}
+.inv-n{flex:1;padding:9px;border-radius:11px;background:transparent;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.lt .inv-n{border:1.5px solid #ece8e0;color:#b0ada6;}
+.dk .inv-n{border:1px solid #222;color:#555;}
+
+/* ===== UPCOMING ROWS — with game photo thumbnails ===== */
+.up-list{padding:0 16px;}
+.up{display:flex;gap:12px;align-items:center;padding:12px;border-radius:16px;margin-bottom:8px;}
+.lt .up{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.03);border:1px solid #f0ede6;}
+.dk .up{background:#161616;border:1px solid #1e1e1e;}
+.up-thumb{width:56px;height:56px;border-radius:14px;flex-shrink:0;position:relative;overflow:hidden;}
+.up-thumb-photo{width:100%;height:100%;object-fit:cover;}
+.up-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.lt .up-overlay{background:rgba(255,255,255,.6);backdrop-filter:blur(3px);}
+.dk .up-overlay{background:rgba(0,0,0,.4);backdrop-filter:blur(3px);}
+.lt .up-mon{font-size:9px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;}
+.dk .up-mon{font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;}
+.lt .up-day{font-size:18px;font-weight:900;color:#1a1a1a;letter-spacing:-1px;font-family:'Outfit',sans-serif;line-height:1;}
+.dk .up-day{font-size:18px;font-weight:900;color:#fff;letter-spacing:-1px;font-family:'Outfit',sans-serif;line-height:1;}
+.up-crown-sm{position:absolute;top:-1px;right:-1px;width:18px;height:18px;border-radius:6px;display:flex;align-items:center;justify-content:center;}
+.lt .up-crown-sm{background:#fff;border:1.5px solid #ece8e0;}
+.dk .up-crown-sm{background:#1e1e1e;border:1.5px solid #2a2a2a;}
+.up-crown-sm svg{width:10px;height:10px;}
+.up-info{flex:1;min-width:0;}
+.lt .up-time{font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;}
+.dk .up-time{font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.lt .up-gname{font-size:13px;font-weight:600;color:#3d6b5b;margin-top:1px;}
+.dk .up-gname{font-size:13px;font-weight:600;color:#5fcea0;margin-top:1px;}
+.up-loc{font-size:11px;margin-top:2px;display:flex;align-items:center;gap:3px;}
+.lt .up-loc{color:#b0ada6;}
+.dk .up-loc{color:#444;}
+.up-loc svg{width:11px;height:11px;fill:none;stroke-width:2;}
+.lt .up-loc svg{stroke:#c0bdb6;}
+.dk .up-loc svg{stroke:#444;}
+.up-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.up-pcount{font-size:13px;font-weight:800;letter-spacing:-.3px;}
+.lt .ok{color:#2d5245;}
+.dk .ok{color:#5fcea0;}
+.lt .warn{color:#854f0b;}
+.dk .warn{color:#f0c060;}
+.up-pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;}
+.lt .pill-ok{background:#e8f4ef;color:#3d6b5b;}
+.dk .pill-ok{background:rgba(95,206,160,.1);color:#5fcea0;}
+.lt .pill-warn{background:#faeeda;color:#7a5c2e;}
+.dk .pill-warn{background:rgba(240,192,96,.08);color:#f0c060;}
+
+/* Upcoming player avatars */
+.up-avatars{display:flex;margin-top:4px;}
+.up-av{width:20px;height:20px;border-radius:50%;margin-right:-4px;overflow:hidden;background-size:cover;background-position:center;}
+.lt .up-av{border:2px solid #fff;}
+.dk .up-av{border:2px solid #161616;}
+.up-av img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+</style>
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>Option A — Refined</h1>
+  <p>Real photos, profile pics, inbox icon</p>
+</div>
+<div class="mode-toggle">
+  <button class="mt-btn act" onclick="setMode('light')">Light Mode</button>
+  <button class="mt-btn" onclick="setMode('dark')">Dark Mode</button>
+</div>
+
+<div class="stage">
+<div class="phone" id="phone">
+<div class="notch"></div>
+<div class="lt" id="inner" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="sbar"><span>9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+  <div class="scr">
+
+    <!-- TOP BAR: Avatar, Greeting, Search + Inbox + Notifications -->
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Jake"></div>
+        <div class="tb-greet"><div class="tb-hi">Good evening</div><div class="tb-name">Jake</div></div>
+      </div>
+      <div class="tb-right">
+        <!-- Search -->
+        <div class="tb-btn"><svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+        <!-- Inbox / Messages -->
+        <div class="tb-btn">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <div class="tb-cnt-badge">3</div>
+        </div>
+        <!-- Notifications / Bell -->
+        <div class="tb-btn">
+          <svg viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <div class="tb-bdg"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO GREETING -->
+    <div class="hero">
+      <div class="hero-date">Monday, April 14</div>
+      <div class="hero-greeting">Good evening,<br>Jake.</div>
+      <div class="hero-sub">3 games coming up &middot; 2 invites</div>
+    </div>
+
+    <!-- HERO NEXT GAME — real game photo -->
+    <div class="hcard">
+      <div class="hc-img hc-img-photo">
+        <div class="hc-date"><span>SAT</span> 4/19</div>
+        <div class="hc-crown"><svg viewBox="0 0 16 16" fill="#d4a030"><path d="M2 12l2-6 3 3 1-5 1 5 3-3 2 6z"/></svg></div>
+        <div class="hc-players"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 4/4</div>
+      </div>
+      <div class="hc-body">
+        <div class="hc-label">Next Game</div>
+        <div class="hc-time">2:00 PM – 4:00 PM</div>
+        <div class="hc-gname">Saturday Mahjong</div>
+        <div class="hc-meta"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div>
+        <div class="hc-bottom">
+          <div class="hc-avatars">
+            <!-- Real profile pics -->
+            <div class="hc-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Jake"></div>
+            <div class="hc-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" alt="Lisa"></div>
+            <div class="hc-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face" alt="Mike"></div>
+            <div class="hc-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="Sarah"></div>
+          </div>
+          <div class="hc-status hc-status-ok"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> You're in!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVITES SECTION -->
+    <div class="sec">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;"><span class="sec-title">Invites</span><span class="sec-badge">2</span></div>
+      </div>
+    </div>
+
+    <!-- Invite 1 — game photo -->
+    <div class="inv">
+      <div class="inv-img inv-img-1"><div class="inv-img-overlay"></div><div class="inv-lbl">Game Invite</div></div>
+      <div class="inv-body">
+        <div class="inv-row">
+          <div class="inv-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=70&h=70&fit=crop&crop=face" alt="Mike"></div>
+          <div class="inv-info"><div class="inv-name">Mike's Tuesday Game</div><div class="inv-meta">Tue, Apr 22 &middot; 6:30 PM &middot; Mike K.</div></div>
+        </div>
+        <div class="inv-btns">
+          <button class="inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> Accept</button>
+          <button class="inv-n">Decline</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invite 2 — game photo -->
+    <div class="inv">
+      <div class="inv-img inv-img-2"><div class="inv-img-overlay"></div><div class="inv-lbl">Open Game</div></div>
+      <div class="inv-body">
+        <div class="inv-row">
+          <div class="inv-av"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=70&h=70&fit=crop&crop=face" alt="Rachel"></div>
+          <div class="inv-info"><div class="inv-name">Rachel's Open Game</div><div class="inv-meta">Thu, Apr 24 &middot; 3:00 PM &middot; Open to all</div></div>
+        </div>
+        <div class="inv-btns">
+          <button class="inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> Accept</button>
+          <button class="inv-n">Decline</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- COMING UP -->
+    <div class="sec" style="margin-top:14px;">
+      <div class="sec-top">
+        <div class="sec-title">Coming Up</div>
+        <div class="sec-link">See All</div>
+      </div>
+    </div>
+
+    <div class="up-list">
+      <!-- Game 1 -->
+      <div class="up">
+        <div class="up-thumb">
+          <img class="up-thumb-photo" src="https://images.unsplash.com/photo-1609902726285-00668009f004?w=120&h=120&fit=crop" alt="Game">
+          <div class="up-overlay"><div class="up-mon">Apr</div><div class="up-day">21</div></div>
+        </div>
+        <div class="up-info">
+          <div class="up-time">7:00 PM – 9:00 PM</div>
+          <div class="up-gname">Lisa's Practice Game</div>
+          <div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Lisa's Apartment</div>
+          <div class="up-avatars">
+            <div class="up-av"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt="Lisa"></div>
+            <div class="up-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="Jake"></div>
+            <div class="up-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="Sarah"></div>
+          </div>
+        </div>
+        <div class="up-right"><div class="up-pcount warn">3/4</div><div class="up-pill pill-warn">Needs 1</div></div>
+      </div>
+
+      <!-- Game 2 -->
+      <div class="up">
+        <div class="up-thumb">
+          <img class="up-thumb-photo" src="https://images.unsplash.com/photo-1596451190630-186aff535bf2?w=120&h=120&fit=crop" alt="Game">
+          <div class="up-overlay"><div class="up-mon">Apr</div><div class="up-day">26</div></div>
+          <div class="up-crown-sm"><svg viewBox="0 0 10 10" fill="#d4a030"><path d="M1 8l1.5-4 2 2 .5-3.5.5 3.5 2-2L9 8z"/></svg></div>
+        </div>
+        <div class="up-info">
+          <div class="up-time">1:00 PM – 3:00 PM</div>
+          <div class="up-gname">Weekend Warriors</div>
+          <div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Jake's Place</div>
+          <div class="up-avatars">
+            <div class="up-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="Jake"></div>
+            <div class="up-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face" alt="Mike"></div>
+          </div>
+        </div>
+        <div class="up-right"><div class="up-pcount ok">2/4</div><div class="up-pill pill-ok">Confirmed</div></div>
+      </div>
+
+      <!-- Game 3 -->
+      <div class="up">
+        <div class="up-thumb">
+          <img class="up-thumb-photo" src="https://images.unsplash.com/photo-1511882150382-421056c89033?w=120&h=120&fit=crop" alt="Game">
+          <div class="up-overlay"><div class="up-mon">May</div><div class="up-day">3</div></div>
+        </div>
+        <div class="up-info">
+          <div class="up-time">2:00 PM – 4:00 PM</div>
+          <div class="up-gname">Saturday Mahjong</div>
+          <div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div>
+          <div class="up-avatars">
+            <div class="up-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="Jake"></div>
+          </div>
+        </div>
+        <div class="up-right"><div class="up-pcount warn">1/4</div><div class="up-pill pill-warn">Needs 3</div></div>
+      </div>
+    </div>
+    <div style="height:100px;"></div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tbar">
+    <div class="tbar-bg"></div>
+    <div class="tbar-items">
+      <div class="t act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span>Home</span><div class="dot"></div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>Discover</span></div>
+      <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span>Games</span></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+function setMode(mode){
+  document.querySelectorAll('.mt-btn').forEach(b=>{b.classList.remove('act');if(b.textContent.toLowerCase().includes(mode))b.classList.add('act');});
+  const inner=document.getElementById('inner');
+  inner.className=mode==='dark'?'dk':'lt';
+  inner.style.cssText='width:100%;height:100%;position:relative;overflow:hidden;';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — 3 Dashboard Options</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;}
+
+/* ===== LAYOUT ===== */
+.page-hdr{text-align:center;padding:40px 20px 6px;}
+.page-hdr h1{font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;color:#fff;letter-spacing:-.8px;}
+.page-hdr p{color:#555;font-size:13px;margin-top:4px;}
+.mode-toggle{display:flex;justify-content:center;gap:8px;padding:14px 20px 8px;}
+.mt-btn{padding:8px 18px;border-radius:10px;border:1.5px solid #1a1a1a;background:#111;color:#666;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .25s;}
+.mt-btn:hover{border-color:#2a2a2a;color:#aaa;}
+.mt-btn.act{background:linear-gradient(135deg,#0f2a20,#0a1a14);border-color:#2d5245;color:#5fcea0;}
+.stage{display:flex;justify-content:center;gap:30px;padding:20px 20px 80px;flex-wrap:wrap;align-items:flex-start;}
+
+/* Phone frame */
+.phone-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.phone-label{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px;}
+.phone-label span{font-size:11px;font-weight:400;color:#555;display:block;margin-top:2px;}
+.phone{width:375px;height:812px;border-radius:48px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 30px 80px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.02);}
+.notch{width:120px;height:34px;background:#000;border-radius:18px;position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:50px;padding:12px 26px 0;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;position:relative;z-index:10;}
+.sbar .r{font-size:11px;display:flex;gap:4px;align-items:center;opacity:.5;}
+.scr{position:absolute;top:50px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:5;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* ===== TAB BAR (shared) ===== */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:84px;z-index:40;}
+.tbar-bg{position:absolute;bottom:0;left:0;right:0;height:78px;}
+.tbar-items{position:relative;display:flex;align-items:flex-start;padding-top:8px;height:78px;z-index:2;width:100%;}
+.tbar .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:8px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding-bottom:30px;}
+.tbar .t svg{width:20px;height:20px;}
+.tbar .t .dot{width:4px;height:4px;border-radius:99px;margin-top:1px;}
+.tbar .t .tbadge{position:absolute;top:-3px;right:calc(50% - 16px);min-width:14px;height:14px;border-radius:99px;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 3px;}
+.tbar .cb{flex:1;display:flex;justify-content:center;position:relative;}
+.tbar .pb{width:52px;height:52px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:-20px;box-shadow:0 4px 18px rgba(0,0,0,.2);}
+.tbar .pb svg{width:24px;height:24px;}
+.tbar .pl{position:absolute;top:38px;font-size:8px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;}
+
+/* ===== PASTEL IMAGE BGs ===== */
+.gi-sage{background:linear-gradient(145deg,#c5e0d3,#a8d5c2,#d3eade);position:relative;}
+.gi-lavender{background:linear-gradient(145deg,#d8cef0,#c5b8e8,#e2daf5);position:relative;}
+.gi-peach{background:linear-gradient(145deg,#f0dcc8,#e8d0b8,#f5e4d2);position:relative;}
+.gi-sky{background:linear-gradient(145deg,#c0d8ee,#a8c8e0,#d0e2f2);position:relative;}
+.gi-rose{background:linear-gradient(145deg,#f0d0d8,#e8bcc8,#f5dce2);position:relative;}
+/* dark pastel */
+.dk .gi-sage{background:linear-gradient(145deg,#1a3327,#253f33,#1a3327);}
+.dk .gi-lavender{background:linear-gradient(145deg,#251a33,#332548,#251a33);}
+.dk .gi-peach{background:linear-gradient(145deg,#332b1a,#483c22,#332b1a);}
+.dk .gi-sky{background:linear-gradient(145deg,#1a2a3a,#253848,#1a2a3a);}
+.dk .gi-rose{background:linear-gradient(145deg,#331a22,#482530,#331a22);}
+
+/* Tile pattern overlay */
+.gi-sage::after,.gi-lavender::after,.gi-peach::after,.gi-sky::after,.gi-rose::after{content:'';position:absolute;inset:0;opacity:.2;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Crect x='8' y='8' width='34' height='34' rx='5' fill='none' stroke='%23000' stroke-width='.6' opacity='.12'/%3E%3C/svg%3E") repeat;}
+
+/* ===== THEME TOKENS ===== */
+/* Light */
+.lt{background:#faf9f6;}
+.lt .sbar{color:#1a1a1a;}
+.lt .tbar-bg{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-top:1px solid #ece8e0;}
+.lt .tbar .t{color:#c0bdb6;}
+.lt .tbar .t.act{color:#2d5245;}
+.lt .tbar .t .dot{background:#2d5245;}
+.lt .tbar .t .tbadge{background:#e85a2c;color:#fff;}
+.lt .tbar .pb{background:#2d5245;}
+.lt .tbar .pl{color:#2d5245;}
+/* Dark */
+.dk{background:#0c0c0c;}
+.dk .sbar{color:#fff;}
+.dk .tbar-bg{background:rgba(15,15,15,.92);backdrop-filter:blur(30px);border-top:1px solid #1a1a1a;}
+.dk .tbar .t{color:#444;}
+.dk .tbar .t.act{color:#5fcea0;}
+.dk .tbar .t .dot{background:#5fcea0;}
+.dk .tbar .t .tbadge{background:#5fcea0;color:#0a1a14;}
+.dk .tbar .pb{background:linear-gradient(145deg,#3d6b5b,#5fcea0);}
+.dk .tbar .pl{color:#5fcea0;}
+
+/* HIDE VIEWS */
+.dk-hide{display:block;}
+.phone[data-mode="dark"] .dk-hide{display:none;}
+
+/* ===========================================================
+   OPTION A — EDITORIAL + COMPETITOR FUSION (previous pick)
+   =========================================================== */
+/* Top bar */
+.a-topbar{display:flex;align-items:center;justify-content:space-between;padding:4px 18px 8px;}
+.a-tb-left{display:flex;align-items:center;gap:8px;}
+.a-tb-av{width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;font-family:'Outfit';}
+.lt .a-tb-av{background:linear-gradient(135deg,#c5e0d3,#a8d5c2);color:#2d5245;}
+.dk .a-tb-av{background:linear-gradient(135deg,#1a3327,#2d5245);color:#5fcea0;border:1px solid rgba(95,206,160,.15);}
+.a-tb-greet{font-family:'Outfit',sans-serif;}
+.lt .a-tb-hi{font-size:11px;color:#b0ada6;font-weight:400;}
+.dk .a-tb-hi{font-size:11px;color:#555;font-weight:400;}
+.lt .a-tb-name{font-size:16px;font-weight:800;color:#1a1a1a;letter-spacing:-.4px;}
+.dk .a-tb-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.4px;}
+.a-tb-right{display:flex;gap:6px;}
+.a-tb-btn{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;position:relative;}
+.lt .a-tb-btn{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid #f0ede6;}
+.dk .a-tb-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);}
+.a-tb-btn svg{width:16px;height:16px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lt .a-tb-btn svg{stroke:#9ca3af;}
+.dk .a-tb-btn svg{stroke:#555;}
+.a-tb-bdg{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:99px;}
+.lt .a-tb-bdg{background:#e85a2c;border:2px solid #faf9f6;}
+.dk .a-tb-bdg{background:#5fcea0;border:2px solid #0c0c0c;}
+
+/* Hero greeting */
+.a-hero{padding:6px 18px 10px;}
+.lt .a-hero-date{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#b0ada6;margin-bottom:4px;}
+.dk .a-hero-date{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#444;margin-bottom:4px;}
+.lt .a-hero-greeting{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:#1a1a1a;line-height:1.1;margin-bottom:3px;}
+.dk .a-hero-greeting{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:#f0ede6;line-height:1.1;margin-bottom:3px;}
+.lt .a-hero-sub{font-size:12px;color:#b0ada6;font-weight:400;}
+.dk .a-hero-sub{font-size:12px;color:#555;font-weight:400;}
+
+/* Hero card */
+.a-hcard{margin:10px 14px 12px;border-radius:20px;overflow:hidden;}
+.lt .a-hcard{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid #ece8e0;}
+.dk .a-hcard{background:#161616;border:1px solid #1e1e1e;}
+.a-hc-img{width:100%;height:120px;position:relative;overflow:hidden;}
+.a-hc-date{position:absolute;top:8px;left:8px;padding:4px 8px;border-radius:7px;font-family:'Outfit';font-size:10px;font-weight:800;letter-spacing:.3px;}
+.lt .a-hc-date{color:#2d5245;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);}
+.dk .a-hc-date{color:#eee;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);}
+.a-hc-date span{font-weight:500;opacity:.5;margin-right:2px;}
+.a-hc-crown{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.lt .a-hc-crown{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);}
+.dk .a-hc-crown{background:rgba(0,0,0,.4);backdrop-filter:blur(8px);}
+.a-hc-crown svg{width:14px;height:14px;}
+.a-hc-players{position:absolute;bottom:8px;right:8px;display:flex;align-items:center;gap:3px;padding:4px 8px;border-radius:7px;font-size:11px;font-weight:700;}
+.lt .a-hc-players{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);color:#2d5245;}
+.dk .a-hc-players{background:rgba(0,0,0,.4);backdrop-filter:blur(8px);color:#5fcea0;}
+.a-hc-players svg{width:12px;height:12px;fill:none;stroke-width:2;}
+.lt .a-hc-players svg{stroke:#2d5245;}
+.dk .a-hc-players svg{stroke:#5fcea0;}
+.a-hc-body{padding:12px 14px 10px;}
+.a-hc-label{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#5a9b85;margin-bottom:4px;}
+.dk .a-hc-label{color:#5fcea0;}
+.a-hc-label::before{content:'';width:5px;height:5px;border-radius:99px;background:currentColor;}
+.lt .a-hc-time{font-family:'Outfit';font-size:18px;font-weight:800;color:#1a1a1a;letter-spacing:-.4px;margin-bottom:1px;}
+.dk .a-hc-time{font-family:'Outfit';font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px;margin-bottom:1px;}
+.lt .a-hc-name{font-size:13px;font-weight:600;color:#3d6b5b;margin-bottom:4px;}
+.dk .a-hc-name{font-size:13px;font-weight:600;color:#5fcea0;margin-bottom:4px;}
+.a-hc-meta{font-size:11px;display:flex;align-items:center;gap:4px;margin-bottom:2px;}
+.lt .a-hc-meta{color:#9ca3af;}
+.dk .a-hc-meta{color:#555;}
+.a-hc-meta svg{width:12px;height:12px;fill:none;stroke-width:2;}
+.lt .a-hc-meta svg{stroke:#b0ada6;}
+.dk .a-hc-meta svg{stroke:#444;}
+.a-hc-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;}
+.lt .a-hc-bottom{border-top:1px solid #f5f3ee;}
+.dk .a-hc-bottom{border-top:1px solid #1e1e1e;}
+.a-hc-avatars{display:flex;}
+.a-hc-av{width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;margin-right:-4px;}
+.lt .a-hc-av{border:2px solid #fff;}
+.dk .a-hc-av{border:2px solid #161616;}
+.a-hc-status{padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:3px;}
+.a-hc-status svg{width:12px;height:12px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .a-hc-status-ok{background:#e8f4ef;color:#2d5245;}
+.lt .a-hc-status-ok svg{stroke:#2d5245;}
+.dk .a-hc-status-ok{background:rgba(95,206,160,.1);color:#5fcea0;border:1px solid rgba(95,206,160,.08);}
+.dk .a-hc-status-ok svg{stroke:#5fcea0;}
+
+/* Section header */
+.a-sec{padding:3px 18px 6px;}
+.a-sec-top{display:flex;justify-content:space-between;align-items:baseline;}
+.lt .a-sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:#1a1a1a;}
+.dk .a-sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:#f0ede6;}
+.a-sec-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:6px;}
+.lt .a-sec-badge{background:#e85a2c;color:#fff;}
+.dk .a-sec-badge{background:#5fcea0;color:#0a1a14;}
+.lt .a-sec-link{font-size:11px;font-weight:600;color:#3d6b5b;}
+.dk .a-sec-link{font-size:11px;font-weight:600;color:#5fcea0;}
+.lt .a-divider{height:1px;background:#ece8e0;margin:3px 18px 0;}
+.dk .a-divider{height:1px;background:#1a1a1a;margin:3px 18px 0;}
+
+/* Invite card */
+.a-inv{margin:0 14px 8px;border-radius:16px;overflow:hidden;}
+.lt .a-inv{background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.03);border:1px solid #ece8e0;}
+.dk .a-inv{background:#161616;border:1px solid #1e1e1e;}
+.a-inv-img{width:100%;height:56px;position:relative;overflow:hidden;}
+.a-inv-lbl{position:absolute;bottom:6px;left:8px;padding:2px 7px;border-radius:6px;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;display:flex;align-items:center;gap:4px;}
+.lt .a-inv-lbl{color:#fff;background:rgba(0,0,0,.25);backdrop-filter:blur(6px);}
+.dk .a-inv-lbl{color:#fff;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);}
+.a-inv-lbl::before{content:'';width:5px;height:5px;border-radius:99px;background:#f0c060;animation:ip 2s infinite;}
+@keyframes ip{0%,100%{opacity:1;}50%{opacity:.3;}}
+.a-inv-body{padding:10px 12px;}
+.a-inv-row{display:flex;gap:8px;align-items:center;}
+.a-inv-av{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;flex-shrink:0;}
+.lt .a-inv-av-g{background:#e8f4ef;color:#2d5245;}
+.dk .a-inv-av-g{background:rgba(95,206,160,.1);color:#5fcea0;}
+.lt .a-inv-av-p{background:#f5e8ef;color:#8a3d5b;}
+.dk .a-inv-av-p{background:rgba(200,140,180,.1);color:#e8a0c8;}
+.a-inv-info{flex:1;min-width:0;}
+.lt .a-inv-name{font-size:13px;font-weight:700;color:#1a1a1a;}
+.dk .a-inv-name{font-size:13px;font-weight:700;color:#fff;}
+.lt .a-inv-meta{font-size:10px;color:#b0ada6;margin-top:1px;}
+.dk .a-inv-meta{font-size:10px;color:#444;margin-top:1px;}
+.a-inv-btns{display:flex;gap:5px;margin-top:8px;}
+.a-inv-y{flex:1;padding:7px;border-radius:9px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter';display:flex;align-items:center;justify-content:center;gap:4px;}
+.lt .a-inv-y{background:#2d5245;color:#fff;}
+.dk .a-inv-y{background:rgba(95,206,160,.12);border:1px solid rgba(95,206,160,.1);color:#5fcea0;}
+.a-inv-y svg{width:12px;height:12px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .a-inv-y svg{stroke:#fff;}
+.dk .a-inv-y svg{stroke:#5fcea0;}
+.a-inv-n{flex:1;padding:7px;border-radius:9px;background:transparent;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter';}
+.lt .a-inv-n{border:1.5px solid #ece8e0;color:#b0ada6;}
+.dk .a-inv-n{border:1px solid #222;color:#555;}
+
+/* Upcoming rows */
+.a-up-list{padding:0 14px;}
+.a-up{display:flex;gap:10px;align-items:center;padding:10px;border-radius:14px;margin-bottom:6px;}
+.lt .a-up{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.02);border:1px solid #f0ede6;}
+.dk .a-up{background:#161616;border:1px solid #1e1e1e;}
+.a-up-thumb{width:48px;height:48px;border-radius:12px;flex-shrink:0;position:relative;overflow:hidden;}
+.a-up-thumb-bg{width:100%;height:100%;}
+.a-up-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.lt .a-up-overlay{background:rgba(255,255,255,.5);backdrop-filter:blur(2px);}
+.dk .a-up-overlay{background:rgba(0,0,0,.35);backdrop-filter:blur(2px);}
+.lt .a-up-mon{font-size:8px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.6px;}
+.dk .a-up-mon{font-size:8px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.6px;}
+.lt .a-up-day{font-size:16px;font-weight:900;color:#1a1a1a;font-family:'Outfit';line-height:1;letter-spacing:-.8px;}
+.dk .a-up-day{font-size:16px;font-weight:900;color:#fff;font-family:'Outfit';line-height:1;letter-spacing:-.8px;}
+.a-up-info{flex:1;min-width:0;}
+.lt .a-up-time{font-family:'Outfit';font-size:13px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;}
+.dk .a-up-time{font-family:'Outfit';font-size:13px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.lt .a-up-name{font-size:12px;font-weight:600;color:#3d6b5b;margin-top:1px;}
+.dk .a-up-name{font-size:12px;font-weight:600;color:#5fcea0;margin-top:1px;}
+.a-up-loc{font-size:10px;margin-top:1px;display:flex;align-items:center;gap:2px;}
+.lt .a-up-loc{color:#b0ada6;}
+.dk .a-up-loc{color:#444;}
+.a-up-loc svg{width:10px;height:10px;fill:none;stroke-width:2;}
+.lt .a-up-loc svg{stroke:#c0bdb6;}
+.dk .a-up-loc svg{stroke:#444;}
+.a-up-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.a-up-pcount{font-size:12px;font-weight:800;letter-spacing:-.3px;}
+.lt .ok{color:#2d5245;}
+.dk .ok{color:#5fcea0;}
+.lt .warn{color:#854f0b;}
+.dk .warn{color:#f0c060;}
+.a-up-pill{font-size:9px;font-weight:600;padding:2px 6px;border-radius:5px;}
+.lt .pill-ok{background:#e8f4ef;color:#3d6b5b;}
+.dk .pill-ok{background:rgba(95,206,160,.1);color:#5fcea0;}
+.lt .pill-warn{background:#faeeda;color:#7a5c2e;}
+.dk .pill-warn{background:rgba(240,192,96,.08);color:#f0c060;}
+
+/* ===========================================================
+   OPTION B — APPLE FITNESS / WIDGET GRID
+   Clean modular cards, stats as rings, horizontal scroll
+   =========================================================== */
+.b-topbar{display:flex;align-items:center;justify-content:space-between;padding:4px 18px 6px;}
+.b-tb-left{display:flex;align-items:center;gap:10px;}
+.b-tb-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;font-family:'Outfit';}
+.lt .b-tb-av{background:#e8f4ef;color:#2d5245;}
+.dk .b-tb-av{background:rgba(95,206,160,.1);color:#5fcea0;border:1px solid rgba(95,206,160,.1);}
+.lt .b-tb-title{font-family:'Outfit';font-size:22px;font-weight:800;color:#1a1a1a;letter-spacing:-.6px;}
+.dk .b-tb-title{font-family:'Outfit';font-size:22px;font-weight:800;color:#fff;letter-spacing:-.6px;}
+.b-tb-right{display:flex;gap:6px;}
+.b-tb-btn{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;}
+.lt .b-tb-btn{background:#f5f3ee;border:1px solid #ece8e0;}
+.dk .b-tb-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);}
+.b-tb-btn svg{width:16px;height:16px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lt .b-tb-btn svg{stroke:#6b7280;}
+.dk .b-tb-btn svg{stroke:#555;}
+
+/* Date pill */
+.b-date-pill{margin:2px 18px 10px;display:inline-flex;padding:5px 12px;border-radius:8px;font-size:11px;font-weight:600;}
+.lt .b-date-pill{background:#f5f3ee;color:#6b7280;}
+.dk .b-date-pill{background:rgba(255,255,255,.04);color:#555;border:1px solid rgba(255,255,255,.04);}
+
+/* Stats row - horizontal rings */
+.b-stats{display:flex;gap:8px;padding:0 14px 10px;overflow-x:auto;}
+.b-stats::-webkit-scrollbar{display:none;}
+.b-stat{flex:0 0 auto;width:100px;padding:12px 10px;border-radius:16px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.lt .b-stat{background:#fff;border:1px solid #f0ede6;box-shadow:0 1px 4px rgba(0,0,0,.02);}
+.dk .b-stat{background:#161616;border:1px solid #1e1e1e;}
+.b-stat-ring{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;}
+.b-stat-ring::before{content:'';position:absolute;inset:0;border-radius:50%;border:3px solid;}
+.lt .b-stat-ring::before{border-color:#f0ede6;}
+.dk .b-stat-ring::before{border-color:#1e1e1e;}
+.b-stat-ring::after{content:'';position:absolute;inset:0;border-radius:50%;border:3px solid transparent;}
+.b-ring-green::after{border-top-color:#2d5245;border-right-color:#2d5245;border-bottom-color:#2d5245;}
+.dk .b-ring-green::after{border-top-color:#5fcea0;border-right-color:#5fcea0;border-bottom-color:#5fcea0;}
+.b-ring-half::after{border-top-color:#e85a2c;border-right-color:#e85a2c;}
+.dk .b-ring-half::after{border-top-color:#f0c060;border-right-color:#f0c060;}
+.b-ring-quarter::after{border-top-color:#5b3d8a;}
+.dk .b-ring-quarter::after{border-top-color:#b09cf0;}
+.b-stat-val{font-family:'Outfit';font-size:14px;font-weight:800;letter-spacing:-.5px;}
+.lt .b-stat-val{color:#1a1a1a;}
+.dk .b-stat-val{color:#fff;}
+.b-stat-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.lt .b-stat-lbl{color:#b0ada6;}
+.dk .b-stat-lbl{color:#555;}
+
+/* Section */
+.b-sec{padding:4px 18px 6px;display:flex;justify-content:space-between;align-items:center;}
+.lt .b-sec-title{font-family:'Outfit';font-size:16px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;}
+.dk .b-sec-title{font-family:'Outfit';font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.b-sec-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:5px;}
+.lt .b-sec-badge{background:#fee2e2;color:#dc2626;}
+.dk .b-sec-badge{background:rgba(245,100,100,.1);color:#f08080;}
+.lt .b-sec-link{font-size:11px;font-weight:600;color:#2d5245;}
+.dk .b-sec-link{font-size:11px;font-weight:600;color:#5fcea0;}
+
+/* Next Game widget */
+.b-next{margin:0 14px 10px;padding:14px;border-radius:18px;display:flex;gap:12px;align-items:center;}
+.lt .b-next{background:linear-gradient(135deg,#e8f4ef,#d3eade);border:1px solid #c5e0d3;}
+.dk .b-next{background:linear-gradient(135deg,#0f2a20,#1a3327);border:1px solid rgba(95,206,160,.1);}
+.b-next-img{width:64px;height:64px;border-radius:16px;overflow:hidden;flex-shrink:0;position:relative;}
+.b-next-img-bg{width:100%;height:100%;}
+.b-next-day{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.4);backdrop-filter:blur(2px);}
+.dk .b-next-day{background:rgba(0,0,0,.3);}
+.lt .b-next-dow{font-size:9px;font-weight:700;color:#2d5245;text-transform:uppercase;letter-spacing:.6px;}
+.dk .b-next-dow{font-size:9px;font-weight:700;color:#5fcea0;text-transform:uppercase;letter-spacing:.6px;}
+.lt .b-next-num{font-size:20px;font-weight:900;color:#1a3327;font-family:'Outfit';line-height:1;}
+.dk .b-next-num{font-size:20px;font-weight:900;color:#fff;font-family:'Outfit';line-height:1;}
+.b-next-info{flex:1;min-width:0;}
+.b-next-lbl{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:2px;}
+.lt .b-next-lbl{color:#5a9b85;}
+.dk .b-next-lbl{color:#5fcea0;}
+.lt .b-next-time{font-family:'Outfit';font-size:16px;font-weight:800;color:#1a3327;letter-spacing:-.3px;}
+.dk .b-next-time{font-family:'Outfit';font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.lt .b-next-name{font-size:12px;font-weight:600;color:#3d6b5b;margin-top:1px;}
+.dk .b-next-name{font-size:12px;font-weight:600;color:#80d0a8;margin-top:1px;}
+.b-next-loc{font-size:10px;margin-top:2px;display:flex;align-items:center;gap:3px;}
+.lt .b-next-loc{color:#6b917f;}
+.dk .b-next-loc{color:#446b58;}
+.b-next-loc svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;}
+.b-next-status{margin-top:4px;padding:4px 10px;border-radius:7px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px;}
+.lt .b-next-status{background:rgba(45,82,69,.12);color:#2d5245;}
+.dk .b-next-status{background:rgba(95,206,160,.1);color:#5fcea0;}
+.b-next-status svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Invite row */
+.b-inv{margin:0 14px 6px;padding:12px;border-radius:14px;display:flex;gap:10px;align-items:center;}
+.lt .b-inv{background:#fff;border:1px solid #f0ede6;}
+.dk .b-inv{background:#161616;border:1px solid #1e1e1e;}
+.b-inv-av{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;position:relative;overflow:hidden;}
+.b-inv-av-bg{width:100%;height:100%;position:absolute;inset:0;}
+.b-inv-av span{position:relative;z-index:1;}
+.b-inv-info{flex:1;min-width:0;}
+.lt .b-inv-name{font-size:13px;font-weight:700;color:#1a1a1a;}
+.dk .b-inv-name{font-size:13px;font-weight:700;color:#fff;}
+.lt .b-inv-meta{font-size:10px;color:#b0ada6;margin-top:1px;}
+.dk .b-inv-meta{font-size:10px;color:#444;margin-top:1px;}
+.b-inv-actions{display:flex;gap:5px;}
+.b-inv-yes{width:32px;height:32px;border-radius:10px;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.lt .b-inv-yes{background:#2d5245;}
+.dk .b-inv-yes{background:rgba(95,206,160,.12);border:1px solid rgba(95,206,160,.1);}
+.b-inv-yes svg{width:14px;height:14px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .b-inv-yes svg{stroke:#fff;}
+.dk .b-inv-yes svg{stroke:#5fcea0;}
+.b-inv-no{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;}
+.lt .b-inv-no{border:1.5px solid #ece8e0;}
+.dk .b-inv-no{border:1px solid #222;}
+.b-inv-no svg{width:14px;height:14px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lt .b-inv-no svg{stroke:#c0bdb6;}
+.dk .b-inv-no svg{stroke:#444;}
+
+/* Games horizontal scroll */
+.b-games-scroll{display:flex;gap:8px;padding:0 14px 10px;overflow-x:auto;}
+.b-games-scroll::-webkit-scrollbar{display:none;}
+.b-game-card{flex:0 0 auto;width:150px;border-radius:16px;overflow:hidden;}
+.lt .b-game-card{background:#fff;border:1px solid #f0ede6;box-shadow:0 1px 4px rgba(0,0,0,.02);}
+.dk .b-game-card{background:#161616;border:1px solid #1e1e1e;}
+.b-gc-img{width:100%;height:72px;position:relative;overflow:hidden;}
+.b-gc-date{position:absolute;top:6px;left:6px;padding:3px 7px;border-radius:6px;font-size:9px;font-weight:700;font-family:'Outfit';}
+.lt .b-gc-date{background:rgba(255,255,255,.8);color:#2d5245;backdrop-filter:blur(4px);}
+.dk .b-gc-date{background:rgba(0,0,0,.35);color:#eee;backdrop-filter:blur(4px);}
+.b-gc-body{padding:8px 10px 10px;}
+.lt .b-gc-time{font-family:'Outfit';font-size:12px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;}
+.dk .b-gc-time{font-family:'Outfit';font-size:12px;font-weight:700;color:#fff;letter-spacing:-.2px;}
+.lt .b-gc-name{font-size:11px;font-weight:500;color:#6b7280;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dk .b-gc-name{font-size:11px;font-weight:500;color:#555;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.b-gc-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+.b-gc-players{font-size:10px;font-weight:700;}
+.b-gc-pill{font-size:8px;font-weight:600;padding:2px 5px;border-radius:4px;}
+
+/* ===========================================================
+   OPTION C — BOLD MINIMAL / SPACE GROTESK MODERN
+   Heavy type, generous whitespace, accent line details
+   =========================================================== */
+.c-topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 4px;}
+.c-tb-left{display:flex;align-items:center;gap:10px;}
+.c-tb-logo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.lt .c-tb-logo{background:#2d5245;color:#fff;}
+.dk .c-tb-logo{background:linear-gradient(135deg,#3d6b5b,#5fcea0);color:#fff;}
+.lt .c-tb-brand{font-family:'Space Grotesk';font-size:17px;font-weight:700;color:#1a1a1a;letter-spacing:-.5px;}
+.dk .c-tb-brand{font-family:'Space Grotesk';font-size:17px;font-weight:700;color:#fff;letter-spacing:-.5px;}
+.c-tb-right{display:flex;gap:6px;align-items:center;}
+.c-tb-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;font-family:'Outfit';}
+.lt .c-tb-av{background:#f5f3ee;color:#6b7280;border:1.5px solid #ece8e0;}
+.dk .c-tb-av{background:rgba(255,255,255,.04);color:#888;border:1px solid rgba(255,255,255,.06);}
+.c-tb-bell{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;}
+.lt .c-tb-bell{background:#f5f3ee;border:1.5px solid #ece8e0;}
+.dk .c-tb-bell{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);}
+.c-tb-bell svg{width:14px;height:14px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lt .c-tb-bell svg{stroke:#6b7280;}
+.dk .c-tb-bell svg{stroke:#555;}
+.c-tb-bell-dot{position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:99px;}
+.lt .c-tb-bell-dot{background:#e85a2c;border:2px solid #faf9f6;}
+.dk .c-tb-bell-dot{background:#5fcea0;border:2px solid #0c0c0c;}
+
+/* Big greeting */
+.c-greeting{padding:14px 18px 6px;}
+.lt .c-greeting-txt{font-family:'Space Grotesk';font-size:30px;font-weight:700;color:#1a1a1a;letter-spacing:-1.2px;line-height:1.05;}
+.dk .c-greeting-txt{font-family:'Space Grotesk';font-size:30px;font-weight:700;color:#fff;letter-spacing:-1.2px;line-height:1.05;}
+.lt .c-greeting-txt span{color:#2d5245;}
+.dk .c-greeting-txt span{color:#5fcea0;}
+.c-sub-row{display:flex;gap:12px;margin-top:8px;}
+.c-sub-chip{padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;}
+.lt .c-sub-chip{background:#f5f3ee;color:#6b7280;}
+.dk .c-sub-chip{background:rgba(255,255,255,.04);color:#666;border:1px solid rgba(255,255,255,.04);}
+.c-sub-chip .num{font-weight:800;}
+.lt .c-sub-chip .num{color:#1a1a1a;}
+.dk .c-sub-chip .num{color:#fff;}
+
+/* Next game — full width prominent card with accent line */
+.c-next{margin:14px 14px 10px;border-radius:20px;overflow:hidden;position:relative;}
+.lt .c-next{background:#fff;border:1px solid #ece8e0;box-shadow:0 2px 12px rgba(0,0,0,.04);}
+.dk .c-next{background:#161616;border:1px solid #1e1e1e;}
+.c-next-accent{position:absolute;top:0;left:0;right:0;height:3px;}
+.lt .c-next-accent{background:linear-gradient(90deg,#2d5245,#5fcea0);}
+.dk .c-next-accent{background:linear-gradient(90deg,#5fcea0,#80d0a8);}
+.c-next-inner{display:flex;gap:12px;padding:16px 14px 14px;}
+.c-next-img{width:72px;height:72px;border-radius:16px;overflow:hidden;flex-shrink:0;position:relative;}
+.c-next-img-bg{width:100%;height:100%;}
+.c-next-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.lt .c-next-overlay{background:rgba(255,255,255,.4);backdrop-filter:blur(2px);}
+.dk .c-next-overlay{background:rgba(0,0,0,.3);backdrop-filter:blur(2px);}
+.lt .c-next-dow2{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#2d5245;}
+.dk .c-next-dow2{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#5fcea0;}
+.lt .c-next-d2{font-size:22px;font-weight:900;font-family:'Space Grotesk';color:#1a1a1a;line-height:1;letter-spacing:-1px;}
+.dk .c-next-d2{font-size:22px;font-weight:900;font-family:'Space Grotesk';color:#fff;line-height:1;letter-spacing:-1px;}
+.c-next-info{flex:1;min-width:0;}
+.c-next-lbl2{display:flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:3px;}
+.lt .c-next-lbl2{color:#5a9b85;}
+.dk .c-next-lbl2{color:#5fcea0;}
+.c-next-lbl2 .crown2{width:12px;height:12px;}
+.lt .c-next-time2{font-family:'Space Grotesk';font-size:18px;font-weight:700;color:#1a1a1a;letter-spacing:-.5px;}
+.dk .c-next-time2{font-family:'Space Grotesk';font-size:18px;font-weight:700;color:#fff;letter-spacing:-.5px;}
+.lt .c-next-name2{font-size:13px;font-weight:500;color:#3d6b5b;margin-top:1px;}
+.dk .c-next-name2{font-size:13px;font-weight:500;color:#5fcea0;margin-top:1px;}
+.c-next-loc2{font-size:10px;margin-top:3px;display:flex;align-items:center;gap:3px;}
+.lt .c-next-loc2{color:#9ca3af;}
+.dk .c-next-loc2{color:#444;}
+.c-next-loc2 svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2;}
+.c-next-bottom2{display:flex;justify-content:space-between;align-items:center;padding:0 14px 12px;}
+.c-next-avatars2{display:flex;}
+.c-next-av2{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;margin-right:-4px;}
+.lt .c-next-av2{border:2px solid #fff;}
+.dk .c-next-av2{border:2px solid #161616;}
+.c-next-status2{padding:5px 10px;border-radius:8px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:3px;}
+.c-next-status2 svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .c-next-st-ok{background:#e8f4ef;color:#2d5245;}
+.dk .c-next-st-ok{background:rgba(95,206,160,.1);color:#5fcea0;border:1px solid rgba(95,206,160,.08);}
+
+/* C Section */
+.c-sec{padding:6px 18px 5px;display:flex;justify-content:space-between;align-items:center;}
+.lt .c-sec-title{font-family:'Space Grotesk';font-size:16px;font-weight:700;color:#1a1a1a;letter-spacing:-.3px;}
+.dk .c-sec-title{font-family:'Space Grotesk';font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px;}
+.c-sec-cnt{font-size:9px;font-weight:700;padding:2px 6px;border-radius:99px;margin-left:4px;}
+.lt .c-sec-cnt{background:#fef3cd;color:#854d0e;}
+.dk .c-sec-cnt{background:rgba(240,192,96,.1);color:#f0c060;}
+.lt .c-sec-see{font-size:11px;font-weight:600;color:#2d5245;}
+.dk .c-sec-see{font-size:11px;font-weight:600;color:#5fcea0;}
+
+/* Invite - clean line card with left accent */
+.c-inv{margin:0 14px 6px;border-radius:14px;overflow:hidden;display:flex;}
+.lt .c-inv{background:#fff;border:1px solid #f0ede6;}
+.dk .c-inv{background:#161616;border:1px solid #1e1e1e;}
+.c-inv-accent{width:4px;flex-shrink:0;}
+.lt .c-inv-accent{background:linear-gradient(180deg,#f0c060,#e8a040);}
+.dk .c-inv-accent{background:linear-gradient(180deg,#f0c060,#e8a040);}
+.c-inv-body{flex:1;padding:10px 12px;display:flex;gap:10px;align-items:center;}
+.c-inv-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.lt .c-inv-icon{background:#f5f3ee;}
+.dk .c-inv-icon{background:rgba(255,255,255,.04);}
+.c-inv-info{flex:1;min-width:0;}
+.lt .c-inv-name{font-family:'Space Grotesk';font-size:13px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;}
+.dk .c-inv-name{font-family:'Space Grotesk';font-size:13px;font-weight:700;color:#fff;letter-spacing:-.2px;}
+.lt .c-inv-meta{font-size:10px;color:#9ca3af;margin-top:1px;}
+.dk .c-inv-meta{font-size:10px;color:#444;margin-top:1px;}
+.c-inv-btns{display:flex;gap:4px;}
+.c-inv-y{width:30px;height:30px;border-radius:8px;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.lt .c-inv-y{background:#2d5245;}
+.dk .c-inv-y{background:rgba(95,206,160,.12);border:1px solid rgba(95,206,160,.1);}
+.c-inv-y svg{width:12px;height:12px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .c-inv-y svg{stroke:#fff;}
+.dk .c-inv-y svg{stroke:#5fcea0;}
+.c-inv-x{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;}
+.lt .c-inv-x{border:1.5px solid #ece8e0;}
+.dk .c-inv-x{border:1px solid #222;}
+.c-inv-x svg{width:12px;height:12px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lt .c-inv-x svg{stroke:#c0bdb6;}
+.dk .c-inv-x svg{stroke:#444;}
+
+/* Coming up — clean timeline-style */
+.c-timeline{padding:0 14px 10px;}
+.c-tl-item{display:flex;gap:10px;position:relative;padding-bottom:8px;}
+.c-tl-line{position:absolute;left:23px;top:40px;bottom:0;width:1.5px;}
+.lt .c-tl-line{background:#ece8e0;}
+.dk .c-tl-line{background:#1e1e1e;}
+.c-tl-item:last-child .c-tl-line{display:none;}
+.c-tl-date{width:48px;flex-shrink:0;text-align:center;padding-top:4px;}
+.lt .c-tl-dow{font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;}
+.dk .c-tl-dow{font-size:9px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.5px;}
+.lt .c-tl-day{font-family:'Space Grotesk';font-size:20px;font-weight:700;color:#1a1a1a;letter-spacing:-.8px;line-height:1.1;}
+.dk .c-tl-day{font-family:'Space Grotesk';font-size:20px;font-weight:700;color:#fff;letter-spacing:-.8px;line-height:1.1;}
+.c-tl-card{flex:1;border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:center;}
+.lt .c-tl-card{background:#fff;border:1px solid #f0ede6;box-shadow:0 1px 3px rgba(0,0,0,.02);}
+.dk .c-tl-card{background:#161616;border:1px solid #1e1e1e;}
+.c-tl-thumb{width:40px;height:40px;border-radius:10px;overflow:hidden;flex-shrink:0;}
+.c-tl-thumb-bg{width:100%;height:100%;}
+.c-tl-info{flex:1;min-width:0;}
+.lt .c-tl-time{font-family:'Space Grotesk';font-size:12px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;}
+.dk .c-tl-time{font-family:'Space Grotesk';font-size:12px;font-weight:700;color:#fff;letter-spacing:-.2px;}
+.lt .c-tl-name{font-size:11px;font-weight:500;color:#3d6b5b;margin-top:1px;}
+.dk .c-tl-name{font-size:11px;font-weight:500;color:#5fcea0;margin-top:1px;}
+.c-tl-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;}
+.c-tl-cnt{font-size:11px;font-weight:800;letter-spacing:-.3px;}
+.c-tl-pill{font-size:8px;font-weight:600;padding:2px 5px;border-radius:4px;}
+</style>
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>Dashboard — 3 Options</h1>
+  <p>A: Editorial &middot; B: Widget Grid &middot; C: Bold Minimal</p>
+</div>
+<div class="mode-toggle">
+  <button class="mt-btn act" onclick="setMode('light')">Light Mode</button>
+  <button class="mt-btn" onclick="setMode('dark')">Dark Mode</button>
+</div>
+
+<div class="stage">
+
+<!-- ==================== OPTION A ==================== -->
+<div class="phone-wrap">
+<div class="phone-label">Option A <span>Editorial + Pastel</span></div>
+<div class="phone" data-mode="light" id="phoneA">
+<div class="notch"></div>
+<div class="lt" id="phoneA-inner" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="sbar"><span>9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+  <div class="scr">
+    <div class="a-topbar">
+      <div class="a-tb-left"><div class="a-tb-av">JR</div><div class="a-tb-greet"><div class="a-tb-hi">Good evening</div><div class="a-tb-name">Jake</div></div></div>
+      <div class="a-tb-right">
+        <div class="a-tb-btn"><svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+        <div class="a-tb-btn"><svg viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><div class="a-tb-bdg"></div></div>
+      </div>
+    </div>
+    <div class="a-hero"><div class="a-hero-date">Monday, April 14</div><div class="a-hero-greeting">Good evening,<br>Jake.</div><div class="a-hero-sub">3 games coming up &middot; 2 invites</div></div>
+    <div class="a-hcard">
+      <div class="a-hc-img gi-sage"><div class="a-hc-date"><span>SAT</span> 4/19</div><div class="a-hc-crown"><svg viewBox="0 0 16 16" fill="#d4a030"><path d="M2 12l2-6 3 3 1-5 1 5 3-3 2 6z"/></svg></div><div class="a-hc-players"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 4/4</div></div>
+      <div class="a-hc-body"><div class="a-hc-label">Next Game</div><div class="a-hc-time">2:00 PM – 4:00 PM</div><div class="a-hc-name">Saturday Mahjong</div><div class="a-hc-meta"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div>
+      <div class="a-hc-bottom"><div class="a-hc-avatars"><div class="a-hc-av" style="background:#c5e0d3;color:#2d5245;">JR</div><div class="a-hc-av" style="background:#F4C0D1;color:#993556;">LP</div><div class="a-hc-av" style="background:#f0d890;color:#7a5c2e;">MK</div><div class="a-hc-av" style="background:#c0d8ee;color:#1e40af;">SM</div></div><div class="a-hc-status a-hc-status-ok"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> You're in!</div></div></div>
+    </div>
+    <div class="a-sec"><div class="a-sec-top"><div style="display:flex;align-items:center;"><span class="a-sec-title">Invites</span><span class="a-sec-badge">2</span></div></div></div>
+    <div class="a-inv"><div class="a-inv-img gi-lavender"><div class="a-inv-lbl">Game Invite</div></div><div class="a-inv-body"><div class="a-inv-row"><div class="a-inv-av a-inv-av-g">MK</div><div class="a-inv-info"><div class="a-inv-name">Mike's Tuesday Game</div><div class="a-inv-meta">Tue, Apr 22 · 6:30 PM</div></div></div><div class="a-inv-btns"><button class="a-inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> Accept</button><button class="a-inv-n">Decline</button></div></div></div>
+    <div class="a-inv"><div class="a-inv-img gi-peach"><div class="a-inv-lbl">Open Game</div></div><div class="a-inv-body"><div class="a-inv-row"><div class="a-inv-av a-inv-av-p">RW</div><div class="a-inv-info"><div class="a-inv-name">Rachel's Open Game</div><div class="a-inv-meta">Thu, Apr 24 · 3:00 PM</div></div></div><div class="a-inv-btns"><button class="a-inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> Accept</button><button class="a-inv-n">Decline</button></div></div></div>
+    <div class="a-divider"></div>
+    <div class="a-sec" style="margin-top:10px;"><div class="a-sec-top"><div class="a-sec-title">Coming Up</div><div class="a-sec-link">See All</div></div></div>
+    <div class="a-up-list">
+      <div class="a-up"><div class="a-up-thumb"><div class="a-up-thumb-bg gi-lavender"></div><div class="a-up-overlay"><div class="a-up-mon">Apr</div><div class="a-up-day">21</div></div></div><div class="a-up-info"><div class="a-up-time">7:00 PM – 9:00 PM</div><div class="a-up-name">Lisa's Practice Game</div><div class="a-up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Lisa's Apartment</div></div><div class="a-up-right"><div class="a-up-pcount warn">3/4</div><div class="a-up-pill pill-warn">Needs 1</div></div></div>
+      <div class="a-up"><div class="a-up-thumb"><div class="a-up-thumb-bg gi-sky"></div><div class="a-up-overlay"><div class="a-up-mon">Apr</div><div class="a-up-day">26</div></div></div><div class="a-up-info"><div class="a-up-time">1:00 PM – 3:00 PM</div><div class="a-up-name">Weekend Warriors</div><div class="a-up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Jake's Place</div></div><div class="a-up-right"><div class="a-up-pcount ok">2/4</div><div class="a-up-pill pill-ok">Confirmed</div></div></div>
+      <div class="a-up"><div class="a-up-thumb"><div class="a-up-thumb-bg gi-sage"></div><div class="a-up-overlay"><div class="a-up-mon">May</div><div class="a-up-day">3</div></div></div><div class="a-up-info"><div class="a-up-time">2:00 PM – 4:00 PM</div><div class="a-up-name">Saturday Mahjong</div><div class="a-up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div></div><div class="a-up-right"><div class="a-up-pcount warn">1/4</div><div class="a-up-pill pill-warn">Needs 3</div></div></div>
+    </div>
+    <div style="height:100px;"></div>
+  </div>
+  <div class="tbar"><div class="tbar-bg"></div><div class="tbar-items"><div class="t act" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span>Home</span><div class="dot"></div></div><div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>Nearby</span></div><div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div><div class="t" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span>Games</span><div class="tbadge">4</div></div><div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div></div></div>
+</div>
+</div>
+</div>
+
+<!-- ==================== OPTION B ==================== -->
+<div class="phone-wrap">
+<div class="phone-label">Option B <span>Widget Grid / Apple Fitness</span></div>
+<div class="phone" data-mode="light" id="phoneB">
+<div class="notch"></div>
+<div class="lt" id="phoneB-inner" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="sbar"><span>9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+  <div class="scr">
+    <div class="b-topbar">
+      <div class="b-tb-left"><div class="b-tb-av">JR</div><div class="b-tb-title">Home</div></div>
+      <div class="b-tb-right">
+        <div class="b-tb-btn"><svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+        <div class="b-tb-btn" style="position:relative;"><svg viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><div class="a-tb-bdg" style="width:7px;height:7px;top:5px;right:5px;"></div></div>
+      </div>
+    </div>
+    <div class="b-date-pill">Mon, April 14</div>
+
+    <!-- Stats rings -->
+    <div class="b-stats">
+      <div class="b-stat"><div class="b-stat-ring b-ring-green"><div class="b-stat-val">7</div></div><div class="b-stat-lbl">Games</div></div>
+      <div class="b-stat"><div class="b-stat-ring b-ring-half"><div class="b-stat-val">3</div></div><div class="b-stat-lbl">Upcoming</div></div>
+      <div class="b-stat"><div class="b-stat-ring b-ring-quarter"><div class="b-stat-val">2</div></div><div class="b-stat-lbl">Groups</div></div>
+    </div>
+
+    <!-- Next game widget -->
+    <div class="b-sec"><div style="display:flex;align-items:center;"><span class="b-sec-title">Next Game</span></div></div>
+    <div class="b-next">
+      <div class="b-next-img"><div class="b-next-img-bg gi-sage"></div><div class="b-next-day"><div class="b-next-dow">SAT</div><div class="b-next-num">19</div></div></div>
+      <div class="b-next-info"><div class="b-next-lbl">&#9830; YOU'RE HOSTING</div><div class="b-next-time">2:00 – 4:00 PM</div><div class="b-next-name">Saturday Mahjong</div><div class="b-next-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St</div><div class="b-next-status"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> 4/4 Confirmed</div></div>
+    </div>
+
+    <!-- Invites -->
+    <div class="b-sec"><div style="display:flex;align-items:center;"><span class="b-sec-title">Invites</span><span class="b-sec-badge">2</span></div></div>
+    <div class="b-inv">
+      <div class="b-inv-av"><div class="b-inv-av-bg gi-lavender"></div><span style="position:relative;z-index:1;color:#5b3d8a;">MK</span></div>
+      <div class="b-inv-info"><div class="b-inv-name">Mike's Tuesday Game</div><div class="b-inv-meta">Tue, Apr 22 · 6:30 PM</div></div>
+      <div class="b-inv-actions"><button class="b-inv-yes"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg></button><button class="b-inv-no"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
+    </div>
+    <div class="b-inv">
+      <div class="b-inv-av"><div class="b-inv-av-bg gi-peach"></div><span style="position:relative;z-index:1;color:#7a5c2e;">RW</span></div>
+      <div class="b-inv-info"><div class="b-inv-name">Rachel's Open Game</div><div class="b-inv-meta">Thu, Apr 24 · 3:00 PM</div></div>
+      <div class="b-inv-actions"><button class="b-inv-yes"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg></button><button class="b-inv-no"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
+    </div>
+
+    <!-- Upcoming games scroll -->
+    <div class="b-sec" style="margin-top:4px;"><div style="display:flex;align-items:center;"><span class="b-sec-title">Coming Up</span></div><div class="b-sec-link">See All ›</div></div>
+    <div class="b-games-scroll">
+      <div class="b-game-card"><div class="b-gc-img gi-lavender"><div class="b-gc-date">Apr 21</div></div><div class="b-gc-body"><div class="b-gc-time">7:00 – 9:00 PM</div><div class="b-gc-name">Lisa's Practice Game</div><div class="b-gc-bottom"><div class="b-gc-players warn">3/4</div><div class="b-gc-pill pill-warn">Needs 1</div></div></div></div>
+      <div class="b-game-card"><div class="b-gc-img gi-sky"><div class="b-gc-date">Apr 26</div></div><div class="b-gc-body"><div class="b-gc-time">1:00 – 3:00 PM</div><div class="b-gc-name">Weekend Warriors</div><div class="b-gc-bottom"><div class="b-gc-players ok">2/4</div><div class="b-gc-pill pill-ok">Confirmed</div></div></div></div>
+      <div class="b-game-card"><div class="b-gc-img gi-sage"><div class="b-gc-date">May 3</div></div><div class="b-gc-body"><div class="b-gc-time">2:00 – 4:00 PM</div><div class="b-gc-name">Saturday Mahjong</div><div class="b-gc-bottom"><div class="b-gc-players warn">1/4</div><div class="b-gc-pill pill-warn">Needs 3</div></div></div></div>
+    </div>
+    <div style="height:100px;"></div>
+  </div>
+  <div class="tbar"><div class="tbar-bg"></div><div class="tbar-items"><div class="t act" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span>Home</span><div class="dot"></div></div><div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>Nearby</span></div><div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div><div class="t" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span>Games</span><div class="tbadge">4</div></div><div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div></div></div>
+</div>
+</div>
+</div>
+
+<!-- ==================== OPTION C ==================== -->
+<div class="phone-wrap">
+<div class="phone-label">Option C <span>Bold Minimal / Timeline</span></div>
+<div class="phone" data-mode="light" id="phoneC">
+<div class="notch"></div>
+<div class="lt" id="phoneC-inner" style="width:100%;height:100%;position:relative;overflow:hidden;">
+  <div class="sbar"><span>9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+  <div class="scr">
+    <div class="c-topbar">
+      <div class="c-tb-left"><div class="c-tb-logo">B</div><div class="c-tb-brand">BamBuddies</div></div>
+      <div class="c-tb-right">
+        <div class="c-tb-bell"><svg viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><div class="c-tb-bell-dot"></div></div>
+        <div class="c-tb-av">JR</div>
+      </div>
+    </div>
+
+    <!-- Big greeting -->
+    <div class="c-greeting">
+      <div class="c-greeting-txt">Hey <span>Jake</span>,<br>ready to play?</div>
+      <div class="c-sub-row">
+        <div class="c-sub-chip"><span class="num">3</span> upcoming</div>
+        <div class="c-sub-chip"><span class="num">2</span> invites</div>
+        <div class="c-sub-chip"><span class="num">2</span> groups</div>
+      </div>
+    </div>
+
+    <!-- Next game card with accent line -->
+    <div class="c-next">
+      <div class="c-next-accent"></div>
+      <div class="c-next-inner">
+        <div class="c-next-img"><div class="c-next-img-bg gi-sage"></div><div class="c-next-overlay"><div class="c-next-dow2">SAT</div><div class="c-next-d2">19</div></div></div>
+        <div class="c-next-info"><div class="c-next-lbl2"><svg viewBox="0 0 16 16" fill="#d4a030" width="12" height="12" class="crown2"><path d="M2 12l2-6 3 3 1-5 1 5 3-3 2 6z"/></svg> YOU'RE HOSTING</div><div class="c-next-time2">2:00 – 4:00 PM</div><div class="c-next-name2">Saturday Mahjong</div><div class="c-next-loc2"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div></div>
+      </div>
+      <div class="c-next-bottom2">
+        <div class="c-next-avatars2"><div class="c-next-av2" style="background:#c5e0d3;color:#2d5245;">JR</div><div class="c-next-av2" style="background:#F4C0D1;color:#993556;">LP</div><div class="c-next-av2" style="background:#f0d890;color:#7a5c2e;">MK</div><div class="c-next-av2" style="background:#c0d8ee;color:#1e40af;">SM</div></div>
+        <div class="c-next-status2 c-next-st-ok"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> 4/4 Full</div>
+      </div>
+    </div>
+
+    <!-- Invites with accent line -->
+    <div class="c-sec"><div style="display:flex;align-items:center;"><span class="c-sec-title">Invites</span><span class="c-sec-cnt">2</span></div></div>
+    <div class="c-inv"><div class="c-inv-accent"></div><div class="c-inv-body"><div class="c-inv-icon">🀄</div><div class="c-inv-info"><div class="c-inv-name">Mike's Tuesday Game</div><div class="c-inv-meta">Tue, Apr 22 · 6:30 PM · Mike K.</div></div><div class="c-inv-btns"><button class="c-inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg></button><button class="c-inv-x"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div></div></div>
+    <div class="c-inv"><div class="c-inv-accent"></div><div class="c-inv-body"><div class="c-inv-icon">🀄</div><div class="c-inv-info"><div class="c-inv-name">Rachel's Open Game</div><div class="c-inv-meta">Thu, Apr 24 · 3:00 PM · Open</div></div><div class="c-inv-btns"><button class="c-inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg></button><button class="c-inv-x"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div></div></div>
+
+    <!-- Timeline -->
+    <div class="c-sec" style="margin-top:6px;"><div style="display:flex;align-items:center;"><span class="c-sec-title">Coming Up</span></div><div class="c-sec-see">See All ›</div></div>
+    <div class="c-timeline">
+      <div class="c-tl-item"><div class="c-tl-date"><div class="c-tl-dow">Mon</div><div class="c-tl-day">21</div></div><div class="c-tl-line"></div><div class="c-tl-card"><div class="c-tl-thumb"><div class="c-tl-thumb-bg gi-lavender"></div></div><div class="c-tl-info"><div class="c-tl-time">7:00 – 9:00 PM</div><div class="c-tl-name">Lisa's Practice Game</div></div><div class="c-tl-right"><div class="c-tl-cnt warn">3/4</div><div class="c-tl-pill pill-warn">Needs 1</div></div></div></div>
+      <div class="c-tl-item"><div class="c-tl-date"><div class="c-tl-dow">Sat</div><div class="c-tl-day">26</div></div><div class="c-tl-line"></div><div class="c-tl-card"><div class="c-tl-thumb"><div class="c-tl-thumb-bg gi-sky"></div></div><div class="c-tl-info"><div class="c-tl-time">1:00 – 3:00 PM</div><div class="c-tl-name">Weekend Warriors</div></div><div class="c-tl-right"><div class="c-tl-cnt ok">2/4</div><div class="c-tl-pill pill-ok">Confirmed</div></div></div></div>
+      <div class="c-tl-item"><div class="c-tl-date"><div class="c-tl-dow">Sat</div><div class="c-tl-day">3</div></div><div class="c-tl-card"><div class="c-tl-thumb"><div class="c-tl-thumb-bg gi-sage"></div></div><div class="c-tl-info"><div class="c-tl-time">2:00 – 4:00 PM</div><div class="c-tl-name">Saturday Mahjong</div></div><div class="c-tl-right"><div class="c-tl-cnt warn">1/4</div><div class="c-tl-pill pill-warn">Needs 3</div></div></div></div>
+    </div>
+    <div style="height:100px;"></div>
+  </div>
+  <div class="tbar"><div class="tbar-bg"></div><div class="tbar-items"><div class="t act" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span>Home</span><div class="dot"></div></div><div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>Nearby</span></div><div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div><div class="t" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span>Games</span><div class="tbadge">4</div></div><div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div></div></div>
+</div>
+</div>
+</div>
+
+</div><!-- /stage -->
+
+<script>
+function setMode(mode){
+  document.querySelectorAll('.mt-btn').forEach(b=>{b.classList.remove('act');if(b.textContent.toLowerCase().includes(mode))b.classList.add('act');});
+  ['phoneA','phoneB','phoneC'].forEach(id=>{
+    const phone=document.getElementById(id);
+    const inner=document.getElementById(id+'-inner');
+    phone.dataset.mode=mode;
+    if(mode==='dark'){inner.className='dk';inner.style.cssText='width:100%;height:100%;position:relative;overflow:hidden;';}
+    else{inner.className='lt';inner.style.cssText='width:100%;height:100%;position:relative;overflow:hidden;';}
+  });
+}
+</script>
+</body>
+</html>

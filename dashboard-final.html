@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Dashboard Final Direction</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:#08080a;color:#fff;min-height:100vh;}
+.page-hdr{text-align:center;padding:50px 20px 10px;}
+.page-hdr h1{font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;color:#fff;letter-spacing:-.8px;}
+.page-hdr p{color:#555;font-size:13px;margin-top:4px;}
+.views-nav{display:flex;justify-content:center;gap:8px;padding:16px 20px;max-width:600px;margin:0 auto;}
+.vb{padding:10px 20px;border-radius:12px;border:1.5px solid #1a1a1a;background:#111;color:#666;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;}
+.vb:hover{border-color:#2a2a2a;color:#aaa;}
+.vb.act{background:linear-gradient(135deg,#0f2a20,#0a1a14);border-color:#2d5245;color:#5fcea0;}
+.stage{display:flex;justify-content:center;padding:24px 20px 80px;}
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 0 0 1px #111,0 40px 100px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.02);}
+.notch{width:126px;height:36px;background:#000;border-radius:20px;position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:90;}
+.sw{display:none;width:100%;height:100%;position:relative;overflow:hidden;}
+.sw.vis{display:block;}
+.sbar{height:54px;padding:14px 30px 0;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;position:relative;z-index:10;}
+.sbar .r{font-size:12px;display:flex;gap:5px;align-items:center;opacity:.5;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:5;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* ===== TAB BAR ===== */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:88px;z-index:40;}
+.tbar-bg{position:absolute;bottom:0;left:0;right:0;height:83px;}
+.tbar-items{position:relative;display:flex;align-items:flex-start;padding-top:10px;height:83px;z-index:2;width:100%;}
+.tbar .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;padding-bottom:34px;}
+.tbar .t svg{width:22px;height:22px;}
+.tbar .t .dot{width:4px;height:4px;border-radius:99px;margin-top:1px;}
+.tbar .t .tbadge{position:absolute;top:-4px;right:calc(50% - 18px);min-width:16px;height:16px;border-radius:99px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+.tbar .cb{flex:1;display:flex;justify-content:center;position:relative;}
+.tbar .pb{width:58px;height:58px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:-22px;box-shadow:0 6px 24px rgba(0,0,0,.2);}
+.tbar .pb svg{width:26px;height:26px;}
+.tbar .pl{position:absolute;top:42px;font-size:9px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;}
+
+/* Light tab */
+.lt .tbar-bg{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-top:1px solid #ece8e0;}
+.lt .tbar .t{color:#c0bdb6;}
+.lt .tbar .t.act{color:#2d5245;}
+.lt .tbar .t .dot{background:#2d5245;}
+.lt .tbar .t .tbadge{background:#e85a2c;color:#fff;}
+.lt .tbar .pb{background:#2d5245;}
+.lt .tbar .pl{color:#2d5245;}
+/* Dark tab */
+.dk .tbar-bg{background:rgba(15,15,15,.92);backdrop-filter:blur(30px);border-top:1px solid #1a1a1a;}
+.dk .tbar .t{color:#444;}
+.dk .tbar .t.act{color:#5fcea0;}
+.dk .tbar .t .dot{background:#5fcea0;}
+.dk .tbar .t .tbadge{background:#5fcea0;color:#0a1a14;}
+.dk .tbar .pb{background:linear-gradient(145deg,#3d6b5b,#5fcea0);}
+.dk .tbar .pl{color:#5fcea0;}
+
+/* ===== PASTEL GAME IMAGES ===== */
+.gi-sage{background:linear-gradient(145deg,#c5e0d3,#a8d5c2,#d3eade);position:relative;}
+.gi-sage::after{content:'';position:absolute;inset:0;opacity:.35;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect x='8' y='8' width='44' height='44' rx='6' fill='none' stroke='%232d5245' stroke-width='1.2' opacity='.18'/%3E%3Crect x='16' y='16' width='28' height='28' rx='4' fill='none' stroke='%232d5245' stroke-width='.8' opacity='.12'/%3E%3C/svg%3E") repeat;}
+.gi-lavender{background:linear-gradient(145deg,#d8cef0,#c5b8e8,#e2daf5);position:relative;}
+.gi-lavender::after{content:'';position:absolute;inset:0;opacity:.35;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect x='8' y='8' width='44' height='44' rx='6' fill='none' stroke='%235b3d8a' stroke-width='1.2' opacity='.15'/%3E%3Crect x='16' y='16' width='28' height='28' rx='4' fill='none' stroke='%235b3d8a' stroke-width='.8' opacity='.1'/%3E%3C/svg%3E") repeat;}
+.gi-peach{background:linear-gradient(145deg,#f0dcc8,#e8d0b8,#f5e4d2);position:relative;}
+.gi-peach::after{content:'';position:absolute;inset:0;opacity:.35;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect x='8' y='8' width='44' height='44' rx='6' fill='none' stroke='%237a5c2e' stroke-width='1.2' opacity='.15'/%3E%3Crect x='16' y='16' width='28' height='28' rx='4' fill='none' stroke='%237a5c2e' stroke-width='.8' opacity='.1'/%3E%3C/svg%3E") repeat;}
+.gi-sky{background:linear-gradient(145deg,#c0d8ee,#a8c8e0,#d0e2f2);position:relative;}
+.gi-sky::after{content:'';position:absolute;inset:0;opacity:.35;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect x='8' y='8' width='44' height='44' rx='6' fill='none' stroke='%231e40af' stroke-width='1.2' opacity='.15'/%3E%3Crect x='16' y='16' width='28' height='28' rx='4' fill='none' stroke='%231e40af' stroke-width='.8' opacity='.1'/%3E%3C/svg%3E") repeat;}
+
+/* Decorative tile icons on images */
+.gi-deco{position:absolute;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:.12;z-index:1;}
+.gi-deco2{position:absolute;display:flex;align-items:center;justify-content:center;font-size:28px;opacity:.08;z-index:1;}
+
+/* ============================================================
+   LIGHT THEME
+   ============================================================ */
+.lt{background:#faf9f6;}
+.lt .sbar{color:#1a1a1a;}
+
+/* Top bar */
+.lt .topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 10px;}
+.lt .tb-left{display:flex;align-items:center;gap:10px;}
+.lt .tb-av{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;color:#2d5245;font-weight:800;font-size:14px;font-family:'Outfit';}
+.lt .tb-greet{font-family:'Outfit',sans-serif;}
+.lt .tb-hi{font-size:12px;color:#b0ada6;font-weight:400;}
+.lt .tb-name{font-size:18px;font-weight:800;color:#1a1a1a;letter-spacing:-.5px;}
+.lt .tb-right{display:flex;gap:8px;}
+.lt .tb-btn{width:40px;height:40px;border-radius:13px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.05);position:relative;border:1px solid #f0ede6;}
+.lt .tb-btn svg{width:18px;height:18px;stroke:#9ca3af;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lt .tb-bdg{position:absolute;top:6px;right:6px;width:9px;height:9px;border-radius:99px;background:#e85a2c;border:2px solid #faf9f6;}
+
+/* Editorial greeting */
+.lt .hero{padding:8px 20px 14px;}
+.lt .hero-date{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#b0ada6;margin-bottom:6px;}
+.lt .hero-greeting{font-family:'DM Serif Display',Georgia,serif;font-size:32px;color:#1a1a1a;line-height:1.1;margin-bottom:4px;}
+.lt .hero-sub{font-size:13px;color:#b0ada6;font-weight:400;}
+
+/* === HERO NEXT GAME — image on top, content below (like competitor) === */
+.lt .hero-card{margin:12px 16px 14px;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.04);border:1px solid #ece8e0;}
+.lt .hc-img{width:100%;height:140px;position:relative;overflow:hidden;}
+.lt .hc-date{position:absolute;top:10px;left:10px;padding:5px 10px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;color:#2d5245;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);letter-spacing:.3px;}
+.lt .hc-date span{font-weight:500;opacity:.5;margin-right:3px;}
+.lt .hc-crown{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;}
+.lt .hc-crown svg{width:16px;height:16px;}
+.lt .hc-players-pill{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:9px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);font-size:12px;font-weight:700;color:#2d5245;}
+.lt .hc-players-pill svg{width:14px;height:14px;stroke:#2d5245;fill:none;stroke-width:2;}
+.lt .hc-body{padding:14px 16px 12px;}
+.lt .hc-label{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#5a9b85;margin-bottom:6px;}
+.lt .hc-label::before{content:'';width:6px;height:6px;border-radius:99px;background:#5a9b85;}
+.lt .hc-time{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:#1a1a1a;letter-spacing:-.5px;margin-bottom:2px;}
+.lt .hc-name{font-size:14px;font-weight:600;color:#3d6b5b;margin-bottom:6px;}
+.lt .hc-meta{font-size:12px;color:#9ca3af;display:flex;align-items:center;gap:5px;margin-bottom:3px;}
+.lt .hc-meta svg{width:13px;height:13px;stroke:#b0ada6;fill:none;stroke-width:2;}
+.lt .hc-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #f5f3ee;}
+.lt .hc-avatars{display:flex;}
+.lt .hc-av{width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-right:-5px;border:2px solid #fff;}
+.lt .hc-status{padding:7px 14px;border-radius:10px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px;}
+.lt .hc-status svg{width:14px;height:14px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .hc-status-ok{background:#e8f4ef;color:#2d5245;}
+.lt .hc-status-ok svg{stroke:#2d5245;}
+
+/* === SECTION HEADERS === */
+.lt .sec{padding:4px 20px 8px;}
+.lt .sec-top{display:flex;justify-content:space-between;align-items:baseline;}
+.lt .sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:#1a1a1a;}
+.lt .sec-badge{font-size:10px;font-weight:700;color:#fff;background:#e85a2c;padding:2px 8px;border-radius:99px;margin-left:8px;}
+.lt .sec-link{font-size:12px;font-weight:600;color:#3d6b5b;}
+.lt .divider{height:1px;background:#ece8e0;margin:4px 20px 0;}
+
+/* === INVITE CARDS — image + content separated === */
+.lt .inv-card{margin:0 16px 10px;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.04);border:1px solid #ece8e0;}
+.lt .inv-img{width:100%;height:68px;position:relative;overflow:hidden;}
+.lt .inv-img-label{position:absolute;bottom:8px;left:10px;padding:3px 9px;border-radius:7px;font-size:10px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;background:rgba(0,0,0,.3);backdrop-filter:blur(8px);display:flex;align-items:center;gap:5px;}
+.lt .inv-img-label::before{content:'';width:6px;height:6px;border-radius:99px;background:#f0c060;animation:invp 2s infinite;}
+@keyframes invp{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.4);}}
+.lt .inv-body{padding:12px 14px;}
+.lt .inv-row{display:flex;gap:10px;align-items:center;}
+.lt .inv-av{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;}
+.lt .inv-av-g{background:#e8f4ef;color:#2d5245;}
+.lt .inv-av-p{background:#f5e8ef;color:#8a3d5b;}
+.lt .inv-info{flex:1;min-width:0;}
+.lt .inv-name{font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;}
+.lt .inv-meta{font-size:11px;color:#b0ada6;margin-top:1px;}
+.lt .inv-btns{display:flex;gap:6px;margin-top:10px;}
+.lt .inv-y{flex:1;padding:9px;border-radius:11px;border:none;background:#2d5245;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;}
+.lt .inv-y svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.lt .inv-n{flex:1;padding:9px;border-radius:11px;border:1.5px solid #ece8e0;background:transparent;color:#b0ada6;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+
+/* === UPCOMING — compact image-thumbnail rows === */
+.lt .up-list{padding:0 16px;}
+.lt .up-card{display:flex;gap:12px;align-items:center;padding:12px;border-radius:16px;background:#fff;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.03);border:1px solid #f0ede6;}
+.lt .up-thumb{width:56px;height:56px;border-radius:14px;flex-shrink:0;position:relative;overflow:hidden;}
+.lt .up-thumb-bg{width:100%;height:100%;}
+.lt .up-date-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.55);backdrop-filter:blur(3px);}
+.lt .up-mon{font-size:9px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;}
+.lt .up-day{font-size:18px;font-weight:900;color:#1a1a1a;letter-spacing:-1px;font-family:'Outfit',sans-serif;line-height:1;}
+.lt .up-crown-sm{position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-radius:5px;background:#fff;border:1.5px solid #ece8e0;display:flex;align-items:center;justify-content:center;}
+.lt .up-crown-sm svg{width:9px;height:9px;}
+.lt .up-info{flex:1;min-width:0;}
+.lt .up-time{font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;}
+.lt .up-name{font-size:13px;font-weight:600;color:#3d6b5b;margin-top:1px;}
+.lt .up-loc{font-size:11px;color:#b0ada6;margin-top:2px;display:flex;align-items:center;gap:3px;}
+.lt .up-loc svg{width:11px;height:11px;stroke:#c0bdb6;fill:none;stroke-width:2;}
+.lt .up-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.lt .up-players{font-size:13px;font-weight:800;letter-spacing:-.3px;}
+.lt .up-players-ok{color:#2d5245;}
+.lt .up-players-warn{color:#854f0b;}
+.lt .up-status{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;}
+.lt .up-status-ok{background:#e8f4ef;color:#3d6b5b;}
+.lt .up-status-warn{background:#faeeda;color:#7a5c2e;}
+
+/* ============================================================
+   DARK THEME
+   ============================================================ */
+.dk{background:#0c0c0c;}
+.dk .sbar{color:#fff;}
+
+.dk .topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 10px;}
+.dk .tb-left{display:flex;align-items:center;gap:10px;}
+.dk .tb-av{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#1a3327,#2d5245);display:flex;align-items:center;justify-content:center;color:#5fcea0;font-weight:800;font-size:14px;font-family:'Outfit';border:1px solid rgba(95,206,160,.15);}
+.dk .tb-greet{font-family:'Outfit',sans-serif;}
+.dk .tb-hi{font-size:12px;color:#555;font-weight:400;}
+.dk .tb-name{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.5px;}
+.dk .tb-right{display:flex;gap:8px;}
+.dk .tb-btn{width:40px;height:40px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;position:relative;}
+.dk .tb-btn svg{width:18px;height:18px;stroke:#555;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.dk .tb-bdg{position:absolute;top:6px;right:6px;width:9px;height:9px;border-radius:99px;background:#5fcea0;border:2px solid #0c0c0c;}
+
+.dk .hero{padding:8px 20px 14px;}
+.dk .hero-date{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:6px;}
+.dk .hero-greeting{font-family:'DM Serif Display',Georgia,serif;font-size:32px;color:#f0ede6;line-height:1.1;margin-bottom:4px;}
+.dk .hero-sub{font-size:13px;color:#555;font-weight:400;}
+
+/* Dark hero card */
+.dk .hero-card{margin:12px 16px 14px;border-radius:22px;overflow:hidden;background:#161616;border:1px solid #1e1e1e;}
+.dk .hc-img{width:100%;height:140px;position:relative;overflow:hidden;}
+/* Dark pastel images are muted */
+.dk .gi-sage{background:linear-gradient(145deg,#1a3327,#253f33,#1a3327);}
+.dk .gi-lavender{background:linear-gradient(145deg,#251a33,#332548,#251a33);}
+.dk .gi-peach{background:linear-gradient(145deg,#332b1a,#483c22,#332b1a);}
+.dk .gi-sky{background:linear-gradient(145deg,#1a2a3a,#253848,#1a2a3a);}
+.dk .hc-date{position:absolute;top:10px;left:10px;padding:5px 10px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;color:#eee;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);letter-spacing:.3px;}
+.dk .hc-date span{font-weight:500;opacity:.5;margin-right:3px;}
+.dk .hc-crown{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:10px;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;}
+.dk .hc-crown svg{width:16px;height:16px;}
+.dk .hc-players-pill{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:9px;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);font-size:12px;font-weight:700;color:#5fcea0;}
+.dk .hc-players-pill svg{width:14px;height:14px;stroke:#5fcea0;fill:none;stroke-width:2;}
+.dk .hc-body{padding:14px 16px 12px;}
+.dk .hc-label{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#5fcea0;margin-bottom:6px;}
+.dk .hc-label::before{content:'';width:6px;height:6px;border-radius:99px;background:#5fcea0;}
+.dk .hc-time{font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:2px;}
+.dk .hc-name{font-size:14px;font-weight:600;color:#5fcea0;margin-bottom:6px;}
+.dk .hc-meta{font-size:12px;color:#555;display:flex;align-items:center;gap:5px;margin-bottom:3px;}
+.dk .hc-meta svg{width:13px;height:13px;stroke:#444;fill:none;stroke-width:2;}
+.dk .hc-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid #1e1e1e;}
+.dk .hc-avatars{display:flex;}
+.dk .hc-av{width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-right:-5px;border:2px solid #161616;}
+.dk .hc-status{padding:7px 14px;border-radius:10px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px;}
+.dk .hc-status svg{width:14px;height:14px;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.dk .hc-status-ok{background:rgba(95,206,160,.1);color:#5fcea0;border:1px solid rgba(95,206,160,.1);}
+.dk .hc-status-ok svg{stroke:#5fcea0;}
+
+.dk .sec{padding:4px 20px 8px;}
+.dk .sec-top{display:flex;justify-content:space-between;align-items:baseline;}
+.dk .sec-title{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:#f0ede6;}
+.dk .sec-badge{font-size:10px;font-weight:700;color:#0a1a14;background:#5fcea0;padding:2px 8px;border-radius:99px;margin-left:8px;}
+.dk .sec-link{font-size:12px;font-weight:600;color:#5fcea0;}
+.dk .divider{height:1px;background:#1a1a1a;margin:4px 20px 0;}
+
+/* Dark invites */
+.dk .inv-card{margin:0 16px 10px;border-radius:18px;overflow:hidden;background:#161616;border:1px solid #1e1e1e;}
+.dk .inv-img{width:100%;height:68px;position:relative;overflow:hidden;}
+.dk .inv-img-label{position:absolute;bottom:8px;left:10px;padding:3px 9px;border-radius:7px;font-size:10px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);display:flex;align-items:center;gap:5px;}
+.dk .inv-img-label::before{content:'';width:6px;height:6px;border-radius:99px;background:#f0c060;animation:invp 2s infinite;}
+.dk .inv-body{padding:12px 14px;}
+.dk .inv-row{display:flex;gap:10px;align-items:center;}
+.dk .inv-av{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;}
+.dk .inv-av-g{background:rgba(95,206,160,.1);color:#5fcea0;}
+.dk .inv-av-p{background:rgba(200,140,180,.1);color:#e8a0c8;}
+.dk .inv-info{flex:1;min-width:0;}
+.dk .inv-name{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.2px;}
+.dk .inv-meta{font-size:11px;color:#444;margin-top:1px;}
+.dk .inv-btns{display:flex;gap:6px;margin-top:10px;}
+.dk .inv-y{flex:1;padding:9px;border-radius:11px;border:none;background:rgba(95,206,160,.12);border:1px solid rgba(95,206,160,.12);color:#5fcea0;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;}
+.dk .inv-y svg{width:14px;height:14px;fill:none;stroke:#5fcea0;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.dk .inv-n{flex:1;padding:9px;border-radius:11px;border:1px solid #222;background:transparent;color:#555;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+
+/* Dark upcoming */
+.dk .up-list{padding:0 16px;}
+.dk .up-card{display:flex;gap:12px;align-items:center;padding:12px;border-radius:16px;background:#161616;margin-bottom:8px;border:1px solid #1e1e1e;}
+.dk .up-thumb{width:56px;height:56px;border-radius:14px;flex-shrink:0;position:relative;overflow:hidden;}
+.dk .up-thumb-bg{width:100%;height:100%;}
+.dk .up-date-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.4);backdrop-filter:blur(3px);}
+.dk .up-mon{font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;}
+.dk .up-day{font-size:18px;font-weight:900;color:#fff;letter-spacing:-1px;font-family:'Outfit',sans-serif;line-height:1;}
+.dk .up-crown-sm{position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-radius:5px;background:#1e1e1e;border:1.5px solid #2a2a2a;display:flex;align-items:center;justify-content:center;}
+.dk .up-crown-sm svg{width:9px;height:9px;}
+.dk .up-info{flex:1;min-width:0;}
+.dk .up-time{font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.dk .up-name{font-size:13px;font-weight:600;color:#5fcea0;margin-top:1px;}
+.dk .up-loc{font-size:11px;color:#444;margin-top:2px;display:flex;align-items:center;gap:3px;}
+.dk .up-loc svg{width:11px;height:11px;stroke:#444;fill:none;stroke-width:2;}
+.dk .up-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.dk .up-players{font-size:13px;font-weight:800;letter-spacing:-.3px;}
+.dk .up-players-ok{color:#5fcea0;}
+.dk .up-players-warn{color:#f0c060;}
+.dk .up-status{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;}
+.dk .up-status-ok{background:rgba(95,206,160,.1);color:#5fcea0;}
+.dk .up-status-warn{background:rgba(240,192,96,.08);color:#f0c060;}
+</style>
+</head>
+<body>
+
+<div class="page-hdr">
+  <h1>Editorial + Pastel + Competitor</h1>
+  <p>Lighter, airier — image and content separated</p>
+</div>
+
+<div class="views-nav">
+  <button class="vb act" data-v="light">Light Mode</button>
+  <button class="vb" data-v="dark">Dark Mode</button>
+</div>
+
+<div class="stage">
+<div class="phone">
+<div class="notch"></div>
+
+<!-- ====== LIGHT ====== -->
+<div class="sw lt vis" id="v-light">
+  <div class="sbar"><span>9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+  <div class="scr">
+
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-av">JR</div>
+        <div class="tb-greet"><div class="tb-hi">Good evening</div><div class="tb-name">Jake</div></div>
+      </div>
+      <div class="tb-right">
+        <div class="tb-btn"><svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+        <div class="tb-btn"><svg viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><div class="tb-bdg"></div></div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-date">Monday, April 14</div>
+      <div class="hero-greeting">Good evening,<br>Jake.</div>
+      <div class="hero-sub">3 games coming up &middot; 2 invites</div>
+    </div>
+
+    <!-- Hero next game -->
+    <div class="hero-card">
+      <div class="hc-img gi-sage">
+        <div class="gi-deco" style="top:15px;right:25px;">&#127136;</div>
+        <div class="gi-deco2" style="bottom:10px;left:20px;">&#126980;</div>
+        <div class="gi-deco2" style="top:40px;left:50%;opacity:.06;">&#127136;</div>
+        <div class="hc-date"><span>SAT</span> 4/19</div>
+        <div class="hc-crown"><svg viewBox="0 0 16 16" fill="#d4a030"><path d="M2 12l2-6 3 3 1-5 1 5 3-3 2 6z"/></svg></div>
+        <div class="hc-players-pill"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 4/4</div>
+      </div>
+      <div class="hc-body">
+        <div class="hc-label">Next Game</div>
+        <div class="hc-time">2:00 PM &ndash; 4:00 PM</div>
+        <div class="hc-name">Saturday Mahjong</div>
+        <div class="hc-meta"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div>
+        <div class="hc-bottom">
+          <div class="hc-avatars">
+            <div class="hc-av" style="background:#c5e0d3;color:#2d5245;">JR</div>
+            <div class="hc-av" style="background:#F4C0D1;color:#993556;">LP</div>
+            <div class="hc-av" style="background:#f0d890;color:#7a5c2e;">MK</div>
+            <div class="hc-av" style="background:#c0d8ee;color:#1e40af;">SM</div>
+          </div>
+          <div class="hc-status hc-status-ok"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> You're in!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invites -->
+    <div class="sec">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;"><span class="sec-title">Invites</span><span class="sec-badge">2</span></div>
+      </div>
+    </div>
+
+    <div class="inv-card">
+      <div class="inv-img gi-lavender">
+        <div class="gi-deco" style="top:5px;right:15px;opacity:.08;">&#127136;</div>
+        <div class="inv-img-label">Game Invite</div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-row">
+          <div class="inv-av inv-av-g">MK</div>
+          <div class="inv-info"><div class="inv-name">Mike's Tuesday Game</div><div class="inv-meta">Tue, Apr 22 &middot; 6:30 PM &middot; Mike K.</div></div>
+        </div>
+        <div class="inv-btns">
+          <button class="inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> Accept</button>
+          <button class="inv-n">Decline</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="inv-card">
+      <div class="inv-img gi-peach">
+        <div class="gi-deco" style="top:5px;right:20px;opacity:.08;">&#126980;</div>
+        <div class="inv-img-label">Open Game</div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-row">
+          <div class="inv-av inv-av-p">RW</div>
+          <div class="inv-info"><div class="inv-name">Rachel's Open Game</div><div class="inv-meta">Thu, Apr 24 &middot; 3:00 PM &middot; Open to all</div></div>
+        </div>
+        <div class="inv-btns">
+          <button class="inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> Accept</button>
+          <button class="inv-n">Decline</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Coming Up -->
+    <div class="sec" style="margin-top:14px;">
+      <div class="sec-top">
+        <div class="sec-title">Coming Up</div>
+        <div class="sec-link">See All</div>
+      </div>
+    </div>
+
+    <div class="up-list">
+      <div class="up-card">
+        <div class="up-thumb">
+          <div class="up-thumb-bg gi-lavender"></div>
+          <div class="up-date-overlay"><div class="up-mon">Apr</div><div class="up-day">21</div></div>
+        </div>
+        <div class="up-info">
+          <div class="up-time">7:00 PM &ndash; 9:00 PM</div>
+          <div class="up-name">Lisa's Practice Game</div>
+          <div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Lisa's Apartment</div>
+        </div>
+        <div class="up-right">
+          <div class="up-players up-players-warn">3/4</div>
+          <div class="up-status up-status-warn">Needs 1</div>
+        </div>
+      </div>
+
+      <div class="up-card">
+        <div class="up-thumb">
+          <div class="up-thumb-bg gi-sky"></div>
+          <div class="up-date-overlay"><div class="up-mon">Apr</div><div class="up-day">26</div></div>
+          <div class="up-crown-sm"><svg viewBox="0 0 10 10" fill="#d4a030"><path d="M1 8l1.5-4 2 2 .5-3.5.5 3.5 2-2L9 8z"/></svg></div>
+        </div>
+        <div class="up-info">
+          <div class="up-time">1:00 PM &ndash; 3:00 PM</div>
+          <div class="up-name">Weekend Warriors</div>
+          <div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Jake's Place</div>
+        </div>
+        <div class="up-right">
+          <div class="up-players up-players-ok">2/4</div>
+          <div class="up-status up-status-ok">Confirmed</div>
+        </div>
+      </div>
+
+      <div class="up-card">
+        <div class="up-thumb">
+          <div class="up-thumb-bg gi-sage"></div>
+          <div class="up-date-overlay"><div class="up-mon">May</div><div class="up-day">3</div></div>
+        </div>
+        <div class="up-info">
+          <div class="up-time">2:00 PM &ndash; 4:00 PM</div>
+          <div class="up-name">Saturday Mahjong</div>
+          <div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div>
+        </div>
+        <div class="up-right">
+          <div class="up-players up-players-warn">1/4</div>
+          <div class="up-status up-status-warn">Needs 3</div>
+        </div>
+      </div>
+    </div>
+    <div style="height:100px;"></div>
+  </div>
+
+  <div class="tbar">
+    <div class="tbar-bg"></div>
+    <div class="tbar-items">
+      <div class="t act" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span>Home</span><div class="dot"></div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>Nearby</span></div>
+      <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div>
+      <div class="t" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span>Games</span><div class="tbadge">4</div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== DARK ====== -->
+<div class="sw dk" id="v-dark">
+  <div class="sbar"><span>9:41</span><span class="r">&#9679;&#9679;&#9679;&#9679; &#128267;</span></div>
+  <div class="scr">
+    <div class="topbar">
+      <div class="tb-left">
+        <div class="tb-av">JR</div>
+        <div class="tb-greet"><div class="tb-hi">Good evening</div><div class="tb-name">Jake</div></div>
+      </div>
+      <div class="tb-right">
+        <div class="tb-btn"><svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+        <div class="tb-btn"><svg viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><div class="tb-bdg"></div></div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-date">Monday, April 14</div>
+      <div class="hero-greeting">Good evening,<br>Jake.</div>
+      <div class="hero-sub">3 games coming up &middot; 2 invites</div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hc-img gi-sage">
+        <div class="gi-deco" style="top:15px;right:25px;color:#5fcea0;">&#127136;</div>
+        <div class="gi-deco2" style="bottom:10px;left:20px;color:#5fcea0;">&#126980;</div>
+        <div class="hc-date"><span>SAT</span> 4/19</div>
+        <div class="hc-crown"><svg viewBox="0 0 16 16" fill="#f0c060"><path d="M2 12l2-6 3 3 1-5 1 5 3-3 2 6z"/></svg></div>
+        <div class="hc-players-pill"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 4/4</div>
+      </div>
+      <div class="hc-body">
+        <div class="hc-label">Next Game</div>
+        <div class="hc-time">2:00 PM &ndash; 4:00 PM</div>
+        <div class="hc-name">Saturday Mahjong</div>
+        <div class="hc-meta"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div>
+        <div class="hc-bottom">
+          <div class="hc-avatars">
+            <div class="hc-av" style="background:#1a3327;color:#5fcea0;border-color:#1a3327;">JR</div>
+            <div class="hc-av" style="background:#3a1a2a;color:#e8a0c8;border-color:#161616;">LP</div>
+            <div class="hc-av" style="background:#332b1a;color:#f0c060;border-color:#161616;">MK</div>
+            <div class="hc-av" style="background:#1a2a3a;color:#80c0e8;border-color:#161616;">SM</div>
+          </div>
+          <div class="hc-status hc-status-ok"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> You're in!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-top">
+        <div style="display:flex;align-items:center;"><span class="sec-title">Invites</span><span class="sec-badge">2</span></div>
+      </div>
+    </div>
+
+    <div class="inv-card">
+      <div class="inv-img gi-lavender"><div class="gi-deco" style="top:5px;right:15px;opacity:.08;color:#b09cf0;">&#127136;</div><div class="inv-img-label">Game Invite</div></div>
+      <div class="inv-body">
+        <div class="inv-row"><div class="inv-av inv-av-g">MK</div><div class="inv-info"><div class="inv-name">Mike's Tuesday Game</div><div class="inv-meta">Tue, Apr 22 &middot; 6:30 PM &middot; Mike K.</div></div></div>
+        <div class="inv-btns"><button class="inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> Accept</button><button class="inv-n">Decline</button></div>
+      </div>
+    </div>
+
+    <div class="inv-card">
+      <div class="inv-img gi-peach"><div class="gi-deco" style="top:5px;right:20px;opacity:.08;color:#d4a653;">&#126980;</div><div class="inv-img-label">Open Game</div></div>
+      <div class="inv-body">
+        <div class="inv-row"><div class="inv-av inv-av-p">RW</div><div class="inv-info"><div class="inv-name">Rachel's Open Game</div><div class="inv-meta">Thu, Apr 24 &middot; 3:00 PM &middot; Open to all</div></div></div>
+        <div class="inv-btns"><button class="inv-y"><svg viewBox="0 0 16 16"><path d="M13.5 4.5l-7 7L3 8"/></svg> Accept</button><button class="inv-n">Decline</button></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sec" style="margin-top:14px;">
+      <div class="sec-top"><div class="sec-title">Coming Up</div><div class="sec-link">See All</div></div>
+    </div>
+
+    <div class="up-list">
+      <div class="up-card">
+        <div class="up-thumb"><div class="up-thumb-bg gi-lavender"></div><div class="up-date-overlay"><div class="up-mon">Apr</div><div class="up-day">21</div></div></div>
+        <div class="up-info"><div class="up-time">7:00 PM &ndash; 9:00 PM</div><div class="up-name">Lisa's Practice Game</div><div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Lisa's Apartment</div></div>
+        <div class="up-right"><div class="up-players up-players-warn">3/4</div><div class="up-status up-status-warn">Needs 1</div></div>
+      </div>
+      <div class="up-card">
+        <div class="up-thumb"><div class="up-thumb-bg gi-sky"></div><div class="up-date-overlay"><div class="up-mon">Apr</div><div class="up-day">26</div></div><div class="up-crown-sm"><svg viewBox="0 0 10 10" fill="#f0c060"><path d="M1 8l1.5-4 2 2 .5-3.5.5 3.5 2-2L9 8z"/></svg></div></div>
+        <div class="up-info"><div class="up-time">1:00 PM &ndash; 3:00 PM</div><div class="up-name">Weekend Warriors</div><div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Jake's Place</div></div>
+        <div class="up-right"><div class="up-players up-players-ok">2/4</div><div class="up-status up-status-ok">Confirmed</div></div>
+      </div>
+      <div class="up-card">
+        <div class="up-thumb"><div class="up-thumb-bg gi-sage"></div><div class="up-date-overlay"><div class="up-mon">May</div><div class="up-day">3</div></div></div>
+        <div class="up-info"><div class="up-time">2:00 PM &ndash; 4:00 PM</div><div class="up-name">Saturday Mahjong</div><div class="up-loc"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> 123 Main St, Brooklyn</div></div>
+        <div class="up-right"><div class="up-players up-players-warn">1/4</div><div class="up-status up-status-warn">Needs 3</div></div>
+      </div>
+    </div>
+    <div style="height:100px;"></div>
+  </div>
+
+  <div class="tbar">
+    <div class="tbar-bg"></div>
+    <div class="tbar-items">
+      <div class="t act" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg><span>Home</span><div class="dot"></div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><span>Nearby</span></div>
+      <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div>
+      <div class="t" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke-linecap="round"/></svg><span>Games</span><div class="tbadge">4</div></div>
+      <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+document.querySelectorAll('.vb').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.vb').forEach(x=>x.classList.remove('act'));
+    b.classList.add('act');
+    document.querySelectorAll('.sw').forEach(v=>v.classList.remove('vis'));
+    document.getElementById('v-'+b.dataset.v).classList.add('vis');
+  });
+});
+</script>
+</body>
+</html>
