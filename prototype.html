@@ -395,6 +395,50 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="background:#f5f3ef;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #ece8e0;">Cancelled</div>
       </div>
 
+      <!-- ===== PENDING INVITES SECTION ===== -->
+      <div style="margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;">Pending Invites</div>
+          <div style="background:#e85a2c;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">2</div>
+        </div>
+
+        <!-- Invite 1 -->
+        <div style="background:#fff;border:1px solid #ece8e0;border-radius:14px;padding:12px;margin-bottom:8px;">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" alt="">
+            <div style="flex:1;min-width:0;">
+              <div style="color:#000;font-size:13px;font-weight:700;">Mike's Tuesday Game</div>
+              <div style="color:#888;font-size:11px;">Tue, Apr 22 &middot; 6:30 PM &middot; Mike K.</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:3px;background:#faeeda;color:#7a5c2e;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;">3/4</div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:10px;">
+            <div style="flex:1;background:#2d5245;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">&#10003; Accept</div>
+            <div style="flex:1;background:transparent;border:1.5px solid #ece8e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;">Decline</div>
+          </div>
+        </div>
+
+        <!-- Invite 2 -->
+        <div style="background:#fff;border:1px solid #ece8e0;border-radius:14px;padding:12px;margin-bottom:8px;">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" alt="">
+            <div style="flex:1;min-width:0;">
+              <div style="color:#000;font-size:13px;font-weight:700;">Rachel's Open Game</div>
+              <div style="color:#888;font-size:11px;">Thu, Apr 24 &middot; 3:00 PM &middot; Open</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:3px;background:#faeeda;color:#7a5c2e;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;">2/4</div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:10px;">
+            <div style="flex:1;background:#2d5245;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">&#10003; Accept</div>
+            <div style="flex:1;background:transparent;border:1.5px solid #ece8e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;">Decline</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div style="height:1px;background:#ece8e0;margin-bottom:14px;"></div>
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">My Games</div>
+
       <!-- Game Row 1 -->
       <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #ece8e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
         <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;">
@@ -488,96 +532,241 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
 
       <!-- FAB -->
-      <div onclick="go('creation')" style="position:sticky;bottom:100px;margin-left:auto;z-index:88;cursor:pointer;width:56px;height:56px;border-radius:50%;background:#2d5245;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(45,82,69,.4);">
+      <div onclick="go('creation1')" style="position:sticky;bottom:100px;margin-left:auto;z-index:88;cursor:pointer;width:56px;height:56px;border-radius:50%;background:#2d5245;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(45,82,69,.4);">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
       </div>
 
     </div><!-- /myGames -->
 
     <!-- ==================== 4. GAME CREATION ==================== -->
-    <div class="screen" data-screen="creation" style="padding:16px;">
+    <!-- ===== STEP 1: WHEN & WHERE ===== -->
+    <div class="screen" data-screen="creation1" style="padding:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="cursor:pointer;padding:4px;" onclick="goBack()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
+        <div style="color:#888;font-size:12px;font-weight:600;">Step 1 of 3</div>
+      </div>
+      <div style="height:4px;background:#ece8e0;border-radius:4px;margin-bottom:20px;"><div style="width:33%;height:100%;background:#2d5245;border-radius:4px;"></div></div>
 
-      <!-- Top -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div style="cursor:pointer;padding:4px;" onclick="goBack()">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-        </div>
-        <div style="color:#000;font-size:16px;font-weight:600;">New Game</div>
-        <div style="color:#888;font-size:13px;">Step 1 of 3</div>
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Date</div>
+      <div class="scroll-x" style="margin-bottom:16px;">
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #ece8e0;"><div style="color:#888;font-size:9px;font-weight:600;">TUE</div><div style="color:#000;font-size:15px;font-weight:700;">15</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #ece8e0;"><div style="color:#888;font-size:9px;font-weight:600;">WED</div><div style="color:#000;font-size:15px;font-weight:700;">16</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #ece8e0;"><div style="color:#888;font-size:9px;font-weight:600;">THU</div><div style="color:#000;font-size:15px;font-weight:700;">17</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #ece8e0;"><div style="color:#888;font-size:9px;font-weight:600;">FRI</div><div style="color:#000;font-size:15px;font-weight:700;">18</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#2d5245;border:2px solid #2d5245;"><div style="color:rgba(255,255,255,.7);font-size:9px;font-weight:600;">SAT</div><div style="color:#fff;font-size:15px;font-weight:700;">19</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #ece8e0;"><div style="color:#888;font-size:9px;font-weight:600;">SUN</div><div style="color:#000;font-size:15px;font-weight:700;">20</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #ece8e0;"><div style="color:#888;font-size:9px;font-weight:600;">MON</div><div style="color:#000;font-size:15px;font-weight:700;">21</div></div>
+        <div style="min-width:60px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #ece8e0;"><div style="color:#888;font-size:9px;">&#128197;</div><div style="color:#888;font-size:11px;font-weight:600;">Other</div></div>
       </div>
 
-      <!-- Progress Bar -->
-      <div style="height:4px;background:#ece8e0;border-radius:4px;margin-bottom:24px;">
-        <div style="width:33%;height:100%;background:#2d5245;border-radius:4px;"></div>
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Start Time</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">10 AM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">11 AM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">12 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">1 PM</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#2d5245;color:#fff;font-size:12px;font-weight:600;">2 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">3 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">4 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">5 PM</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">6 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">7 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">8 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:11px;font-weight:500;">Other</div>
+      </div>
+      <div style="color:#999;font-size:10px;margin-bottom:16px;">Eastern Time (ET)</div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Estimated Length</div>
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="color:#000;font-size:13px;font-weight:500;">2 hours</div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
       </div>
 
-      <!-- Date Chips -->
-      <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:10px;">Date</div>
-      <div class="scroll-x" style="margin-bottom:20px;">
-        <div style="min-width:56px;text-align:center;padding:10px 8px;border-radius:14px;background:#f5f3ef;border:1px solid #ece8e0;">
-          <div style="color:#888;font-size:10px;">TUE</div><div style="color:#000;font-size:16px;font-weight:700;">15</div>
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Where</div>
+      <!-- Location cards -->
+      <div style="background:#fff;border:2px solid #2d5245;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:20px;">&#127968;</div>
+        <div><div style="color:#2d5245;font-size:13px;font-weight:700;">My Home</div><div style="color:#888;font-size:11px;">456 Oak Ave, Brooklyn, NY</div></div>
+        <div style="margin-left:auto;width:18px;height:18px;border-radius:50%;background:#2d5245;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="3"><path d="M3 8l4 4 6-7"/></svg></div>
+      </div>
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:20px;">&#128190;</div>
+        <div><div style="color:#000;font-size:13px;font-weight:600;">Mom's House</div><div style="color:#888;font-size:11px;">789 Elm St, Manhattan</div></div>
+      </div>
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:14px;padding:12px 14px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:20px;">&#128205;</div>
+        <div><div style="color:#000;font-size:13px;font-weight:600;">Custom Address</div><div style="color:#888;font-size:11px;">Enter a new address</div></div>
+      </div>
+
+      <div onclick="go('creation2')" style="background:#2d5245;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</div>
+    </div><!-- /creation1 -->
+
+    <!-- ===== STEP 2: PLAYERS & TYPE ===== -->
+    <div class="screen" data-screen="creation2" style="padding:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="cursor:pointer;padding:4px;" onclick="go('creation1')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
+        <div style="color:#888;font-size:12px;font-weight:600;">Step 2 of 3</div>
+      </div>
+      <div style="height:4px;background:#ece8e0;border-radius:4px;margin-bottom:12px;"><div style="width:66%;height:100%;background:#2d5245;border-radius:4px;"></div></div>
+
+      <!-- Summary of Step 1 -->
+      <div style="background:#e8f4ef;border:1px solid #c5e0d3;border-radius:12px;padding:10px 14px;margin-bottom:18px;">
+        <div style="color:#2d5245;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs &middot; My Home</div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">Game Type</div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;">
+        <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #ece8e0;cursor:pointer;">
+          <div style="font-size:18px;margin-bottom:2px;">&#128274;</div>
+          <div style="color:#000;font-size:12px;font-weight:600;">Invite Only</div>
         </div>
-        <div style="min-width:56px;text-align:center;padding:10px 8px;border-radius:14px;background:#f5f3ef;border:1px solid #ece8e0;">
-          <div style="color:#888;font-size:10px;">WED</div><div style="color:#000;font-size:16px;font-weight:700;">16</div>
+        <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #ece8e0;cursor:pointer;">
+          <div style="font-size:18px;margin-bottom:2px;">&#128101;</div>
+          <div style="color:#000;font-size:12px;font-weight:600;">Group</div>
         </div>
-        <div style="min-width:56px;text-align:center;padding:10px 8px;border-radius:14px;background:#f5f3ef;border:1px solid #ece8e0;">
-          <div style="color:#888;font-size:10px;">THU</div><div style="color:#000;font-size:16px;font-weight:700;">17</div>
+        <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#2d5245;border:2px solid #2d5245;cursor:pointer;">
+          <div style="font-size:18px;margin-bottom:2px;">&#127760;</div>
+          <div style="color:#fff;font-size:12px;font-weight:700;">Open</div>
         </div>
-        <div style="min-width:56px;text-align:center;padding:10px 8px;border-radius:14px;background:#f5f3ef;border:1px solid #ece8e0;">
-          <div style="color:#888;font-size:10px;">FRI</div><div style="color:#000;font-size:16px;font-weight:700;">18</div>
+      </div>
+      <div style="color:#888;font-size:11px;margin-bottom:16px;">Players in your area can Discover your game and apply to join.</div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">How Players Join</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <div style="flex:1;padding:10px;border-radius:12px;background:#2d5245;text-align:center;">
+          <div style="color:#fff;font-size:12px;font-weight:700;">Players Apply</div>
+          <div style="color:rgba(255,255,255,.6);font-size:10px;margin-top:2px;">You approve each one</div>
         </div>
-        <div style="min-width:56px;text-align:center;padding:10px 8px;border-radius:14px;background:#2d5245;border:2px solid #2d5245;">
-          <div style="color:rgba(255,255,255,.7);font-size:10px;">SAT</div><div style="color:#fff;font-size:16px;font-weight:700;">19</div>
-        </div>
-        <div style="min-width:56px;text-align:center;padding:10px 8px;border-radius:14px;background:#f5f3ef;border:1px solid #ece8e0;">
-          <div style="color:#888;font-size:10px;">SUN</div><div style="color:#000;font-size:16px;font-weight:700;">20</div>
-        </div>
-        <div style="min-width:56px;text-align:center;padding:10px 8px;border-radius:14px;background:#f5f3ef;border:1px solid #ece8e0;">
-          <div style="color:#888;font-size:10px;">MON</div><div style="color:#000;font-size:16px;font-weight:700;">21</div>
+        <div style="flex:1;padding:10px;border-radius:12px;background:#fff;border:1px solid #ece8e0;text-align:center;">
+          <div style="color:#000;font-size:12px;font-weight:600;">Direct Join</div>
+          <div style="color:#888;font-size:10px;margin-top:2px;">Join immediately</div>
         </div>
       </div>
 
-      <!-- Time Grid -->
-      <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:10px;">Time</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;">
-        <div style="text-align:center;padding:10px 4px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:13px;font-weight:500;">12 PM</div>
-        <div style="text-align:center;padding:10px 4px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:13px;font-weight:500;">1 PM</div>
-        <div style="text-align:center;padding:10px 4px;border-radius:10px;background:#2d5245;color:#fff;font-size:13px;font-weight:600;">2 PM</div>
-        <div style="text-align:center;padding:10px 4px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:13px;font-weight:500;">3 PM</div>
-        <div style="text-align:center;padding:10px 4px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:13px;font-weight:500;">4 PM</div>
-        <div style="text-align:center;padding:10px 4px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:13px;font-weight:500;">5 PM</div>
-        <div style="text-align:center;padding:10px 4px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:13px;font-weight:500;">6 PM</div>
-        <div style="text-align:center;padding:10px 4px;border-radius:10px;background:#f5f3ef;border:1px solid #ece8e0;color:#000;font-size:13px;font-weight:500;">7 PM</div>
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Confirmation</div>
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <div style="color:#000;font-size:13px;font-weight:500;">Auto-Confirmed at 4 Players</div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
       </div>
+      <div style="color:#999;font-size:10px;margin-bottom:16px;">Game confirms when minimum players reached.</div>
 
-      <!-- Duration -->
-      <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:10px;">Duration</div>
-      <div style="background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-        <div style="color:#000;font-size:14px;font-weight:500;">2 hours</div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-      </div>
-
-      <!-- Location -->
-      <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:10px;">Location</div>
-      <div style="display:flex;gap:8px;margin-bottom:24px;">
-        <div style="flex:1;background:#fff;border:2px solid #2d5245;border-radius:14px;padding:14px;text-align:center;">
-          <div style="font-size:22px;margin-bottom:4px;">&#127968;</div>
-          <div style="color:#2d5245;font-size:13px;font-weight:600;">My Home</div>
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Players</div>
+      <div style="display:flex;gap:12px;margin-bottom:6px;">
+        <div style="flex:1;background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:space-between;">
+          <div style="color:#888;font-size:11px;font-weight:600;">Min</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ef;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">−</div>
+            <div style="color:#000;font-size:18px;font-weight:800;">4</div>
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ef;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">+</div>
+          </div>
         </div>
-        <div style="flex:1;background:#fff;border:1px solid #ece8e0;border-radius:14px;padding:14px;text-align:center;">
-          <div style="font-size:22px;margin-bottom:4px;">&#127970;</div>
-          <div style="color:#000;font-size:13px;font-weight:500;">Other</div>
-        </div>
-        <div style="flex:1;background:#fff;border:1px solid #ece8e0;border-radius:14px;padding:14px;text-align:center;">
-          <div style="font-size:22px;margin-bottom:4px;">&#128205;</div>
-          <div style="color:#000;font-size:13px;font-weight:500;">Online</div>
+        <div style="flex:1;background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:space-between;">
+          <div style="color:#888;font-size:11px;font-weight:600;">Max</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ef;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">−</div>
+            <div style="color:#000;font-size:18px;font-weight:800;">4</div>
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ef;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">+</div>
+          </div>
         </div>
       </div>
+      <div style="color:#888;font-size:10px;margin-bottom:16px;">4 players per table</div>
 
-      <!-- Next Button -->
-      <div style="background:#2d5245;color:#fff;text-align:center;padding:16px;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;">Next &rarr;</div>
+      <!-- Collapsible sections -->
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;">
+        <div style="color:#000;font-size:13px;font-weight:600;">Tables</div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="color:#888;font-size:12px;">1 table</div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;cursor:pointer;">
+        <div style="color:#000;font-size:13px;font-weight:600;">Invite Players</div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="color:#888;font-size:12px;">0 added</div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
 
-    </div><!-- /creation -->
+      <div style="display:flex;gap:10px;">
+        <div onclick="go('creation1')" style="flex:1;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;color:#888;">&larr; Back</div>
+        <div onclick="go('creation3')" style="flex:2;background:#2d5245;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</div>
+      </div>
+    </div><!-- /creation2 -->
+
+    <!-- ===== STEP 3: EXTRAS ===== -->
+    <div class="screen" data-screen="creation3" style="padding:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="cursor:pointer;padding:4px;" onclick="go('creation2')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
+        <div style="color:#888;font-size:12px;font-weight:600;">Step 3 of 3</div>
+      </div>
+      <div style="height:4px;background:#ece8e0;border-radius:4px;margin-bottom:12px;"><div style="width:100%;height:100%;background:#2d5245;border-radius:4px;"></div></div>
+
+      <!-- Summary -->
+      <div style="background:#e8f4ef;border:1px solid #c5e0d3;border-radius:12px;padding:10px 14px;margin-bottom:18px;">
+        <div style="color:#2d5245;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs</div>
+        <div style="color:#2d5245;font-size:11px;font-weight:500;margin-top:2px;">My Home &middot; Open Public &middot; Auto-Confirm &middot; 4 players</div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Game Name</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <div style="flex:1;background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:12px 14px;">
+          <div style="color:#aaa;font-size:13px;">Auto-generated if blank</div>
+        </div>
+        <div style="width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid #ece8e0;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="#888"/><path d="M21 15l-5-5L5 21"/></svg>
+        </div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Note for Players</div>
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:12px 14px;margin-bottom:16px;min-height:56px;">
+        <div style="color:#aaa;font-size:13px;">Any notes for players...</div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Minimum Skill Level</div>
+      <div style="display:flex;gap:6px;margin-bottom:4px;">
+        <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#2d5245;color:#fff;font-size:12px;font-weight:600;">All Welcome</div>
+        <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#fff;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">Intermediate+</div>
+        <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#fff;border:1px solid #ece8e0;color:#000;font-size:12px;font-weight:500;">Advanced+</div>
+      </div>
+      <div style="color:#999;font-size:10px;margin-bottom:16px;">Players below this level won't see your game.</div>
+
+      <!-- Collapsible: What to Bring -->
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+          <div style="color:#000;font-size:13px;font-weight:600;">What to Bring</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div style="color:#888;font-size:11px;">2 selected</div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <!-- Expanded items -->
+        <div style="margin-top:10px;border-top:1px solid #ece8e0;padding-top:10px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #ece8e0;"></div><div style="color:#000;font-size:12px;">Game mat</div></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="width:20px;height:20px;border-radius:6px;background:#2d5245;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 8l4 4 6-7"/></svg></div><div style="color:#000;font-size:12px;font-weight:600;">Tile set</div></div>
+          <div style="display:flex;gap:6px;margin-left:28px;margin-bottom:8px;">
+            <div style="padding:4px 10px;border-radius:8px;background:#2d5245;color:#fff;font-size:10px;font-weight:600;">I'll bring</div>
+            <div style="padding:4px 10px;border-radius:8px;background:#f5f3ef;border:1px solid #ece8e0;color:#888;font-size:10px;font-weight:500;">Others bring</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #ece8e0;"></div><div style="color:#000;font-size:12px;">Wine</div></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="width:20px;height:20px;border-radius:6px;background:#2d5245;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 8l4 4 6-7"/></svg></div><div style="color:#000;font-size:12px;font-weight:600;">Snacks</div></div>
+          <div style="display:flex;gap:6px;margin-left:28px;margin-bottom:8px;">
+            <div style="padding:4px 10px;border-radius:8px;background:#f5f3ef;border:1px solid #ece8e0;color:#888;font-size:10px;font-weight:500;">I'll bring</div>
+            <div style="padding:4px 10px;border-radius:8px;background:#2d5245;color:#fff;font-size:10px;font-weight:600;">Others bring</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #ece8e0;"></div><div style="color:#000;font-size:12px;">Drinks</div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #ece8e0;"></div><div style="color:#000;font-size:12px;">Chips / tokens</div></div>
+        </div>
+      </div>
+
+      <!-- Collapsible: Repeat -->
+      <div style="background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;cursor:pointer;">
+        <div style="color:#000;font-size:13px;font-weight:600;">Repeat This Game</div>
+        <div style="width:44px;height:24px;border-radius:12px;background:#ece8e0;position:relative;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;box-shadow:0 1px 3px rgba(0,0,0,.15);"></div></div>
+      </div>
+
+      <div style="display:flex;gap:10px;">
+        <div onclick="go('creation2')" style="flex:1;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;color:#888;">&larr; Back</div>
+        <div onclick="go('dashboard')" style="flex:2;background:#2d5245;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Create Game &#10003;</div>
+      </div>
+    </div><!-- /creation3 -->
 
     <!-- ==================== 5. DISCOVER ==================== -->
     <div class="screen has-tab" data-screen="discover" style="padding:16px;">
@@ -780,7 +969,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
         <div style="display:flex;gap:10px;">
           <div style="flex:1;background:#fff;color:#2d5245;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid #2d5245;">Message Group</div>
-          <div style="flex:1;background:#2d5245;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('creation')">Schedule Game</div>
+          <div style="flex:1;background:#2d5245;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('creation1')">Schedule Game</div>
         </div>
       </div>
 
@@ -1060,7 +1249,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div class="tab-label" style="color:#c0bdb6;">Discover</div>
         <div class="tab-dot" style="background:transparent;"></div>
       </div>
-      <div class="tab-center" onclick="go('creation')">
+      <div class="tab-center" onclick="go('creation1')">
         <div class="tab-center-btn" style="background:#2d5245;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
         </div>
@@ -1086,9 +1275,9 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 <script>
 const history = ['dashboard'];
 const tabMap = {dashboard:'dashboard',discover:'discover',myGames:'myGames',groups:'groups',
-  gameDetail:'myGames',creation:'myGames',groupDetail:'groups',inbox:'dashboard',
+  gameDetail:'myGames',creation1:'myGames',creation2:'myGames',creation3:'myGames',groupDetail:'groups',inbox:'dashboard',
   chat:'dashboard',notifications:'dashboard'};
-const noTabScreens = ['creation','chat'];
+const noTabScreens = ['creation1','creation2','creation3','chat'];
 
 function go(screen) {
   const current = history[history.length - 1];
