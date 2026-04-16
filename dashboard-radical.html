@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — 3 Radical Designs</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding:30px 20px 60px;overflow-x:hidden;}
+h1{color:#fff;text-align:center;font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px;}
+.sub{color:#666;text-align:center;font-size:13px;margin-bottom:30px;}
+.grid{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;}
+.col{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.label{color:#fff;font-size:16px;font-weight:700;letter-spacing:-.3px;}
+.desc{color:#555;font-size:12px;margin-bottom:6px;text-align:center;max-width:300px;}
+
+.phone{width:375px;height:812px;border-radius:48px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6);}
+.notch{width:120px;height:34px;background:#000;border-radius:18px;position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:52px;padding:12px 28px 0;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;position:relative;z-index:10;}
+.scr{position:absolute;top:52px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* Tab bar base */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:80px;z-index:40;display:flex;align-items:flex-start;padding-top:8px;}
+.tbar .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;letter-spacing:.3px;}
+.tbar .t svg{width:20px;height:20px;}
+.tbar .cb{flex:1;display:flex;justify-content:center;position:relative;}
+.tbar .pb{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:absolute;top:-20px;}
+.tbar .pb svg{width:24px;height:24px;}
+.tbar .pl{position:absolute;top:38px;font-size:9px;font-weight:600;letter-spacing:.3px;white-space:nowrap;}
+
+/* Shared avatar */
+.av{border-radius:50%;object-fit:cover;}
+
+/* ============================================================
+   A — GLASSMORPHISM / AURORA
+   Frosted glass over animated gradient. Apple Vision Pro meets social.
+   ============================================================ */
+.pA .sbar{color:#fff;}
+.pA{background:#0c0c14;}
+.pA .scr{padding-bottom:90px;}
+
+/* Aurora background */
+.aurora{position:absolute;top:0;left:0;right:0;height:420px;overflow:hidden;z-index:0;}
+.aurora .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:aur 8s ease-in-out infinite alternate;}
+.aurora .b1{width:200px;height:200px;background:#6ee7b7;top:-40px;left:-30px;animation-delay:0s;}
+.aurora .b2{width:180px;height:180px;background:#a78bfa;top:60px;right:-40px;animation-delay:2s;}
+.aurora .b3{width:160px;height:160px;background:#f9a8d4;top:180px;left:40%;animation-delay:4s;}
+.aurora .b4{width:120px;height:120px;background:#67e8f9;top:280px;left:20px;animation-delay:1s;}
+@keyframes aur{0%{transform:translate(0,0) scale(1);}50%{transform:translate(15px,-15px) scale(1.15);}100%{transform:translate(-10px,10px) scale(.95);}}
+
+/* Glass card */
+.glass{background:rgba(255,255,255,.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.1);border-radius:20px;}
+.glass-strong{background:rgba(255,255,255,.12);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.15);border-radius:20px;}
+
+.pA .top{position:relative;z-index:2;padding:6px 20px 12px;display:flex;align-items:center;justify-content:space-between;}
+.pA .top-left{display:flex;align-items:center;gap:10px;}
+.pA .top-av{width:42px;height:42px;border-radius:50%;border:2px solid rgba(255,255,255,.2);}
+.pA .top-name{color:#fff;font-size:18px;font-weight:700;}
+.pA .top-sub{color:rgba(255,255,255,.5);font-size:12px;}
+.pA .top-icons{display:flex;gap:10px;}
+.pA .top-icon{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);}
+.pA .top-icon svg{width:18px;height:18px;stroke:rgba(255,255,255,.6);fill:none;stroke-width:2;}
+.pA .top-bdg{position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:#f9a8d4;border:2px solid rgba(12,12,20,.8);}
+
+.pA .content{position:relative;z-index:2;padding:0 16px;}
+
+/* Next game — large glass hero */
+.pA .hero{padding:18px;margin-bottom:14px;}
+.pA .hero-label{color:#6ee7b7;font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.pA .hero-label::before{content:'';width:6px;height:6px;border-radius:50%;background:#6ee7b7;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.pA .hero-time{color:#fff;font-size:26px;font-weight:800;letter-spacing:-.8px;font-family:'Outfit';line-height:1.1;}
+.pA .hero-name{color:rgba(255,255,255,.7);font-size:15px;font-weight:500;margin-top:4px;}
+.pA .hero-meta{display:flex;gap:12px;margin-top:12px;}
+.pA .hero-chip{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:6px 10px;font-size:11px;color:rgba(255,255,255,.6);}
+.pA .hero-chip svg{width:13px;height:13px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:2;}
+.pA .hero-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);}
+.pA .hero-avs{display:flex;}
+.pA .hero-avs img{width:28px;height:28px;border-radius:50%;margin-left:-6px;border:2px solid rgba(12,12,20,.6);}
+.pA .hero-status{background:rgba(110,231,183,.12);border:1px solid rgba(110,231,183,.15);color:#6ee7b7;padding:6px 14px;border-radius:10px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px;}
+
+/* Section */
+.pA .sec{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 10px;}
+.pA .sec-title{color:#fff;font-size:16px;font-weight:700;}
+.pA .sec-badge{background:#f9a8d4;color:#1a0a14;font-size:9px;font-weight:800;padding:2px 7px;border-radius:99px;margin-left:6px;}
+.pA .sec-link{color:rgba(255,255,255,.4);font-size:12px;font-weight:500;}
+
+/* Invite glass cards */
+.pA .inv{padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.pA .inv-av{width:40px;height:40px;border-radius:14px;border:1px solid rgba(255,255,255,.1);}
+.pA .inv-info{flex:1;}
+.pA .inv-name{color:#fff;font-size:14px;font-weight:600;}
+.pA .inv-meta{color:rgba(255,255,255,.4);font-size:11px;margin-top:1px;}
+.pA .inv-btns{display:flex;gap:6px;margin-top:8px;}
+.pA .inv-y{flex:1;padding:8px;border-radius:10px;border:none;background:rgba(110,231,183,.15);color:#6ee7b7;font-size:12px;font-weight:700;cursor:pointer;text-align:center;font-family:'Outfit';}
+.pA .inv-n{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.3);font-size:12px;font-weight:600;cursor:pointer;text-align:center;font-family:'Outfit';}
+
+/* Coming up rows */
+.pA .up{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:14px;margin-bottom:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);}
+.pA .up-date{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.pA .up-mon{font-size:9px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;}
+.pA .up-day{font-size:17px;font-weight:800;color:#fff;line-height:1;}
+.pA .up-info{flex:1;}
+.pA .up-time{color:#fff;font-size:13px;font-weight:700;}
+.pA .up-name{color:rgba(255,255,255,.5);font-size:12px;margin-top:1px;}
+.pA .up-pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;}
+.pA .up-ok{background:rgba(110,231,183,.1);color:#6ee7b7;}
+.pA .up-warn{background:rgba(249,168,212,.1);color:#f9a8d4;}
+
+/* Tab */
+.pA .tbar{background:rgba(12,12,20,.85);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.05);}
+.pA .tbar .t{color:rgba(255,255,255,.25);}
+.pA .tbar .t.act{color:#6ee7b7;}
+.pA .tbar .pb{background:linear-gradient(135deg,#6ee7b7,#a78bfa);box-shadow:0 4px 20px rgba(110,231,183,.3);}
+.pA .tbar .pl{color:#6ee7b7;}
+
+/* ============================================================
+   B — BENTO GRID
+   Asymmetric cards like Apple marketing. Bold, modular, playful.
+   ============================================================ */
+.pB{background:#f5f2ee;}
+.pB .sbar{color:#1a1a1a;}
+.pB .scr{padding-bottom:90px;}
+
+.pB .top{padding:6px 18px 8px;display:flex;align-items:center;justify-content:space-between;}
+.pB .top-left{display:flex;align-items:center;gap:10px;}
+.pB .top-av{width:38px;height:38px;border-radius:50%;border:2px solid #e0ddd6;}
+.pB .top-name{color:#1a1a1a;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;}
+.pB .top-sub{color:#aaa;font-size:11px;}
+.pB .top-icons{display:flex;gap:8px;}
+.pB .top-icon{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #e8e4e0;position:relative;}
+.pB .top-icon svg{width:16px;height:16px;stroke:#888;fill:none;stroke-width:2;}
+.pB .top-bdg{position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:#e8756a;border:2px solid #f5f2ee;}
+
+/* Bento grid */
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px;}
+.bento-wide{grid-column:1/-1;}
+
+/* Bento cards */
+.bc{border-radius:20px;overflow:hidden;position:relative;}
+.bc-hero{background:#1a1a1a;padding:18px;min-height:180px;display:flex;flex-direction:column;justify-content:flex-end;}
+.bc-hero .img-bg{position:absolute;top:0;right:0;width:55%;height:100%;overflow:hidden;}
+.bc-hero .img-bg img{width:100%;height:100%;object-fit:cover;opacity:.4;mask-image:linear-gradient(to left,rgba(0,0,0,.6),transparent);}
+.bc-hero-label{color:#6ee7b7;font-size:9px;font-weight:700;letter-spacing:1.5px;display:flex;align-items:center;gap:5px;margin-bottom:6px;}
+.bc-hero-label::before{content:'';width:5px;height:5px;border-radius:50%;background:#6ee7b7;animation:pulse 2s infinite;}
+.bc-hero-time{color:#fff;font-size:22px;font-weight:800;font-family:'Space Grotesk';letter-spacing:-.5px;line-height:1.1;}
+.bc-hero-name{color:rgba(255,255,255,.5);font-size:13px;font-weight:500;margin-top:3px;}
+.bc-hero-meta{display:flex;gap:8px;margin-top:10px;}
+.bc-hero-chip{background:rgba(255,255,255,.1);border-radius:8px;padding:5px 8px;font-size:10px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:3px;}
+.bc-hero-avs{display:flex;margin-top:10px;}
+.bc-hero-avs img{width:24px;height:24px;border-radius:50%;margin-left:-4px;border:2px solid #1a1a1a;}
+
+/* Stat card */
+.bc-stat{background:#fff;padding:16px;display:flex;flex-direction:column;justify-content:space-between;min-height:100px;}
+.bc-stat-num{font-family:'Space Grotesk';font-size:36px;font-weight:700;color:#1a1a1a;line-height:1;}
+.bc-stat-label{font-size:11px;color:#aaa;font-weight:500;margin-top:4px;}
+.bc-stat-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+
+/* Invite card bento */
+.bc-inv{background:#fff;padding:14px;}
+.bc-inv-label{font-size:9px;font-weight:700;letter-spacing:1px;color:#e8756a;margin-bottom:8px;display:flex;align-items:center;gap:4px;}
+.bc-inv-label::before{content:'';width:5px;height:5px;border-radius:50%;background:#e8756a;animation:pulse 2s infinite;}
+.bc-inv-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.bc-inv-row img{width:28px;height:28px;border-radius:50%;}
+.bc-inv-name{color:#1a1a1a;font-size:13px;font-weight:600;}
+.bc-inv-meta{color:#aaa;font-size:10px;}
+.bc-inv-btns{display:flex;gap:6px;margin-top:8px;}
+.bc-inv-y{flex:1;background:#1a1a1a;color:#fff;border:none;padding:8px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit';text-align:center;}
+.bc-inv-n{flex:1;background:#f5f2ee;color:#888;border:none;padding:8px;border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit';text-align:center;}
+
+/* Coming up bento */
+.bc-up{background:#fff;padding:14px;}
+.bc-up-title{font-size:11px;font-weight:700;color:#aaa;letter-spacing:1px;margin-bottom:10px;}
+.bc-up-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.bc-up-date{width:36px;height:36px;border-radius:10px;background:#f5f2ee;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.bc-up-mon{font-size:8px;font-weight:600;color:#aaa;text-transform:uppercase;}
+.bc-up-day{font-size:14px;font-weight:800;color:#1a1a1a;line-height:1;}
+.bc-up-info{flex:1;}
+.bc-up-name{font-size:12px;font-weight:600;color:#1a1a1a;}
+.bc-up-time{font-size:10px;color:#aaa;}
+.bc-up-pill{font-size:9px;font-weight:600;padding:2px 6px;border-radius:5px;}
+
+/* Tab bento */
+.pB .tbar{background:rgba(245,242,238,.92);backdrop-filter:blur(16px);border-top:1px solid #e0ddd6;}
+.pB .tbar .t{color:#ccc;}
+.pB .tbar .t.act{color:#1a1a1a;}
+.pB .tbar .pb{background:#1a1a1a;box-shadow:0 4px 16px rgba(0,0,0,.2);}
+.pB .tbar .pl{color:#1a1a1a;}
+
+/* ============================================================
+   C — SOCIAL FEED / STORIES
+   Instagram-meets-Airbnb. Full-bleed imagery, stories bar, minimal chrome.
+   ============================================================ */
+.pC{background:#faf8f6;}
+.pC .sbar{color:#1a1a1a;}
+.pC .scr{padding-bottom:90px;}
+
+.pC .top{padding:6px 18px 10px;display:flex;align-items:center;justify-content:space-between;}
+.pC .top-left{display:flex;align-items:center;gap:10px;}
+.pC .top-av{width:38px;height:38px;border-radius:50%;}
+.pC .top-ring{padding:2px;border-radius:50%;background:linear-gradient(135deg,#f9a8d4,#a78bfa,#6ee7b7);display:inline-flex;}
+.pC .top-name{color:#1a1a1a;font-size:18px;font-weight:800;font-family:'Outfit';letter-spacing:-.5px;}
+.pC .top-sub{color:#bbb;font-size:11px;}
+.pC .top-icons{display:flex;gap:10px;}
+.pC .top-icon{position:relative;}
+.pC .top-icon svg{width:24px;height:24px;stroke:#1a1a1a;fill:none;stroke-width:1.8;}
+.pC .top-bdg{position:absolute;top:-3px;right:-6px;background:#e8756a;color:#fff;font-size:8px;font-weight:800;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #faf8f6;}
+
+/* Stories bar */
+.stories{display:flex;gap:12px;padding:0 18px 14px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.stories::-webkit-scrollbar{display:none;}
+.story{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}
+.story-ring{width:56px;height:56px;padding:2px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.story-ring-active{background:linear-gradient(135deg,#f9a8d4,#a78bfa,#6ee7b7);}
+.story-ring-seen{background:#ddd;}
+.story-ring-add{background:#eee;position:relative;}
+.story-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid #faf8f6;}
+.story-add{width:52px;height:52px;border-radius:50%;background:#f5f2ee;display:flex;align-items:center;justify-content:center;font-size:24px;color:#aaa;}
+.story-name{font-size:10px;color:#888;font-weight:500;max-width:56px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* Feed cards */
+.feed-card{margin:0 14px 14px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.04);}
+.feed-img{width:100%;height:160px;position:relative;overflow:hidden;}
+.feed-img img{width:100%;height:100%;object-fit:cover;}
+.feed-img-overlay{position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(transparent,rgba(0,0,0,.5));}
+.feed-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);border-radius:8px;padding:4px 8px;font-size:10px;font-weight:700;color:#fff;}
+.feed-body{padding:14px 16px;}
+.feed-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.feed-title{font-size:17px;font-weight:800;color:#1a1a1a;font-family:'Outfit';letter-spacing:-.3px;}
+.feed-host{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.feed-host img{width:20px;height:20px;border-radius:50%;}
+.feed-host-name{font-size:12px;color:#aaa;}
+.feed-details{display:flex;gap:12px;margin-bottom:10px;}
+.feed-detail{display:flex;align-items:center;gap:4px;font-size:11px;color:#888;}
+.feed-detail svg{width:13px;height:13px;stroke:#bbb;fill:none;stroke-width:2;}
+.feed-avs{display:flex;margin-right:8px;}
+.feed-avs img{width:22px;height:22px;border-radius:50%;margin-left:-4px;border:2px solid #fff;}
+.feed-bottom{display:flex;align-items:center;justify-content:space-between;}
+.feed-status{font-size:11px;font-weight:700;padding:5px 12px;border-radius:8px;}
+.feed-status-ok{background:#edf7f4;color:#3d8b7a;}
+.feed-status-inv{background:#fef0ee;color:#e8756a;}
+
+/* Invite inline */
+.feed-invite-btns{display:flex;gap:6px;}
+.feed-inv-y{background:#1a1a1a;color:#fff;border:none;padding:8px 18px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit';}
+.feed-inv-n{background:transparent;color:#aaa;border:1.5px solid #e8e4e0;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Outfit';}
+
+/* Ad */
+.feed-ad{margin:0 14px 14px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#fef5f0,#f5eef8);padding:14px 16px;display:flex;align-items:center;gap:14px;border:1px solid rgba(167,139,250,.1);}
+.feed-ad-icon{font-size:32px;}
+.feed-ad-text{flex:1;}
+.feed-ad-label{font-size:9px;font-weight:700;color:#a78bfa;letter-spacing:1px;}
+.feed-ad-title{font-size:15px;font-weight:700;color:#1a1a1a;font-family:'Outfit';margin-top:2px;}
+.feed-ad-cta{font-size:12px;color:#a78bfa;font-weight:600;margin-top:2px;}
+
+/* Tab */
+.pC .tbar{background:rgba(250,248,246,.92);backdrop-filter:blur(16px);border-top:1px solid #e8e4e0;}
+.pC .tbar .t{color:#ccc;}
+.pC .tbar .t.act{color:#1a1a1a;}
+.pC .tbar .pb{background:linear-gradient(135deg,#f9a8d4,#a78bfa);box-shadow:0 4px 16px rgba(167,139,250,.3);}
+.pC .tbar .pl{color:#a78bfa;}
+</style>
+</head>
+<body>
+
+<h1>3 Radical Concepts</h1>
+<p class="sub">Completely different design philosophies</p>
+
+<div class="grid">
+
+<!-- ============================== A: GLASSMORPHISM ============================== -->
+<div class="col">
+<div class="label">A — Glassmorphism Aurora</div>
+<div class="desc">Frosted glass over animated gradients. Apple Vision Pro meets social.</div>
+<div class="phone pA">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:11px;opacity:.4;">&#9679;&#9679;&#9679;&#9679;</span></div>
+<div class="scr">
+  <div class="aurora">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  </div>
+
+  <div class="top">
+    <div class="top-left">
+      <img class="top-av av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt="">
+      <div><div class="top-name">Sarah</div><div class="top-sub">3 upcoming &middot; 2 invites</div></div>
+    </div>
+    <div class="top-icons">
+      <div class="top-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+      <div class="top-icon" style="position:relative;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div class="top-bdg"></div></div>
+      <div class="top-icon" style="position:relative;"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="top-bdg"></div></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Hero -->
+    <div class="glass-strong hero" style="margin-bottom:14px;">
+      <div class="hero-label">NEXT GAME</div>
+      <div class="hero-time">2:00 PM &ndash; 4:00 PM</div>
+      <div class="hero-name">Saturday Mahjong &middot; Sarah's Home</div>
+      <div class="hero-meta">
+        <div class="hero-chip"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Sat, Apr 19</div>
+        <div class="hero-chip"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 4/4</div>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-avs">
+          <img class="av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" alt="">
+          <img class="av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" alt="">
+          <img class="av" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" alt="">
+          <img class="av" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="">
+        </div>
+        <div class="hero-status">&#10003; You're in!</div>
+      </div>
+    </div>
+
+    <!-- Invites -->
+    <div class="sec"><div style="display:flex;align-items:center;"><span class="sec-title">Invites</span><span class="sec-badge">2</span></div></div>
+
+    <div class="glass inv">
+      <img class="inv-av av" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" alt="">
+      <div class="inv-info">
+        <div class="inv-name">Amy's Tuesday Game</div>
+        <div class="inv-meta">Tue, Apr 22 &middot; 7:00 PM</div>
+        <div class="inv-btns"><button class="inv-y">&#10003; Accept</button><button class="inv-n">Decline</button></div>
+      </div>
+    </div>
+
+    <div class="glass inv">
+      <img class="inv-av av" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="">
+      <div class="inv-info">
+        <div class="inv-name">Rachel's Open Game</div>
+        <div class="inv-meta">Sat, Apr 26 &middot; 1:00 PM</div>
+        <div class="inv-btns"><button class="inv-y">&#10003; Accept</button><button class="inv-n">Decline</button></div>
+      </div>
+    </div>
+
+    <!-- Coming Up -->
+    <div class="sec" style="margin-top:6px;"><div class="sec-title">Coming Up</div><div class="sec-link">See All</div></div>
+
+    <div class="up">
+      <div class="up-date"><div class="up-mon">Apr</div><div class="up-day">22</div></div>
+      <div class="up-info"><div class="up-time">7:00 PM &middot; Amy's Place</div><div class="up-name">Amy's Tuesday Game</div></div>
+      <div class="up-pill up-ok">3/4</div>
+    </div>
+    <div class="up">
+      <div class="up-date"><div class="up-mon">Apr</div><div class="up-day">26</div></div>
+      <div class="up-info"><div class="up-time">1:00 PM &middot; Community Ctr</div><div class="up-name">Rachel's Open Game</div></div>
+      <div class="up-pill up-warn">2/4</div>
+    </div>
+    <div class="up">
+      <div class="up-date"><div class="up-mon">May</div><div class="up-day">3</div></div>
+      <div class="up-info"><div class="up-time">3:00 PM &middot; Lisa's House</div><div class="up-name">Sunday Afternoon</div></div>
+      <div class="up-pill up-ok">4/4</div>
+    </div>
+    <div style="height:20px;"></div>
+  </div>
+
+  <div class="tbar">
+    <div class="t act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0v-4a1 1 0 011-1h2a1 1 0 011 1v4"/></svg><span>Home</span></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span>Nearby</span></div>
+    <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg><span>Games</span></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================== B: BENTO GRID ============================== -->
+<div class="col">
+<div class="label">B — Bento Grid</div>
+<div class="desc">Asymmetric modular layout. Bold, Apple-inspired, information-dense.</div>
+<div class="phone pB">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:11px;color:#aaa;">&#9679;&#9679;&#9679;&#9679;</span></div>
+<div class="scr">
+  <div class="top">
+    <div class="top-left">
+      <img class="top-av av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt="">
+      <div><div class="top-name">Sarah</div><div class="top-sub">3 upcoming &middot; 2 invites</div></div>
+    </div>
+    <div class="top-icons">
+      <div class="top-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+      <div class="top-icon" style="position:relative;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div class="top-bdg"></div></div>
+      <div class="top-icon" style="position:relative;"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="top-bdg"></div></div>
+    </div>
+  </div>
+
+  <div class="bento">
+    <!-- Hero — full width -->
+    <div class="bc bc-hero bento-wide">
+      <div class="img-bg"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400" alt=""></div>
+      <div class="bc-hero-label">NEXT GAME</div>
+      <div class="bc-hero-time">2:00 PM &ndash; 4:00 PM</div>
+      <div class="bc-hero-name">Saturday Mahjong</div>
+      <div class="bc-hero-meta">
+        <div class="bc-hero-chip">&#128197; Sat 4/19</div>
+        <div class="bc-hero-chip">&#128205; Sarah's Home</div>
+        <div class="bc-hero-chip">&#128100; 4/4</div>
+      </div>
+      <div class="bc-hero-avs">
+        <img class="av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=50&h=50&fit=crop&crop=face" alt="">
+        <img class="av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&h=50&fit=crop&crop=face" alt="">
+        <img class="av" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=50&h=50&fit=crop&crop=face" alt="">
+        <img class="av" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" alt="">
+      </div>
+    </div>
+
+    <!-- Stats — 2 small -->
+    <div class="bc bc-stat">
+      <div class="bc-stat-icon" style="background:#edf7f4;"><span style="font-size:14px;">&#127136;</span></div>
+      <div><div class="bc-stat-num">12</div><div class="bc-stat-label">Games played</div></div>
+    </div>
+    <div class="bc bc-stat">
+      <div class="bc-stat-icon" style="background:#fef0ee;"><span style="font-size:14px;">&#128293;</span></div>
+      <div><div class="bc-stat-num">3</div><div class="bc-stat-label">Week streak</div></div>
+    </div>
+
+    <!-- Invite — full width -->
+    <div class="bc bc-inv bento-wide">
+      <div class="bc-inv-label">2 PENDING INVITES</div>
+      <div class="bc-inv-row">
+        <img class="av" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=50&h=50&fit=crop&crop=face" alt="">
+        <div><div class="bc-inv-name">Amy's Tuesday Game</div><div class="bc-inv-meta">Tue, Apr 22 &middot; 7:00 PM</div></div>
+      </div>
+      <div class="bc-inv-btns"><button class="bc-inv-y">Accept</button><button class="bc-inv-n">Decline</button></div>
+      <div style="height:1px;background:#f0ede8;margin:10px 0;"></div>
+      <div class="bc-inv-row">
+        <img class="av" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" alt="">
+        <div><div class="bc-inv-name">Rachel's Open Game</div><div class="bc-inv-meta">Sat, Apr 26 &middot; 1:00 PM</div></div>
+      </div>
+      <div class="bc-inv-btns"><button class="bc-inv-y">Accept</button><button class="bc-inv-n">Decline</button></div>
+    </div>
+
+    <!-- Coming up — full width -->
+    <div class="bc bc-up bento-wide">
+      <div class="bc-up-title">COMING UP</div>
+      <div class="bc-up-row">
+        <div class="bc-up-date"><div class="bc-up-mon">Apr</div><div class="bc-up-day">22</div></div>
+        <div class="bc-up-info"><div class="bc-up-name">Amy's Tuesday Game</div><div class="bc-up-time">7:00 PM &middot; Amy's Place</div></div>
+        <div class="bc-up-pill" style="background:#edf7f4;color:#3d8b7a;">3/4</div>
+      </div>
+      <div class="bc-up-row">
+        <div class="bc-up-date"><div class="bc-up-mon">Apr</div><div class="bc-up-day">26</div></div>
+        <div class="bc-up-info"><div class="bc-up-name">Rachel's Open Game</div><div class="bc-up-time">1:00 PM &middot; Community Ctr</div></div>
+        <div class="bc-up-pill" style="background:#fef5ee;color:#a0834a;">2/4</div>
+      </div>
+      <div class="bc-up-row" style="margin-bottom:0;">
+        <div class="bc-up-date"><div class="bc-up-mon">May</div><div class="bc-up-day">3</div></div>
+        <div class="bc-up-info"><div class="bc-up-name">Sunday Afternoon</div><div class="bc-up-time">3:00 PM &middot; Lisa's House</div></div>
+        <div class="bc-up-pill" style="background:#edf7f4;color:#3d8b7a;">4/4</div>
+      </div>
+    </div>
+
+    <!-- Ad bento -->
+    <div class="bc bento-wide" style="background:linear-gradient(135deg,#fef5f0,#f5eef8);padding:14px 16px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:28px;">&#x1F004;</div>
+      <div style="flex:1;"><div style="font-size:9px;font-weight:700;color:#a78bfa;letter-spacing:1px;">SPONSORED</div><div style="font-size:14px;font-weight:700;color:#1a1a1a;font-family:'Space Grotesk';margin-top:2px;">Master the Winds</div><div style="font-size:11px;color:#a78bfa;font-weight:600;margin-top:2px;">Learn Tips &rarr;</div></div>
+    </div>
+  </div>
+
+  <div style="height:20px;"></div>
+
+  <div class="tbar">
+    <div class="t act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0v-4a1 1 0 011-1h2a1 1 0 011 1v4"/></svg><span>Home</span></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span>Nearby</span></div>
+    <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg><span>Games</span></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================== C: SOCIAL FEED ============================== -->
+<div class="col">
+<div class="label">C — Social Feed + Stories</div>
+<div class="desc">Instagram stories bar + Airbnb-style feed cards. Content-first, visual.</div>
+<div class="phone pC">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:11px;color:#aaa;">&#9679;&#9679;&#9679;&#9679;</span></div>
+<div class="scr">
+  <div class="top">
+    <div class="top-left">
+      <div class="top-ring"><img class="top-av av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt=""></div>
+      <div><div class="top-name">Sarah</div><div class="top-sub">3 upcoming &middot; 2 invites</div></div>
+    </div>
+    <div class="top-icons">
+      <div class="top-icon" style="position:relative;"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div class="top-bdg">3</div></div>
+      <div class="top-icon" style="position:relative;"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="top-bdg" style="min-width:8px;padding:0;font-size:0;width:8px;height:8px;top:0;right:0;"></div></div>
+    </div>
+  </div>
+
+  <!-- Stories -->
+  <div class="stories">
+    <div class="story"><div class="story-ring story-ring-add"><div class="story-add">+</div></div><div class="story-name">New Game</div></div>
+    <div class="story"><div class="story-ring story-ring-active"><img class="av" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face" alt=""></div><div class="story-name">Amy</div></div>
+    <div class="story"><div class="story-ring story-ring-active"><img class="av" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt=""></div><div class="story-name">Rachel</div></div>
+    <div class="story"><div class="story-ring story-ring-seen"><img class="av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt=""></div><div class="story-name">Lisa</div></div>
+    <div class="story"><div class="story-ring story-ring-seen"><img class="av" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face" alt=""></div><div class="story-name">MJ Group</div></div>
+  </div>
+
+  <!-- Next Game - feed card -->
+  <div class="feed-card">
+    <div class="feed-img">
+      <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" alt="">
+      <div class="feed-img-overlay">
+        <div class="feed-tag">&#9679; NEXT GAME &middot; Sat 4/19</div>
+      </div>
+    </div>
+    <div class="feed-body">
+      <div class="feed-top-row">
+        <div class="feed-title">Saturday Mahjong</div>
+        <span style="font-size:14px;">&#128081;</span>
+      </div>
+      <div class="feed-host"><img class="av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" alt=""><span class="feed-host-name">Hosted by you</span></div>
+      <div class="feed-details">
+        <div class="feed-detail"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 2:00 PM</div>
+        <div class="feed-detail"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Sarah's Home</div>
+      </div>
+      <div class="feed-bottom">
+        <div style="display:flex;align-items:center;">
+          <div class="feed-avs">
+            <img class="av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" alt="">
+            <img class="av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" alt="">
+            <img class="av" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" alt="">
+            <img class="av" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt="">
+          </div>
+          <span style="font-size:11px;color:#aaa;">4/4</span>
+        </div>
+        <div class="feed-status feed-status-ok">&#10003; You're in</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ad -->
+  <div class="feed-ad">
+    <div class="feed-ad-icon">&#x1F004;</div>
+    <div class="feed-ad-text">
+      <div class="feed-ad-label">SPONSORED</div>
+      <div class="feed-ad-title">Master the Winds</div>
+      <div class="feed-ad-cta">Learn Strategy Tips &rarr;</div>
+    </div>
+  </div>
+
+  <!-- Invite feed card -->
+  <div class="feed-card">
+    <div style="height:80px;background:linear-gradient(135deg,#d8cef0,#f0dce8);position:relative;">
+      <div style="position:absolute;bottom:10px;left:14px;"><div class="feed-tag" style="background:rgba(232,117,106,.2);color:#e8756a;">&#9679; INVITE</div></div>
+    </div>
+    <div class="feed-body">
+      <div class="feed-title">Amy's Tuesday Game</div>
+      <div class="feed-host"><img class="av" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" alt=""><span class="feed-host-name">Amy T. invited you</span></div>
+      <div class="feed-details">
+        <div class="feed-detail"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Tue, Apr 22 &middot; 7 PM</div>
+        <div class="feed-detail"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 3/4</div>
+      </div>
+      <div class="feed-invite-btns">
+        <button class="feed-inv-y">&#10003; Accept</button>
+        <button class="feed-inv-n">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Another invite -->
+  <div class="feed-card">
+    <div style="height:80px;background:linear-gradient(135deg,#c5e0d3,#d0eade);position:relative;">
+      <div style="position:absolute;bottom:10px;left:14px;"><div class="feed-tag" style="background:rgba(232,117,106,.2);color:#e8756a;">&#9679; OPEN GAME</div></div>
+    </div>
+    <div class="feed-body">
+      <div class="feed-title">Rachel's Open Game</div>
+      <div class="feed-host"><img class="av" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" alt=""><span class="feed-host-name">Rachel K.</span></div>
+      <div class="feed-details">
+        <div class="feed-detail"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Sat, Apr 26 &middot; 1 PM</div>
+        <div class="feed-detail"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 2/4</div>
+      </div>
+      <div class="feed-invite-btns">
+        <button class="feed-inv-y">&#10003; Accept</button>
+        <button class="feed-inv-n">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:20px;"></div>
+
+  <div class="tbar">
+    <div class="t act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0v-4a1 1 0 011-1h2a1 1 0 011 1v4"/></svg><span>Home</span></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><span>Nearby</span></div>
+    <div class="cb"><div class="pb"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="pl">New Game</div></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg><span>Games</span></div>
+    <div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><span>Groups</span></div>
+  </div>
+</div>
+</div>
+</div>
+
+</div><!-- /grid -->
+</body>
+</html>
