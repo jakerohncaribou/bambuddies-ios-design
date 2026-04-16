@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BamBuddies iOS Prototype</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Outfit',sans-serif; padding:20px 0; }
@@ -106,14 +109,14 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:14px;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <i class="ph ph-magnifying-glass" style="font-size:24px;color:#1a1a1a;"></i>
           <div style="position:relative;cursor:pointer;" onclick="go('inbox')">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <div style="position:absolute;top:-5px;right:-8px;background:#e8756a;color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
+            <i class="ph ph-chat-circle-dots" style="font-size:24px;color:#1a1a1a;"></i>
+            <div style="position:absolute;top:-5px;right:-8px;background:#f43f5e;color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
           </div>
           <div style="position:relative;cursor:pointer;" onclick="go('notifications')">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-            <div style="position:absolute;top:0;right:0;width:8px;height:8px;background:#e8756a;border-radius:50%;border:2px solid #faf8f6;"></div>
+            <i class="ph ph-bell" style="font-size:24px;color:#1a1a1a;"></i>
+            <div style="position:absolute;top:0;right:0;width:8px;height:8px;background:#f43f5e;border-radius:50%;border:2px solid #faf8f6;"></div>
           </div>
         </div>
       </div>
@@ -123,7 +126,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="flex:1;">
           <div style="color:#8a7355;font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:4px;">SPONSORED</div>
           <div style="color:#5a4030;font-size:18px;font-family:'DM Serif Display',serif;line-height:1.2;">Master the Winds</div>
-          <div style="color:#5ba896;font-size:13px;font-weight:500;margin-top:4px;cursor:pointer;">Learn Strategy Tips &rarr;</div>
+          <div style="color:#14b8a6;font-size:13px;font-weight:500;margin-top:4px;cursor:pointer;">Learn Strategy Tips &rarr;</div>
         </div>
         <div style="font-size:32px;display:flex;gap:2px;transform:rotate(-8deg);">&#x1F004;&#x1F000;&#x1F003;</div>
       </div>
@@ -137,11 +140,11 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600;color:#fff;">4/4</div>
         </div>
         <div style="padding:14px 16px;">
-          <div style="color:#3d8b7a;font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:2px;">&#9679; NEXT GAME</div>
+          <div style="color:#0d9488;font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:2px;">&#9679; NEXT GAME</div>
           <div style="color:#000;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;">2:00 PM &ndash; 4:00 PM</div>
-          <div style="color:#5ba896;font-size:15px;font-weight:600;margin-top:2px;">Saturday Mahjong</div>
+          <div style="color:#14b8a6;font-size:15px;font-weight:600;margin-top:2px;">Saturday Mahjong</div>
           <div style="color:#888;font-size:13px;margin-top:4px;display:flex;align-items:center;gap:4px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#888" stroke="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <i class="ph ph-map-pin" style="font-size:14px;color:#aaa;"></i>
             <span style="color:#888;">Sarah's Home, Portland</span>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
@@ -151,7 +154,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
               <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="28" height="28" class="avatar" style="border:2px solid #fff;margin-left:-4px;">
               <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="28" height="28" class="avatar" style="border:2px solid #fff;margin-left:-4px;">
             </div>
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;">&#10003; You're in!</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;">&#10003; You're in!</div>
           </div>
         </div>
       </div>
@@ -159,7 +162,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <!-- Invites -->
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
         <div style="color:#000;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;">Invites</div>
-        <div style="background:#e8756a;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">2</div>
+        <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">2</div>
       </div>
 
       <!-- Invite 1 -->
@@ -168,7 +171,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;opacity:.7;" alt="">
         </div>
         <div style="padding:12px 14px;">
-          <div style="color:#3d8b7a;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;">GAME INVITE</div>
+          <div style="color:#0d9488;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;">GAME INVITE</div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
             <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
             <div>
@@ -177,8 +180,8 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             </div>
           </div>
           <div style="display:flex;gap:8px;margin-top:8px;">
-            <div style="flex:1;background:#3d8b7a;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
-            <div style="flex:1;background:#f5f3ef;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
+            <div style="flex:1;background:#0d9488;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
+            <div style="flex:1;background:#f5f3ee;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
           </div>
         </div>
       </div>
@@ -187,7 +190,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div class="card" style="background:#fff;border:1px solid #e8e4e0;margin-bottom:16px;">
         <div style="height:48px;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);"></div>
         <div style="padding:12px 14px;">
-          <div style="color:#a0834a;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;">OPEN GAME</div>
+          <div style="color:#d97706;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;">OPEN GAME</div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
             <div>
@@ -196,8 +199,8 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             </div>
           </div>
           <div style="display:flex;gap:8px;margin-top:8px;">
-            <div style="flex:1;background:#3d8b7a;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
-            <div style="flex:1;background:#f5f3ef;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
+            <div style="flex:1;background:#0d9488;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
+            <div style="flex:1;background:#f5f3ee;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
           </div>
         </div>
       </div>
@@ -205,7 +208,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <!-- Coming Up -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
         <div style="color:#000;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;">Coming Up</div>
-        <div style="color:#5ba896;font-size:13px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('myGames')">See All &rarr;</div>
+        <div style="color:#14b8a6;font-size:13px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('myGames')">See All &rarr;</div>
       </div>
 
       <!-- Coming Up Row 1 -->
@@ -220,7 +223,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">3/4</div>
-          <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Confirmed</div>
+          <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Confirmed</div>
         </div>
       </div>
 
@@ -235,14 +238,14 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">2/4</div>
-          <div class="pill" style="background:#faeeda;color:#a0834a;font-size:10px;">Needs 2</div>
+          <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Needs 2</div>
         </div>
       </div>
 
       <!-- Coming Up Row 3 -->
       <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:16px;cursor:pointer;" onclick="go('gameDetail')">
         <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;">
-          <div style="color:#3d8b7a;font-size:8px;font-weight:700;">5/03</div>
+          <div style="color:#0d9488;font-size:8px;font-weight:700;">5/03</div>
         </div>
         <div style="flex:1;min-width:0;">
           <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Sunday Afternoon Session</div>
@@ -250,7 +253,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">4/4</div>
-          <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Confirmed</div>
+          <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Confirmed</div>
         </div>
       </div>
 
@@ -262,15 +265,15 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <!-- Top Nav -->
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;">
         <div style="cursor:pointer;padding:4px;" onclick="goBack()">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <i class="ph ph-caret-left" style="font-size:24px;color:#1a1a1a;"></i>
         </div>
         <div style="color:#000;font-size:16px;font-weight:600;">Game Detail</div>
-        <div style="color:#000;font-size:20px;cursor:pointer;">&#8943;</div>
+        <i class="ph ph-dots-three" style="font-size:24px;color:#1a1a1a;cursor:pointer;"></i>
       </div>
 
       <!-- Status Pill -->
       <div style="padding:0 16px 10px;">
-        <div class="pill" style="background:#edf7f4;color:#3d8b7a;">CONFIRMED</div>
+        <div class="pill" style="background:#e6fffa;color:#0d9488;">CONFIRMED</div>
       </div>
 
       <!-- Hero Image -->
@@ -291,23 +294,23 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <!-- Details Card -->
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:16px;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#5ba896"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+            <i class="ph ph-calendar-blank" style="font-size:20px;color:#0d9488;"></i>
             <div><div style="color:#000;font-size:14px;font-weight:600;">Sat, April 19</div><div style="color:#888;font-size:12px;">2:00 PM &ndash; 4:00 PM</div></div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#5ba896"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+            <i class="ph ph-clock" style="font-size:20px;color:#0d9488;"></i>
             <div style="color:#000;font-size:14px;font-weight:600;">2 hours</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#5ba896"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <i class="ph ph-map-pin" style="font-size:20px;color:#0d9488;"></i>
             <div style="color:#000;font-size:14px;font-weight:600;">Sarah's Home, Portland</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#5ba896"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            <i class="ph ph-globe-simple" style="font-size:20px;color:#0d9488;"></i>
             <div style="color:#000;font-size:14px;font-weight:600;">Open Public</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#5ba896"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            <i class="ph ph-users" style="font-size:20px;color:#0d9488;"></i>
             <div style="color:#000;font-size:14px;font-weight:600;">4 / 4 Players</div>
           </div>
         </div>
@@ -318,22 +321,22 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R. &#128081;</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Accepted</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Accepted</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:11px;">Advanced</div></div>
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Accepted</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Accepted</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:11px;">Beginner</div></div>
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Accepted</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Accepted</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-            <div class="pill" style="background:#faeeda;color:#a0834a;font-size:10px;">Invited</div>
+            <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Invited</div>
           </div>
         </div>
 
@@ -342,11 +345,11 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:12px;">What to Bring</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
             <div style="color:#000;font-size:14px;">&#x1F004; Tile Set</div>
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Covered</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Covered</div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
             <div style="color:#000;font-size:14px;">&#127839; Snacks</div>
-            <div style="background:#3d8b7a;color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">Claim</div>
+            <div style="background:#0d9488;color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">Claim</div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <div style="color:#000;font-size:14px;">&#127866; Drinks</div>
@@ -358,7 +361,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:12px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
             <div style="color:#000;font-size:16px;font-weight:700;">Game Chat</div>
-            <div style="background:#e8756a;color:#fff;font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;">12</div>
+            <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;">12</div>
           </div>
           <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;">
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
@@ -368,13 +371,13 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
             <div><div style="color:#000;font-size:12px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:12px;">Can't wait, see you all Sat!</div></div>
           </div>
-          <div style="color:#5ba896;font-size:13px;font-weight:600;cursor:pointer;text-align:center;" onclick="event.stopPropagation();go('chat')">View All Messages &rarr;</div>
+          <div style="color:#14b8a6;font-size:13px;font-weight:600;cursor:pointer;text-align:center;" onclick="event.stopPropagation();go('chat')">View All Messages &rarr;</div>
         </div>
 
         <!-- Action Buttons -->
         <div style="display:flex;gap:10px;margin-top:16px;padding-bottom:16px;">
-          <div style="flex:1;background:#3d8b7a;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Invite Players</div>
-          <div style="flex:1;background:#fff;color:#3d8b7a;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid #3d8b7a;">Complete Game</div>
+          <div style="flex:1;background:#0d9488;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Invite Players</div>
+          <div style="flex:1;background:#fff;color:#0d9488;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid #0d9488;">Complete Game</div>
         </div>
       </div>
     </div><!-- /gameDetail -->
@@ -384,15 +387,15 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
         <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;">My Games</div>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <i class="ph ph-magnifying-glass" style="font-size:22px;color:#1a1a1a;"></i>
       </div>
 
       <!-- Filter Tabs -->
       <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <div style="background:#3d8b7a;color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;">All</div>
-        <div style="background:#f5f3ef;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Upcoming</div>
-        <div style="background:#f5f3ef;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Past</div>
-        <div style="background:#f5f3ef;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Cancelled</div>
+        <div style="background:#0d9488;color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;">All</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Upcoming</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Past</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Cancelled</div>
       </div>
 
       <!-- ===== PENDING INVITES SECTION ===== -->
@@ -410,10 +413,10 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
               <div style="color:#000;font-size:13px;font-weight:700;">Amy's Tuesday Game</div>
               <div style="color:#888;font-size:11px;">Tue, Apr 22 &middot; 6:30 PM &middot; Amy T.</div>
             </div>
-            <div style="display:flex;align-items:center;gap:3px;background:#faeeda;color:#a0834a;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;">3/4</div>
+            <div style="display:flex;align-items:center;gap:3px;background:#fef3c7;color:#d97706;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;">3/4</div>
           </div>
           <div style="display:flex;gap:6px;margin-top:10px;">
-            <div style="flex:1;background:#3d8b7a;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">&#10003; Accept</div>
+            <div style="flex:1;background:#0d9488;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">&#10003; Accept</div>
             <div style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;">Decline</div>
           </div>
         </div>
@@ -426,10 +429,10 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
               <div style="color:#000;font-size:13px;font-weight:700;">Rachel's Open Game</div>
               <div style="color:#888;font-size:11px;">Thu, Apr 24 &middot; 3:00 PM &middot; Open</div>
             </div>
-            <div style="display:flex;align-items:center;gap:3px;background:#faeeda;color:#a0834a;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;">2/4</div>
+            <div style="display:flex;align-items:center;gap:3px;background:#fef3c7;color:#d97706;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;">2/4</div>
           </div>
           <div style="display:flex;gap:6px;margin-top:10px;">
-            <div style="flex:1;background:#3d8b7a;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">&#10003; Accept</div>
+            <div style="flex:1;background:#0d9488;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">&#10003; Accept</div>
             <div style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;">Decline</div>
           </div>
         </div>
@@ -451,7 +454,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">4/4</div>
-          <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Confirmed</div>
+          <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Confirmed</div>
         </div>
       </div>
 
@@ -467,7 +470,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">3/4</div>
-          <div class="pill" style="background:#faeeda;color:#a0834a;font-size:10px;">Needs 1</div>
+          <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Needs 1</div>
         </div>
       </div>
 
@@ -482,14 +485,14 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">2/4</div>
-          <div class="pill" style="background:#faeeda;color:#a0834a;font-size:10px;">Pending</div>
+          <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Pending</div>
         </div>
       </div>
 
       <!-- Game Row 4 -->
       <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
         <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;">
-          <div style="color:#3d8b7a;font-size:8px;font-weight:700;">5/03</div>
+          <div style="color:#0d9488;font-size:8px;font-weight:700;">5/03</div>
         </div>
         <div style="flex:1;min-width:0;">
           <div style="color:#000;font-size:14px;font-weight:600;">Sunday Afternoon &#128081;</div>
@@ -497,14 +500,14 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">4/4</div>
-          <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Confirmed</div>
+          <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Confirmed</div>
         </div>
       </div>
 
       <!-- Game Row 5 (Completed) -->
       <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;opacity:.7;" onclick="go('gameDetail')">
         <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);display:flex;align-items:center;justify-content:center;">
-          <div style="color:#a0834a;font-size:8px;font-weight:700;">4/12</div>
+          <div style="color:#d97706;font-size:8px;font-weight:700;">4/12</div>
         </div>
         <div style="flex:1;min-width:0;">
           <div style="color:#000;font-size:14px;font-weight:600;">Weekend Warriors</div>
@@ -512,14 +515,14 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">4/4</div>
-          <div class="pill" style="background:#e0e7ff;color:#4338ca;font-size:10px;">Completed</div>
+          <div class="pill" style="background:#dbeafe;color:#4338ca;font-size:10px;">Completed</div>
         </div>
       </div>
 
       <!-- Game Row 6 (Cancelled) -->
       <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:16px;cursor:pointer;opacity:.5;" onclick="go('gameDetail')">
         <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#c0d8ee,#a8c8e0);display:flex;align-items:center;justify-content:center;">
-          <div style="color:#3d8b7a;font-size:8px;font-weight:700;">4/08</div>
+          <div style="color:#0d9488;font-size:8px;font-weight:700;">4/08</div>
         </div>
         <div style="flex:1;min-width:0;">
           <div style="color:#000;font-size:14px;font-weight:600;">Monday Night Game</div>
@@ -527,13 +530,13 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div style="color:#888;font-size:11px;">1/4</div>
-          <div class="pill" style="background:#fff0ec;color:#c0654a;font-size:10px;">Cancelled</div>
+          <div class="pill" style="background:#ffe4e6;color:#ef4444;font-size:10px;">Cancelled</div>
         </div>
       </div>
 
       <!-- FAB -->
-      <div onclick="go('creation1')" style="position:sticky;bottom:100px;margin-left:auto;z-index:88;cursor:pointer;width:56px;height:56px;border-radius:50%;background:#3d8b7a;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(61,139,122,.25);">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      <div onclick="go('creation1')" style="position:sticky;bottom:100px;margin-left:auto;z-index:88;cursor:pointer;width:56px;height:56px;border-radius:50%;background:#0d9488;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(61,139,122,.25);">
+        <i class="ph-bold ph-plus" style="font-size:26px;color:#fff;"></i>
       </div>
 
     </div><!-- /myGames -->
@@ -542,42 +545,42 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     <!-- ===== STEP 1: WHEN & WHERE ===== -->
     <div class="screen" data-screen="creation1" style="padding:16px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <div style="cursor:pointer;padding:4px;" onclick="goBack()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+        <div style="cursor:pointer;padding:4px;" onclick="goBack()"><i class="ph ph-x" style="font-size:22px;color:#1a1a1a;"></i></div>
         <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
         <div style="color:#888;font-size:12px;font-weight:600;">Step 1 of 3</div>
       </div>
-      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:20px;"><div style="width:33%;height:100%;background:#3d8b7a;border-radius:4px;"></div></div>
+      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:20px;"><div style="width:33%;height:100%;background:#0d9488;border-radius:4px;"></div></div>
 
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Date</div>
       <div class="scroll-x" style="margin-bottom:16px;">
-        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">TUE</div><div style="color:#000;font-size:15px;font-weight:700;">15</div></div>
-        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">WED</div><div style="color:#000;font-size:15px;font-weight:700;">16</div></div>
-        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">THU</div><div style="color:#000;font-size:15px;font-weight:700;">17</div></div>
-        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">FRI</div><div style="color:#000;font-size:15px;font-weight:700;">18</div></div>
-        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#3d8b7a;border:2px solid #3d8b7a;"><div style="color:rgba(255,255,255,.7);font-size:9px;font-weight:600;">SAT</div><div style="color:#fff;font-size:15px;font-weight:700;">19</div></div>
-        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">SUN</div><div style="color:#000;font-size:15px;font-weight:700;">20</div></div>
-        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">MON</div><div style="color:#000;font-size:15px;font-weight:700;">21</div></div>
-        <div style="min-width:60px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ef;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;">&#128197;</div><div style="color:#888;font-size:11px;font-weight:600;">Other</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">TUE</div><div style="color:#000;font-size:15px;font-weight:700;">15</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">WED</div><div style="color:#000;font-size:15px;font-weight:700;">16</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">THU</div><div style="color:#000;font-size:15px;font-weight:700;">17</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">FRI</div><div style="color:#000;font-size:15px;font-weight:700;">18</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#0d9488;border:2px solid #0d9488;"><div style="color:rgba(255,255,255,.7);font-size:9px;font-weight:600;">SAT</div><div style="color:#fff;font-size:15px;font-weight:700;">19</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">SUN</div><div style="color:#000;font-size:15px;font-weight:700;">20</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">MON</div><div style="color:#000;font-size:15px;font-weight:700;">21</div></div>
+        <div style="min-width:60px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;">&#128197;</div><div style="color:#888;font-size:11px;font-weight:600;">Other</div></div>
       </div>
 
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Start Time</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">10 AM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">11 AM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">12 PM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">1 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">10 AM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">11 AM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">12 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">1 PM</div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#3d8b7a;color:#fff;font-size:12px;font-weight:600;">2 PM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">3 PM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">4 PM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">5 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#0d9488;color:#fff;font-size:12px;font-weight:600;">2 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">3 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">4 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">5 PM</div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">6 PM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">7 PM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">8 PM</div>
-        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ef;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;">Other</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">6 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">7 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">8 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;">Other</div>
       </div>
       <div style="color:#999;font-size:10px;margin-bottom:16px;">Eastern Time (ET)</div>
 
@@ -589,10 +592,10 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Where</div>
       <!-- Location cards -->
-      <div style="background:#fff;border:2px solid #3d8b7a;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+      <div style="background:#fff;border:2px solid #0d9488;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
         <div style="font-size:20px;">&#127968;</div>
-        <div><div style="color:#3d8b7a;font-size:13px;font-weight:700;">My Home</div><div style="color:#888;font-size:11px;">456 Oak Ave, Brooklyn, NY</div></div>
-        <div style="margin-left:auto;width:18px;height:18px;border-radius:50%;background:#3d8b7a;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="3"><path d="M3 8l4 4 6-7"/></svg></div>
+        <div><div style="color:#0d9488;font-size:13px;font-weight:700;">My Home</div><div style="color:#888;font-size:11px;">456 Oak Ave, Brooklyn, NY</div></div>
+        <div style="margin-left:auto;width:18px;height:18px;border-radius:50%;background:#0d9488;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="3"><path d="M3 8l4 4 6-7"/></svg></div>
       </div>
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
         <div style="font-size:20px;">&#128190;</div>
@@ -603,21 +606,21 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div><div style="color:#000;font-size:13px;font-weight:600;">Custom Address</div><div style="color:#888;font-size:11px;">Enter a new address</div></div>
       </div>
 
-      <div onclick="go('creation2')" style="background:#3d8b7a;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</div>
+      <div onclick="go('creation2')" style="background:#0d9488;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</div>
     </div><!-- /creation1 -->
 
     <!-- ===== STEP 2: PLAYERS & TYPE ===== -->
     <div class="screen" data-screen="creation2" style="padding:16px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <div style="cursor:pointer;padding:4px;" onclick="go('creation1')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+        <div style="cursor:pointer;padding:4px;" onclick="go('creation1')"><i class="ph ph-arrow-left" style="font-size:22px;color:#1a1a1a;"></i></div>
         <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
         <div style="color:#888;font-size:12px;font-weight:600;">Step 2 of 3</div>
       </div>
-      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:12px;"><div style="width:66%;height:100%;background:#3d8b7a;border-radius:4px;"></div></div>
+      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:12px;"><div style="width:66%;height:100%;background:#0d9488;border-radius:4px;"></div></div>
 
       <!-- Summary of Step 1 -->
-      <div style="background:#edf7f4;border:1px solid #c5e0d3;border-radius:12px;padding:10px 14px;margin-bottom:18px;">
-        <div style="color:#3d8b7a;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs &middot; My Home</div>
+      <div style="background:#e6fffa;border:1px solid #c5e0d3;border-radius:12px;padding:10px 14px;margin-bottom:18px;">
+        <div style="color:#0d9488;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs &middot; My Home</div>
       </div>
 
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">Game Type</div>
@@ -630,7 +633,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="font-size:18px;margin-bottom:2px;">&#128101;</div>
           <div style="color:#000;font-size:12px;font-weight:600;">Group</div>
         </div>
-        <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#3d8b7a;border:2px solid #3d8b7a;cursor:pointer;">
+        <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#0d9488;border:2px solid #0d9488;cursor:pointer;">
           <div style="font-size:18px;margin-bottom:2px;">&#127760;</div>
           <div style="color:#fff;font-size:12px;font-weight:700;">Open</div>
         </div>
@@ -639,7 +642,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">How Players Join</div>
       <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <div style="flex:1;padding:10px;border-radius:12px;background:#3d8b7a;text-align:center;">
+        <div style="flex:1;padding:10px;border-radius:12px;background:#0d9488;text-align:center;">
           <div style="color:#fff;font-size:12px;font-weight:700;">Players Apply</div>
           <div style="color:rgba(255,255,255,.6);font-size:10px;margin-top:2px;">You approve each one</div>
         </div>
@@ -661,17 +664,17 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="flex:1;background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:space-between;">
           <div style="color:#888;font-size:11px;font-weight:600;">Min</div>
           <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ef;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">−</div>
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">−</div>
             <div style="color:#000;font-size:18px;font-weight:800;">4</div>
-            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ef;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">+</div>
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">+</div>
           </div>
         </div>
         <div style="flex:1;background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:space-between;">
           <div style="color:#888;font-size:11px;font-weight:600;">Max</div>
           <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ef;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">−</div>
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">−</div>
             <div style="color:#000;font-size:18px;font-weight:800;">4</div>
-            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ef;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">+</div>
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">+</div>
           </div>
         </div>
       </div>
@@ -689,23 +692,23 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="display:flex;gap:10px;">
         <div onclick="go('creation1')" style="flex:1;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;color:#888;">&larr; Back</div>
-        <div onclick="go('creation3')" style="flex:2;background:#3d8b7a;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</div>
+        <div onclick="go('creation3')" style="flex:2;background:#0d9488;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</div>
       </div>
     </div><!-- /creation2 -->
 
     <!-- ===== STEP 3: EXTRAS ===== -->
     <div class="screen" data-screen="creation3" style="padding:16px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <div style="cursor:pointer;padding:4px;" onclick="go('creation2')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+        <div style="cursor:pointer;padding:4px;" onclick="go('creation2')"><i class="ph ph-arrow-left" style="font-size:22px;color:#1a1a1a;"></i></div>
         <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
         <div style="color:#888;font-size:12px;font-weight:600;">Step 3 of 3</div>
       </div>
-      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:12px;"><div style="width:100%;height:100%;background:#3d8b7a;border-radius:4px;"></div></div>
+      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:12px;"><div style="width:100%;height:100%;background:#0d9488;border-radius:4px;"></div></div>
 
       <!-- Summary -->
-      <div style="background:#edf7f4;border:1px solid #c5e0d3;border-radius:12px;padding:10px 14px;margin-bottom:18px;">
-        <div style="color:#3d8b7a;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs</div>
-        <div style="color:#3d8b7a;font-size:11px;font-weight:500;margin-top:2px;">My Home &middot; Open Public &middot; Auto-Confirm &middot; 4 players</div>
+      <div style="background:#e6fffa;border:1px solid #c5e0d3;border-radius:12px;padding:10px 14px;margin-bottom:18px;">
+        <div style="color:#0d9488;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs</div>
+        <div style="color:#0d9488;font-size:11px;font-weight:500;margin-top:2px;">My Home &middot; Open Public &middot; Auto-Confirm &middot; 4 players</div>
       </div>
 
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Game Name</div>
@@ -725,7 +728,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Minimum Skill Level</div>
       <div style="display:flex;gap:6px;margin-bottom:4px;">
-        <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#3d8b7a;color:#fff;font-size:12px;font-weight:600;">All Welcome</div>
+        <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#0d9488;color:#fff;font-size:12px;font-weight:600;">All Welcome</div>
         <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">Intermediate+</div>
         <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">Advanced+</div>
       </div>
@@ -740,16 +743,16 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <!-- Expanded items -->
         <div style="margin-top:10px;border-top:1px solid #e8e4e0;padding-top:10px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #e8e4e0;"></div><div style="color:#000;font-size:12px;">Game mat</div></div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="width:20px;height:20px;border-radius:6px;background:#3d8b7a;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 8l4 4 6-7"/></svg></div><div style="color:#000;font-size:12px;font-weight:600;">Tile set</div></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="width:20px;height:20px;border-radius:6px;background:#0d9488;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 8l4 4 6-7"/></svg></div><div style="color:#000;font-size:12px;font-weight:600;">Tile set</div></div>
           <div style="display:flex;gap:6px;margin-left:28px;margin-bottom:8px;">
-            <div style="padding:4px 10px;border-radius:8px;background:#3d8b7a;color:#fff;font-size:10px;font-weight:600;">I'll bring</div>
-            <div style="padding:4px 10px;border-radius:8px;background:#f5f3ef;border:1px solid #e8e4e0;color:#888;font-size:10px;font-weight:500;">Others bring</div>
+            <div style="padding:4px 10px;border-radius:8px;background:#0d9488;color:#fff;font-size:10px;font-weight:600;">I'll bring</div>
+            <div style="padding:4px 10px;border-radius:8px;background:#f5f3ee;border:1px solid #e8e4e0;color:#888;font-size:10px;font-weight:500;">Others bring</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #e8e4e0;"></div><div style="color:#000;font-size:12px;">Wine</div></div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="width:20px;height:20px;border-radius:6px;background:#3d8b7a;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 8l4 4 6-7"/></svg></div><div style="color:#000;font-size:12px;font-weight:600;">Snacks</div></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="width:20px;height:20px;border-radius:6px;background:#0d9488;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5"><path d="M3 8l4 4 6-7"/></svg></div><div style="color:#000;font-size:12px;font-weight:600;">Snacks</div></div>
           <div style="display:flex;gap:6px;margin-left:28px;margin-bottom:8px;">
-            <div style="padding:4px 10px;border-radius:8px;background:#f5f3ef;border:1px solid #e8e4e0;color:#888;font-size:10px;font-weight:500;">I'll bring</div>
-            <div style="padding:4px 10px;border-radius:8px;background:#3d8b7a;color:#fff;font-size:10px;font-weight:600;">Others bring</div>
+            <div style="padding:4px 10px;border-radius:8px;background:#f5f3ee;border:1px solid #e8e4e0;color:#888;font-size:10px;font-weight:500;">I'll bring</div>
+            <div style="padding:4px 10px;border-radius:8px;background:#0d9488;color:#fff;font-size:10px;font-weight:600;">Others bring</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #e8e4e0;"></div><div style="color:#000;font-size:12px;">Drinks</div></div>
           <div style="display:flex;align-items:center;gap:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #e8e4e0;"></div><div style="color:#000;font-size:12px;">Chips / tokens</div></div>
@@ -764,7 +767,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="display:flex;gap:10px;">
         <div onclick="go('creation2')" style="flex:1;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;color:#888;">&larr; Back</div>
-        <div onclick="go('dashboard')" style="flex:2;background:#3d8b7a;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Create Game &#10003;</div>
+        <div onclick="go('dashboard')" style="flex:2;background:#0d9488;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Create Game &#10003;</div>
       </div>
     </div><!-- /creation3 -->
 
@@ -774,27 +777,27 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
         <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;">Discover</div>
         <div style="display:flex;gap:12px;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <i class="ph ph-magnifying-glass" style="font-size:22px;color:#1a1a1a;"></i>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M4 21V14M4 10V3M12 21V12M12 8V3M20 21V16M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>
         </div>
       </div>
 
       <!-- Filter Pills -->
       <div class="scroll-x" style="margin-bottom:16px;">
-        <div class="pill" style="background:#3d8b7a;color:#fff;padding:6px 14px;font-size:12px;">Near Me</div>
-        <div class="pill" style="background:#f5f3ef;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">25 mi</div>
-        <div class="pill" style="background:#f5f3ef;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">This Week</div>
-        <div class="pill" style="background:#f5f3ef;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">All Levels</div>
+        <div class="pill" style="background:#0d9488;color:#fff;padding:6px 14px;font-size:12px;">Near Me</div>
+        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">25 mi</div>
+        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">This Week</div>
+        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">All Levels</div>
       </div>
 
       <!-- Map Area -->
       <div style="height:250px;background:linear-gradient(135deg,#e8efe8,#dce6dc);border-radius:16px;margin-bottom:4px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:40px;left:60px;width:14px;height:14px;background:#3d8b7a;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <div style="position:absolute;top:80px;left:180px;width:14px;height:14px;background:#3d8b7a;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <div style="position:absolute;top:130px;left:100px;width:14px;height:14px;background:#3d8b7a;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <div style="position:absolute;top:100px;left:260px;width:14px;height:14px;background:#3d8b7a;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <div style="position:absolute;top:170px;left:200px;width:14px;height:14px;background:#3d8b7a;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:.15;" viewBox="0 0 361 250"><path d="M0 50h361M0 100h361M0 150h361M0 200h361M60 0v250M120 0v250M180 0v250M240 0v250M300 0v250" stroke="#3d8b7a" stroke-width="1"/></svg>
+        <div style="position:absolute;top:40px;left:60px;width:14px;height:14px;background:#0d9488;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <div style="position:absolute;top:80px;left:180px;width:14px;height:14px;background:#0d9488;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <div style="position:absolute;top:130px;left:100px;width:14px;height:14px;background:#0d9488;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <div style="position:absolute;top:100px;left:260px;width:14px;height:14px;background:#0d9488;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <div style="position:absolute;top:170px;left:200px;width:14px;height:14px;background:#0d9488;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:.15;" viewBox="0 0 361 250"><path d="M0 50h361M0 100h361M0 150h361M0 200h361M60 0v250M120 0v250M180 0v250M240 0v250M300 0v250" stroke="#0d9488" stroke-width="1"/></svg>
       </div>
 
       <!-- Bottom Sheet -->
@@ -809,7 +812,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             <div style="padding:10px 12px;">
               <div style="color:#000;font-size:14px;font-weight:600;">Park Mahjong</div>
               <div style="color:#888;font-size:11px;">Sat, Apr 19 &middot; 0.8 mi</div>
-              <div style="background:#3d8b7a;color:#fff;text-align:center;padding:6px;border-radius:8px;font-size:12px;font-weight:600;margin-top:8px;cursor:pointer;">Join</div>
+              <div style="background:#0d9488;color:#fff;text-align:center;padding:6px;border-radius:8px;font-size:12px;font-weight:600;margin-top:8px;cursor:pointer;">Join</div>
             </div>
           </div>
           <!-- Card 2 -->
@@ -820,7 +823,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             <div style="padding:10px 12px;">
               <div style="color:#000;font-size:14px;font-weight:600;">Cafe Game Night</div>
               <div style="color:#888;font-size:11px;">Sun, Apr 20 &middot; 2.1 mi</div>
-              <div style="background:#3d8b7a;color:#fff;text-align:center;padding:6px;border-radius:8px;font-size:12px;font-weight:600;margin-top:8px;cursor:pointer;">Join</div>
+              <div style="background:#0d9488;color:#fff;text-align:center;padding:6px;border-radius:8px;font-size:12px;font-weight:600;margin-top:8px;cursor:pointer;">Join</div>
             </div>
           </div>
         </div>
@@ -833,7 +836,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
         <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;">My Groups</div>
-        <div style="background:#3d8b7a;color:#fff;padding:6px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">+ New</div>
+        <div style="background:#0d9488;color:#fff;padding:6px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">+ New</div>
       </div>
 
       <!-- Search Bar -->
@@ -844,12 +847,12 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <!-- Pending Invite -->
       <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:14px;margin-bottom:16px;">
-        <div style="color:#a0834a;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:6px;">GROUP INVITE</div>
+        <div style="color:#d97706;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:6px;">GROUP INVITE</div>
         <div style="color:#000;font-size:15px;font-weight:600;margin-bottom:2px;">Portland Mahjong Club</div>
         <div style="color:#888;font-size:12px;margin-bottom:10px;">12 members &middot; Invited by Sarah</div>
         <div style="display:flex;gap:8px;">
-          <div style="flex:1;background:#3d8b7a;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
-          <div style="flex:1;background:#f5f3ef;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
+          <div style="flex:1;background:#0d9488;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
+          <div style="flex:1;background:#f5f3ee;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
         </div>
       </div>
 
@@ -857,40 +860,40 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;cursor:pointer;text-align:center;" onclick="go('groupDetail')">
           <div style="display:flex;justify-content:center;margin-bottom:8px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#3d8b7a;font-size:11px;font-weight:700;">J</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#0d9488;font-size:11px;font-weight:700;">J</div></div>
             <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#d8cef0,#c5b8e8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#4338ca;font-size:11px;font-weight:700;">L</div></div>
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#a0834a;font-size:11px;font-weight:700;">M</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#d97706;font-size:11px;font-weight:700;">M</div></div>
           </div>
           <div style="color:#000;font-size:14px;font-weight:600;">Saturday Regulars</div>
           <div style="color:#888;font-size:11px;margin-top:2px;">4 members</div>
-          <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;margin-top:6px;">Owner</div>
+          <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;margin-top:6px;">Owner</div>
         </div>
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;cursor:pointer;text-align:center;" onclick="go('groupDetail')">
           <div style="display:flex;justify-content:center;margin-bottom:8px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c0d8ee,#a8c8e0);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#3d8b7a;font-size:11px;font-weight:700;">R</div></div>
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#a0834a;font-size:11px;font-weight:700;">K</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c0d8ee,#a8c8e0);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#0d9488;font-size:11px;font-weight:700;">R</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#d97706;font-size:11px;font-weight:700;">K</div></div>
           </div>
           <div style="color:#000;font-size:14px;font-weight:600;">Work Crew</div>
           <div style="color:#888;font-size:11px;margin-top:2px;">6 members</div>
-          <div class="pill" style="background:#f5f3ef;color:#888;font-size:10px;margin-top:6px;border:1px solid #e8e4e0;">Member</div>
+          <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;margin-top:6px;border:1px solid #e8e4e0;">Member</div>
         </div>
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;cursor:pointer;text-align:center;" onclick="go('groupDetail')">
           <div style="display:flex;justify-content:center;margin-bottom:8px;">
             <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#d8cef0,#c5b8e8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#4338ca;font-size:11px;font-weight:700;">S</div></div>
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#3d8b7a;font-size:11px;font-weight:700;">A</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#0d9488;font-size:11px;font-weight:700;">A</div></div>
           </div>
           <div style="color:#000;font-size:14px;font-weight:600;">Beginners</div>
           <div style="color:#888;font-size:11px;margin-top:2px;">8 members</div>
-          <div class="pill" style="background:#f5f3ef;color:#888;font-size:10px;margin-top:6px;border:1px solid #e8e4e0;">Member</div>
+          <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;margin-top:6px;border:1px solid #e8e4e0;">Member</div>
         </div>
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;cursor:pointer;text-align:center;" onclick="go('groupDetail')">
           <div style="display:flex;justify-content:center;margin-bottom:8px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#a0834a;font-size:11px;font-weight:700;">T</div></div>
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c0d8ee,#a8c8e0);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#3d8b7a;font-size:11px;font-weight:700;">P</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#d97706;font-size:11px;font-weight:700;">T</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c0d8ee,#a8c8e0);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#0d9488;font-size:11px;font-weight:700;">P</div></div>
           </div>
           <div style="color:#000;font-size:14px;font-weight:600;">Tournament Prep</div>
           <div style="color:#888;font-size:11px;margin-top:2px;">5 members</div>
-          <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;margin-top:6px;">Owner</div>
+          <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;margin-top:6px;">Owner</div>
         </div>
       </div>
 
@@ -901,7 +904,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;">
         <div style="cursor:pointer;padding:4px;" onclick="goBack()">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <i class="ph ph-caret-left" style="font-size:24px;color:#1a1a1a;"></i>
         </div>
         <div style="color:#000;font-size:16px;font-weight:600;">Saturday Regulars</div>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
@@ -910,11 +913,11 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="padding:0 16px 16px;">
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:20px;text-align:center;margin-bottom:16px;">
           <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;">
-            <div style="color:#3d8b7a;font-size:24px;font-weight:700;">SR</div>
+            <div style="color:#0d9488;font-size:24px;font-weight:700;">SR</div>
           </div>
           <div style="color:#000;font-size:20px;font-weight:700;font-family:'Outfit',sans-serif;">Saturday Regulars</div>
           <div style="color:#888;font-size:13px;margin-top:4px;">Created by you &middot; 4 members</div>
-          <div class="pill" style="background:#edf7f4;color:#3d8b7a;margin-top:8px;">Owner</div>
+          <div class="pill" style="background:#e6fffa;color:#0d9488;margin-top:8px;">Owner</div>
         </div>
 
         <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:6px;">About</div>
@@ -925,22 +928,22 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:10px;">Owner</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:10px;">Owner</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:11px;">Advanced</div></div>
-            <div class="pill" style="background:#f5f3ef;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
+            <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:11px;">Beginner</div></div>
-            <div class="pill" style="background:#f5f3ef;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
+            <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-            <div class="pill" style="background:#f5f3ef;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
+            <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
           </div>
         </div>
 
@@ -958,7 +961,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:16px;cursor:pointer;" onclick="go('gameDetail')">
           <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;">
-            <div style="color:#3d8b7a;font-size:8px;font-weight:700;">4/26</div>
+            <div style="color:#0d9488;font-size:8px;font-weight:700;">4/26</div>
           </div>
           <div style="flex:1;min-width:0;">
             <div style="color:#000;font-size:14px;font-weight:600;">Next Saturday Session</div>
@@ -968,8 +971,8 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
 
         <div style="display:flex;gap:10px;">
-          <div style="flex:1;background:#fff;color:#3d8b7a;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid #3d8b7a;">Message Group</div>
-          <div style="flex:1;background:#3d8b7a;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('creation1')">Schedule Game</div>
+          <div style="flex:1;background:#fff;color:#0d9488;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid #0d9488;">Message Group</div>
+          <div style="flex:1;background:#0d9488;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('creation1')">Schedule Game</div>
         </div>
       </div>
 
@@ -984,14 +987,14 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="42" height="42" class="avatar" alt="">
         <div style="flex:1;min-width:0;">
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:9px;padding:2px 6px;">GAME</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:9px;padding:2px 6px;">GAME</div>
             <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Saturday Mahjong</div>
           </div>
           <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Lisa: I'll bring the drinks!</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
           <div style="color:#aaa;font-size:11px;">2m</div>
-          <div style="background:#3d8b7a;color:#fff;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
+          <div style="background:#0d9488;color:#fff;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
         </div>
       </div>
 
@@ -999,14 +1002,14 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="42" height="42" class="avatar" alt="">
         <div style="flex:1;min-width:0;">
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:9px;padding:2px 6px;">GAME</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:9px;padding:2px 6px;">GAME</div>
             <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Amy's Tuesday Game</div>
           </div>
           <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Mike: Who's bringing tiles?</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
           <div style="color:#aaa;font-size:11px;">15m</div>
-          <div style="background:#3d8b7a;color:#fff;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">1</div>
+          <div style="background:#0d9488;color:#fff;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">1</div>
         </div>
       </div>
 
@@ -1016,7 +1019,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="flex:1;min-width:0;">
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
-            <div class="pill" style="background:#e0e7ff;color:#4338ca;font-size:9px;padding:2px 6px;">GROUP</div>
+            <div class="pill" style="background:#dbeafe;color:#4338ca;font-size:9px;padding:2px 6px;">GROUP</div>
             <div style="color:#000;font-size:14px;font-weight:600;">Saturday Regulars</div>
           </div>
           <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Rachel: Same time next week?</div>
@@ -1030,7 +1033,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="42" height="42" class="avatar" alt="">
         <div style="flex:1;min-width:0;">
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
-            <div class="pill" style="background:#f5f3ef;color:#888;font-size:9px;padding:2px 6px;border:1px solid #e8e4e0;">DM</div>
+            <div class="pill" style="background:#f5f3ee;color:#888;font-size:9px;padding:2px 6px;border:1px solid #e8e4e0;">DM</div>
             <div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div>
           </div>
           <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Thanks for the invite!</div>
@@ -1042,11 +1045,11 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('chat')">
         <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <div style="color:#3d8b7a;font-size:14px;font-weight:700;">BB</div>
+          <div style="color:#0d9488;font-size:14px;font-weight:700;">BB</div>
         </div>
         <div style="flex:1;min-width:0;">
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
-            <div class="pill" style="background:#edf7f4;color:#3d8b7a;font-size:9px;padding:2px 6px;">GAME</div>
+            <div class="pill" style="background:#e6fffa;color:#0d9488;font-size:9px;padding:2px 6px;">GAME</div>
             <div style="color:#000;font-size:14px;font-weight:500;">Sunday Session</div>
           </div>
           <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">You: Looking forward to it!</div>
@@ -1063,7 +1066,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #e8e4e0;background:#fff;flex-shrink:0;">
         <div style="cursor:pointer;padding:4px;" onclick="goBack()">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <i class="ph ph-caret-left" style="font-size:24px;color:#1a1a1a;"></i>
         </div>
         <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">
           <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:100%;height:100%;object-fit:cover;" alt="">
@@ -1101,7 +1104,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
         <div style="display:flex;justify-content:flex-end;">
           <div style="max-width:80%;">
-            <div style="background:#3d8b7a;border-radius:16px 16px 4px 16px;padding:10px 14px;">
+            <div style="background:#0d9488;border-radius:16px 16px 4px 16px;padding:10px 14px;">
               <div style="color:#fff;font-size:14px;line-height:1.4;">Yes please! Snacks would be great. I'll have the tiles ready.</div>
             </div>
           </div>
@@ -1119,7 +1122,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
         <div style="display:flex;justify-content:flex-end;">
           <div style="max-width:80%;">
-            <div style="background:#3d8b7a;border-radius:16px 16px 4px 16px;padding:10px 14px;">
+            <div style="background:#0d9488;border-radius:16px 16px 4px 16px;padding:10px 14px;">
               <div style="color:#fff;font-size:14px;line-height:1.4;">Perfect, thanks Lisa!</div>
             </div>
           </div>
@@ -1152,10 +1155,10 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="padding:10px 16px 28px;border-top:1px solid #e8e4e0;background:#fff;display:flex;align-items:center;gap:10px;flex-shrink:0;">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        <div style="flex:1;background:#f5f3ef;border:1px solid #e8e4e0;border-radius:20px;padding:10px 16px;">
+        <div style="flex:1;background:#f5f3ee;border:1px solid #e8e4e0;border-radius:20px;padding:10px 16px;">
           <div style="color:#aaa;font-size:14px;">Type a message...</div>
         </div>
-        <div style="width:36px;height:36px;border-radius:50%;background:#3d8b7a;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#0d9488;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </div>
       </div>
@@ -1167,16 +1170,16 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:16px;">Activity</div>
 
       <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <div style="background:#3d8b7a;color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;">All</div>
-        <div style="background:#f5f3ef;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;position:relative;">
+        <div style="background:#0d9488;color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;">All</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;position:relative;">
           Notifications
-          <div style="position:absolute;top:-4px;right:-4px;background:#e8756a;color:#fff;font-size:8px;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
+          <div style="position:absolute;top:-4px;right:-4px;background:#f43f5e;color:#fff;font-size:8px;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
         </div>
-        <div style="background:#f5f3ef;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Messages</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Messages</div>
       </div>
 
       <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#f0f8f4;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#3d8b7a;margin-top:6px;flex-shrink:0;"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:#0d9488;margin-top:6px;flex-shrink:0;"></div>
         <div style="flex:1;min-width:0;">
           <div style="color:#000;font-size:14px;font-weight:700;">Game Confirmed</div>
           <div style="color:#666;font-size:13px;margin-top:2px;">Saturday Mahjong is now full with 4/4 players</div>
@@ -1186,7 +1189,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
 
       <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#f0f8f4;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;">
-        <div style="width:8px;height:8px;border-radius:50%;background:#a0834a;margin-top:6px;flex-shrink:0;"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:#d97706;margin-top:6px;flex-shrink:0;"></div>
         <div style="flex:1;min-width:0;">
           <div style="color:#000;font-size:14px;font-weight:700;">New Invite</div>
           <div style="color:#666;font-size:13px;margin-top:2px;">Mike invited you to Tuesday Game on Apr 22</div>
@@ -1240,28 +1243,28 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     <!-- ==================== TAB BAR ==================== -->
     <div class="tab-bar" id="tabBar">
       <div class="tab-item" onclick="go('dashboard')" data-tab="dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <i class="ph ph-house-simple" style="font-size:26px;"></i>
         <div class="tab-label" style="color:#c0bdb6;">Home</div>
         <div class="tab-dot" style="background:transparent;"></div>
       </div>
       <div class="tab-item" onclick="go('discover')" data-tab="discover">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <i class="ph ph-compass" style="font-size:26px;"></i>
         <div class="tab-label" style="color:#c0bdb6;">Discover</div>
         <div class="tab-dot" style="background:transparent;"></div>
       </div>
       <div class="tab-center" onclick="go('creation1')">
-        <div class="tab-center-btn" style="background:#3d8b7a;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        <div class="tab-center-btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);">
+          <i class="ph-bold ph-plus" style="font-size:28px;color:#fff;"></i>
         </div>
         <div class="tab-center-label" style="color:#c0bdb6;">New</div>
       </div>
       <div class="tab-item" onclick="go('myGames')" data-tab="myGames">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <i class="ph ph-squares-four" style="font-size:26px;"></i>
         <div class="tab-label" style="color:#c0bdb6;">Games</div>
         <div class="tab-dot" style="background:transparent;"></div>
       </div>
       <div class="tab-item" onclick="go('groups')" data-tab="groups">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <i class="ph ph-users-three" style="font-size:26px;"></i>
         <div class="tab-label" style="color:#c0bdb6;">Groups</div>
         <div class="tab-dot" style="background:transparent;"></div>
       </div>
@@ -1309,15 +1312,15 @@ function updateTab(screen) {
   const activeTab = tabMap[screen] || 'dashboard';
   document.querySelectorAll('#tabBar .tab-item').forEach(function(t) {
     var tab = t.getAttribute('data-tab');
-    var svg = t.querySelector('svg');
+    var icon = t.querySelector('i');
     var label = t.querySelector('.tab-label');
     var dot = t.querySelector('.tab-dot');
     if (tab === activeTab) {
-      svg.style.color = '#3d8b7a';
-      label.style.color = '#3d8b7a';
-      if (dot) dot.style.background = '#3d8b7a';
+      if (icon) icon.style.color = '#0d9488';
+      label.style.color = '#0d9488';
+      if (dot) dot.style.background = '#0d9488';
     } else {
-      svg.style.color = '#c0bdb6';
+      if (icon) icon.style.color = '#c0bdb6';
       label.style.color = '#c0bdb6';
       if (dot) dot.style.background = 'transparent';
     }
