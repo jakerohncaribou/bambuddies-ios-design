@@ -70,6 +70,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 .pill { border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; display:inline-flex; align-items:center; }
 .scroll-x { display:flex; gap:10px; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
 .scroll-x::-webkit-scrollbar { display:none; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
 .screen::-webkit-scrollbar { display:none; }
 </style>
 </head>
@@ -128,7 +129,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="color:#5a4030;font-size:18px;font-family:'DM Serif Display',serif;line-height:1.2;">Master the Winds</div>
           <div style="color:#10b981;font-size:13px;font-weight:500;margin-top:4px;cursor:pointer;">Learn Strategy Tips &rarr;</div>
         </div>
-        <div style="font-size:32px;display:flex;gap:2px;transform:rotate(-8deg);">&#x1F004;&#x1F000;&#x1F003;</div>
+        <div style="display:flex;gap:4px;transform:rotate(-5deg);opacity:.6;"><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-diamond" style="font-size:14px;color:#059669;"></i></div><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-circle" style="font-size:14px;color:#f43f5e;"></i></div><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-wind" style="font-size:14px;color:#3b82f6;"></i></div></div>
       </div>
 
       <!-- Next Game Card -->
@@ -136,11 +137,11 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="position:relative;height:100px;overflow:hidden;">
           <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;" alt="Mahjong">
           <div style="position:absolute;top:10px;left:10px;background:#fff;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;color:#000;">SAT 4/19</div>
-          <div style="position:absolute;top:10px;right:40px;font-size:16px;">&#128081;</div>
+          <div style="position:absolute;top:10px;right:40px;"><i class="ph-fill ph-crown" style="font-size:18px;color:#d97706;"></i></div>
           <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600;color:#fff;">4/4</div>
         </div>
         <div style="padding:14px 16px;">
-          <div style="color:#059669;font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:2px;">&#9679; NEXT GAME</div>
+          <div style="color:#059669;font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:2px;"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#059669;margin-right:4px;animation:pulse 2s infinite;"></span> NEXT GAME</div>
           <div style="color:#000;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;">2:00 PM &ndash; 4:00 PM</div>
           <div style="color:#10b981;font-size:15px;font-weight:600;margin-top:2px;">Saturday Mahjong</div>
           <div style="color:#888;font-size:13px;margin-top:4px;display:flex;align-items:center;gap:4px;">
@@ -280,7 +281,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="position:relative;height:120px;margin:0 16px;border-radius:14px;overflow:hidden;">
         <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;" alt="">
         <div style="position:absolute;top:10px;left:10px;background:#fff;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;color:#000;">SAT 4/19</div>
-        <div style="position:absolute;top:10px;right:40px;font-size:16px;">&#128081;</div>
+        <div style="position:absolute;top:10px;right:40px;"><i class="ph-fill ph-crown" style="font-size:18px;color:#d97706;"></i></div>
         <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600;color:#fff;">4/4</div>
       </div>
 
@@ -320,7 +321,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:12px;">Players 4/4</div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R. &#128081;</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R. <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;vertical-align:middle;"></i></div><div style="color:#888;font-size:11px;">Intermediate</div></div>
             <div class="pill" style="background:#d1fae5;color:#059669;font-size:10px;">Accepted</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
@@ -344,15 +345,15 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:12px;">
           <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:12px;">What to Bring</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-            <div style="color:#000;font-size:14px;">&#x1F004; Tile Set</div>
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-puzzle-piece" style="font-size:16px;color:#059669;"></i> Tile Set</div>
             <div class="pill" style="background:#d1fae5;color:#059669;font-size:10px;">Covered</div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-            <div style="color:#000;font-size:14px;">&#127839; Snacks</div>
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-cookie" style="font-size:16px;color:#d97706;"></i> Snacks</div>
             <div style="background:#059669;color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">Claim</div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
-            <div style="color:#000;font-size:14px;">&#127866; Drinks</div>
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-wine" style="font-size:16px;color:#f43f5e;"></i> Drinks</div>
             <div style="color:#888;font-size:12px;">Lisa M.</div>
           </div>
         </div>
@@ -449,7 +450,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:1px;">4/19</div>
         </div>
         <div style="flex:1;min-width:0;">
-          <div style="color:#000;font-size:14px;font-weight:600;">Saturday Mahjong &#128081;</div>
+          <div style="color:#000;font-size:14px;font-weight:600;">Saturday Mahjong <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;vertical-align:middle;"></i></div>
           <div style="color:#888;font-size:12px;">2:00 PM &middot; Sarah's Home</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
@@ -495,7 +496,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="color:#059669;font-size:8px;font-weight:700;">5/03</div>
         </div>
         <div style="flex:1;min-width:0;">
-          <div style="color:#000;font-size:14px;font-weight:600;">Sunday Afternoon &#128081;</div>
+          <div style="color:#000;font-size:14px;font-weight:600;">Sunday Afternoon <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;vertical-align:middle;"></i></div>
           <div style="color:#888;font-size:12px;">3:00 PM &middot; Lisa's House</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
@@ -560,7 +561,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#059669;border:2px solid #059669;"><div style="color:rgba(255,255,255,.7);font-size:9px;font-weight:600;">SAT</div><div style="color:#fff;font-size:15px;font-weight:700;">19</div></div>
         <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">SUN</div><div style="color:#000;font-size:15px;font-weight:700;">20</div></div>
         <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">MON</div><div style="color:#000;font-size:15px;font-weight:700;">21</div></div>
-        <div style="min-width:60px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;">&#128197;</div><div style="color:#888;font-size:11px;font-weight:600;">Other</div></div>
+        <div style="min-width:60px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><i class="ph ph-calendar-dots" style="font-size:14px;color:#888;"></i><div style="color:#888;font-size:11px;font-weight:600;">Other</div></div>
       </div>
 
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Start Time</div>
@@ -593,16 +594,16 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Where</div>
       <!-- Location cards -->
       <div style="background:#fff;border:2px solid #059669;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
-        <div style="font-size:20px;">&#127968;</div>
+        <div style="width:36px;height:36px;border-radius:10px;background:#d1fae5;display:flex;align-items:center;justify-content:center;"><i class="ph ph-house" style="font-size:20px;color:#059669;"></i></div>
         <div><div style="color:#059669;font-size:13px;font-weight:700;">My Home</div><div style="color:#888;font-size:11px;">456 Oak Ave, Brooklyn, NY</div></div>
         <div style="margin-left:auto;width:18px;height:18px;border-radius:50%;background:#059669;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:10px;color:#fff;"></i></div>
       </div>
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
-        <div style="font-size:20px;">&#128190;</div>
+        <div style="width:36px;height:36px;border-radius:10px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;"><i class="ph ph-buildings" style="font-size:20px;color:#888;"></i></div>
         <div><div style="color:#000;font-size:13px;font-weight:600;">Mom's House</div><div style="color:#888;font-size:11px;">789 Elm St, Manhattan</div></div>
       </div>
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px 14px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
-        <div style="font-size:20px;">&#128205;</div>
+        <div style="width:36px;height:36px;border-radius:10px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;"><i class="ph ph-map-pin-line" style="font-size:20px;color:#888;"></i></div>
         <div><div style="color:#000;font-size:13px;font-weight:600;">Custom Address</div><div style="color:#888;font-size:11px;">Enter a new address</div></div>
       </div>
 
@@ -626,16 +627,16 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">Game Type</div>
       <div style="display:flex;gap:8px;margin-bottom:6px;">
         <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
-          <div style="font-size:18px;margin-bottom:2px;">&#128274;</div>
-          <div style="color:#000;font-size:12px;font-weight:600;">Invite Only</div>
+          <i class="ph ph-lock-simple" style="font-size:22px;color:#888;"></i>
+          <div style="color:#000;font-size:12px;font-weight:600;margin-top:2px;">Invite Only</div>
         </div>
         <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
-          <div style="font-size:18px;margin-bottom:2px;">&#128101;</div>
-          <div style="color:#000;font-size:12px;font-weight:600;">Group</div>
+          <i class="ph ph-users-three" style="font-size:22px;color:#888;"></i>
+          <div style="color:#000;font-size:12px;font-weight:600;margin-top:2px;">Group</div>
         </div>
         <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#059669;border:2px solid #059669;cursor:pointer;">
-          <div style="font-size:18px;margin-bottom:2px;">&#127760;</div>
-          <div style="color:#fff;font-size:12px;font-weight:700;">Open</div>
+          <i class="ph ph-globe-hemisphere-west" style="font-size:22px;color:#fff;"></i>
+          <div style="color:#fff;font-size:12px;font-weight:700;margin-top:2px;">Open</div>
         </div>
       </div>
       <div style="color:#888;font-size:11px;margin-bottom:16px;">Players in your area can Discover your game and apply to join.</div>
