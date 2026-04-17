@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies iOS - Full Prototype (Mauve)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Outfit',sans-serif; padding:20px 0; }
+.page-title { color:#fff; font-family:'DM Serif Display',serif; font-size:28px; margin-bottom:6px; text-align:center; }
+.page-sub { color:#888; font-size:14px; margin-bottom:20px; text-align:center; }
+.screen-indicator { color:#666; font-size:13px; margin-top:14px; text-align:center; font-family:'Inter',sans-serif; }
+.screen-indicator span { color:#aaa; font-weight:600; }
+
+.phone-frame {
+  width:393px; height:852px; border-radius:52px; border:3px solid #222;
+  background:#000; position:relative; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.5);
+  flex-shrink:0;
+}
+.notch {
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:126px; height:36px; background:#000; border-radius:0 0 20px 20px; z-index:100;
+}
+.status-bar {
+  position:absolute; top:0; left:0; right:0; height:54px; z-index:99;
+  display:flex; align-items:center; justify-content:space-between; padding:14px 28px 0;
+}
+.status-time { font-size:15px; font-weight:600; }
+.status-icons { display:flex; gap:5px; align-items:center; }
+.status-dot { width:4px; height:4px; border-radius:50%; }
+
+.phone-inner {
+  position:absolute; top:0; left:0; right:0; bottom:0;
+  background:#faf8f6; color:#000; overflow:hidden;
+}
+.screen {
+  position:absolute; top:54px; left:0; right:0; bottom:0;
+  overflow-y:auto; overflow-x:hidden;
+  opacity:0; pointer-events:none; transition:opacity 200ms ease;
+  -webkit-overflow-scrolling:touch;
+}
+.screen.active { opacity:1; pointer-events:auto; }
+.screen.has-tab { padding-bottom:90px; }
+
+/* Tab Bar */
+.tab-bar {
+  position:absolute; bottom:0; left:0; right:0; height:83px; z-index:90;
+  background:rgba(255,255,255,.92); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid #e8e4e0; display:flex; align-items:flex-start; justify-content:space-around;
+  padding-top:8px;
+}
+.tab-item { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; position:relative; padding:0 4px; }
+.tab-item svg { width:24px; height:24px; }
+.tab-label { font-size:10px; font-weight:500; }
+.tab-dot { width:4px; height:4px; border-radius:50%; margin-top:-1px; }
+.tab-center { position:relative; top:-18px; }
+.tab-center-btn {
+  width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 4px 16px rgba(61,139,122,.25);
+}
+.tab-center-label { font-size:10px; font-weight:500; margin-top:2px; text-align:center; }
+
+/* Utility */
+.card { border-radius:16px; overflow:hidden; }
+.avatar { border-radius:50%; object-fit:cover; }
+.pill { border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; display:inline-flex; align-items:center; }
+.scroll-x { display:flex; gap:10px; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
+.scroll-x::-webkit-scrollbar { display:none; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+.screen::-webkit-scrollbar { display:none; }
+</style>
+</head>
+<body>
+
+<div class="page-title" style="color:#fff;">BamBuddies iOS · Mauve Theme</div>
+<div class="page-sub" style="color:#888;">Tap game cards, tabs, and icons to browse the app</div>
+
+<div class="phone-frame">
+  <div class="notch"></div>
+  <div class="phone-inner" style="background:#faf8f6;color:#000;">
+
+    <!-- ==================== STATUS BAR ==================== -->
+    <div class="status-bar">
+      <div class="status-time" style="color:#000;">9:41</div>
+      <div class="status-icons">
+        <div class="status-dot" style="background:#000;"></div>
+        <div class="status-dot" style="background:#000;"></div>
+        <div class="status-dot" style="background:#000;"></div>
+        <div class="status-dot" style="background:#aaa;"></div>
+        <svg width="16" height="12" viewBox="0 0 16 12" style="margin-left:4px;"><rect x="0" y="3" width="3" height="9" rx="1" fill="#000"/><rect x="4" y="2" width="3" height="10" rx="1" fill="#000"/><rect x="8" y="0" width="3" height="12" rx="1" fill="#000"/><rect x="12" y="1" width="3" height="11" rx="1" fill="#000" opacity=".3"/></svg>
+        <svg width="20" height="12" viewBox="0 0 20 12" style="margin-left:2px;"><rect x="0" y="1" width="17" height="10" rx="2" stroke="#000" stroke-width="1.2" fill="none"/><rect x="17.5" y="4" width="2" height="4" rx="1" fill="#000" opacity=".4"/><rect x="1.5" y="2.5" width="12" height="7" rx="1" fill="#000"/></svg>
+      </div>
+    </div>
+
+    <!-- ==================== 1. DASHBOARD ==================== -->
+    <div class="screen has-tab active" data-screen="dashboard" style="padding:16px 16px 0;">
+
+      <!-- Top Bar -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="go('login')">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" width="40" height="40" class="avatar" alt="Sarah">
+          <div>
+            <div style="color:#888;font-size:13px;font-family:'Inter',sans-serif;">Good evening</div>
+            <div style="color:#000;font-size:20px;font-weight:700;font-family:'Outfit',sans-serif;">Sarah</div>
+            <div style="color:#888;font-size:12px;font-family:'Inter',sans-serif;">3 upcoming &middot; 2 invites</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <i class="ph ph-magnifying-glass" style="font-size:24px;color:#1a1a1a;"></i>
+          <div style="position:relative;cursor:pointer;" onclick="go('inbox')">
+            <i class="ph ph-chat-circle-dots" style="font-size:24px;color:#1a1a1a;"></i>
+            <div style="position:absolute;top:-5px;right:-8px;background:#f43f5e;color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
+          </div>
+          <div style="position:relative;cursor:pointer;" onclick="go('notifications')">
+            <i class="ph ph-bell" style="font-size:24px;color:#1a1a1a;"></i>
+            <div style="position:absolute;top:0;right:0;width:8px;height:8px;background:#f43f5e;border-radius:50%;border:2px solid #faf8f6;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ad Banner -->
+      <div style="background:linear-gradient(135deg,#f5f0ec,#efe6de);border-radius:14px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;">
+        <div style="flex:1;">
+          <div style="color:#8a7355;font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:4px;">SPONSORED</div>
+          <div style="color:#5a4030;font-size:18px;font-family:'DM Serif Display',serif;line-height:1.2;">Master the Winds</div>
+          <div style="color:#a78bfa;font-size:13px;font-weight:500;margin-top:4px;cursor:pointer;">Learn Strategy Tips &rarr;</div>
+        </div>
+        <div style="display:flex;gap:4px;transform:rotate(-5deg);opacity:.6;"><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-diamond" style="font-size:14px;color:#7c3aed;"></i></div><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-circle" style="font-size:14px;color:#f43f5e;"></i></div><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-wind" style="font-size:14px;color:#3b82f6;"></i></div></div>
+      </div>
+
+      <!-- Next Game Card -->
+      <div class="card" style="background:#fff;border:1px solid #e8e4e0;margin-bottom:16px;cursor:pointer;" onclick="go('gameDetail')">
+        <div style="position:relative;height:100px;overflow:hidden;">
+          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;" alt="Mahjong">
+          <div style="position:absolute;top:10px;left:10px;background:#fff;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;color:#000;">SAT 4/19</div>
+          <div style="position:absolute;top:10px;right:40px;"><i class="ph-fill ph-crown" style="font-size:18px;color:#d97706;"></i></div>
+          <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600;color:#fff;">4/4</div>
+        </div>
+        <div style="padding:14px 16px;">
+          <div style="color:#7c3aed;font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:2px;"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7c3aed;margin-right:4px;animation:pulse 2s infinite;"></span> NEXT GAME</div>
+          <div style="color:#000;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;">2:00 PM &ndash; 4:00 PM</div>
+          <div style="color:#a78bfa;font-size:15px;font-weight:600;margin-top:2px;">Saturday Mahjong</div>
+          <div style="color:#888;font-size:13px;margin-top:4px;display:flex;align-items:center;gap:4px;">
+            <i class="ph ph-map-pin" style="font-size:14px;color:#aaa;"></i>
+            <span style="color:#888;">Sarah's Home, Portland</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+            <div style="display:flex;margin-left:-4px;">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="28" height="28" class="avatar" style="border:2px solid #fff;margin-left:-4px;">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="28" height="28" class="avatar" style="border:2px solid #fff;margin-left:-4px;">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="28" height="28" class="avatar" style="border:2px solid #fff;margin-left:-4px;">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="28" height="28" class="avatar" style="border:2px solid #fff;margin-left:-4px;">
+            </div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;">&#10003; You're in!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Invites -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="color:#000;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;">Invites</div>
+        <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">2</div>
+      </div>
+
+      <!-- Invite 1 -->
+      <div class="card" style="background:#fff;border:1px solid #e8e4e0;margin-bottom:10px;">
+        <div style="height:48px;overflow:hidden;">
+          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;opacity:.7;" alt="">
+        </div>
+        <div style="padding:12px 14px;">
+          <div style="color:#7c3aed;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;">GAME INVITE</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
+            <div>
+              <div style="color:#000;font-size:14px;font-weight:600;">Amy's Tuesday Game</div>
+              <div style="color:#888;font-size:12px;">Tue, Apr 22 &middot; 7:00 PM</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
+            <div style="flex:1;background:#f5f3ee;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Invite 2 -->
+      <div class="card" style="background:#fff;border:1px solid #e8e4e0;margin-bottom:16px;">
+        <div style="height:48px;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);"></div>
+        <div style="padding:12px 14px;">
+          <div style="color:#d97706;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;">OPEN GAME</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
+            <div>
+              <div style="color:#000;font-size:14px;font-weight:600;">Rachel's Open Game</div>
+              <div style="color:#888;font-size:12px;">Sat, Apr 26 &middot; 1:00 PM</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
+            <div style="flex:1;background:#f5f3ee;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coming Up -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="color:#000;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;">Coming Up</div>
+        <div style="color:#a78bfa;font-size:13px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('myGames')">See All &rarr;</div>
+      </div>
+
+      <!-- Coming Up Row 1 -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;">
+          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:100%;height:100%;object-fit:cover;" alt="">
+          <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:1px;">4/22</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Amy's Tuesday Game</div>
+          <div style="color:#888;font-size:12px;">7:00 PM &middot; Amy's Place</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">3/4</div>
+          <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Confirmed</div>
+        </div>
+      </div>
+
+      <!-- Coming Up Row 2 -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;">
+          <div style="color:#4338ca;font-size:8px;font-weight:700;">4/26</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Rachel's Open Game</div>
+          <div style="color:#888;font-size:12px;">1:00 PM &middot; Community Center</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">2/4</div>
+          <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Needs 2</div>
+        </div>
+      </div>
+
+      <!-- Coming Up Row 3 -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:16px;cursor:pointer;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;">
+          <div style="color:#7c3aed;font-size:8px;font-weight:700;">5/03</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Sunday Afternoon Session</div>
+          <div style="color:#888;font-size:12px;">3:00 PM &middot; Lisa's House</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">4/4</div>
+          <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Confirmed</div>
+        </div>
+      </div>
+
+    </div><!-- /dashboard -->
+
+    <!-- ==================== 2. GAME DETAIL ==================== -->
+    <div class="screen has-tab" data-screen="gameDetail" style="padding:0;">
+
+      <!-- Top Nav -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;">
+        <div style="cursor:pointer;padding:4px;" onclick="goBack()">
+          <i class="ph ph-caret-left" style="font-size:24px;color:#1a1a1a;"></i>
+        </div>
+        <div style="color:#000;font-size:16px;font-weight:600;">Game Detail</div>
+        <i class="ph ph-dots-three" style="font-size:24px;color:#1a1a1a;cursor:pointer;"></i>
+      </div>
+
+      <!-- Status Pill -->
+      <div style="padding:0 16px 10px;">
+        <div class="pill" style="background:#ede9fe;color:#7c3aed;">CONFIRMED</div>
+      </div>
+
+      <!-- Hero Image -->
+      <div style="position:relative;height:120px;margin:0 16px;border-radius:14px;overflow:hidden;">
+        <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;" alt="">
+        <div style="position:absolute;top:10px;left:10px;background:#fff;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;color:#000;">SAT 4/19</div>
+        <div style="position:absolute;top:10px;right:40px;"><i class="ph-fill ph-crown" style="font-size:18px;color:#d97706;"></i></div>
+        <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600;color:#fff;">4/4</div>
+      </div>
+
+      <div style="padding:16px;">
+        <div style="color:#000;font-size:22px;font-weight:700;font-family:'Outfit',sans-serif;">Saturday Mahjong</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
+          <div style="color:#888;font-size:13px;">Hosted by <span style="color:#000;font-weight:600;">Sarah R.</span></div>
+        </div>
+
+        <!-- Details Card -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <i class="ph ph-calendar-blank" style="font-size:20px;color:#7c3aed;"></i>
+            <div><div style="color:#000;font-size:14px;font-weight:600;">Sat, April 19</div><div style="color:#888;font-size:12px;">2:00 PM &ndash; 4:00 PM</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <i class="ph ph-clock" style="font-size:20px;color:#7c3aed;"></i>
+            <div style="color:#000;font-size:14px;font-weight:600;">2 hours</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <i class="ph ph-map-pin" style="font-size:20px;color:#7c3aed;"></i>
+            <div style="color:#000;font-size:14px;font-weight:600;">Sarah's Home, Portland</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <i class="ph ph-globe-simple" style="font-size:20px;color:#7c3aed;"></i>
+            <div style="color:#000;font-size:14px;font-weight:600;">Open Public</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <i class="ph ph-users" style="font-size:20px;color:#7c3aed;"></i>
+            <div style="color:#000;font-size:14px;font-weight:600;">4 / 4 Players</div>
+          </div>
+        </div>
+
+        <!-- Roster Card -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:12px;">
+          <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:12px;">Players 4/4</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R. <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;vertical-align:middle;"></i></div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Accepted</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:11px;">Advanced</div></div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Accepted</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:11px;">Beginner</div></div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Accepted</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+            <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Invited</div>
+          </div>
+        </div>
+
+        <!-- Bring Items Card -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:12px;">
+          <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:12px;">What to Bring</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-puzzle-piece" style="font-size:16px;color:#7c3aed;"></i> Tile Set</div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Covered</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-cookie" style="font-size:16px;color:#d97706;"></i> Snacks</div>
+            <div style="background:#7c3aed;color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">Claim</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-wine" style="font-size:16px;color:#f43f5e;"></i> Drinks</div>
+            <div style="color:#888;font-size:12px;">Lisa M.</div>
+          </div>
+        </div>
+
+        <!-- Chat Preview -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div style="color:#000;font-size:16px;font-weight:700;">Game Chat</div>
+            <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;">12</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
+            <div><div style="color:#000;font-size:12px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:12px;">I'll bring the drinks!</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
+            <div><div style="color:#000;font-size:12px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:12px;">Can't wait, see you all Sat!</div></div>
+          </div>
+          <div style="color:#a78bfa;font-size:13px;font-weight:600;cursor:pointer;text-align:center;" onclick="event.stopPropagation();go('chat')">View All Messages &rarr;</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display:flex;gap:8px;margin-top:16px;padding-bottom:8px;">
+          <div onclick="event.stopPropagation();go('gameEdit')" style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Edit</div>
+          <div onclick="event.stopPropagation();go('applicants')" style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Applicants</div>
+          <div onclick="event.stopPropagation();go('gameReview')" style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Review</div>
+        </div>
+        <div style="display:flex;gap:10px;padding-bottom:16px;">
+          <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Invite Players</div>
+          <div style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Complete Game</div>
+        </div>
+      </div>
+    </div><!-- /gameDetail -->
+
+    <!-- ==================== 3. MY GAMES ==================== -->
+    <div class="screen has-tab" data-screen="myGames" style="padding:16px;">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;">My Games</div>
+        <i class="ph ph-magnifying-glass" style="font-size:22px;color:#1a1a1a;"></i>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <div style="background:#7c3aed;color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;">All</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Upcoming</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Past</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Cancelled</div>
+      </div>
+
+      <!-- ===== PENDING INVITES SECTION ===== -->
+      <div style="margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+          <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;">Pending Invites</div>
+          <div style="background:#e85a2c;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">2</div>
+        </div>
+
+        <!-- Invite 1 -->
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;margin-bottom:8px;">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" alt="">
+            <div style="flex:1;min-width:0;">
+              <div style="color:#000;font-size:13px;font-weight:700;">Amy's Tuesday Game</div>
+              <div style="color:#888;font-size:11px;">Tue, Apr 22 &middot; 6:30 PM &middot; Amy T.</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:3px;background:#fef3c7;color:#d97706;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;">3/4</div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:10px;">
+            <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">&#10003; Accept</div>
+            <div style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;">Decline</div>
+          </div>
+        </div>
+
+        <!-- Invite 2 -->
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;margin-bottom:8px;">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" alt="">
+            <div style="flex:1;min-width:0;">
+              <div style="color:#000;font-size:13px;font-weight:700;">Rachel's Open Game</div>
+              <div style="color:#888;font-size:11px;">Thu, Apr 24 &middot; 3:00 PM &middot; Open</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:3px;background:#fef3c7;color:#d97706;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;">2/4</div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:10px;">
+            <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">&#10003; Accept</div>
+            <div style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;">Decline</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div style="height:1px;background:#e8e4e0;margin-bottom:14px;"></div>
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">My Games</div>
+
+      <!-- Game Row 1 -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;">
+          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:100%;height:100%;object-fit:cover;" alt="">
+          <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:1px;">4/19</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;">Saturday Mahjong <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;vertical-align:middle;"></i></div>
+          <div style="color:#888;font-size:12px;">2:00 PM &middot; Sarah's Home</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">4/4</div>
+          <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Confirmed</div>
+        </div>
+      </div>
+
+      <!-- Game Row 2 -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;">
+          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:100%;height:100%;object-fit:cover;" alt="">
+          <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:1px;">4/22</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;">Amy's Tuesday Game</div>
+          <div style="color:#888;font-size:12px;">7:00 PM &middot; Amy's Place</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">3/4</div>
+          <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Needs 1</div>
+        </div>
+      </div>
+
+      <!-- Game Row 3 -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;position:relative;">
+          <div style="color:#4338ca;font-size:8px;font-weight:700;">4/26</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;">Rachel's Open Game</div>
+          <div style="color:#888;font-size:12px;">1:00 PM &middot; Community Center</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">2/4</div>
+          <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Pending</div>
+        </div>
+      </div>
+
+      <!-- Game Row 4 -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;">
+          <div style="color:#7c3aed;font-size:8px;font-weight:700;">5/03</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;">Sunday Afternoon <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;vertical-align:middle;"></i></div>
+          <div style="color:#888;font-size:12px;">3:00 PM &middot; Lisa's House</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">4/4</div>
+          <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Confirmed</div>
+        </div>
+      </div>
+
+      <!-- Game Row 5 (Completed) -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;opacity:.7;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);display:flex;align-items:center;justify-content:center;">
+          <div style="color:#d97706;font-size:8px;font-weight:700;">4/12</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;">Weekend Warriors</div>
+          <div style="color:#888;font-size:12px;">2:00 PM &middot; Sarah's Home</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">4/4</div>
+          <div class="pill" style="background:#dbeafe;color:#4338ca;font-size:10px;">Completed</div>
+        </div>
+      </div>
+
+      <!-- Game Row 6 (Cancelled) -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:16px;cursor:pointer;opacity:.5;" onclick="go('gameDetail')">
+        <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#c0d8ee,#a8c8e0);display:flex;align-items:center;justify-content:center;">
+          <div style="color:#7c3aed;font-size:8px;font-weight:700;">4/08</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:600;">Monday Night Game</div>
+          <div style="color:#888;font-size:12px;">6:00 PM &middot; Community Center</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <div style="color:#888;font-size:11px;">1/4</div>
+          <div class="pill" style="background:#ffe4e6;color:#ef4444;font-size:10px;">Cancelled</div>
+        </div>
+      </div>
+
+      <!-- FAB -->
+      <div onclick="go('creation1')" style="position:sticky;bottom:100px;margin-left:auto;z-index:88;cursor:pointer;width:56px;height:56px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(61,139,122,.25);">
+        <i class="ph-bold ph-plus" style="font-size:26px;color:#fff;"></i>
+      </div>
+
+    </div><!-- /myGames -->
+
+    <!-- ==================== 4. GAME CREATION ==================== -->
+    <!-- ===== STEP 1: WHEN & WHERE ===== -->
+    <div class="screen" data-screen="creation1" style="padding:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="cursor:pointer;padding:4px;" onclick="goBack()"><i class="ph ph-x" style="font-size:22px;color:#1a1a1a;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
+        <div style="color:#888;font-size:12px;font-weight:600;">Step 1 of 3</div>
+      </div>
+      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:20px;"><div style="width:33%;height:100%;background:#7c3aed;border-radius:4px;"></div></div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Date</div>
+      <div class="scroll-x" style="margin-bottom:16px;">
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">TUE</div><div style="color:#000;font-size:15px;font-weight:700;">15</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">WED</div><div style="color:#000;font-size:15px;font-weight:700;">16</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">THU</div><div style="color:#000;font-size:15px;font-weight:700;">17</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">FRI</div><div style="color:#000;font-size:15px;font-weight:700;">18</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#7c3aed;border:2px solid #7c3aed;"><div style="color:rgba(255,255,255,.7);font-size:9px;font-weight:600;">SAT</div><div style="color:#fff;font-size:15px;font-weight:700;">19</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">SUN</div><div style="color:#000;font-size:15px;font-weight:700;">20</div></div>
+        <div style="min-width:52px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><div style="color:#888;font-size:9px;font-weight:600;">MON</div><div style="color:#000;font-size:15px;font-weight:700;">21</div></div>
+        <div style="min-width:60px;text-align:center;padding:8px 6px;border-radius:12px;background:#f5f3ee;border:1px solid #e8e4e0;"><i class="ph ph-calendar-dots" style="font-size:14px;color:#888;"></i><div style="color:#888;font-size:11px;font-weight:600;">Other</div></div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Start Time</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">10 AM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">11 AM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">12 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">1 PM</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#7c3aed;color:#fff;font-size:12px;font-weight:600;">2 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">3 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">4 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">5 PM</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:4px;">
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">6 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">7 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">8 PM</div>
+        <div style="text-align:center;padding:9px 2px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;">Other</div>
+      </div>
+      <div style="color:#999;font-size:10px;margin-bottom:16px;">Eastern Time (ET)</div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Estimated Length</div>
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="color:#000;font-size:13px;font-weight:500;">2 hours</div>
+        <i class="ph ph-caret-down" style="font-size:16px;color:#888;"></i>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Where</div>
+      <!-- Location cards -->
+      <div style="background:#fff;border:2px solid #7c3aed;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#ede9fe;display:flex;align-items:center;justify-content:center;"><i class="ph ph-house" style="font-size:20px;color:#7c3aed;"></i></div>
+        <div><div style="color:#7c3aed;font-size:13px;font-weight:700;">My Home</div><div style="color:#888;font-size:11px;">456 Oak Ave, Brooklyn, NY</div></div>
+        <div style="margin-left:auto;width:18px;height:18px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:10px;color:#fff;"></i></div>
+      </div>
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;"><i class="ph ph-buildings" style="font-size:20px;color:#888;"></i></div>
+        <div><div style="color:#000;font-size:13px;font-weight:600;">Mom's House</div><div style="color:#888;font-size:11px;">789 Elm St, Manhattan</div></div>
+      </div>
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px 14px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;"><i class="ph ph-map-pin-line" style="font-size:20px;color:#888;"></i></div>
+        <div><div style="color:#000;font-size:13px;font-weight:600;">Custom Address</div><div style="color:#888;font-size:11px;">Enter a new address</div></div>
+      </div>
+
+      <div onclick="go('creation2')" style="background:#7c3aed;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</div>
+    </div><!-- /creation1 -->
+
+    <!-- ===== STEP 2: PLAYERS & TYPE ===== -->
+    <div class="screen" data-screen="creation2" style="padding:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="cursor:pointer;padding:4px;" onclick="go('creation1')"><i class="ph ph-arrow-left" style="font-size:22px;color:#1a1a1a;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
+        <div style="color:#888;font-size:12px;font-weight:600;">Step 2 of 3</div>
+      </div>
+      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:12px;"><div style="width:66%;height:100%;background:#7c3aed;border-radius:4px;"></div></div>
+
+      <!-- Summary of Step 1 -->
+      <div style="background:#ede9fe;border:1px solid #c5e0d3;border-radius:12px;padding:10px 14px;margin-bottom:18px;">
+        <div style="color:#7c3aed;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs &middot; My Home</div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">Game Type</div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;">
+        <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
+          <i class="ph ph-lock-simple" style="font-size:22px;color:#888;"></i>
+          <div style="color:#000;font-size:12px;font-weight:600;margin-top:2px;">Invite Only</div>
+        </div>
+        <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
+          <i class="ph ph-users-three" style="font-size:22px;color:#888;"></i>
+          <div style="color:#000;font-size:12px;font-weight:600;margin-top:2px;">Group</div>
+        </div>
+        <div style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#7c3aed;border:2px solid #7c3aed;cursor:pointer;">
+          <i class="ph ph-globe-hemisphere-west" style="font-size:22px;color:#fff;"></i>
+          <div style="color:#fff;font-size:12px;font-weight:700;margin-top:2px;">Open</div>
+        </div>
+      </div>
+      <div style="color:#888;font-size:11px;margin-bottom:16px;">Players in your area can Discover your game and apply to join.</div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">How Players Join</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <div style="flex:1;padding:10px;border-radius:12px;background:#7c3aed;text-align:center;">
+          <div style="color:#fff;font-size:12px;font-weight:700;">Players Apply</div>
+          <div style="color:rgba(255,255,255,.6);font-size:10px;margin-top:2px;">You approve each one</div>
+        </div>
+        <div style="flex:1;padding:10px;border-radius:12px;background:#fff;border:1px solid #e8e4e0;text-align:center;">
+          <div style="color:#000;font-size:12px;font-weight:600;">Direct Join</div>
+          <div style="color:#888;font-size:10px;margin-top:2px;">Join immediately</div>
+        </div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Confirmation</div>
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <div style="color:#000;font-size:13px;font-weight:500;">Auto-Confirmed at 4 Players</div>
+        <i class="ph ph-caret-down" style="font-size:16px;color:#888;"></i>
+      </div>
+      <div style="color:#999;font-size:10px;margin-bottom:16px;">Game confirms when minimum players reached.</div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Players</div>
+      <div style="display:flex;gap:12px;margin-bottom:6px;">
+        <div style="flex:1;background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:space-between;">
+          <div style="color:#888;font-size:11px;font-weight:600;">Min</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">−</div>
+            <div style="color:#000;font-size:18px;font-weight:800;">4</div>
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">+</div>
+          </div>
+        </div>
+        <div style="flex:1;background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:space-between;">
+          <div style="color:#888;font-size:11px;font-weight:600;">Max</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">−</div>
+            <div style="color:#000;font-size:18px;font-weight:800;">4</div>
+            <div style="width:26px;height:26px;border-radius:8px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;color:#000;font-size:14px;font-weight:600;">+</div>
+          </div>
+        </div>
+      </div>
+      <div style="color:#888;font-size:10px;margin-bottom:16px;">4 players per table</div>
+
+      <!-- Collapsible sections -->
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;">
+        <div style="color:#000;font-size:13px;font-weight:600;">Tables</div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="color:#888;font-size:12px;">1 table</div><i class="ph ph-caret-right" style="font-size:16px;color:#888;"></i></div>
+      </div>
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;cursor:pointer;">
+        <div style="color:#000;font-size:13px;font-weight:600;">Invite Players</div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="color:#888;font-size:12px;">0 added</div><i class="ph ph-caret-right" style="font-size:16px;color:#888;"></i></div>
+      </div>
+
+      <div style="display:flex;gap:10px;">
+        <div onclick="go('creation1')" style="flex:1;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;color:#888;">&larr; Back</div>
+        <div onclick="go('creation3')" style="flex:2;background:#7c3aed;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</div>
+      </div>
+    </div><!-- /creation2 -->
+
+    <!-- ===== STEP 3: EXTRAS ===== -->
+    <div class="screen" data-screen="creation3" style="padding:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="cursor:pointer;padding:4px;" onclick="go('creation2')"><i class="ph ph-arrow-left" style="font-size:22px;color:#1a1a1a;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">New Game</div>
+        <div style="color:#888;font-size:12px;font-weight:600;">Step 3 of 3</div>
+      </div>
+      <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:12px;"><div style="width:100%;height:100%;background:#7c3aed;border-radius:4px;"></div></div>
+
+      <!-- Summary -->
+      <div style="background:#ede9fe;border:1px solid #c5e0d3;border-radius:12px;padding:10px 14px;margin-bottom:18px;">
+        <div style="color:#7c3aed;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs</div>
+        <div style="color:#7c3aed;font-size:11px;font-weight:500;margin-top:2px;">My Home &middot; Open Public &middot; Auto-Confirm &middot; 4 players</div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Game Name</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <div style="flex:1;background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px 14px;">
+          <div style="color:#aaa;font-size:13px;">Auto-generated if blank</div>
+        </div>
+        <div style="width:44px;height:44px;border-radius:12px;background:#fff;border:1px solid #e8e4e0;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          <i class="ph ph-image" style="font-size:20px;color:#888;"></i>
+        </div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Note for Players</div>
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px 14px;margin-bottom:16px;min-height:56px;">
+        <div style="color:#aaa;font-size:13px;">Any notes for players...</div>
+      </div>
+
+      <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:8px;">Minimum Skill Level</div>
+      <div style="display:flex;gap:6px;margin-bottom:4px;">
+        <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#7c3aed;color:#fff;font-size:12px;font-weight:600;">All Welcome</div>
+        <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">Intermediate+</div>
+        <div style="flex:1;text-align:center;padding:10px 4px;border-radius:10px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;">Advanced+</div>
+      </div>
+      <div style="color:#999;font-size:10px;margin-bottom:16px;">Players below this level won't see your game.</div>
+
+      <!-- Collapsible: What to Bring -->
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+          <div style="color:#000;font-size:13px;font-weight:600;">What to Bring</div>
+          <div style="display:flex;align-items:center;gap:6px;"><div style="color:#888;font-size:11px;">2 selected</div><i class="ph ph-caret-down" style="font-size:16px;color:#888;"></i></div>
+        </div>
+        <!-- Expanded items -->
+        <div style="margin-top:10px;border-top:1px solid #e8e4e0;padding-top:10px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #e8e4e0;"></div><div style="color:#000;font-size:12px;">Game mat</div></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="width:20px;height:20px;border-radius:6px;background:#7c3aed;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:11px;color:#fff;"></i></div><div style="color:#000;font-size:12px;font-weight:600;">Tile set</div></div>
+          <div style="display:flex;gap:6px;margin-left:28px;margin-bottom:8px;">
+            <div style="padding:4px 10px;border-radius:8px;background:#7c3aed;color:#fff;font-size:10px;font-weight:600;">I'll bring</div>
+            <div style="padding:4px 10px;border-radius:8px;background:#f5f3ee;border:1px solid #e8e4e0;color:#888;font-size:10px;font-weight:500;">Others bring</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #e8e4e0;"></div><div style="color:#000;font-size:12px;">Wine</div></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><div style="width:20px;height:20px;border-radius:6px;background:#7c3aed;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:11px;color:#fff;"></i></div><div style="color:#000;font-size:12px;font-weight:600;">Snacks</div></div>
+          <div style="display:flex;gap:6px;margin-left:28px;margin-bottom:8px;">
+            <div style="padding:4px 10px;border-radius:8px;background:#f5f3ee;border:1px solid #e8e4e0;color:#888;font-size:10px;font-weight:500;">I'll bring</div>
+            <div style="padding:4px 10px;border-radius:8px;background:#7c3aed;color:#fff;font-size:10px;font-weight:600;">Others bring</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #e8e4e0;"></div><div style="color:#000;font-size:12px;">Drinks</div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #e8e4e0;"></div><div style="color:#000;font-size:12px;">Chips / tokens</div></div>
+        </div>
+      </div>
+
+      <!-- Collapsible: Repeat -->
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;cursor:pointer;">
+        <div style="color:#000;font-size:13px;font-weight:600;">Repeat This Game</div>
+        <div style="width:44px;height:24px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;box-shadow:0 1px 3px rgba(0,0,0,.15);"></div></div>
+      </div>
+
+      <div style="display:flex;gap:10px;">
+        <div onclick="go('creation2')" style="flex:1;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;color:#888;">&larr; Back</div>
+        <div onclick="go('dashboard')" style="flex:2;background:#7c3aed;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Create Game &#10003;</div>
+      </div>
+    </div><!-- /creation3 -->
+
+    <!-- ==================== 5. DISCOVER ==================== -->
+    <div class="screen has-tab" data-screen="discover" style="padding:16px;">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;">Discover</div>
+        <div style="display:flex;gap:12px;">
+          <i class="ph ph-magnifying-glass" style="font-size:22px;color:#1a1a1a;"></i>
+          <i class="ph ph-sliders-horizontal" style="font-size:22px;color:#1a1a1a;"></i>
+        </div>
+      </div>
+
+      <!-- Filter Pills -->
+      <div class="scroll-x" style="margin-bottom:16px;">
+        <div class="pill" style="background:#7c3aed;color:#fff;padding:6px 14px;font-size:12px;">Near Me</div>
+        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">25 mi</div>
+        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">This Week</div>
+        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">All Levels</div>
+      </div>
+
+      <!-- Map Area -->
+      <div style="height:250px;background:linear-gradient(135deg,#e8efe8,#dce6dc);border-radius:16px;margin-bottom:4px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:40px;left:60px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <div style="position:absolute;top:80px;left:180px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <div style="position:absolute;top:130px;left:100px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <div style="position:absolute;top:100px;left:260px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <div style="position:absolute;top:170px;left:200px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
+        <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:.15;" viewBox="0 0 361 250"><path d="M0 50h361M0 100h361M0 150h361M0 200h361M60 0v250M120 0v250M180 0v250M240 0v250M300 0v250" stroke="#7c3aed" stroke-width="1"/></svg>
+      </div>
+
+      <!-- Bottom Sheet -->
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:16px;padding:12px 16px;">
+        <div style="width:36px;height:4px;background:#ddd;border-radius:4px;margin:0 auto 10px;"></div>
+        <div style="color:#000;font-size:15px;font-weight:700;margin-bottom:12px;">4 games nearby</div>
+
+        <div class="scroll-x">
+          <!-- Card 1 -->
+          <div style="min-width:200px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;flex-shrink:0;cursor:pointer;" onclick="go('gameDetail')">
+            <div style="height:80px;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);"></div>
+            <div style="padding:10px 12px;">
+              <div style="color:#000;font-size:14px;font-weight:600;">Park Mahjong</div>
+              <div style="color:#888;font-size:11px;">Sat, Apr 19 &middot; 0.8 mi</div>
+              <div style="background:#7c3aed;color:#fff;text-align:center;padding:6px;border-radius:8px;font-size:12px;font-weight:600;margin-top:8px;cursor:pointer;">Join</div>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div style="min-width:200px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;flex-shrink:0;cursor:pointer;" onclick="go('gameDetail')">
+            <div style="height:80px;overflow:hidden;">
+              <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400" style="width:100%;height:100%;object-fit:cover;" alt="">
+            </div>
+            <div style="padding:10px 12px;">
+              <div style="color:#000;font-size:14px;font-weight:600;">Cafe Game Night</div>
+              <div style="color:#888;font-size:11px;">Sun, Apr 20 &middot; 2.1 mi</div>
+              <div style="background:#7c3aed;color:#fff;text-align:center;padding:6px;border-radius:8px;font-size:12px;font-weight:600;margin-top:8px;cursor:pointer;">Join</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /discover -->
+
+    <!-- ==================== 6. GROUPS ==================== -->
+    <div class="screen has-tab" data-screen="groups" style="padding:16px;">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;">My Groups</div>
+        <div onclick="go('groupCreation')" style="background:#7c3aed;color:#fff;padding:6px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">+ New</div>
+      </div>
+
+      <!-- Search Bar + Discover -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <div style="flex:1;background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+          <i class="ph ph-magnifying-glass" style="font-size:16px;color:#aaa;"></i>
+          <div style="color:#aaa;font-size:14px;">Search groups...</div>
+        </div>
+        <div onclick="go('groupDiscovery')" style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:6px;cursor:pointer;">
+          <i class="ph ph-compass" style="font-size:16px;color:#7c3aed;"></i>
+          <span style="color:#7c3aed;font-size:12px;font-weight:600;">Discover</span>
+        </div>
+      </div>
+
+      <!-- Pending Invite -->
+      <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:14px;margin-bottom:16px;">
+        <div style="color:#d97706;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:6px;">GROUP INVITE</div>
+        <div style="color:#000;font-size:15px;font-weight:600;margin-bottom:2px;">Portland Mahjong Club</div>
+        <div style="color:#888;font-size:12px;margin-bottom:10px;">12 members &middot; Invited by Sarah</div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Accept</div>
+          <div style="flex:1;background:#f5f3ee;color:#000;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #e8e4e0;">Decline</div>
+        </div>
+      </div>
+
+      <!-- Groups Grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;cursor:pointer;text-align:center;" onclick="go('groupDetail')">
+          <div style="display:flex;justify-content:center;margin-bottom:8px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#7c3aed;font-size:11px;font-weight:700;">J</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#d8cef0,#c5b8e8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#4338ca;font-size:11px;font-weight:700;">L</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#d97706;font-size:11px;font-weight:700;">M</div></div>
+          </div>
+          <div style="color:#000;font-size:14px;font-weight:600;">Saturday Regulars</div>
+          <div style="color:#888;font-size:11px;margin-top:2px;">4 members</div>
+          <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;margin-top:6px;">Owner</div>
+        </div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;cursor:pointer;text-align:center;" onclick="go('groupDetail')">
+          <div style="display:flex;justify-content:center;margin-bottom:8px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c0d8ee,#a8c8e0);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#7c3aed;font-size:11px;font-weight:700;">R</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#d97706;font-size:11px;font-weight:700;">K</div></div>
+          </div>
+          <div style="color:#000;font-size:14px;font-weight:600;">Work Crew</div>
+          <div style="color:#888;font-size:11px;margin-top:2px;">6 members</div>
+          <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;margin-top:6px;border:1px solid #e8e4e0;">Member</div>
+        </div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;cursor:pointer;text-align:center;" onclick="go('groupDetail')">
+          <div style="display:flex;justify-content:center;margin-bottom:8px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#d8cef0,#c5b8e8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#4338ca;font-size:11px;font-weight:700;">S</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#7c3aed;font-size:11px;font-weight:700;">A</div></div>
+          </div>
+          <div style="color:#000;font-size:14px;font-weight:600;">Beginners</div>
+          <div style="color:#888;font-size:11px;margin-top:2px;">8 members</div>
+          <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;margin-top:6px;border:1px solid #e8e4e0;">Member</div>
+        </div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;cursor:pointer;text-align:center;" onclick="go('groupDetail')">
+          <div style="display:flex;justify-content:center;margin-bottom:8px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f0dcc8,#e8d0b8);border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-right:-8px;"><div style="color:#d97706;font-size:11px;font-weight:700;">T</div></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c0d8ee,#a8c8e0);border:2px solid #fff;display:flex;align-items:center;justify-content:center;"><div style="color:#7c3aed;font-size:11px;font-weight:700;">P</div></div>
+          </div>
+          <div style="color:#000;font-size:14px;font-weight:600;">Tournament Prep</div>
+          <div style="color:#888;font-size:11px;margin-top:2px;">5 members</div>
+          <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;margin-top:6px;">Owner</div>
+        </div>
+      </div>
+
+    </div><!-- /groups -->
+
+    <!-- ==================== 7. GROUP DETAIL ==================== -->
+    <div class="screen has-tab" data-screen="groupDetail" style="padding:0;">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;">
+        <div style="cursor:pointer;padding:4px;" onclick="goBack()">
+          <i class="ph ph-caret-left" style="font-size:24px;color:#1a1a1a;"></i>
+        </div>
+        <div style="color:#000;font-size:16px;font-weight:600;">Saturday Regulars</div>
+        <i class="ph ph-gear" style="font-size:22px;color:#1a1a1a;"></i>
+      </div>
+
+      <div style="padding:0 16px 16px;">
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:20px;text-align:center;margin-bottom:16px;">
+          <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;">
+            <div style="color:#7c3aed;font-size:24px;font-weight:700;">SR</div>
+          </div>
+          <div style="color:#000;font-size:20px;font-weight:700;font-family:'Outfit',sans-serif;">Saturday Regulars</div>
+          <div style="color:#888;font-size:13px;margin-top:4px;">Created by you &middot; 4 members</div>
+          <div class="pill" style="background:#ede9fe;color:#7c3aed;margin-top:8px;">Owner</div>
+        </div>
+
+        <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:6px;">About</div>
+        <div style="color:#666;font-size:14px;line-height:1.5;margin-bottom:16px;">Our weekly Saturday mahjong group. We play American style, all levels welcome. Snacks provided, BYOB.</div>
+
+        <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:10px;">Members</div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:14px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Owner</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:11px;">Advanced</div></div>
+            <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:11px;">Beginner</div></div>
+            <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+            <div class="pill" style="background:#f5f3ee;color:#888;font-size:10px;border:1px solid #e8e4e0;">Member</div>
+          </div>
+        </div>
+
+        <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:10px;">Upcoming Games</div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
+          <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;">
+            <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:100%;height:100%;object-fit:cover;" alt="">
+            <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:1px;">4/19</div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="color:#000;font-size:14px;font-weight:600;">Saturday Mahjong</div>
+            <div style="color:#888;font-size:12px;">2:00 PM &middot; Sarah's Home</div>
+          </div>
+          <div style="color:#888;font-size:11px;">4/4</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:16px;cursor:pointer;" onclick="go('gameDetail')">
+          <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;">
+            <div style="color:#7c3aed;font-size:8px;font-weight:700;">4/26</div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="color:#000;font-size:14px;font-weight:600;">Next Saturday Session</div>
+            <div style="color:#888;font-size:12px;">2:00 PM &middot; TBD</div>
+          </div>
+          <div style="color:#888;font-size:11px;">1/4</div>
+        </div>
+
+        <div style="display:flex;gap:10px;">
+          <div style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Message Group</div>
+          <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('creation1')">Schedule Game</div>
+        </div>
+      </div>
+
+    </div><!-- /groupDetail -->
+
+    <!-- ==================== 8. INBOX ==================== -->
+    <div class="screen has-tab" data-screen="inbox" style="padding:16px;">
+
+      <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:16px;">Inbox</div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('chat')">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="42" height="42" class="avatar" alt="">
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:9px;padding:2px 6px;">GAME</div>
+            <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Saturday Mahjong</div>
+          </div>
+          <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Lisa: I'll bring the drinks!</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
+          <div style="color:#aaa;font-size:11px;">2m</div>
+          <div style="background:#7c3aed;color:#fff;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('chat')">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="42" height="42" class="avatar" alt="">
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:9px;padding:2px 6px;">GAME</div>
+            <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Amy's Tuesday Game</div>
+          </div>
+          <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Mike: Who's bringing tiles?</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
+          <div style="color:#aaa;font-size:11px;">15m</div>
+          <div style="background:#7c3aed;color:#fff;font-size:9px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;">1</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('chat')">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <div style="color:#4338ca;font-size:14px;font-weight:700;">SR</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+            <div class="pill" style="background:#dbeafe;color:#4338ca;font-size:9px;padding:2px 6px;">GROUP</div>
+            <div style="color:#000;font-size:14px;font-weight:600;">Saturday Regulars</div>
+          </div>
+          <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Rachel: Same time next week?</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
+          <div style="color:#aaa;font-size:11px;">1h</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('chat')">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="42" height="42" class="avatar" alt="">
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+            <div class="pill" style="background:#f5f3ee;color:#888;font-size:9px;padding:2px 6px;border:1px solid #e8e4e0;">DM</div>
+            <div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div>
+          </div>
+          <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Thanks for the invite!</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
+          <div style="color:#aaa;font-size:11px;">3h</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('chat')">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <div style="color:#7c3aed;font-size:14px;font-weight:700;">BB</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:9px;padding:2px 6px;">GAME</div>
+            <div style="color:#000;font-size:14px;font-weight:500;">Sunday Session</div>
+          </div>
+          <div style="color:#888;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">You: Looking forward to it!</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
+          <div style="color:#aaa;font-size:11px;">1d</div>
+        </div>
+      </div>
+
+    </div><!-- /inbox -->
+
+    <!-- ==================== 9. CHAT ==================== -->
+    <div class="screen" data-screen="chat" style="padding:0;display:flex;flex-direction:column;">
+
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #e8e4e0;background:#fff;flex-shrink:0;">
+        <div style="cursor:pointer;padding:4px;" onclick="goBack()">
+          <i class="ph ph-caret-left" style="font-size:24px;color:#1a1a1a;"></i>
+        </div>
+        <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;">
+          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:100%;height:100%;object-fit:cover;" alt="">
+        </div>
+        <div style="flex:1;">
+          <div style="color:#000;font-size:15px;font-weight:600;">Saturday Mahjong</div>
+          <div style="color:#888;font-size:11px;">4 participants</div>
+        </div>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;">
+        <div style="text-align:center;padding:4px 0;">
+          <div style="color:#aaa;font-size:11px;font-style:italic;">Sarah created this game &middot; Apr 14</div>
+        </div>
+
+        <div style="display:flex;align-items:flex-end;gap:6px;max-width:80%;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="flex-shrink:0;" alt="">
+          <div>
+            <div style="color:#888;font-size:10px;margin-bottom:2px;margin-left:4px;">Lisa M.</div>
+            <div style="background:#fff;border:1px solid #e8e4e0;border-radius:16px 16px 16px 4px;padding:10px 14px;">
+              <div style="color:#000;font-size:14px;line-height:1.4;">Hey everyone! Excited for Saturday</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-end;gap:6px;max-width:80%;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="flex-shrink:0;" alt="">
+          <div>
+            <div style="color:#888;font-size:10px;margin-bottom:2px;margin-left:4px;">Amy T.</div>
+            <div style="background:#fff;border:1px solid #e8e4e0;border-radius:16px 16px 16px 4px;padding:10px 14px;">
+              <div style="color:#000;font-size:14px;line-height:1.4;">Can't wait! Should I bring snacks?</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;">
+          <div style="max-width:80%;">
+            <div style="background:#7c3aed;border-radius:16px 16px 4px 16px;padding:10px 14px;">
+              <div style="color:#fff;font-size:14px;line-height:1.4;">Yes please! Snacks would be great. I'll have the tiles ready.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-end;gap:6px;max-width:80%;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="flex-shrink:0;" alt="">
+          <div>
+            <div style="color:#888;font-size:10px;margin-bottom:2px;margin-left:4px;">Lisa M.</div>
+            <div style="background:#fff;border:1px solid #e8e4e0;border-radius:16px 16px 16px 4px;padding:10px 14px;">
+              <div style="color:#000;font-size:14px;line-height:1.4;">I'll bring drinks!</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;">
+          <div style="max-width:80%;">
+            <div style="background:#7c3aed;border-radius:16px 16px 4px 16px;padding:10px 14px;">
+              <div style="color:#fff;font-size:14px;line-height:1.4;">Perfect, thanks Lisa!</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-end;gap:6px;max-width:80%;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="flex-shrink:0;" alt="">
+          <div>
+            <div style="color:#888;font-size:10px;margin-bottom:2px;margin-left:4px;">Amy T.</div>
+            <div style="background:#fff;border:1px solid #e8e4e0;border-radius:16px 16px 16px 4px;padding:10px 14px;">
+              <div style="color:#000;font-size:14px;line-height:1.4;">See you all Saturday!</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;padding:4px 0;">
+          <div style="color:#aaa;font-size:11px;font-style:italic;">Rachel K. was invited to the game</div>
+        </div>
+
+        <div style="display:flex;align-items:flex-end;gap:6px;max-width:80%;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="flex-shrink:0;" alt="">
+          <div>
+            <div style="color:#888;font-size:10px;margin-bottom:2px;margin-left:4px;">Rachel K.</div>
+            <div style="background:#fff;border:1px solid #e8e4e0;border-radius:16px 16px 16px 4px;padding:10px 14px;">
+              <div style="color:#000;font-size:14px;line-height:1.4;">Thanks for the invite! I'm still deciding.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:10px 16px 28px;border-top:1px solid #e8e4e0;background:#fff;display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <i class="ph ph-camera" style="font-size:24px;color:#aaa;"></i>
+        <div style="flex:1;background:#f5f3ee;border:1px solid #e8e4e0;border-radius:20px;padding:10px 16px;">
+          <div style="color:#aaa;font-size:14px;">Type a message...</div>
+        </div>
+        <div style="width:36px;height:36px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
+          <i class="ph-fill ph-paper-plane-tilt" style="font-size:18px;color:#fff;"></i>
+        </div>
+      </div>
+    </div><!-- /chat -->
+
+    <!-- ==================== 10. NOTIFICATIONS ==================== -->
+    <div class="screen has-tab" data-screen="notifications" style="padding:16px;">
+
+      <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:16px;">Activity</div>
+
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <div style="background:#7c3aed;color:#fff;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;">All</div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;position:relative;">
+          Notifications
+          <div style="position:absolute;top:-4px;right:-4px;background:#f43f5e;color:#fff;font-size:8px;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
+        </div>
+        <div style="background:#f5f3ee;color:#888;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #e8e4e0;">Messages</div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#f0f8f4;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#7c3aed;margin-top:6px;flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:700;">Game Confirmed</div>
+          <div style="color:#666;font-size:13px;margin-top:2px;">Saturday Mahjong is now full with 4/4 players</div>
+          <div style="color:#aaa;font-size:11px;margin-top:4px;">5 min ago</div>
+        </div>
+        <i class="ph ph-caret-right" style="font-size:16px;color:#ccc;flex-shrink:0;margin-top:4px;"></i>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#f0f8f4;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#d97706;margin-top:6px;flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:700;">New Invite</div>
+          <div style="color:#666;font-size:13px;margin-top:2px;">Mike invited you to Tuesday Game on Apr 22</div>
+          <div style="color:#aaa;font-size:11px;margin-top:4px;">1 hour ago</div>
+        </div>
+        <i class="ph ph-caret-right" style="font-size:16px;color:#ccc;flex-shrink:0;margin-top:4px;"></i>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#f0f8f4;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#4338ca;margin-top:6px;flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:700;">Group Message</div>
+          <div style="color:#666;font-size:13px;margin-top:2px;">New message in Saturday Regulars group</div>
+          <div style="color:#aaa;font-size:11px;margin-top:4px;">2 hours ago</div>
+        </div>
+        <i class="ph ph-caret-right" style="font-size:16px;color:#ccc;flex-shrink:0;margin-top:4px;"></i>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#ddd;margin-top:6px;flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:500;">Lisa accepted invite</div>
+          <div style="color:#888;font-size:13px;margin-top:2px;">Lisa M. accepted your invite to Saturday Mahjong</div>
+          <div style="color:#aaa;font-size:11px;margin-top:4px;">Yesterday</div>
+        </div>
+        <i class="ph ph-caret-right" style="font-size:16px;color:#ccc;flex-shrink:0;margin-top:4px;"></i>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#ddd;margin-top:6px;flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:500;">Game completed</div>
+          <div style="color:#888;font-size:13px;margin-top:2px;">Weekend Warriors was marked as completed</div>
+          <div style="color:#aaa;font-size:11px;margin-top:4px;">2 days ago</div>
+        </div>
+        <i class="ph ph-caret-right" style="font-size:16px;color:#ccc;flex-shrink:0;margin-top:4px;"></i>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;">
+        <div style="width:8px;height:8px;border-radius:50%;background:#ddd;margin-top:6px;flex-shrink:0;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="color:#000;font-size:14px;font-weight:500;">Mike joined your group</div>
+          <div style="color:#888;font-size:13px;margin-top:2px;">Amy T. joined Saturday Regulars</div>
+          <div style="color:#aaa;font-size:11px;margin-top:4px;">3 days ago</div>
+        </div>
+        <i class="ph ph-caret-right" style="font-size:16px;color:#ccc;flex-shrink:0;margin-top:4px;"></i>
+      </div>
+
+    </div><!-- /notifications -->
+
+    <!-- ==================== LOGIN ==================== -->
+    <div class="screen" data-screen="login" style="padding:32px 24px;background:#faf8f6;">
+      <div style="text-align:center;margin-top:40px;margin-bottom:32px;">
+        <div style="width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+          <i class="ph-fill ph-diamond" style="font-size:40px;color:#fff;"></i>
+        </div>
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#000;line-height:1.15;">Welcome back</div>
+        <div style="color:#888;font-size:14px;margin-top:4px;">Sign in to continue</div>
+      </div>
+      <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Email</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:14px;color:#aaa;font-size:14px;">you@email.com</div></div>
+      <div style="margin-bottom:16px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Password</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:14px;color:#aaa;font-size:14px;display:flex;align-items:center;justify-content:space-between;"><span>&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span><i class="ph ph-eye" style="font-size:16px;color:#888;"></i></div></div>
+      <div onclick="go('forgotPassword')" style="text-align:right;color:#7c3aed;font-size:13px;font-weight:600;margin-bottom:20px;cursor:pointer;">Forgot password?</div>
+      <div onclick="go('dashboard')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:16px;">Sign In</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><div style="flex:1;height:1px;background:#e8e4e0;"></div><div style="color:#888;font-size:12px;">or</div><div style="flex:1;height:1px;background:#e8e4e0;"></div></div>
+      <div style="background:#fff;border:1px solid #e8e4e0;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;color:#000;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continue with Google
+      </div>
+      <div style="background:#fff;border:1px solid #e8e4e0;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;color:#000;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;"><i class="ph-fill ph-apple-logo" style="font-size:18px;"></i> Continue with Apple</div>
+      <div style="text-align:center;color:#888;font-size:13px;margin-top:24px;">New here? <span onclick="go('register')" style="color:#7c3aed;font-weight:600;cursor:pointer;">Create account</span></div>
+    </div>
+
+    <!-- ==================== REGISTER ==================== -->
+    <div class="screen" data-screen="register" style="padding:20px 24px;background:#faf8f6;">
+      <div style="display:flex;align-items:center;margin-bottom:16px;"><div onclick="go('login')" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:24px;color:#000;"></i></div></div>
+      <div style="font-family:'DM Serif Display',serif;font-size:26px;color:#000;line-height:1.15;margin-bottom:4px;">Join BamBuddies</div>
+      <div style="color:#888;font-size:13px;margin-bottom:20px;">Find your mahjong crew</div>
+      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Full Name</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">Sarah Rodriguez</div></div>
+      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Email</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">sarah@email.com</div></div>
+      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Password</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</div></div>
+      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Phone</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">+1 (555) 123-4567</div></div>
+      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Player Level</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;"><span>Intermediate</span><i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i></div></div>
+      <div style="margin-bottom:14px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Home Address</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">Enter your address</div></div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;align-items:flex-start;"><div style="width:18px;height:18px;border-radius:5px;background:#7c3aed;display:flex;align-items:center;justify-content:center;margin-top:2px;flex-shrink:0;"><i class="ph-bold ph-check" style="font-size:11px;color:#fff;"></i></div><div style="color:#666;font-size:11px;line-height:1.4;">I agree to the <span style="color:#7c3aed;font-weight:600;">Terms of Service</span> and <span style="color:#7c3aed;font-weight:600;">Privacy Policy</span></div></div>
+      <div onclick="go('verifyPhone')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Create Account</div>
+      <div style="text-align:center;color:#888;font-size:13px;margin-top:16px;">Already have an account? <span onclick="go('login')" style="color:#7c3aed;font-weight:600;cursor:pointer;">Sign in</span></div>
+    </div>
+
+    <!-- ==================== FORGOT PASSWORD ==================== -->
+    <div class="screen" data-screen="forgotPassword" style="padding:32px 24px;background:#faf8f6;">
+      <div style="display:flex;align-items:center;margin-bottom:24px;"><div onclick="go('login')" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:24px;color:#000;"></i></div></div>
+      <div style="width:60px;height:60px;border-radius:16px;background:#ede9fe;display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><i class="ph ph-key" style="font-size:28px;color:#7c3aed;"></i></div>
+      <div style="font-family:'DM Serif Display',serif;font-size:26px;color:#000;line-height:1.15;">Forgot password?</div>
+      <div style="color:#888;font-size:14px;margin-top:4px;margin-bottom:24px;">Enter your email and we'll send you a reset link.</div>
+      <div style="margin-bottom:16px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Email</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:14px;color:#aaa;font-size:14px;">you@email.com</div></div>
+      <div onclick="go('resetPassword')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Send Reset Link</div>
+      <div onclick="go('login')" style="text-align:center;color:#7c3aed;font-size:13px;font-weight:600;margin-top:16px;cursor:pointer;">Back to sign in</div>
+    </div>
+
+    <!-- ==================== RESET PASSWORD ==================== -->
+    <div class="screen" data-screen="resetPassword" style="padding:32px 24px;background:#faf8f6;">
+      <div style="width:60px;height:60px;border-radius:16px;background:#ede9fe;display:flex;align-items:center;justify-content:center;margin:24px 0 16px;"><i class="ph ph-lock-key" style="font-size:28px;color:#7c3aed;"></i></div>
+      <div style="font-family:'DM Serif Display',serif;font-size:26px;color:#000;line-height:1.15;">Set new password</div>
+      <div style="color:#888;font-size:14px;margin-top:4px;margin-bottom:24px;">Must be at least 8 characters.</div>
+      <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">New password</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:14px;color:#aaa;font-size:14px;">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</div></div>
+      <div style="margin-bottom:16px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Confirm password</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:14px;color:#aaa;font-size:14px;">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</div></div>
+      <div onclick="go('login')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Reset Password</div>
+    </div>
+
+    <!-- ==================== VERIFY PHONE ==================== -->
+    <div class="screen" data-screen="verifyPhone" style="padding:32px 24px;background:#faf8f6;">
+      <div style="width:60px;height:60px;border-radius:16px;background:#ede9fe;display:flex;align-items:center;justify-content:center;margin:24px 0 16px;"><i class="ph ph-device-mobile" style="font-size:28px;color:#7c3aed;"></i></div>
+      <div style="font-family:'DM Serif Display',serif;font-size:26px;color:#000;line-height:1.15;">Verify your phone</div>
+      <div style="color:#888;font-size:14px;margin-top:4px;margin-bottom:24px;">We sent a code to +1 (555) 123-4567</div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:20px;">
+        <div style="width:48px;height:56px;background:#fff;border:2px solid #7c3aed;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#000;">4</div>
+        <div style="width:48px;height:56px;background:#fff;border:1px solid #e8e4e0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#000;">2</div>
+        <div style="width:48px;height:56px;background:#fff;border:1px solid #e8e4e0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#000;">8</div>
+        <div style="width:48px;height:56px;background:#fff;border:1px solid #e8e4e0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#ccc;">_</div>
+        <div style="width:48px;height:56px;background:#fff;border:1px solid #e8e4e0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#ccc;">_</div>
+        <div style="width:48px;height:56px;background:#fff;border:1px solid #e8e4e0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#ccc;">_</div>
+      </div>
+      <div style="text-align:center;color:#888;font-size:13px;margin-bottom:20px;">Didn't get it? <span style="color:#7c3aed;font-weight:600;">Resend code</span></div>
+      <div onclick="go('dashboard')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Verify</div>
+    </div>
+
+    <!-- ==================== COMPLETE PROFILE ==================== -->
+    <div class="screen" data-screen="completeProfile" style="padding:24px;background:#faf8f6;">
+      <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#000;line-height:1.2;margin-bottom:4px;">One more thing</div>
+      <div style="color:#888;font-size:13px;margin-bottom:20px;">Complete your profile to get started.</div>
+      <div style="text-align:center;margin-bottom:20px;"><div style="width:80px;height:80px;border-radius:50%;background:#ede9fe;display:inline-flex;align-items:center;justify-content:center;"><i class="ph ph-camera" style="font-size:32px;color:#7c3aed;"></i></div><div style="color:#7c3aed;font-size:12px;font-weight:600;margin-top:6px;">Add photo</div></div>
+      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Phone</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">+1 (555) 123-4567</div></div>
+      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Player Level</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;"><span>Intermediate</span><i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i></div></div>
+      <div style="margin-bottom:16px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Home Address</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">Enter your address</div></div>
+      <div onclick="go('dashboard')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Complete Profile</div>
+    </div>
+
+    <!-- ==================== GAME EDIT ==================== -->
+    <div class="screen" data-screen="gameEdit" style="padding:16px;background:#faf8f6;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div onclick="goBack()" style="cursor:pointer;padding:4px;"><i class="ph ph-x" style="font-size:22px;color:#000;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">Edit Game</div>
+        <div style="color:#7c3aed;font-size:14px;font-weight:700;cursor:pointer;" onclick="goBack()">Save</div>
+      </div>
+      <div style="background:#fef3c7;color:#92400e;padding:10px 14px;border-radius:10px;font-size:12px;margin-bottom:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-info" style="font-size:16px;"></i> Players will be notified of changes</div>
+      <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Game Name</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#000;font-size:14px;">Saturday Mahjong</div></div>
+      <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Date & Time</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:14px;display:flex;justify-content:space-between;align-items:center;"><span>Sat, Apr 19 · 2:00 PM</span><i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i></div></div>
+      <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Estimated Length</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:14px;display:flex;justify-content:space-between;align-items:center;"><span>2 hours</span><i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i></div></div>
+      <div style="margin-bottom:20px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Note for Players</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:14px;min-height:80px;">Any updates or notes...</div></div>
+      <div onclick="go('gameDetail')" style="background:transparent;border:1.5px solid #ef4444;color:#ef4444;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">Cancel Game</div>
+    </div>
+
+    <!-- ==================== APPLICANTS ==================== -->
+    <div class="screen" data-screen="applicants" style="padding:16px;background:#faf8f6;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div onclick="goBack()" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:24px;color:#000;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">Applicants</div>
+        <div style="width:24px;"></div>
+      </div>
+      <div style="color:#888;font-size:13px;margin-bottom:14px;">3 pending · Saturday Mahjong</div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+          <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Jessica W.</div><div style="color:#888;font-size:12px;">Advanced · Applied 2h ago</div></div>
+        </div>
+        <div style="color:#666;font-size:12px;margin-bottom:10px;font-style:italic;">"Would love to join! I'm free Saturday."</div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;">Approve</div>
+          <div style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Decline</div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Marcus L.</div><div style="color:#888;font-size:12px;">Intermediate · Applied 5h ago</div></div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;">Approve</div>
+          <div style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Decline</div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Priya R.</div><div style="color:#888;font-size:12px;">Beginner · Applied 1d ago</div></div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;">Approve</div>
+          <div style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Decline</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== GAME REVIEW ==================== -->
+    <div class="screen" data-screen="gameReview" style="padding:16px;background:#faf8f6;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div onclick="goBack()" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:24px;color:#000;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">How was it?</div>
+        <div style="width:24px;"></div>
+      </div>
+      <div style="color:#888;font-size:13px;margin-bottom:14px;">Saturday Mahjong · Apr 19</div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:16px;margin-bottom:12px;">
+        <div style="color:#000;font-size:14px;font-weight:700;margin-bottom:10px;">Rate the game</div>
+        <div style="display:flex;gap:4px;margin-bottom:14px;">
+          <i class="ph-fill ph-star" style="font-size:28px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:28px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:28px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:28px;color:#fbbf24;"></i><i class="ph ph-star" style="font-size:28px;color:#ddd;"></i>
+        </div>
+        <div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Notes (optional)</div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:10px;color:#aaa;font-size:13px;min-height:60px;">Great group, fun game...</div>
+        <div style="margin-top:10px;display:flex;align-items:center;gap:8px;color:#7c3aed;font-size:13px;font-weight:600;cursor:pointer;"><i class="ph ph-camera" style="font-size:18px;"></i> Add a photo</div>
+      </div>
+
+      <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:10px;margin-top:16px;">Rate the players</div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;margin-bottom:8px;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:11px;">Advanced</div></div>
+          <div style="display:flex;gap:2px;"><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i></div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;margin-bottom:8px;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:11px;">Beginner</div></div>
+          <div style="display:flex;gap:2px;"><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i></div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;margin-bottom:16px;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+          <div style="display:flex;gap:2px;"><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i></div>
+        </div>
+      </div>
+
+      <div onclick="go('dashboard')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Submit Reviews</div>
+    </div>
+
+    <!-- ==================== GROUP CREATION ==================== -->
+    <div class="screen" data-screen="groupCreation" style="padding:16px;background:#faf8f6;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div onclick="goBack()" style="cursor:pointer;padding:4px;"><i class="ph ph-x" style="font-size:22px;color:#000;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">New Group</div>
+        <div style="width:24px;"></div>
+      </div>
+      <div style="text-align:center;margin-bottom:20px;"><div style="width:72px;height:72px;border-radius:20px;background:#ede9fe;display:inline-flex;align-items:center;justify-content:center;"><i class="ph-fill ph-users-three" style="font-size:36px;color:#7c3aed;"></i></div></div>
+      <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Group Name</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:14px;">Saturday Regulars</div></div>
+      <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Description</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:14px;min-height:60px;">Our regular Saturday afternoon group...</div></div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;">
+        <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">City</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:14px;">Portland</div></div>
+        <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Neighborhood</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:14px;">Pearl District</div></div>
+      </div>
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:14px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="color:#000;font-size:14px;font-weight:600;">Discoverable</div><div style="color:#888;font-size:11px;margin-top:2px;">Let others find your group</div></div>
+        <div style="width:44px;height:24px;border-radius:12px;background:#7c3aed;position:relative;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div>
+      </div>
+      <div onclick="go('groupDetail')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Create Group</div>
+    </div>
+
+    <!-- ==================== GROUP DISCOVERY ==================== -->
+    <div class="screen has-tab" data-screen="groupDiscovery" style="padding:16px;background:#faf8f6;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div onclick="goBack()" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:24px;color:#000;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">Discover Groups</div>
+        <i class="ph ph-sliders-horizontal" style="font-size:22px;color:#000;"></i>
+      </div>
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:14px;"><i class="ph ph-magnifying-glass" style="font-size:16px;color:#888;"></i><span style="color:#aaa;font-size:13px;">Search by name or city</span></div>
+
+      <div style="color:#888;font-size:12px;margin-bottom:10px;">12 groups near Portland, OR</div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-fill ph-users-three" style="font-size:22px;color:#7c3aed;"></i></div>
+          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Portland Mahjong Club</div><div style="color:#888;font-size:12px;margin-top:2px;">Pearl District · 42 members</div><div style="color:#666;font-size:11px;margin-top:4px;">Weekly games every Saturday...</div></div>
+        </div>
+        <div style="margin-top:12px;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">Apply to Join</div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-fill ph-users-three" style="font-size:22px;color:#d97706;"></i></div>
+          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Sunday Beginners</div><div style="color:#888;font-size:12px;margin-top:2px;">SE Portland · 18 members</div><div style="color:#666;font-size:11px;margin-top:4px;">Friendly group for newcomers...</div></div>
+        </div>
+        <div style="margin-top:12px;background:#fef3c7;color:#d97706;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;">Applied · Pending</div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-fill ph-users-three" style="font-size:22px;color:#2563eb;"></i></div>
+          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Advanced Players PDX</div><div style="color:#888;font-size:12px;margin-top:2px;">Downtown · 23 members</div><div style="color:#666;font-size:11px;margin-top:4px;">Competitive play, NMJL rules</div></div>
+        </div>
+        <div style="margin-top:12px;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">Apply to Join</div>
+      </div>
+    </div>
+
+    <!-- ==================== MODAL OVERLAY ==================== -->
+    <div class="screen" data-screen="modalFirstGame" style="padding:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;">
+      <div style="width:100%;background:#faf8f6;border-radius:24px 24px 0 0;padding:20px;">
+        <div style="width:40px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 16px;"></div>
+        <div style="text-align:center;margin-bottom:20px;">
+          <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;"><i class="ph-fill ph-hand-waving" style="font-size:32px;color:#fff;"></i></div>
+          <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#000;">Welcome, Sarah!</div>
+          <div style="color:#888;font-size:14px;margin-top:4px;">Amy invited you to a game</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:16px;">
+          <div style="display:flex;gap:10px;align-items:center;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;" alt=""><div><div style="color:#000;font-size:14px;font-weight:700;">Amy's Tuesday Game</div><div style="color:#888;font-size:12px;">Tue, Apr 22 · 7:00 PM</div></div></div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <div onclick="go('dashboard')" style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">Not now</div>
+          <div onclick="go('gameDetail')" style="flex:2;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;">Accept Invite</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB BAR ==================== -->
+    <div class="tab-bar" id="tabBar">
+      <div class="tab-item" onclick="go('dashboard')" data-tab="dashboard">
+        <i class="ph ph-house-simple" style="font-size:26px;"></i>
+        <div class="tab-label" style="color:#c0bdb6;">Home</div>
+        <div class="tab-dot" style="background:transparent;"></div>
+      </div>
+      <div class="tab-item" onclick="go('discover')" data-tab="discover">
+        <i class="ph ph-compass" style="font-size:26px;"></i>
+        <div class="tab-label" style="color:#c0bdb6;">Discover</div>
+        <div class="tab-dot" style="background:transparent;"></div>
+      </div>
+      <div class="tab-center" onclick="go('creation1')">
+        <div class="tab-center-btn" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);">
+          <i class="ph-bold ph-plus" style="font-size:28px;color:#fff;"></i>
+        </div>
+        <div class="tab-center-label" style="color:#c0bdb6;">New</div>
+      </div>
+      <div class="tab-item" onclick="go('myGames')" data-tab="myGames">
+        <i class="ph ph-squares-four" style="font-size:26px;"></i>
+        <div class="tab-label" style="color:#c0bdb6;">Games</div>
+        <div class="tab-dot" style="background:transparent;"></div>
+      </div>
+      <div class="tab-item" onclick="go('groups')" data-tab="groups">
+        <i class="ph ph-users-three" style="font-size:26px;"></i>
+        <div class="tab-label" style="color:#c0bdb6;">Groups</div>
+        <div class="tab-dot" style="background:transparent;"></div>
+      </div>
+    </div>
+
+  </div><!-- /phone-inner -->
+</div><!-- /phone-frame -->
+
+<div class="screen-indicator" style="color:#666;">Screen: <span id="screenLabel" style="color:#aaa;">dashboard</span></div>
+
+<script>
+const history = ['dashboard'];
+const tabMap = {dashboard:'dashboard',discover:'discover',myGames:'myGames',groups:'groups',
+  gameDetail:'myGames',creation1:'myGames',creation2:'myGames',creation3:'myGames',groupDetail:'groups',inbox:'dashboard',
+  chat:'dashboard',notifications:'dashboard'};
+const noTabScreens = ['creation1','creation2','creation3','chat','login','register','forgotPassword','resetPassword','verifyPhone','completeProfile','gameEdit','applicants','gameReview','groupCreation','groupDiscovery','modalFirstGame'];
+
+function go(screen) {
+  const current = history[history.length - 1];
+  if (screen === current) return;
+  const cur = document.querySelector('.screen.active');
+  if (cur) cur.classList.remove('active');
+  history.push(screen);
+  const next = document.querySelector('[data-screen="'+screen+'"]');
+  if (next) { next.classList.add('active'); next.scrollTop = 0; }
+  updateTab(screen);
+  document.getElementById('screenLabel').textContent = screen;
+  document.getElementById('tabBar').style.display = noTabScreens.includes(screen) ? 'none' : 'flex';
+}
+
+function goBack() {
+  if (history.length <= 1) return;
+  const cur = document.querySelector('.screen.active');
+  if (cur) cur.classList.remove('active');
+  history.pop();
+  const prev = history[history.length - 1];
+  const next = document.querySelector('[data-screen="'+prev+'"]');
+  if (next) next.classList.add('active');
+  updateTab(prev);
+  document.getElementById('screenLabel').textContent = prev;
+  document.getElementById('tabBar').style.display = noTabScreens.includes(prev) ? 'none' : 'flex';
+}
+
+function updateTab(screen) {
+  const activeTab = tabMap[screen] || 'dashboard';
+  document.querySelectorAll('#tabBar .tab-item').forEach(function(t) {
+    var tab = t.getAttribute('data-tab');
+    var icon = t.querySelector('i');
+    var label = t.querySelector('.tab-label');
+    var dot = t.querySelector('.tab-dot');
+    if (tab === activeTab) {
+      if (icon) icon.style.color = '#7c3aed';
+      label.style.color = '#7c3aed';
+      if (dot) dot.style.background = '#7c3aed';
+    } else {
+      if (icon) icon.style.color = '#c0bdb6';
+      label.style.color = '#c0bdb6';
+      if (dot) dot.style.background = 'transparent';
+    }
+  });
+}
+
+updateTab('dashboard');
+</script>
+
+</body>
+</html>
