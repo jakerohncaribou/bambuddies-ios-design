@@ -334,6 +334,23 @@ select.input{cursor:pointer;}
   <button class="vp-btn" data-vp="mobile" onclick="setViewport('mobile')"><i class="ph ph-device-mobile"></i> Mobile</button>
 </div>
 
+<!-- PAGE BADGE (large, outside browser frame) -->
+<div id="pageBadge" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#059669,#10b981);color:#fff;padding:10px 22px;border-radius:99px;font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;letter-spacing:.2px;box-shadow:0 6px 22px rgba(5,150,105,.35);margin:0 auto 20px;">
+  <span style="opacity:.7;font-weight:600;font-size:12px;letter-spacing:2px;text-transform:uppercase;">Page</span>
+  <span id="pageNum" style="font-size:22px;font-weight:800;letter-spacing:-.5px;">7</span>
+  <span style="opacity:.5;">·</span>
+  <span id="pageName">Dashboard</span>
+</div>
+
+<!-- PAGE REFERENCE LIST (collapsible) -->
+<details style="max-width:1100px;margin:0 auto 24px;background:#141414;border:1px solid #222;border-radius:14px;overflow:hidden;font-family:'Outfit',sans-serif;">
+  <summary style="cursor:pointer;padding:12px 18px;color:#aaa;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:space-between;list-style:none;">
+    <span><i class="ph ph-list-numbers" style="margin-right:6px;vertical-align:-2px;"></i> Page Reference (27 pages) — click to expand</span>
+    <i class="ph ph-caret-down" style="font-size:14px;"></i>
+  </summary>
+  <div id="pageIndex" style="padding:14px 18px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;border-top:1px solid #222;"></div>
+</details>
+
 <div class="frame-wrap">
   <div class="browser-frame desktop" id="frame">
     <div class="browser-chrome">
@@ -2205,11 +2222,53 @@ const urls={
   notifications:'bambuddies.com/notifications',settings:'bambuddies.com/settings',
   completeProfile:'bambuddies.com/onboarding/profile',admin:'bambuddies.com/admin'
 };
+// Page numbering — ordered by logical user flow (matches iOS ordering where possible)
+const pageOrder = [
+  ['login','Login'],
+  ['register','Register'],
+  ['forgot','Forgot Password'],
+  ['reset','Reset Password'],
+  ['verify','Verify Phone'],
+  ['completeProfile','Complete Profile'],
+  ['dashboard','Dashboard'],
+  ['myGames','My Games'],
+  ['gameDetail','Game Detail'],
+  ['gameCreate1','Create Game · Step 1'],
+  ['gameCreate2','Create Game · Step 2'],
+  ['gameCreate3','Create Game · Step 3'],
+  ['gameEdit','Edit Game'],
+  ['applicants','Applicants'],
+  ['gameReview','Game Review'],
+  ['discover','Discover (Map)'],
+  ['discoverList','Discover (List)'],
+  ['groups','My Groups'],
+  ['groupDetail','Group Detail'],
+  ['groupCreate','Create Group'],
+  ['groupDiscover','Discover Groups'],
+  ['inbox','Inbox'],
+  ['chat','Chat Thread'],
+  ['notifications','Notifications'],
+  ['settings','Settings'],
+  ['admin','Admin Dashboard']
+];
+const pageMap = {};
+pageOrder.forEach((p,i)=>{ pageMap[p[0]] = {num:i+1, name:p[1]}; });
+
+function updatePageBadge(screen){
+  const p = pageMap[screen];
+  if(!p) return;
+  const numEl = document.getElementById('pageNum');
+  const nameEl = document.getElementById('pageName');
+  if(numEl) numEl.textContent = String(p.num).padStart(2,'0');
+  if(nameEl) nameEl.textContent = p.name;
+}
+
 function go(screen){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const el=document.querySelector(`[data-screen="${screen}"]`);
   if(el){el.classList.add('active');document.getElementById('addr-text').textContent=urls[screen]||'bambuddies.com';}
   const main=el&&el.querySelector('.main');if(main)main.scrollTop=0;
+  updatePageBadge(screen);
   // Update sidebar active state to match current screen
   document.querySelectorAll('.sidebar .nav-item, .mobile-tabbar .mt-item').forEach(n=>n.classList.remove('active'));
   const navMap={dashboard:0,myGames:1,discover:2,groups:3,inbox:4,notifications:5,settings:6};
@@ -2279,6 +2338,19 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(!layout.querySelector('.sidebar')) layout.insertAdjacentHTML('afterbegin',SIDEBAR_HTML);
     if(!layout.querySelector('.mobile-tabbar')) layout.insertAdjacentHTML('beforeend',MOBILE_TABBAR_HTML);
   });
+  // Populate page reference index
+  const idx = document.getElementById('pageIndex');
+  if(idx){
+    pageOrder.forEach((p,i)=>{
+      const el = document.createElement('div');
+      el.style.cssText = 'cursor:pointer;padding:8px 10px;border-radius:8px;background:#1a1a1a;color:#ddd;font-size:12px;display:flex;align-items:center;gap:8px;transition:background .15s;';
+      el.onmouseover = ()=>el.style.background='#252525';
+      el.onmouseout = ()=>el.style.background='#1a1a1a';
+      el.onclick = ()=>go(p[0]);
+      el.innerHTML = '<span style="background:linear-gradient(135deg,#059669,#10b981);color:#fff;min-width:28px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;">'+String(i+1).padStart(2,'0')+'</span><span>'+p[1]+'</span>';
+      idx.appendChild(el);
+    });
+  }
   go('dashboard');
 });
 </script>

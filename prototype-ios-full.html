@@ -79,6 +79,23 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 <div class="page-title" style="color:#fff;">BamBuddies iOS · Mauve Theme</div>
 <div class="page-sub" style="color:#888;">Tap game cards, tabs, and icons to browse the app</div>
 
+<!-- PAGE BADGE (large, outside phone) -->
+<div id="pageBadge" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;padding:10px 20px;border-radius:99px;font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;letter-spacing:.2px;box-shadow:0 6px 22px rgba(124,58,237,.35);margin:16px auto 20px;">
+  <span style="opacity:.7;font-weight:600;font-size:12px;letter-spacing:2px;text-transform:uppercase;">Page</span>
+  <span id="pageNum" style="font-size:22px;font-weight:800;letter-spacing:-.5px;">1</span>
+  <span style="opacity:.5;">·</span>
+  <span id="pageName">Dashboard</span>
+</div>
+
+<!-- PAGE REFERENCE LIST (collapsible) -->
+<details style="max-width:920px;margin:0 auto 24px;background:#141414;border:1px solid #222;border-radius:14px;overflow:hidden;font-family:'Outfit',sans-serif;">
+  <summary style="cursor:pointer;padding:12px 18px;color:#aaa;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:space-between;list-style:none;">
+    <span><i class="ph ph-list-numbers" style="margin-right:6px;vertical-align:-2px;"></i> Page Reference (24 pages) — click to expand</span>
+    <i class="ph ph-caret-down" style="font-size:14px;"></i>
+  </summary>
+  <div id="pageIndex" style="padding:14px 18px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;border-top:1px solid #222;"></div>
+</details>
+
 <div class="phone-frame">
   <div class="notch"></div>
   <div class="phone-inner" style="background:#faf8f6;color:#000;">
@@ -1564,6 +1581,59 @@ const tabMap = {dashboard:'dashboard',discover:'discover',myGames:'myGames',grou
   chat:'dashboard',notifications:'dashboard'};
 const noTabScreens = ['creation1','creation2','creation3','chat','login','register','forgotPassword','resetPassword','verifyPhone','completeProfile','gameEdit','applicants','gameReview','groupCreation','groupDiscovery','modalFirstGame'];
 
+// Page numbering — ordered by logical user flow
+const pageOrder = [
+  ['login','Login'],
+  ['register','Register'],
+  ['forgotPassword','Forgot Password'],
+  ['resetPassword','Reset Password'],
+  ['verifyPhone','Verify Phone'],
+  ['completeProfile','Complete Profile'],
+  ['dashboard','Dashboard'],
+  ['myGames','My Games'],
+  ['gameDetail','Game Detail'],
+  ['creation1','Create Game · Step 1'],
+  ['creation2','Create Game · Step 2'],
+  ['creation3','Create Game · Step 3'],
+  ['gameEdit','Edit Game'],
+  ['applicants','Applicants'],
+  ['gameReview','Game Review'],
+  ['discover','Discover (Map)'],
+  ['groups','My Groups'],
+  ['groupDetail','Group Detail'],
+  ['groupCreation','Create Group'],
+  ['groupDiscovery','Discover Groups'],
+  ['inbox','Inbox'],
+  ['chat','Chat Thread'],
+  ['notifications','Notifications'],
+  ['modalFirstGame','Modal · First Game']
+];
+const pageMap = {};
+pageOrder.forEach((p,i)=>{ pageMap[p[0]] = {num:i+1, name:p[1]}; });
+
+function updatePageBadge(screen){
+  const p = pageMap[screen];
+  if(!p) return;
+  document.getElementById('pageNum').textContent = String(p.num).padStart(2,'0');
+  document.getElementById('pageName').textContent = p.name;
+}
+
+// Populate page reference index on load
+window.addEventListener('DOMContentLoaded', function(){
+  const idx = document.getElementById('pageIndex');
+  if(!idx) return;
+  pageOrder.forEach((p,i)=>{
+    const el = document.createElement('div');
+    el.style.cssText = 'cursor:pointer;padding:8px 10px;border-radius:8px;background:#1a1a1a;color:#ddd;font-size:12px;display:flex;align-items:center;gap:8px;transition:background .15s;';
+    el.onmouseover = ()=>el.style.background='#252525';
+    el.onmouseout = ()=>el.style.background='#1a1a1a';
+    el.onclick = ()=>go(p[0]);
+    el.innerHTML = '<span style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;min-width:28px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;">'+String(i+1).padStart(2,'0')+'</span><span>'+p[1]+'</span>';
+    idx.appendChild(el);
+  });
+  updatePageBadge('dashboard');
+});
+
 function go(screen) {
   const current = history[history.length - 1];
   if (screen === current) return;
@@ -1575,6 +1645,7 @@ function go(screen) {
   updateTab(screen);
   document.getElementById('screenLabel').textContent = screen;
   document.getElementById('tabBar').style.display = noTabScreens.includes(screen) ? 'none' : 'flex';
+  updatePageBadge(screen);
 }
 
 function goBack() {
@@ -1588,6 +1659,7 @@ function goBack() {
   updateTab(prev);
   document.getElementById('screenLabel').textContent = prev;
   document.getElementById('tabBar').style.display = noTabScreens.includes(prev) ? 'none' : 'flex';
+  updatePageBadge(prev);
 }
 
 function updateTab(screen) {
