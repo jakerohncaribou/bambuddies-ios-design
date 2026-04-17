@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Outfit',sans-serif; padding:20px 0; }
@@ -784,59 +786,45 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     <!-- ==================== 5. DISCOVER ==================== -->
     <div class="screen has-tab" data-screen="discover" style="padding:16px;">
 
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
         <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;">Discover</div>
-        <div style="display:flex;gap:12px;">
-          <i class="ph ph-magnifying-glass" style="font-size:22px;color:#1a1a1a;"></i>
-          <i class="ph ph-sliders-horizontal" style="font-size:22px;color:#1a1a1a;"></i>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <!-- View toggle: cards/list (visible only when >10 games, but shown here for mockup) -->
+          <div id="discoverViewToggle" style="display:flex;background:#f5f3ee;border:1px solid #e8e4e0;border-radius:10px;padding:2px;">
+            <button id="viewCardsBtn" onclick="setDiscoverView('cards')" style="background:#fff;color:#7c3aed;border:none;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.06);display:flex;align-items:center;gap:3px;"><i class="ph ph-squares-four" style="font-size:13px;"></i></button>
+            <button id="viewListBtn" onclick="setDiscoverView('list')" style="background:transparent;color:#888;border:none;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:3px;"><i class="ph ph-list" style="font-size:13px;"></i></button>
+          </div>
+          <i class="ph ph-magnifying-glass" style="font-size:22px;color:#1a1a1a;cursor:pointer;"></i>
         </div>
       </div>
 
       <!-- Filter Pills -->
-      <div class="scroll-x" style="margin-bottom:16px;">
-        <div class="pill" style="background:#7c3aed;color:#fff;padding:6px 14px;font-size:12px;">Near Me</div>
-        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">25 mi</div>
-        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">This Week</div>
-        <div class="pill" style="background:#f5f3ee;color:#888;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;">All Levels</div>
+      <div class="scroll-x" style="margin-bottom:12px;">
+        <div class="pill" style="background:#7c3aed;color:#fff;padding:6px 14px;font-size:12px;font-weight:700;">Near Me</div>
+        <div class="pill" style="background:#fff;color:#000;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;font-weight:600;">25 mi</div>
+        <div class="pill" style="background:#fff;color:#000;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;font-weight:600;">This Week</div>
+        <div class="pill" style="background:#fff;color:#000;padding:6px 14px;font-size:12px;border:1px solid #e8e4e0;font-weight:600;">All Levels</div>
       </div>
 
-      <!-- Map Area -->
-      <div style="height:250px;background:linear-gradient(135deg,#e8efe8,#dce6dc);border-radius:16px;margin-bottom:4px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:40px;left:60px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <div style="position:absolute;top:80px;left:180px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <div style="position:absolute;top:130px;left:100px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <div style="position:absolute;top:100px;left:260px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <div style="position:absolute;top:170px;left:200px;width:14px;height:14px;background:#7c3aed;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);"></div>
-        <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:.15;" viewBox="0 0 361 250"><path d="M0 50h361M0 100h361M0 150h361M0 200h361M60 0v250M120 0v250M180 0v250M240 0v250M300 0v250" stroke="#7c3aed" stroke-width="1"/></svg>
-      </div>
+      <!-- MAP VIEW (cards) -->
+      <div id="discoverMapView">
+        <div id="discoverMap" style="height:240px;border-radius:16px;overflow:hidden;margin-bottom:8px;border:1px solid #e8e4e0;"></div>
 
-      <!-- Bottom Sheet -->
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:16px;padding:12px 16px;">
-        <div style="width:36px;height:4px;background:#ddd;border-radius:4px;margin:0 auto 10px;"></div>
-        <div style="color:#000;font-size:15px;font-weight:700;margin-bottom:12px;">4 games nearby</div>
-
-        <div class="scroll-x">
-          <!-- Card 1 -->
-          <div style="min-width:200px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;flex-shrink:0;cursor:pointer;" onclick="go('gameDetail')">
-            <div style="height:80px;background:linear-gradient(135deg,#c5e0d3,#a8d5c2);"></div>
-            <div style="padding:10px 12px;">
-              <div style="color:#000;font-size:14px;font-weight:600;">Park Mahjong</div>
-              <div style="color:#888;font-size:11px;">Sat, Apr 19 &middot; 0.8 mi</div>
-              <div style="background:#7c3aed;color:#fff;text-align:center;padding:6px;border-radius:8px;font-size:12px;font-weight:600;margin-top:8px;cursor:pointer;">Join</div>
-            </div>
+        <!-- Bottom carousel + active POI panel -->
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:16px;padding:12px 14px;">
+          <div style="width:36px;height:4px;background:#ddd;border-radius:4px;margin:0 auto 8px;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <div style="color:#000;font-size:14px;font-weight:700;"><span id="discoverGameCount">6</span> games nearby</div>
+            <div id="activeGameHint" style="color:#7c3aed;font-size:11px;font-weight:600;display:none;"><i class="ph-fill ph-map-pin" style="font-size:11px;vertical-align:-1px;"></i> Pin selected</div>
           </div>
-          <!-- Card 2 -->
-          <div style="min-width:200px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;flex-shrink:0;cursor:pointer;" onclick="go('gameDetail')">
-            <div style="height:80px;overflow:hidden;">
-              <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400" style="width:100%;height:100%;object-fit:cover;" alt="">
-            </div>
-            <div style="padding:10px 12px;">
-              <div style="color:#000;font-size:14px;font-weight:600;">Cafe Game Night</div>
-              <div style="color:#888;font-size:11px;">Sun, Apr 20 &middot; 2.1 mi</div>
-              <div style="background:#7c3aed;color:#fff;text-align:center;padding:6px;border-radius:8px;font-size:12px;font-weight:600;margin-top:8px;cursor:pointer;">Join</div>
-            </div>
-          </div>
+          <div id="discoverCards" class="scroll-x" style="padding-bottom:2px;"></div>
         </div>
+      </div>
+
+      <!-- LIST VIEW (hidden by default, used when games > 10) -->
+      <div id="discoverListView" style="display:none;">
+        <div style="color:#888;font-size:12px;margin-bottom:10px;"><span id="discoverGameCountList">12</span> games within 25 miles</div>
+        <div id="discoverList"></div>
       </div>
 
     </div><!-- /discover -->
@@ -1607,18 +1595,198 @@ function updatePageBadge(screen){
 // Populate page reference index on load
 window.addEventListener('DOMContentLoaded', function(){
   const idx = document.getElementById('pageIndex');
-  if(!idx) return;
-  pageOrder.forEach((p,i)=>{
-    const el = document.createElement('div');
-    el.style.cssText = 'cursor:pointer;padding:8px 10px;border-radius:8px;background:#1a1a1a;color:#ddd;font-size:12px;display:flex;align-items:center;gap:8px;transition:background .15s;';
-    el.onmouseover = ()=>el.style.background='#252525';
-    el.onmouseout = ()=>el.style.background='#1a1a1a';
-    el.onclick = ()=>go(p[0]);
-    el.innerHTML = '<span style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;min-width:28px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;">'+String(i+1).padStart(2,'0')+'</span><span>'+p[1]+'</span>';
-    idx.appendChild(el);
-  });
+  if(idx){
+    pageOrder.forEach((p,i)=>{
+      const el = document.createElement('div');
+      el.style.cssText = 'cursor:pointer;padding:8px 10px;border-radius:8px;background:#1a1a1a;color:#ddd;font-size:12px;display:flex;align-items:center;gap:8px;transition:background .15s;';
+      el.onmouseover = ()=>el.style.background='#252525';
+      el.onmouseout = ()=>el.style.background='#1a1a1a';
+      el.onclick = ()=>go(p[0]);
+      el.innerHTML = '<span style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;min-width:28px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;">'+String(i+1).padStart(2,'0')+'</span><span>'+p[1]+'</span>';
+      idx.appendChild(el);
+    });
+  }
   updatePageBadge('dashboard');
+  initDiscoverMap();
 });
+
+// ============== DISCOVER MAP (Atlanta) ==============
+const ATL_GAMES = [
+  {id:1, name:'Piedmont Park Mahjong', lat:33.7850, lng:-84.3740, date:'Sat, Apr 19', time:'2:00 PM', distance:'0.8 mi', players:'2/4 players', status:'PENDING', type:'Open', img:'https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400', host:'Emma S.', hostAv:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face'},
+  {id:2, name:'Midtown Cafe Night', lat:33.7820, lng:-84.3840, date:'Sun, Apr 20', time:'6:30 PM', distance:'1.2 mi', players:'3/4 players', status:'PENDING', type:'Open', img:null, grad:'linear-gradient(135deg,#a78bfa,#ec4899)', host:'Maya P.', hostAv:'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face'},
+  {id:3, name:'Virginia Highland Game', lat:33.7810, lng:-84.3520, date:'Tue, Apr 22', time:'7:00 PM', distance:'2.1 mi', players:'4/4 players', status:'COMMITTED', type:'Open', img:'https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400', host:'Nina L.', hostAv:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face'},
+  {id:4, name:'Grant Park Session', lat:33.7390, lng:-84.3730, date:'Thu, Apr 24', time:'3:00 PM', distance:'1.5 mi', players:'2/4 players', status:'PENDING', type:'Open', img:null, grad:'linear-gradient(135deg,#06b6d4,#6366f1)', host:'Priya R.', hostAv:'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face'},
+  {id:5, name:'Inman Park Open', lat:33.7570, lng:-84.3570, date:'Fri, Apr 25', time:'5:00 PM', distance:'2.3 mi', players:'1/4 players', status:'PENDING', type:'Open', img:null, grad:'linear-gradient(135deg,#f59e0b,#ef4444)', host:'Jessica W.', hostAv:'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face'},
+  {id:6, name:'Decatur Square Play', lat:33.7740, lng:-84.2960, date:'Sat, Apr 26', time:'1:00 PM', distance:'3.2 mi', players:'3/4 players', status:'PENDING', type:'Open', img:'https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400', host:'Lisa M.', hostAv:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face'}
+];
+
+let discoverMap = null;
+let discoverMarkers = {};
+let activeGameId = null;
+
+function initDiscoverMap(){
+  if(typeof L === 'undefined') return;
+  if(discoverMap) return; // already initialized
+  const mapEl = document.getElementById('discoverMap');
+  if(!mapEl) return;
+  discoverMap = L.map('discoverMap', {zoomControl:false, attributionControl:false}).setView([33.7490, -84.3880], 12);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    subdomains: 'abcd'
+  }).addTo(discoverMap);
+  L.control.zoom({position:'topright'}).addTo(discoverMap);
+
+  // Custom marker icon factory (mauve circle)
+  function makeIcon(active){
+    const bg = active ? '#7c3aed' : '#fff';
+    const border = active ? '#fff' : '#7c3aed';
+    const tx = active ? '#fff' : '#7c3aed';
+    const size = active ? 36 : 28;
+    return L.divIcon({
+      className:'custom-map-pin',
+      html:`<div style="width:${size}px;height:${size}px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:${bg};border:2px solid ${border};box-shadow:0 3px 8px rgba(124,58,237,.35);display:flex;align-items:center;justify-content:center;"><div style="transform:rotate(45deg);color:${tx};font-size:${active?14:12}px;font-weight:800;"><i class="ph-fill ph-diamond"></i></div></div>`,
+      iconSize:[size,size],
+      iconAnchor:[size/2,size]
+    });
+  }
+
+  ATL_GAMES.forEach(g=>{
+    const marker = L.marker([g.lat, g.lng], {icon:makeIcon(false)}).addTo(discoverMap);
+    marker.on('click', ()=> selectPOI(g.id));
+    discoverMarkers[g.id] = marker;
+  });
+
+  renderDiscoverCards();
+  renderDiscoverList();
+}
+
+function selectPOI(id){
+  activeGameId = id;
+  // Update all marker icons
+  const mapEl = document.getElementById('discoverMap');
+  if(!mapEl || !discoverMap) return;
+  ATL_GAMES.forEach(g=>{
+    const marker = discoverMarkers[g.id];
+    if(!marker) return;
+    marker.setIcon(L.divIcon({
+      className:'custom-map-pin',
+      html: g.id === id
+        ? `<div style="width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#7c3aed;border:3px solid #fff;box-shadow:0 4px 12px rgba(124,58,237,.5);display:flex;align-items:center;justify-content:center;animation:bounce 0.4s;"><div style="transform:rotate(45deg);color:#fff;font-size:14px;font-weight:800;"><i class="ph-fill ph-diamond"></i></div></div>`
+        : `<div style="width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#fff;border:2px solid #7c3aed;box-shadow:0 3px 8px rgba(124,58,237,.35);display:flex;align-items:center;justify-content:center;"><div style="transform:rotate(45deg);color:#7c3aed;font-size:12px;font-weight:800;"><i class="ph-fill ph-diamond"></i></div></div>`,
+      iconSize: g.id === id ? [38,38] : [28,28],
+      iconAnchor: g.id === id ? [19,38] : [14,28]
+    }));
+  });
+  // Pan to selected
+  const g = ATL_GAMES.find(x=>x.id===id);
+  if(g) discoverMap.panTo([g.lat, g.lng], {animate:true});
+  // Show hint, re-render cards with active state
+  const hint = document.getElementById('activeGameHint');
+  if(hint) hint.style.display = 'flex';
+  renderDiscoverCards();
+  // Scroll the active card into view
+  setTimeout(()=>{
+    const active = document.querySelector('#discoverCards [data-game-id="'+id+'"]');
+    if(active) active.scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
+  }, 100);
+}
+
+function renderDiscoverCards(){
+  const container = document.getElementById('discoverCards');
+  if(!container) return;
+  container.innerHTML = '';
+  const games = [...ATL_GAMES];
+  // Sort active game to front
+  if(activeGameId){
+    games.sort((a,b)=> (a.id===activeGameId?-1: b.id===activeGameId?1: 0));
+  }
+  games.forEach(g=>{
+    const active = g.id === activeGameId;
+    const imgBlock = g.img
+      ? `<div style="height:70px;overflow:hidden;"><img src="${g.img}" style="width:100%;height:100%;object-fit:cover;"></div>`
+      : `<div style="height:70px;background:${g.grad};position:relative;"><div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.3),transparent 60%);"></div></div>`;
+    const statusBg = g.status === 'COMMITTED' ? '#ede9fe' : '#fef3c7';
+    const statusColor = g.status === 'COMMITTED' ? '#7c3aed' : '#d97706';
+    const card = document.createElement('div');
+    card.setAttribute('data-game-id', g.id);
+    card.style.cssText = `min-width:190px;background:#fff;border:${active?'2px solid #7c3aed':'1px solid #e8e4e0'};border-radius:14px;overflow:hidden;flex-shrink:0;cursor:pointer;transition:all .2s;${active?'box-shadow:0 6px 18px rgba(124,58,237,.25);transform:translateY(-2px);':''}`;
+    card.onclick = (e)=>{ e.stopPropagation(); if(active){ go('gameDetail'); } else { selectPOI(g.id); } };
+    card.innerHTML = `
+      ${imgBlock}
+      <div style="padding:9px 11px 11px;">
+        <div style="color:#000;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${g.name}</div>
+        <div style="color:#888;font-size:11px;margin-top:2px;">${g.date} &middot; ${g.distance}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+          <span style="color:#666;font-size:10px;">${g.players}</span>
+          <span style="background:${statusBg};color:${statusColor};font-size:9px;font-weight:700;letter-spacing:.3px;padding:2px 7px;border-radius:99px;">${g.status}</span>
+        </div>
+        ${active ? `<button onclick="event.stopPropagation();go('gameDetail')" style="width:100%;background:#7c3aed;color:#fff;border:none;padding:7px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;margin-top:8px;font-family:'Outfit',sans-serif;">View Game</button>` : ''}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  const cnt = document.getElementById('discoverGameCount');
+  if(cnt) cnt.textContent = ATL_GAMES.length;
+}
+
+function renderDiscoverList(){
+  const container = document.getElementById('discoverList');
+  if(!container) return;
+  container.innerHTML = '';
+  ATL_GAMES.forEach(g=>{
+    const statusBg = g.status === 'COMMITTED' ? '#ede9fe' : '#fef3c7';
+    const statusColor = g.status === 'COMMITTED' ? '#7c3aed' : '#d97706';
+    const thumbBlock = g.img
+      ? `<img src="${g.img}" style="width:52px;height:52px;border-radius:10px;object-fit:cover;flex-shrink:0;">`
+      : `<div style="width:52px;height:52px;border-radius:10px;background:${g.grad};flex-shrink:0;position:relative;overflow:hidden;"><div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.3),transparent 60%);"></div></div>`;
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:12px;align-items:center;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;';
+    row.onclick = ()=>go('gameDetail');
+    row.innerHTML = `
+      ${thumbBlock}
+      <div style="flex:1;min-width:0;">
+        <div style="color:#000;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${g.name}</div>
+        <div style="color:#888;font-size:12px;margin-top:1px;">${g.date} &middot; ${g.time}</div>
+        <div style="color:#999;font-size:11px;margin-top:2px;display:flex;align-items:center;gap:3px;"><i class="ph ph-map-pin" style="font-size:11px;"></i> ${g.distance} &middot; Hosted by ${g.host}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
+        <span style="color:#666;font-size:10px;">${g.players}</span>
+        <span style="background:${statusBg};color:${statusColor};font-size:9px;font-weight:700;letter-spacing:.3px;padding:2px 7px;border-radius:99px;">${g.status}</span>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+  const cnt2 = document.getElementById('discoverGameCountList');
+  if(cnt2) cnt2.textContent = ATL_GAMES.length;
+}
+
+function setDiscoverView(mode){
+  const mapView = document.getElementById('discoverMapView');
+  const listView = document.getElementById('discoverListView');
+  const cardsBtn = document.getElementById('viewCardsBtn');
+  const listBtn = document.getElementById('viewListBtn');
+  if(mode === 'list'){
+    mapView.style.display = 'none';
+    listView.style.display = 'block';
+    cardsBtn.style.background = 'transparent';
+    cardsBtn.style.color = '#888';
+    cardsBtn.style.boxShadow = 'none';
+    listBtn.style.background = '#fff';
+    listBtn.style.color = '#7c3aed';
+    listBtn.style.boxShadow = '0 1px 2px rgba(0,0,0,.06)';
+  } else {
+    mapView.style.display = 'block';
+    listView.style.display = 'none';
+    cardsBtn.style.background = '#fff';
+    cardsBtn.style.color = '#7c3aed';
+    cardsBtn.style.boxShadow = '0 1px 2px rgba(0,0,0,.06)';
+    listBtn.style.background = 'transparent';
+    listBtn.style.color = '#888';
+    listBtn.style.boxShadow = 'none';
+    setTimeout(()=>{ if(discoverMap) discoverMap.invalidateSize(); }, 50);
+  }
+}
+
 
 function go(screen) {
   const current = history[history.length - 1];
@@ -1632,6 +1800,9 @@ function go(screen) {
   document.getElementById('screenLabel').textContent = screen;
   document.getElementById('tabBar').style.display = noTabScreens.includes(screen) ? 'none' : 'flex';
   updatePageBadge(screen);
+  if (screen === 'discover') {
+    setTimeout(()=>{ if(discoverMap) discoverMap.invalidateSize(); }, 50);
+  }
 }
 
 function goBack() {
