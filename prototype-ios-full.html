@@ -1516,7 +1516,71 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Full Name</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">Sarah Rodriguez</div></div>
       <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Email</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">sarah@email.com</div></div>
       <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Password</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</div></div>
-      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Phone</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">+1 (555) 123-4567</div></div>
+      <div style="margin-bottom:10px;">
+        <div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Phone</div>
+        <div style="display:flex;gap:6px;">
+          <!-- Country Code Picker -->
+          <div onclick="toggleCountryPicker()" style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px 10px;display:flex;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;">
+            <span id="regFlag" style="font-size:18px;line-height:1;">&#127482;&#127480;</span>
+            <span id="regCountryCode" style="color:#000;font-size:13px;font-weight:600;">+1</span>
+            <i class="ph ph-caret-down" style="font-size:12px;color:#888;"></i>
+          </div>
+          <!-- Phone Input (auto-formats as user types) -->
+          <input id="regPhoneInput" type="tel" placeholder="(555) 123-4567" oninput="formatPhoneUS(this)" maxlength="14" style="flex:1;background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#000;font-size:13px;font-family:'Outfit',sans-serif;outline:none;letter-spacing:.2px;" value="(555) 123-4567">
+        </div>
+        <!-- Country Picker Dropdown -->
+        <div id="countryPicker" style="display:none;background:#fff;border:1px solid #e8e4e0;border-radius:10px;margin-top:6px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.12);">
+          <div style="padding:8px 10px;border-bottom:1px solid #f0ede8;position:sticky;top:0;background:#fff;">
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:8px;padding:6px 10px;display:flex;align-items:center;gap:6px;"><i class="ph ph-magnifying-glass" style="font-size:13px;color:#aaa;"></i><span style="color:#aaa;font-size:12px;">Search country or code</span></div>
+          </div>
+          <div onclick="pickCountry('United States','🇺🇸','+1')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #f5f3ee;background:#ede9fe;">
+            <span style="font-size:18px;">&#127482;&#127480;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:600;">United States</div>
+            <span style="color:#888;font-size:12px;font-weight:600;">+1</span>
+            <i class="ph-bold ph-check" style="font-size:13px;color:#7c3aed;"></i>
+          </div>
+          <div onclick="pickCountry('Canada','🇨🇦','+1')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #f5f3ee;">
+            <span style="font-size:18px;">&#127464;&#127462;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:500;">Canada</div>
+            <span style="color:#888;font-size:12px;">+1</span>
+          </div>
+          <div onclick="pickCountry('United Kingdom','🇬🇧','+44')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #f5f3ee;">
+            <span style="font-size:18px;">&#127468;&#127463;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:500;">United Kingdom</div>
+            <span style="color:#888;font-size:12px;">+44</span>
+          </div>
+          <div onclick="pickCountry('Australia','🇦🇺','+61')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #f5f3ee;">
+            <span style="font-size:18px;">&#127462;&#127482;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:500;">Australia</div>
+            <span style="color:#888;font-size:12px;">+61</span>
+          </div>
+          <div onclick="pickCountry('Mexico','🇲🇽','+52')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #f5f3ee;">
+            <span style="font-size:18px;">&#127474;&#127485;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:500;">Mexico</div>
+            <span style="color:#888;font-size:12px;">+52</span>
+          </div>
+          <div onclick="pickCountry('Germany','🇩🇪','+49')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #f5f3ee;">
+            <span style="font-size:18px;">&#127465;&#127466;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:500;">Germany</div>
+            <span style="color:#888;font-size:12px;">+49</span>
+          </div>
+          <div onclick="pickCountry('France','🇫🇷','+33')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #f5f3ee;">
+            <span style="font-size:18px;">&#127467;&#127479;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:500;">France</div>
+            <span style="color:#888;font-size:12px;">+33</span>
+          </div>
+          <div onclick="pickCountry('China','🇨🇳','+86')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;border-bottom:1px solid #f5f3ee;">
+            <span style="font-size:18px;">&#127464;&#127475;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:500;">China</div>
+            <span style="color:#888;font-size:12px;">+86</span>
+          </div>
+          <div onclick="pickCountry('Japan','🇯🇵','+81')" style="padding:9px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <span style="font-size:18px;">&#127471;&#127477;</span>
+            <div style="flex:1;color:#000;font-size:13px;font-weight:500;">Japan</div>
+            <span style="color:#888;font-size:12px;">+81</span>
+          </div>
+        </div>
+      </div>
       <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Player Level</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;"><span>Intermediate</span><i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i></div></div>
       <div style="margin-bottom:14px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Home Address</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">Enter your address</div></div>
       <div style="display:flex;gap:8px;margin-bottom:16px;align-items:flex-start;"><div style="width:18px;height:18px;border-radius:5px;background:#7c3aed;display:flex;align-items:center;justify-content:center;margin-top:2px;flex-shrink:0;"><i class="ph-bold ph-check" style="font-size:11px;color:#fff;"></i></div><div style="color:#666;font-size:11px;line-height:1.4;">I agree to the <span style="color:#7c3aed;font-weight:600;">Terms of Service</span> and <span style="color:#7c3aed;font-weight:600;">Privacy Policy</span></div></div>
@@ -2271,6 +2335,38 @@ function renderDiscoverList(){
   });
   const cnt2 = document.getElementById('discoverGameCountList');
   if(cnt2) cnt2.textContent = ATL_GAMES.length;
+}
+
+// ============== PHONE / COUNTRY PICKER (Register) ==============
+function toggleCountryPicker(){
+  const p = document.getElementById('countryPicker');
+  if(p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+function pickCountry(name, flag, code){
+  const flagEl = document.getElementById('regFlag');
+  const codeEl = document.getElementById('regCountryCode');
+  if(flagEl) flagEl.textContent = flag;
+  if(codeEl) codeEl.textContent = code;
+  const p = document.getElementById('countryPicker');
+  if(p) p.style.display = 'none';
+  // Clear phone input since format may differ
+  const input = document.getElementById('regPhoneInput');
+  if(input){ input.value = ''; input.focus(); }
+}
+// Auto-format US-style phone: "5551234567" -> "(555) 123-4567"
+function formatPhoneUS(input){
+  let digits = input.value.replace(/\D/g,'').slice(0,10);
+  let formatted = '';
+  if(digits.length === 0){
+    formatted = '';
+  } else if(digits.length <= 3){
+    formatted = '(' + digits;
+  } else if(digits.length <= 6){
+    formatted = '(' + digits.slice(0,3) + ') ' + digits.slice(3);
+  } else {
+    formatted = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+  }
+  input.value = formatted;
 }
 
 // ============== GAME TYPE (Step 2) ==============
