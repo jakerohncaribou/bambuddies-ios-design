@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pink Concepts v7 — Mauve & Hot Pink Variants</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Outfit',sans-serif;background:#1a1a1a;min-height:100vh;padding:30px 20px;color:#fff;}
+.hdr{text-align:center;margin-bottom:30px;}
+.hdr h1{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px;}
+.hdr p{color:#999;font-size:13px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(393px,420px));gap:40px;justify-content:center;}
+.wrap{display:flex;flex-direction:column;align-items:center;}
+.label{font-size:12px;color:#bbb;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:4px;}
+.tagline{font-size:11px;color:#888;margin-bottom:14px;max-width:360px;text-align:center;min-height:14px;}
+
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:0 0 20px 20px;z-index:100;}
+.inner{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;background:#fff;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:14px 28px 0;display:flex;justify-content:space-between;align-items:center;z-index:50;font-size:15px;font-weight:600;color:#1a1a1a;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:100px;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* Each iteration scoped to .phone[data-v="N"] — CSS variables drive theming */
+.phone{--primary:#7c3aed;--primary-dark:#6d28d9;--primary-light:#a78bfa;--primary-bg-1:#ede9fe;--primary-bg-2:#ddd6fe;--primary-bg-3:#e9d5ff;--primary-tint:#f5f3ff;--primary-border:#ede9fe;}
+.phone[data-c="pink"]{--primary:#c73078;--primary-dark:#a61e5f;--primary-light:#e879b0;--primary-bg-1:#fce7f3;--primary-bg-2:#fbcfe8;--primary-bg-3:#f9a8d4;--primary-tint:#fdf2f8;--primary-border:#fbcfe8;}
+
+/* ===== TOP BAR ===== */
+.topbar{display:flex;align-items:center;gap:10px;padding:10px 18px 6px;}
+.topbar-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Outfit';font-weight:700;font-size:18px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.1);}
+.phone .topbar-avatar{background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));}
+.topbar-name-wrap{flex:1;min-width:0;display:flex;align-items:flex-end;line-height:1;}
+.topbar-name{font-family:'Caveat',cursive;font-size:36px;font-weight:700;line-height:.9;}
+.phone .topbar-name{color:var(--primary);}
+.topbar-icons{display:flex;gap:8px;}
+.topbar-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;border:1px solid;}
+.phone .topbar-icon{background:var(--primary-tint);border-color:var(--primary-border);}
+.topbar-icon svg{width:18px;height:18px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.phone .topbar-icon svg{stroke:var(--primary-dark);}
+.topbar-icon .dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:#c73078;border:2px solid #fff;}
+
+/* ===== GREETING ===== */
+.greet{padding:4px 20px 14px;font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;color:#1a1a1a;letter-spacing:-.4px;line-height:1.2;}
+
+/* ===== ACTION ROW ===== */
+.actions-bg{margin:0 16px 14px;border-radius:22px;padding:14px 10px;}
+.phone .actions-bg{background:linear-gradient(135deg,var(--primary-bg-1),var(--primary-bg-2) 50%,var(--primary-bg-3));}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.act{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
+.act-bubble{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.10),inset 0 0 0 2px #1a1a1a;position:relative;transition:transform .15s;}
+.act-bubble:active{transform:scale(.95);}
+.act-badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:#c73078;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
+.act-lbl{font-size:11px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.1;}
+
+/* ===== AD BANNER ===== */
+.ad{margin:0 16px 18px;background:linear-gradient(135deg,#fef3e7,#fee5ca);border-radius:16px;padding:12px 14px;display:flex;align-items:center;gap:12px;border:1px solid #fcd9a8;}
+.ad-img{width:44px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.ad-txt{flex:1;min-width:0;}
+.ad-label{font-size:9px;font-weight:700;color:#9a6f2a;letter-spacing:.8px;text-transform:uppercase;margin-bottom:1px;}
+.ad-head{font-size:13px;font-weight:700;color:#1a1a1a;}
+.ad-sub{font-size:11px;color:#6d4f16;margin-top:1px;}
+
+/* ===== SECTIONS ===== */
+.sec-wrap{padding:0 18px;margin-bottom:20px;}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.sec-title{font-family:'Caveat',cursive;font-size:26px;font-weight:700;color:#1a1a1a;line-height:1;display:flex;align-items:center;gap:8px;}
+.sec-count{background:#fecaca;color:#b91c1c;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;font-family:'Outfit';}
+.sec-link{font-size:12px;font-weight:600;}
+.phone .sec-link{color:var(--primary);}
+
+/* Status pills (locked colors) */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:.3px;}
+.pill-committed{background:#dcfce7;color:#166534;}
+.pill-pending{background:#fef3c7;color:#92400e;}
+.pill-next{background:var(--primary-bg-1);color:var(--primary-dark);}
+
+/* Card */
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:8px;box-shadow:0 2px 10px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.04);}
+.phone .card.next{background:linear-gradient(135deg,var(--primary-tint),#fff);}
+
+.game-row{display:flex;gap:12px;align-items:center;}
+.date-blk{width:48px;height:48px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.phone .date-blk{background:var(--primary-tint);color:var(--primary-dark);}
+.date-blk .mon{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+.date-blk .day{font-size:18px;font-weight:900;line-height:.9;margin-top:2px;}
+.game-time{font-family:'Outfit';font-size:15px;font-weight:800;color:#1a1a1a;letter-spacing:-.3px;line-height:1.1;}
+.game-name{font-size:13px;font-weight:600;color:#555;margin-top:2px;}
+.game-loc{font-size:11px;color:#999;margin-top:3px;display:flex;align-items:center;gap:4px;}
+.game-loc svg{width:10px;height:10px;stroke:#999;fill:none;stroke-width:2;}
+.game-mid{flex:1;min-width:0;}
+.game-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.game-players{font-size:11px;font-weight:700;color:#1a1a1a;}
+
+/* Needs Attention — LEFT-aligned stacked CTAs */
+.att-row{display:flex;gap:10px;align-items:center;}
+.att-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;font-family:'Outfit';flex-shrink:0;}
+.att-avatar.mia{background:linear-gradient(135deg,#fcd34d,#f59e0b);}
+.att-avatar.lisa{background:linear-gradient(135deg,#60a5fa,#3b82f6);}
+.att-txt{flex:1;min-width:0;}
+.att-name{font-size:13px;font-weight:700;color:#1a1a1a;}
+.att-meta{font-size:11px;color:#999;margin-top:1px;}
+.att-cta{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex-shrink:0;min-width:80px;}
+.att-accept{color:#fff;padding:7px 14px;border-radius:10px;font-size:12px;font-weight:700;text-align:left;cursor:pointer;}
+.phone .att-accept{background:var(--primary);}
+.att-decline{font-size:11px;color:#999;font-weight:600;text-align:left;cursor:pointer;text-decoration:underline;padding:2px 4px;}
+
+/* ===== TAB BAR ===== */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:83px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid #eee;display:flex;align-items:flex-start;justify-content:space-around;padding-top:10px;z-index:60;}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:.3px;padding-bottom:34px;cursor:pointer;}
+.tab svg{width:22px;height:22px;}
+.phone .tab.active{color:var(--primary);}
+.tab-center{flex:1;display:flex;justify-content:center;position:relative;}
+.tab-plus{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:absolute;top:-22px;cursor:pointer;}
+.phone .tab-plus{background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));box-shadow:0 6px 16px rgba(0,0,0,.25);}
+.tab-plus-lbl{position:absolute;top:42px;font-size:9px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;}
+.phone .tab-plus-lbl{color:var(--primary);}
+
+/* =========================================================================
+   ITERATION VARIANTS
+   ========================================================================= */
+
+/* v1 — Mauve base (polished reference) — default styles */
+
+/* v2 — Mauve frosted glass cards with subtle primary glow */
+.v2 .card{background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border:1px solid var(--primary-border);box-shadow:0 4px 20px rgba(124,58,237,.08);}
+.v2 .sec-wrap{padding:0 16px;}
+
+/* v3 — Mauve minimal — Outfit bold headings (no cursive), ultra-clean */
+.v3 .sec-title{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:#1a1a1a;}
+.v3 .sec-title .sec-count{font-family:'Outfit';}
+.v3 .card{box-shadow:none;border:1px solid #f1f1f1;}
+.v3 .card.next{border:2px solid var(--primary);}
+
+/* v4 — Hot pink base (polished reference in pink) */
+/* uses data-c="pink" override + defaults */
+
+/* v5 — Hot pink warm duo — pink primary + peach tint on cards */
+.v5 .card{background:#fff7ed;border:1px solid #fed7aa;box-shadow:0 2px 10px rgba(251,146,60,.06);}
+.v5 .card.next{background:linear-gradient(135deg,#fff7ed,#fef2f2);border:1px solid #fecaca;}
+.v5 .ad{background:linear-gradient(135deg,#fce7f3,#fecaca);border:1px solid #f9a8d4;}
+.v5 .ad-label{color:#be185d;}
+.v5 .ad-sub{color:#9f1239;}
+
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Pink Concepts v7 — Mauve &amp; Hot Pink</h1>
+  <p>Fixes: Sarah avatar · clean header · left-aligned CTAs · 3 mauve + 2 hot pink iterations</p>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<svg width="0" height="0" style="position:absolute;">
+<defs>
+  <symbol id="ic-game" viewBox="0 0 48 48">
+    <rect x="10" y="8" width="28" height="34" rx="5" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+    <line x1="16" y1="14" x2="32" y2="14" stroke="#c73078" stroke-width="2" stroke-linecap="round"/>
+    <line x1="16" y1="18" x2="28" y2="18" stroke="#c73078" stroke-width="2" stroke-linecap="round"/>
+    <line x1="16" y1="22" x2="30" y2="22" stroke="#c73078" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="19" cy="30" r="1.8" fill="#1a1a1a"/>
+    <circle cx="29" cy="30" r="1.8" fill="#1a1a1a"/>
+    <path d="M18 34 Q24 38 30 34" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="15" cy="34" r="1.5" fill="#fbcfe8"/>
+    <circle cx="33" cy="34" r="1.5" fill="#fbcfe8"/>
+  </symbol>
+  <symbol id="ic-find" viewBox="0 0 48 48">
+    <path d="M7 12 L18 8 L30 13 L41 9 L41 37 L30 41 L18 36 L7 40 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <line x1="18" y1="8" x2="18" y2="36" stroke="#1a1a1a" stroke-width="1.8" stroke-dasharray="1.5 2"/>
+    <line x1="30" y1="13" x2="30" y2="41" stroke="#1a1a1a" stroke-width="1.8" stroke-dasharray="1.5 2"/>
+    <path d="M12 34 Q18 28 24 30 T38 18" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="2 2"/>
+    <path d="M24 18 C22 14 17 14 17 18 C17 23 24 28 24 28 C24 28 31 23 31 18 C31 14 26 14 24 18 Z" fill="#c73078" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="24" cy="20" r="1.5" fill="#fff"/>
+  </symbol>
+  <symbol id="ic-group" viewBox="0 0 48 48">
+    <rect x="8" y="14" width="22" height="28" rx="4" fill="#d1fae5" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="15" cy="25" r="1.3" fill="#1a1a1a"/>
+    <circle cx="23" cy="25" r="1.3" fill="#1a1a1a"/>
+    <path d="M15 30 Q19 32 23 30" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <rect x="20" y="8" width="22" height="28" rx="4" fill="#fbcfe8" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="27" cy="20" r="1.5" fill="#1a1a1a"/>
+    <circle cx="35" cy="20" r="1.5" fill="#1a1a1a"/>
+    <path d="M27 25 Q31 28 35 25" stroke="#1a1a1a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="ic-msg" viewBox="0 0 48 48">
+    <path d="M8 14 C8 10 11 8 15 8 L33 8 C37 8 40 10 40 14 L40 28 C40 32 37 34 33 34 L22 34 L14 40 L16 34 L15 34 C11 34 8 32 8 28 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="17" cy="21" r="2.3" fill="#c73078"/>
+    <circle cx="24" cy="21" r="2.3" fill="#7c3aed"/>
+    <circle cx="31" cy="21" r="2.3" fill="#fbbf24"/>
+  </symbol>
+  <symbol id="ic-pin" viewBox="0 0 24 24">
+    <path d="M12 2 C8 2 5 5 5 9 C5 14 12 22 12 22 C12 22 19 14 19 9 C19 5 16 2 12 2 Z" fill="none" stroke-width="2"/>
+    <circle cx="12" cy="9" r="2" fill="none" stroke-width="2"/>
+  </symbol>
+</defs>
+</svg>
+
+<script>
+const iterations = [
+  { cls:'v1', color:'mauve', name:'Mauve · Polished Base', tag:'Reference match with fixes applied · clean card shadows', swatch:'#7c3aed' },
+  { cls:'v2', color:'mauve', name:'Mauve · Frosted Glass', tag:'Translucent cards with mauve edge glow', swatch:'#7c3aed' },
+  { cls:'v3', color:'mauve', name:'Mauve · Minimal', tag:'Outfit bold section titles · airy borders · next-game outlined in primary', swatch:'#7c3aed' },
+  { cls:'v4', color:'pink',  name:'Hot Pink · Polished Base', tag:'Same layout, hot pink #c73078 primary throughout', swatch:'#c73078' },
+  { cls:'v5', color:'pink',  name:'Hot Pink · Warm Duo', tag:'Pink primary + peach-tinted cards · warmer overall mood', swatch:'#c73078' }
+];
+
+function phoneHTML(it){
+  return `
+<div class="wrap">
+  <div class="label"><span class="swatch" style="background:${it.swatch}"></span>Iteration ${it.cls.slice(1)}</div>
+  <div class="tagline"><b>${it.name}</b> — ${it.tag}</div>
+  <div class="phone ${it.cls}" data-c="${it.color}">
+    <div class="notch"></div>
+    <div class="inner">
+      <div class="sbar"><span>9:41</span><span>&#9679;&#9679;&#9679;&#9679;&nbsp;&#128267;</span></div>
+      <div class="scr">
+
+        <div class="topbar">
+          <div class="topbar-avatar">S</div>
+          <div class="topbar-name-wrap"><span class="topbar-name">Sarah</span></div>
+          <div class="topbar-icons">
+            <div class="topbar-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+            <div class="topbar-icon"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="dot"></span></div>
+          </div>
+        </div>
+
+        <div class="greet">May the winds be with you.</div>
+
+        <div class="actions-bg">
+          <div class="actions">
+            <div class="act"><div class="act-bubble"><svg width="34" height="34"><use href="#ic-game"/></svg></div><div class="act-lbl">Start<br>Game</div></div>
+            <div class="act"><div class="act-bubble"><svg width="34" height="34"><use href="#ic-find"/></svg></div><div class="act-lbl">Find<br>Games</div></div>
+            <div class="act"><div class="act-bubble"><svg width="34" height="34"><use href="#ic-group"/></svg></div><div class="act-lbl">Start<br>Group</div></div>
+            <div class="act"><div class="act-bubble"><svg width="34" height="34"><use href="#ic-msg"/></svg><span class="act-badge">3</span></div><div class="act-lbl">Messages</div></div>
+          </div>
+        </div>
+
+        <div class="ad">
+          <div class="ad-img">&#127846;</div>
+          <div class="ad-txt">
+            <div class="ad-label">Sponsored</div>
+            <div class="ad-head">New Mahjong Sets — 20% Off</div>
+            <div class="ad-sub">Free shipping this week only</div>
+          </div>
+        </div>
+
+        <div class="sec-wrap">
+          <div class="sec-hdr"><div class="sec-title">Your Next Game</div><span class="pill pill-next">IN 2 DAYS</span></div>
+          <div class="card next">
+            <div class="game-row">
+              <div class="date-blk"><span class="mon">SAT</span><span class="day">19</span></div>
+              <div class="game-mid">
+                <div class="game-time">2:00 PM · 2 hrs</div>
+                <div class="game-name">Saturday Mahjong</div>
+                <div class="game-loc"><svg><use href="#ic-pin"/></svg>123 Main St, Brooklyn</div>
+              </div>
+              <div class="game-right"><span class="pill pill-committed">COMMITTED</span><div class="game-players">4 of 4</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec-wrap">
+          <div class="sec-hdr"><div class="sec-title">Needs Your Attention <span class="sec-count">2</span></div><div class="sec-link">See all</div></div>
+          <div class="card">
+            <div class="att-row">
+              <div class="att-avatar mia">M</div>
+              <div class="att-txt">
+                <div class="att-name">Mia invited you</div>
+                <div class="att-meta">Tue Apr 22 · 6:30 PM · 3 of 4</div>
+              </div>
+              <div class="att-cta">
+                <div class="att-accept">Accept</div>
+                <div class="att-decline">Decline</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="att-row">
+              <div class="att-avatar lisa">L</div>
+              <div class="att-txt">
+                <div class="att-name">Lisa's game is full — confirm?</div>
+                <div class="att-meta">Thu Apr 24 · 3:00 PM · 4 of 4</div>
+              </div>
+              <div class="att-cta">
+                <div class="att-accept">Confirm</div>
+                <div class="att-decline">Skip</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec-wrap">
+          <div class="sec-hdr"><div class="sec-title">Your Games</div><div class="sec-link">See all</div></div>
+          <div class="card">
+            <div class="game-row">
+              <div class="date-blk"><span class="mon">MON</span><span class="day">21</span></div>
+              <div class="game-mid">
+                <div class="game-time">7:00 PM · 2 hrs</div>
+                <div class="game-name">Lisa's Practice Game</div>
+                <div class="game-loc"><svg><use href="#ic-pin"/></svg>Lisa's Apartment</div>
+              </div>
+              <div class="game-right"><span class="pill pill-pending">PENDING</span><div class="game-players">3 of 4</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="game-row">
+              <div class="date-blk"><span class="mon">FRI</span><span class="day">26</span></div>
+              <div class="game-mid">
+                <div class="game-time">1:00 PM · 3 hrs</div>
+                <div class="game-name">Weekend Warriors</div>
+                <div class="game-loc"><svg><use href="#ic-pin"/></svg>Sarah's Place</div>
+              </div>
+              <div class="game-right"><span class="pill pill-pending">PENDING</span><div class="game-players">2 of 4</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="game-row">
+              <div class="date-blk"><span class="mon">SUN</span><span class="day">03</span></div>
+              <div class="game-mid">
+                <div class="game-time">2:00 PM · 2 hrs</div>
+                <div class="game-name">Sunday Regulars</div>
+                <div class="game-loc"><svg><use href="#ic-pin"/></svg>Community Center</div>
+              </div>
+              <div class="game-right"><span class="pill pill-pending">PENDING</span><div class="game-players">1 of 4</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tbar">
+        <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg><span>Home</span></div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span>Discover</span></div>
+        <div class="tab-center"><div class="tab-plus"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div><span class="tab-plus-lbl">New</span></div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Games</span></div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Groups</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+`;
+}
+
+document.getElementById('grid').innerHTML = iterations.map(phoneHTML).join('');
+</script>
+</body>
+</html>
