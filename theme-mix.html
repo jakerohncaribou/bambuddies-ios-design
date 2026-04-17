@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BamBuddies — 5 Random Theme Combos</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Archivo+Black&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
@@ -34,7 +34,7 @@ body{background:#0a0a0a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 .topbar-left{display:flex;align-items:center;gap:10px;}
 .topbar-av{width:38px;height:38px;border-radius:50%;}
 .topbar-hello{color:#888;font-size:12px;}
-.topbar-name{color:#1a1a1a;font-size:18px;font-weight:700;letter-spacing:-.3px;}
+.topbar-name{color:var(--primary);font-size:20px;font-weight:700;letter-spacing:-.3px;}
 .topbar-sub{color:#999;font-size:11px;}
 .topbar-icons{display:flex;gap:12px;align-items:center;}
 .topbar-icons i{color:#1a1a1a;}
@@ -89,6 +89,44 @@ body{background:#0a0a0a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 .font-jakarta{font-family:'Plus Jakarta Sans',sans-serif;}
 .font-manrope{font-family:'Manrope',sans-serif;}
 .font-geist{font-family:'Geist',sans-serif;}
+
+/* Distinctive font sets — each with heading + body pairing */
+.font-serif-display .topbar-name,
+.font-serif-display .hero-time,
+.font-serif-display .ad-title,
+.font-serif-display .invite-name,
+.font-serif-display .sec-title{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:0;}
+.font-serif-display{font-family:'Manrope',sans-serif;}
+.font-serif-display .topbar-name{font-size:26px;}
+.font-serif-display .hero-time{font-size:22px;font-weight:400;}
+
+.font-grotesk .topbar-name,
+.font-grotesk .hero-time,
+.font-grotesk .ad-title,
+.font-grotesk .invite-name,
+.font-grotesk .sec-title{font-family:'Space Grotesk',sans-serif;}
+.font-grotesk{font-family:'Space Grotesk',sans-serif;}
+
+.font-fraunces .topbar-name,
+.font-fraunces .hero-time,
+.font-fraunces .ad-title,
+.font-fraunces .invite-name,
+.font-fraunces .sec-title{font-family:'Fraunces',Georgia,serif;font-weight:700;font-variation-settings:'opsz' 144;}
+.font-fraunces{font-family:'Plus Jakarta Sans',sans-serif;}
+
+.font-archivo .topbar-name,
+.font-archivo .hero-time,
+.font-archivo .sec-title{font-family:'Archivo Black',sans-serif;font-weight:400;letter-spacing:-.5px;text-transform:uppercase;}
+.font-archivo .topbar-name{font-size:17px;}
+.font-archivo .hero-time{font-size:15px;}
+.font-archivo{font-family:'Manrope',sans-serif;}
+
+.font-caveat .topbar-name,
+.font-caveat .hero-name,
+.font-caveat .sec-title{font-family:'Caveat',cursive;font-weight:700;}
+.font-caveat .topbar-name{font-size:28px;}
+.font-caveat .sec-title{font-size:22px;}
+.font-caveat{font-family:'Plus Jakarta Sans',sans-serif;}
 </style>
 </head>
 <body>
@@ -100,11 +138,11 @@ body{background:#0a0a0a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 
 <script>
 const combos = [
-  {n:'01', color:'mauve', font:'geist',     name:'Mauve + Geist',              desc:'Luxe purple meets clean tech-modern',       hex:'#7c3aed'},
-  {n:'02', color:'terracotta', font:'jakarta', name:'Terracotta + Jakarta Sans', desc:'Warm earthy with trendy geometric',        hex:'#ea580c'},
-  {n:'03', color:'rose', font:'manrope',    name:'Rose + Manrope',             desc:'Bold passionate with rounded friendly',     hex:'#e11d48'},
-  {n:'04', color:'cobalt', font:'jakarta',  name:'Cobalt + Jakarta Sans',      desc:'Trustworthy blue with modern geometric',    hex:'#2563eb'},
-  {n:'05', color:'emerald', font:'manrope', name:'Emerald + Manrope',          desc:'Fresh natural with rounded warmth',         hex:'#059669'},
+  {n:'01', color:'mauve',      font:'serif-display', name:'Mauve + Instrument Serif',  desc:'Editorial elegance · fashion mag vibe',    hex:'#7c3aed'},
+  {n:'02', color:'terracotta', font:'grotesk',       name:'Terracotta + Space Grotesk', desc:'Geometric techy with warm earth tone',    hex:'#ea580c'},
+  {n:'03', color:'rose',       font:'fraunces',      name:'Rose + Fraunces',            desc:'Warm rounded serif · modern boutique',    hex:'#e11d48'},
+  {n:'04', color:'cobalt',     font:'archivo',       name:'Cobalt + Archivo Black',     desc:'Bold brutalist display · sports vibe',    hex:'#2563eb'},
+  {n:'05', color:'emerald',    font:'caveat',        name:'Emerald + Caveat',           desc:'Handwritten personal · community feel',   hex:'#059669'},
 ];
 
 const phoneHTML = (color, font) => `
