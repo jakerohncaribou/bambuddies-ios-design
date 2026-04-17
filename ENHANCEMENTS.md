@@ -17,4 +17,9 @@ UI pattern: tap "New" → modal sheet with 3 destination types → select recipi
 
 Mockup placeholder exists on Page 21 (Inbox) — "New" button visible but not functional.
 
+## Groups
+
+### Discoverable Groups
+Toggle on Group Creation that lets a group appear in the public Group Discovery list so strangers can apply to join. Removed from Create Group flow on 2026-04-17. **Note:** Jake has flagged this as *possibly never building* — groups may stay invite-only/private by design. Flagged as future consideration rather than committed roadmap.
+
 ## (Other items will be added here as feedback comes in)
