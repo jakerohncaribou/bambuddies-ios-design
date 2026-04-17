@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Space Grotesk + Caveat name (5 colors)</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:#0a0a0a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;font-family:'Space Grotesk',sans-serif;}
+.page-title{color:#fff;text-align:center;font-size:30px;font-weight:700;letter-spacing:-.8px;margin-bottom:4px;}
+.page-sub{color:#666;text-align:center;font-size:14px;margin-bottom:32px;}
+.row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;}
+.col{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:20px;}
+.mix-num{color:#555;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:4px;}
+.label-lg{color:#fff;font-size:16px;font-weight:700;letter-spacing:-.3px;}
+.label-sm{color:#888;font-size:11px;margin-bottom:10px;text-align:center;max-width:280px;font-style:italic;}
+.swatch{display:flex;gap:6px;align-items:center;}
+.swatch-dot{width:12px;height:12px;border-radius:50%;}
+.swatch-code{font-size:10px;color:#666;font-family:monospace;}
+
+.phone{width:360px;height:720px;border-radius:46px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#faf8f6;font-family:'Space Grotesk',sans-serif;}
+.notch{width:116px;height:32px;background:#000;border-radius:18px;position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:50px;padding:12px 26px 0;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;position:relative;z-index:10;color:#1a1a1a;}
+.scr{position:absolute;top:50px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 14px 20px;}
+.scr::-webkit-scrollbar{display:none;}
+
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:8px;}
+.topbar-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.topbar-av{width:40px;height:40px;border-radius:50%;flex-shrink:0;}
+.topbar-greeting{color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.25;}
+.topbar-greeting .name{font-family:'Caveat',cursive;font-weight:700;color:var(--primary);font-size:22px;vertical-align:-2px;}
+.topbar-icons{display:flex;gap:10px;align-items:center;padding-top:8px;}
+.topbar-icons i{color:#1a1a1a;}
+
+.ad-banner{background:linear-gradient(135deg,#f5f0ec,#efe6de);border-radius:14px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.ad-label{color:#8a7355;font-size:9px;font-weight:700;letter-spacing:1px;}
+.ad-title{color:#5a4030;font-size:16px;font-weight:700;}
+.ad-cta{color:var(--primary);font-size:12px;font-weight:600;margin-top:2px;}
+
+.hero-card{background:#fff;border:1px solid #e8e4e0;border-radius:16px;overflow:hidden;margin-bottom:14px;}
+.hero-img{height:90px;background:url('https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600') center/cover;position:relative;}
+.hero-date{position:absolute;top:8px;left:8px;background:#fff;border-radius:7px;padding:3px 7px;font-size:10px;font-weight:700;color:#000;}
+.hero-crown{position:absolute;top:8px;right:34px;}
+.hero-players{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);border-radius:8px;padding:2px 7px;font-size:10px;font-weight:600;color:#fff;}
+.hero-body{padding:12px 14px;}
+.hero-label{color:var(--primary);font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:2px;display:flex;align-items:center;gap:4px;}
+.hero-time{color:#1a1a1a;font-size:16px;font-weight:700;letter-spacing:-.2px;}
+.hero-name{color:var(--primary-soft);font-size:13px;font-weight:600;margin-top:1px;}
+.hero-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+.hero-avs{display:flex;}
+.hero-avs img{width:22px;height:22px;border-radius:50%;margin-left:-4px;border:2px solid #fff;}
+.hero-pill{background:var(--primary-bg);color:var(--primary);padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:3px;}
+
+.sec-title{color:#1a1a1a;font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-.2px;display:flex;align-items:center;gap:6px;}
+.sec-badge{background:#f43f5e;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:99px;}
+
+.invite{background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:10px 12px;margin-bottom:8px;}
+.invite-top{display:flex;align-items:center;gap:8px;}
+.invite-top img{width:30px;height:30px;border-radius:50%;}
+.invite-name{color:#1a1a1a;font-size:13px;font-weight:600;}
+.invite-meta{color:#999;font-size:11px;}
+.invite-btns{display:flex;gap:6px;margin-top:8px;}
+.invite-y{flex:1;background:var(--primary);color:#fff;text-align:center;padding:7px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:'Space Grotesk',sans-serif;}
+.invite-n{flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:7px;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;}
+
+.tbar{position:absolute;bottom:0;left:0;right:0;height:76px;background:rgba(255,255,255,.9);backdrop-filter:blur(20px);border-top:1px solid #e8e4e0;display:flex;align-items:flex-start;padding-top:8px;}
+.tbar .t{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;color:#bbb;}
+.tbar .t.act{color:var(--primary);}
+.tbar .t.act i{color:var(--primary);}
+.tbar .t i{color:#bbb;font-size:22px;}
+.tbar .cb{flex:1;display:flex;justify-content:center;position:relative;}
+.tbar .pb{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:absolute;top:-18px;background:var(--primary-gradient);box-shadow:0 4px 14px var(--primary-shadow);}
+
+/* Color themes */
+.theme-emerald{--primary:#059669;--primary-soft:#10b981;--primary-bg:#d1fae5;--primary-gradient:linear-gradient(135deg,#059669,#10b981);--primary-shadow:rgba(5,150,105,.3);}
+.theme-mauve{--primary:#7c3aed;--primary-soft:#a78bfa;--primary-bg:#ede9fe;--primary-gradient:linear-gradient(135deg,#7c3aed,#a78bfa);--primary-shadow:rgba(124,58,237,.3);}
+.theme-rose{--primary:#e11d48;--primary-soft:#fb7185;--primary-bg:#ffe4e6;--primary-gradient:linear-gradient(135deg,#e11d48,#fb7185);--primary-shadow:rgba(225,29,72,.3);}
+.theme-cobalt{--primary:#2563eb;--primary-soft:#60a5fa;--primary-bg:#dbeafe;--primary-gradient:linear-gradient(135deg,#2563eb,#60a5fa);--primary-shadow:rgba(37,99,235,.3);}
+.theme-terracotta{--primary:#ea580c;--primary-soft:#fb923c;--primary-bg:#ffedd5;--primary-gradient:linear-gradient(135deg,#ea580c,#fb923c);--primary-shadow:rgba(234,88,12,.3);}
+</style>
+</head>
+<body>
+
+<div class="page-title">Space Grotesk + Caveat Name</div>
+<div class="page-sub">5 colors &middot; Real product greetings (randomized per design)</div>
+
+<div class="row" id="stage"></div>
+
+<script>
+const combos = [
+  {n:'01', color:'emerald',    name:'Emerald',    hex:'#059669', greeting:"East, South, West, North... let's go,", greetingEnd:'!'},
+  {n:'02', color:'mauve',      name:'Mauve',      hex:'#7c3aed', greeting:"Let's make some mahj-ic happen,", greetingEnd:'!'},
+  {n:'03', color:'rose',       name:'Rose',       hex:'#e11d48', greeting:"Red dragon energy today,", greetingEnd:'!'},
+  {n:'04', color:'cobalt',     name:'Cobalt',     hex:'#2563eb', greeting:"May the winds be in your favor,", greetingEnd:'!'},
+  {n:'05', color:'terracotta', name:'Terracotta', hex:'#ea580c', greeting:"Fortune favors the bold player,", greetingEnd:'!'},
+];
+
+const phoneHTML = (c) => `
+<div class="phone theme-${c.color}">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">&bull;&bull;&bull;&bull;</span></div>
+<div class="scr">
+
+<div class="topbar">
+  <div class="topbar-left">
+    <img class="topbar-av" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt="">
+    <div class="topbar-greeting">${c.greeting} <span class="name">Sarah</span>${c.greetingEnd}</div>
+  </div>
+  <div class="topbar-icons">
+    <i class="ph ph-chat-circle-dots" style="font-size:20px;"></i>
+    <i class="ph ph-bell" style="font-size:20px;"></i>
+  </div>
+</div>
+
+<div class="ad-banner">
+  <div style="flex:1;"><div class="ad-label">SPONSORED</div><div class="ad-title">Master the Winds</div><div class="ad-cta">Learn Tips &rarr;</div></div>
+  <div style="display:flex;gap:3px;transform:rotate(-5deg);opacity:.6;">
+    <div style="width:22px;height:28px;border-radius:5px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-diamond" style="font-size:11px;color:var(--primary);"></i></div>
+    <div style="width:22px;height:28px;border-radius:5px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-circle" style="font-size:11px;color:#d97706;"></i></div>
+  </div>
+</div>
+
+<div class="hero-card">
+  <div class="hero-img">
+    <div class="hero-date">SAT 4/19</div>
+    <div class="hero-crown"><i class="ph-fill ph-crown" style="font-size:16px;color:#d97706;"></i></div>
+    <div class="hero-players">4/4</div>
+  </div>
+  <div class="hero-body">
+    <div class="hero-label"><span style="width:6px;height:6px;border-radius:50%;background:var(--primary);display:inline-block;"></span>NEXT GAME</div>
+    <div class="hero-time">2:00 PM &ndash; 4:00 PM</div>
+    <div class="hero-name">Saturday Mahjong</div>
+    <div class="hero-bottom">
+      <div class="hero-avs">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=50&h=50&fit=crop&crop=face" alt="">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&h=50&fit=crop&crop=face" alt="">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=50&h=50&fit=crop&crop=face" alt="">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" alt="">
+      </div>
+      <div class="hero-pill"><i class="ph-bold ph-check" style="font-size:10px;"></i> You're in!</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">Invites <span class="sec-badge">2</span></div>
+
+<div class="invite">
+  <div class="invite-top">
+    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=50&h=50&fit=crop&crop=face" alt="">
+    <div><div class="invite-name">Amy's Tuesday Game</div><div class="invite-meta">Tue, Apr 22 &middot; 7:00 PM</div></div>
+  </div>
+  <div class="invite-btns"><button class="invite-y"><i class="ph-bold ph-check" style="font-size:11px;"></i> Accept</button><button class="invite-n">Decline</button></div>
+</div>
+
+<div class="invite">
+  <div class="invite-top">
+    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" alt="">
+    <div><div class="invite-name">Rachel's Open Game</div><div class="invite-meta">Sat, Apr 26 &middot; 1:00 PM</div></div>
+  </div>
+  <div class="invite-btns"><button class="invite-y"><i class="ph-bold ph-check" style="font-size:11px;"></i> Accept</button><button class="invite-n">Decline</button></div>
+</div>
+
+</div>
+<div class="tbar">
+  <div class="t act"><i class="ph-fill ph-house-simple"></i><span>Home</span></div>
+  <div class="t"><i class="ph ph-compass"></i><span>Discover</span></div>
+  <div class="cb"><div class="pb"><i class="ph-bold ph-plus" style="font-size:22px;color:#fff;"></i></div></div>
+  <div class="t"><i class="ph ph-squares-four"></i><span>Games</span></div>
+  <div class="t"><i class="ph ph-users-three"></i><span>Groups</span></div>
+</div>
+</div>`;
+
+const stage = document.getElementById('stage');
+combos.forEach(c => {
+  const div = document.createElement('div');
+  div.className = 'col';
+  div.innerHTML = `
+    <div class="mix-num">MIX ${c.n}</div>
+    <div class="label-lg">${c.name}</div>
+    <div class="label-sm">"${c.greeting} Sarah${c.greetingEnd}"</div>
+    <div class="swatch"><div class="swatch-dot" style="background:${c.hex};"></div><span class="swatch-code">${c.hex}</span></div>
+    ${phoneHTML(c)}
+  `;
+  stage.appendChild(div);
+});
+</script>
+</body>
+</html>
