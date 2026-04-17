@@ -29,8 +29,9 @@ body{font-family:'Outfit',sans-serif;background:#1a1a1a;min-height:100vh;padding
 
 /* ===== TOP BAR ===== */
 .topbar{display:flex;align-items:center;gap:10px;padding:10px 18px 6px;}
-.topbar-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Outfit';font-weight:700;font-size:18px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.1);}
+.topbar-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Outfit';font-weight:700;font-size:18px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;position:relative;}
 .phone .topbar-avatar{background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));}
+.topbar-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;}
 .topbar-name-wrap{flex:1;min-width:0;display:flex;align-items:flex-end;line-height:1;}
 .topbar-name{font-family:'Caveat',cursive;font-size:36px;font-weight:700;line-height:.9;}
 .phone .topbar-name{color:var(--primary);}
@@ -98,6 +99,15 @@ body{font-family:'Outfit',sans-serif;background:#1a1a1a;min-height:100vh;padding
 .att-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;font-family:'Outfit';flex-shrink:0;}
 .att-avatar.mia{background:linear-gradient(135deg,#fcd34d,#f59e0b);}
 .att-avatar.lisa{background:linear-gradient(135deg,#60a5fa,#3b82f6);}
+.att-avatar{overflow:hidden;position:relative;}
+.att-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;}
+
+/* Calendar icon in section header */
+.sec-link-row{display:flex;align-items:center;gap:10px;}
+.cal-ic{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.phone .cal-ic{background:var(--primary-tint);}
+.cal-ic svg{width:15px;height:15px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.phone .cal-ic svg{stroke:var(--primary-dark);}
 .att-txt{flex:1;min-width:0;}
 .att-name{font-size:13px;font-weight:700;color:#1a1a1a;}
 .att-meta{font-size:11px;color:#999;margin-top:1px;}
@@ -219,7 +229,7 @@ function phoneHTML(it){
       <div class="scr">
 
         <div class="topbar">
-          <div class="topbar-avatar">S</div>
+          <div class="topbar-avatar">S<img src="https://i.pravatar.cc/150?img=47" alt=""></div>
           <div class="topbar-name-wrap"><span class="topbar-name">Sarah</span></div>
           <div class="topbar-icons">
             <div class="topbar-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
@@ -266,7 +276,7 @@ function phoneHTML(it){
           <div class="sec-hdr"><div class="sec-title">Needs Your Attention <span class="sec-count">2</span></div><div class="sec-link">See all</div></div>
           <div class="card">
             <div class="att-row">
-              <div class="att-avatar mia">M</div>
+              <div class="att-avatar mia">M<img src="https://i.pravatar.cc/150?img=5" alt=""></div>
               <div class="att-txt">
                 <div class="att-name">Mia invited you</div>
                 <div class="att-meta">Tue Apr 22 · 6:30 PM · 3 of 4</div>
@@ -279,7 +289,7 @@ function phoneHTML(it){
           </div>
           <div class="card">
             <div class="att-row">
-              <div class="att-avatar lisa">L</div>
+              <div class="att-avatar lisa">L<img src="https://i.pravatar.cc/150?img=9" alt=""></div>
               <div class="att-txt">
                 <div class="att-name">Lisa's game is full — confirm?</div>
                 <div class="att-meta">Thu Apr 24 · 3:00 PM · 4 of 4</div>
@@ -293,7 +303,7 @@ function phoneHTML(it){
         </div>
 
         <div class="sec-wrap">
-          <div class="sec-hdr"><div class="sec-title">Your Games</div><div class="sec-link">See all</div></div>
+          <div class="sec-hdr"><div class="sec-title">Your Games</div><div class="sec-link-row"><div class="cal-ic" title="Sync to calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div><div class="sec-link">See all</div></div></div>
           <div class="card">
             <div class="game-row">
               <div class="date-blk"><span class="mon">MON</span><span class="day">21</span></div>
