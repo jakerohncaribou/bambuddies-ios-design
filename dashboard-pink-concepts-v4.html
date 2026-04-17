@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies · Concept 2 Iterations (v4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Liu+Jian+Mao+Cao&family=Long+Cang&family=ZCOOL+XiaoWei&family=ZCOOL+KuaiLe&family=Outfit:wght@400;500;600;700;800&family=Caveat:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;font-family:'Outfit',sans-serif;}
+.page-title{color:#fff;text-align:center;font-size:30px;font-weight:800;letter-spacing:-.8px;margin-bottom:4px;}
+.page-sub{color:#888;text-align:center;font-size:14px;margin-bottom:8px;}
+.color-note{text-align:center;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:#c73078;color:#fff;border-radius:99px;font-weight:600;font-size:12px;margin-bottom:32px;}
+.color-swatch{width:12px;height:12px;border-radius:50%;background:#fff;}
+.row{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;max-width:2400px;margin:0 auto;}
+.col{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:20px;}
+.mix-num{color:#555;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:4px;}
+.label-lg{color:#fff;font-size:18px;font-weight:700;letter-spacing:-.3px;}
+.label-sm{color:#888;font-size:11px;margin-bottom:8px;text-align:center;max-width:280px;line-height:1.4;}
+.font-note{background:#222;color:#aaa;font-size:10px;font-family:monospace;padding:4px 8px;border-radius:6px;margin-bottom:6px;}
+
+.phone{width:375px;height:812px;border-radius:46px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;}
+.notch{width:120px;height:34px;background:#000;border-radius:18px;position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:52px;padding:12px 26px 0;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;position:relative;z-index:10;color:#1a1a1a;}
+.scr{position:absolute;top:52px;left:0;right:0;bottom:70px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 16px;}
+.scr::-webkit-scrollbar{display:none;}
+
+/* Smaller action tile */
+.sm-btn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:5px;width:62px;cursor:pointer;}
+.sm-tile{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;position:relative;}
+.sm-label{font-size:10px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;}
+
+/* Tab bar with + center */
+.tbar{position:absolute;bottom:0;left:0;right:0;height:70px;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-top:1px solid #eee;display:flex;align-items:flex-start;padding-top:8px;z-index:40;}
+.tb-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:600;color:#bbb;}
+.tb-item svg{width:22px;height:22px;}
+.tb-item.act{color:#c73078;}
+.tb-plus{flex:1;display:flex;justify-content:center;align-items:flex-start;}
+.tb-plus-btn{width:48px;height:48px;border-radius:50%;background:#c73078;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(199,48,120,.4);transform:translateY(-14px);border:3px solid #fff;}
+.tb-plus-btn svg{width:22px;height:22px;color:#fff;}
+
+.sarah{font-family:'Caveat',cursive;font-weight:700;color:#c73078;letter-spacing:.3px;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+</style>
+
+<svg width="0" height="0" style="position:absolute;" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <symbol id="icon-tile-buddy" viewBox="0 0 64 64">
+    <rect x="12" y="10" width="40" height="48" rx="7" fill="#fefce8" stroke="#1a1a1a" stroke-width="2.5"/>
+    <rect x="14" y="12" width="36" height="44" rx="5" fill="#fffef7" opacity=".7"/>
+    <rect x="26" y="18" width="12" height="3" rx="1" fill="#dc2626"/>
+    <rect x="28" y="22" width="8" height="2" rx="1" fill="#dc2626"/>
+    <rect x="26" y="25" width="12" height="2.5" rx="1" fill="#dc2626"/>
+    <circle cx="24" cy="40" r="2.5" fill="#1a1a1a"/>
+    <circle cx="40" cy="40" r="2.5" fill="#1a1a1a"/>
+    <path d="M 24 47 Q 32 52 40 47" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="19" cy="44" r="2" fill="#fda4af" opacity=".7"/>
+    <circle cx="45" cy="44" r="2" fill="#fda4af" opacity=".7"/>
+  </symbol>
+  <symbol id="icon-three-friends" viewBox="0 0 64 64">
+    <rect x="8" y="18" width="24" height="30" rx="5" fill="#fef3c7" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="16" cy="30" r="1.5" fill="#1a1a1a"/><circle cx="24" cy="30" r="1.5" fill="#1a1a1a"/>
+    <path d="M 16 37 Q 20 40 24 37" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <rect x="20" y="12" width="24" height="30" rx="5" fill="#d1fae5" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="28" cy="24" r="1.5" fill="#1a1a1a"/><circle cx="36" cy="24" r="1.5" fill="#1a1a1a"/>
+    <path d="M 28 31 Q 32 34 36 31" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <rect x="32" y="18" width="24" height="30" rx="5" fill="#fce7f3" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="40" cy="30" r="1.5" fill="#1a1a1a"/><circle cx="48" cy="30" r="1.5" fill="#1a1a1a"/>
+    <path d="M 40 37 Q 44 40 48 37" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-map-pin" viewBox="0 0 64 64">
+    <path d="M 8 20 L 24 14 L 40 20 L 56 14 L 56 50 L 40 56 L 24 50 L 8 56 Z" fill="#fff9f0" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 24 14 L 24 50" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <path d="M 40 20 L 40 56" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <path d="M 46 28 C 48 25, 52 25, 52 29 C 52 33, 46 38, 46 38 C 46 38, 40 33, 40 29 C 40 25, 44 25, 46 28 Z" fill="#c73078" stroke="#1a1a1a" stroke-width="2"/>
+    <circle cx="46" cy="30" r="1.5" fill="#fff"/>
+  </symbol>
+  <symbol id="icon-chat-bubble" viewBox="0 0 64 64">
+    <path d="M 10 14 L 54 14 Q 58 14 58 18 L 58 40 Q 58 44 54 44 L 28 44 L 20 52 L 22 44 L 10 44 Q 6 44 6 40 L 6 18 Q 6 14 10 14 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="20" cy="29" r="2.8" fill="#c73078"/>
+    <circle cx="32" cy="29" r="2.8" fill="#fbbf24"/>
+    <circle cx="44" cy="29" r="2.8" fill="#3b82f6"/>
+  </symbol>
+  <symbol id="icon-learn" viewBox="0 0 64 64">
+    <path d="M 8 22 Q 8 20 10 20 L 30 20 L 32 26 L 34 20 L 54 20 Q 56 20 56 22 L 56 52 Q 56 54 54 54 L 34 54 L 32 50 L 30 54 L 10 54 Q 8 54 8 52 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 32 26 L 32 50" stroke="#1a1a1a" stroke-width="1.5"/>
+    <line x1="13" y1="32" x2="28" y2="32" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="13" y1="37" x2="28" y2="37" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="36" y1="32" x2="51" y2="32" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="36" y1="37" x2="51" y2="37" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="22" y="6" width="16" height="18" rx="2.5" fill="#fef3c7" stroke="#1a1a1a" stroke-width="2"/>
+    <circle cx="28" cy="14" r="1.3" fill="#dc2626"/><circle cx="32" cy="14" r="1.3" fill="#dc2626"/>
+    <circle cx="30" cy="18" r="1.3" fill="#dc2626"/>
+  </symbol>
+  <symbol id="tab-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v10a1 1 0 01-1 1h-4v-6h-8v6H4a1 1 0 01-1-1z" fill="currentColor"/></symbol>
+  <symbol id="tab-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="currentColor"/></symbol>
+  <symbol id="tab-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor"/><rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor"/><rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor"/><rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor"/></symbol>
+  <symbol id="tab-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="currentColor"/><circle cx="17" cy="9" r="2.8" fill="currentColor"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5v1H3zm14-4c2 0 4 1.5 4 4v1h-5" fill="currentColor"/></symbol>
+  <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="bell" viewBox="0 0 24 24"><path d="M12 4a6 6 0 016 6v3.5l1.5 2.5H4.5L6 13.5V10a6 6 0 016-6z" fill="currentColor"/><path d="M10 19a2 2 0 004 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="currentColor"/></symbol>
+</defs>
+</svg>
+</head>
+<body>
+
+<div class="page-title">5 Iterations · Concept 2 (Ma Shan Zheng Brush)</div>
+<div class="page-sub">Sarah wrapped · Smaller bubbles · + New Game center tab · Games back on dashboard</div>
+<div style="text-align:center;margin-bottom:32px;"><span class="color-note"><span class="color-swatch"></span>Pink #c73078 · Chinese brush aesthetic</span></div>
+
+<div class="row">
+
+<!-- ============= ITERATION 1: Two-line + Pink Swoosh ============= -->
+<div class="col">
+<div class="mix-num">ITERATION 01</div>
+<div class="label-lg" style="font-family:'Ma Shan Zheng',serif;font-weight:400;font-size:26px;">Two-line · Swoosh</div>
+<div class="label-sm">Greeting breaks line, Sarah featured big with hand-drawn pink swoosh underline</div>
+<div class="font-note">Ma Shan Zheng + Outfit · Caveat for Sarah</div>
+
+<div class="phone" style="font-family:'Outfit',sans-serif;background:#fff9f5;">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
+<div class="scr">
+
+<div style="padding:10px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:flex-start;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:42px;height:42px;border-radius:50%;flex-shrink:0;margin-top:2px;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;">May the winds be in your favor,</div>
+      <div style="display:inline-block;position:relative;margin-top:2px;">
+        <span class="sarah" style="font-size:30px;line-height:1;">Sarah</span>
+        <svg width="80" height="10" style="position:absolute;bottom:-4px;left:0;" viewBox="0 0 80 10"><path d="M 2 6 Q 20 1 40 5 T 78 4" stroke="#c73078" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+  </div>
+  <div style="position:relative;cursor:pointer;padding-top:8px;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:4px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff9f5;">3</div>
+  </div>
+</div>
+
+<!-- Smaller action bubbles -->
+<div style="padding:4px 14px 14px;display:flex;gap:8px;overflow-x:auto;">
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="36" height="36"><use href="#icon-tile-buddy"/></svg></div><div class="sm-label">Start Game</div></div>
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="36" height="36"><use href="#icon-three-friends"/></svg></div><div class="sm-label">Start Group</div></div>
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="36" height="36"><use href="#icon-map-pin"/></svg></div><div class="sm-label">Find Games</div></div>
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;position:relative;"><svg width="36" height="36"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-4px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;padding:0 4px;display:flex;align-items:center;justify-content:center;border:2px solid #fff9f5;">3</div></div><div class="sm-label">Messages</div></div>
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="36" height="36"><use href="#icon-learn"/></svg></div><div class="sm-label">Learn</div></div>
+</div>
+
+<!-- Ad Banner -->
+<div style="margin:0 14px 12px;background:#fff;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;border:2px solid #1a1a1a;position:relative;overflow:hidden;">
+  <div style="position:absolute;right:-8px;top:-16px;font-family:'Ma Shan Zheng',serif;color:rgba(199,48,120,.1);font-size:90px;line-height:1;">風</div>
+  <svg width="36" height="36" style="position:relative;z-index:1;"><use href="#icon-tile-buddy"/></svg>
+  <div style="flex:1;position:relative;z-index:1;">
+    <div style="color:#92400e;font-size:9px;font-weight:700;letter-spacing:1px;">SPONSORED</div>
+    <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:18px;line-height:1.1;margin-top:1px;">Master the Winds</div>
+    <div style="color:#c73078;font-size:11px;font-weight:600;margin-top:1px;">Learn Strategy Tips →</div>
+  </div>
+</div>
+
+<!-- Next Game -->
+<div style="margin:0 14px 12px;background:#fff;border-radius:14px;overflow:hidden;border:2px solid #1a1a1a;">
+  <div style="position:relative;height:78px;overflow:hidden;">
+    <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.6));"></div>
+    <div style="position:absolute;top:6px;left:6px;background:#fff;border:1.5px solid #1a1a1a;border-radius:6px;padding:2px 7px;font-size:9px;font-weight:700;">SAT 4/19</div>
+    <div style="position:absolute;top:6px;right:6px;background:#fff;color:#c73078;border:1.5px solid #c73078;border-radius:99px;padding:2px 9px;font-size:9px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:3px;"><span style="width:4px;height:4px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;bottom:5px;left:10px;right:10px;color:#fff;">
+      <div style="font-size:15px;font-weight:700;line-height:1.1;">2:00 – 4:00 PM</div>
+      <div style="font-family:'Ma Shan Zheng',serif;font-size:15px;line-height:1;margin-top:1px;">Saturday Mahjong</div>
+    </div>
+  </div>
+  <div style="padding:8px 12px 10px;">
+    <div style="color:#666;font-size:11px;margin-bottom:6px;display:flex;align-items:center;gap:3px;"><svg width="12" height="12" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div style="display:flex;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;border:2px solid #fff;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+        </div>
+        <span style="color:#666;font-size:11px;">4/4 players</span>
+      </div>
+      <div style="background:#fce7f3;color:#c73078;font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:99px;">COMMITTED</div>
+    </div>
+  </div>
+</div>
+
+<!-- Needs Your Attention -->
+<div style="padding:0 14px;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+  <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:20px;line-height:1;">Needs Your Attention</div>
+  <div style="background:#c73078;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
+</div>
+
+<div style="margin:0 14px 6px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;">
+  <div style="display:flex;align-items:center;gap:8px;">
+    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Amy's Tuesday Game</div>
+      <div style="color:#888;font-size:10px;">Tue, Apr 22 · 7:00 PM</div>
+    </div>
+    <button style="background:#c73078;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Accept</button>
+  </div>
+  <div style="text-align:right;margin-top:2px;"><span style="color:#9ca3af;font-size:10px;text-decoration:underline;">Decline</span></div>
+</div>
+
+<div style="margin:0 14px 12px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;">
+  <div style="display:flex;align-items:center;gap:8px;">
+    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Mei's Open Game</div>
+      <div style="color:#888;font-size:10px;">Fri, Apr 25 · 3:00 PM</div>
+    </div>
+    <button style="background:#c73078;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Accept</button>
+  </div>
+  <div style="text-align:right;margin-top:2px;"><span style="color:#9ca3af;font-size:10px;text-decoration:underline;">Decline</span></div>
+</div>
+
+<!-- Your Games -->
+<div style="padding:0 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;">
+  <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:20px;line-height:1;">Your Games</div>
+  <span style="color:#c73078;font-size:11px;font-weight:600;">See all →</span>
+</div>
+
+<div style="margin:0 14px 6px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+  <div style="width:34px;height:34px;border-radius:8px;background:#fef3c7;border:1.5px solid #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+    <div style="font-size:7px;color:#92400e;font-weight:700;letter-spacing:.3px;">THU</div>
+    <div style="font-size:13px;color:#1a1a1a;font-weight:800;line-height:1;">4/24</div>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Thursday Ladies' League</div>
+    <div style="color:#888;font-size:10px;">6:00 PM · 3/4 players</div>
+  </div>
+  <div style="background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">PENDING</div>
+</div>
+
+<div style="margin:0 14px 6px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+  <div style="width:34px;height:34px;border-radius:8px;background:#d1fae5;border:1.5px solid #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+    <div style="font-size:7px;color:#065f46;font-weight:700;letter-spacing:.3px;">SAT</div>
+    <div style="font-size:13px;color:#1a1a1a;font-weight:800;line-height:1;">4/26</div>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Weekend Warriors</div>
+    <div style="color:#888;font-size:10px;">1:00 PM · 4/4 players</div>
+  </div>
+  <div style="background:#d1fae5;color:#065f46;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">COMMITTED</div>
+</div>
+
+<div style="margin:0 14px 12px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+  <div style="width:34px;height:34px;border-radius:8px;background:#fce7f3;border:1.5px solid #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+    <div style="font-size:7px;color:#c73078;font-weight:700;letter-spacing:.3px;">TUE</div>
+    <div style="font-size:13px;color:#1a1a1a;font-weight:800;line-height:1;">4/29</div>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Lin's Open Tournament</div>
+    <div style="color:#888;font-size:10px;">5:30 PM · 2/4 players</div>
+  </div>
+  <div style="background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">PENDING</div>
+</div>
+
+</div>
+<div class="tbar">
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-plus"><div class="tb-plus-btn"><svg><use href="#plus"/></svg></div></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
+</div>
+</div>
+</div>
+<!-- ITER1-END -->
+
+<script>
+// Shared template for iterations 2-5. Each iteration specifies a unique "wrap" treatment for Sarah.
+const iters = [
+  {
+    n: '02',
+    title: 'Red Seal Stamp',
+    desc: 'Sarah inside a red chop/seal stamp, rotated slightly',
+    fontNote: 'Ma Shan Zheng + Outfit · Caveat inside red seal',
+    greeting: 'Three bams and a dream,',
+    adChar: '竹',
+    adTitle: 'Join Bamboo League',
+    adSub: 'First month free →',
+    wrap: `<div style="display:inline-flex;align-items:center;gap:6px;margin-top:3px;">
+      <div style="width:56px;height:56px;border-radius:10px;background:#c73078;display:flex;align-items:center;justify-content:center;transform:rotate(-4deg);box-shadow:0 2px 6px rgba(199,48,120,.3);position:relative;">
+        <div style="position:absolute;inset:3px;border:1.5px solid rgba(255,255,255,.35);border-radius:7px;"></div>
+        <span style="font-family:'Caveat',cursive;font-weight:700;color:#fff;font-size:24px;letter-spacing:-.5px;position:relative;z-index:1;">Sarah</span>
+      </div>
+    </div>`
+  },
+  {
+    n: '03',
+    title: 'Brush Banner',
+    desc: 'Sarah inside a hand-painted pink brush-stroke banner shape',
+    fontNote: 'Ma Shan Zheng + Outfit · Caveat on brush banner',
+    greeting: "Red dragon energy today,",
+    adChar: '紅',
+    adTitle: 'Dragon Tile Packs',
+    adSub: 'Shop new designs →',
+    wrap: `<div style="display:inline-block;position:relative;margin-top:4px;">
+      <svg width="120" height="40" viewBox="0 0 120 40" style="display:block;">
+        <path d="M 6 18 C 12 8, 30 6, 60 10 C 90 14, 110 12, 116 20 C 118 28, 100 34, 60 32 C 20 30, 4 28, 6 18 Z" fill="#c73078" opacity=".92"/>
+        <path d="M 10 22 C 18 14, 40 14, 70 16 C 90 17, 110 18, 112 20" stroke="#fff" stroke-width="1" fill="none" opacity=".3"/>
+      </svg>
+      <span class="sarah" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);color:#fff;font-size:28px;line-height:1;">Sarah</span>
+    </div>`
+  },
+  {
+    n: '04',
+    title: 'Lantern Dangle',
+    desc: 'Sarah dangling from a mini lantern illustration — playful + kinetic',
+    fontNote: 'Ma Shan Zheng + Outfit · Caveat on lantern tag',
+    greeting: "Let's turn tiles into triumphs,",
+    adChar: '燈',
+    adTitle: 'Lantern Tournament',
+    adSub: 'Starts May 1 →',
+    wrap: `<div style="display:inline-block;position:relative;margin-top:4px;padding-top:4px;">
+      <svg width="20" height="16" viewBox="0 0 20 16" style="position:absolute;top:-2px;left:50%;transform:translateX(-50%);"><path d="M 10 0 L 10 16" stroke="#1a1a1a" stroke-width="1.5"/><circle cx="10" cy="2" r="2" fill="#fbbf24" stroke="#1a1a1a" stroke-width="1"/></svg>
+      <div style="display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#dc2626,#c73078);border:2px solid #1a1a1a;border-radius:8px 8px 14px 14px;padding:4px 16px 6px;box-shadow:0 3px 8px rgba(0,0,0,.15);margin-top:14px;position:relative;">
+        <div style="position:absolute;top:-4px;left:4px;right:4px;height:2px;background:#1a1a1a;border-radius:99px;"></div>
+        <div style="position:absolute;bottom:-4px;left:4px;right:4px;height:2px;background:#1a1a1a;border-radius:99px;"></div>
+        <span class="sarah" style="color:#fff;font-size:22px;line-height:1;">Sarah</span>
+      </div>
+      <div style="position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:8px;height:6px;background:#fbbf24;border:1.5px solid #1a1a1a;border-radius:0 0 4px 4px;"></div>
+    </div>`
+  },
+  {
+    n: '05',
+    title: 'Paper Scroll',
+    desc: 'Sarah on a rolled paper scroll banner with curled ends',
+    fontNote: 'Ma Shan Zheng + Outfit · Caveat on paper scroll',
+    greeting: 'East wind blows your way,',
+    adChar: '書',
+    adTitle: 'Ancient Strategies',
+    adSub: 'Classic tactics →',
+    wrap: `<div style="display:inline-block;position:relative;margin-top:4px;">
+      <div style="display:flex;align-items:center;">
+        <div style="width:10px;height:28px;background:linear-gradient(90deg,#92400e,#78350f);border-radius:4px;box-shadow:inset -2px 0 0 rgba(0,0,0,.2);"></div>
+        <div style="background:#fffbeb;border-top:1.5px solid #1a1a1a;border-bottom:1.5px solid #1a1a1a;padding:3px 14px;position:relative;">
+          <span class="sarah" style="color:#c73078;font-size:24px;line-height:1;">Sarah</span>
+        </div>
+        <div style="width:10px;height:28px;background:linear-gradient(90deg,#78350f,#92400e);border-radius:4px;box-shadow:inset 2px 0 0 rgba(0,0,0,.2);"></div>
+      </div>
+    </div>`
+  }
+];
+
+function renderIter(it) {
+  return `
+<!-- ============= ITERATION ${it.n}: ${it.title} ============= -->
+<div class="col">
+<div class="mix-num">ITERATION ${it.n}</div>
+<div class="label-lg" style="font-family:'Ma Shan Zheng',serif;font-weight:400;font-size:26px;">${it.title}</div>
+<div class="label-sm">${it.desc}</div>
+<div class="font-note">${it.fontNote}</div>
+<div class="phone" style="font-family:'Outfit',sans-serif;background:#fff9f5;">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
+<div class="scr">
+<div style="padding:10px 16px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:42px;height:42px;border-radius:50%;flex-shrink:0;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:12px;font-weight:500;line-height:1.3;">${it.greeting}</div>
+      ${it.wrap}
+    </div>
+  </div>
+  <div style="position:relative;cursor:pointer;padding-top:8px;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:4px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff9f5;">3</div>
+  </div>
+</div>
+<div style="padding:4px 14px 14px;display:flex;gap:8px;overflow-x:auto;">
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="36" height="36"><use href="#icon-tile-buddy"/></svg></div><div class="sm-label">Start Game</div></div>
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="36" height="36"><use href="#icon-three-friends"/></svg></div><div class="sm-label">Start Group</div></div>
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="36" height="36"><use href="#icon-map-pin"/></svg></div><div class="sm-label">Find Games</div></div>
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;position:relative;"><svg width="36" height="36"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-4px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;padding:0 4px;display:flex;align-items:center;justify-content:center;border:2px solid #fff9f5;">3</div></div><div class="sm-label">Messages</div></div>
+  <div class="sm-btn"><div class="sm-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="36" height="36"><use href="#icon-learn"/></svg></div><div class="sm-label">Learn</div></div>
+</div>
+<div style="margin:0 14px 12px;background:#fff;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;border:2px solid #1a1a1a;position:relative;overflow:hidden;">
+  <div style="position:absolute;right:-8px;top:-16px;font-family:'Ma Shan Zheng',serif;color:rgba(199,48,120,.1);font-size:90px;line-height:1;">${it.adChar}</div>
+  <svg width="36" height="36" style="position:relative;z-index:1;"><use href="#icon-three-friends"/></svg>
+  <div style="flex:1;position:relative;z-index:1;">
+    <div style="color:#92400e;font-size:9px;font-weight:700;letter-spacing:1px;">SPONSORED</div>
+    <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:18px;line-height:1.1;margin-top:1px;">${it.adTitle}</div>
+    <div style="color:#c73078;font-size:11px;font-weight:600;margin-top:1px;">${it.adSub}</div>
+  </div>
+</div>
+<div style="margin:0 14px 12px;background:#fff;border-radius:14px;overflow:hidden;border:2px solid #1a1a1a;">
+  <div style="position:relative;height:78px;overflow:hidden;">
+    <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.6));"></div>
+    <div style="position:absolute;top:6px;left:6px;background:#fff;border:1.5px solid #1a1a1a;border-radius:6px;padding:2px 7px;font-size:9px;font-weight:700;">SAT 4/19</div>
+    <div style="position:absolute;top:6px;right:6px;background:#fff;color:#c73078;border:1.5px solid #c73078;border-radius:99px;padding:2px 9px;font-size:9px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:3px;"><span style="width:4px;height:4px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;bottom:5px;left:10px;right:10px;color:#fff;">
+      <div style="font-size:15px;font-weight:700;line-height:1.1;">2:00 – 4:00 PM</div>
+      <div style="font-family:'Ma Shan Zheng',serif;font-size:15px;line-height:1;margin-top:1px;">Saturday Mahjong</div>
+    </div>
+  </div>
+  <div style="padding:8px 12px 10px;">
+    <div style="color:#666;font-size:11px;margin-bottom:6px;display:flex;align-items:center;gap:3px;"><svg width="12" height="12" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div style="display:flex;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;border:2px solid #fff;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+        </div>
+        <span style="color:#666;font-size:11px;">4/4 players</span>
+      </div>
+      <div style="background:#fce7f3;color:#c73078;font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 8px;border-radius:99px;">COMMITTED</div>
+    </div>
+  </div>
+</div>
+<div style="padding:0 14px;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+  <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:20px;line-height:1;">Needs Your Attention</div>
+  <div style="background:#c73078;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
+</div>
+<div style="margin:0 14px 6px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;">
+  <div style="display:flex;align-items:center;gap:8px;">
+    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Amy's Tuesday Game</div>
+      <div style="color:#888;font-size:10px;">Tue, Apr 22 · 7:00 PM</div>
+    </div>
+    <button style="background:#c73078;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Accept</button>
+  </div>
+  <div style="text-align:right;margin-top:2px;"><span style="color:#9ca3af;font-size:10px;text-decoration:underline;">Decline</span></div>
+</div>
+<div style="margin:0 14px 12px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;">
+  <div style="display:flex;align-items:center;gap:8px;">
+    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Mei's Open Game</div>
+      <div style="color:#888;font-size:10px;">Fri, Apr 25 · 3:00 PM</div>
+    </div>
+    <button style="background:#c73078;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Accept</button>
+  </div>
+  <div style="text-align:right;margin-top:2px;"><span style="color:#9ca3af;font-size:10px;text-decoration:underline;">Decline</span></div>
+</div>
+<div style="padding:0 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;">
+  <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:20px;line-height:1;">Your Games</div>
+  <span style="color:#c73078;font-size:11px;font-weight:600;">See all →</span>
+</div>
+<div style="margin:0 14px 6px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+  <div style="width:34px;height:34px;border-radius:8px;background:#fef3c7;border:1.5px solid #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+    <div style="font-size:7px;color:#92400e;font-weight:700;">THU</div>
+    <div style="font-size:13px;color:#1a1a1a;font-weight:800;line-height:1;">4/24</div>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Thursday Ladies' League</div>
+    <div style="color:#888;font-size:10px;">6:00 PM · 3/4 players</div>
+  </div>
+  <div style="background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">PENDING</div>
+</div>
+<div style="margin:0 14px 6px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+  <div style="width:34px;height:34px;border-radius:8px;background:#d1fae5;border:1.5px solid #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+    <div style="font-size:7px;color:#065f46;font-weight:700;">SAT</div>
+    <div style="font-size:13px;color:#1a1a1a;font-weight:800;line-height:1;">4/26</div>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Weekend Warriors</div>
+    <div style="color:#888;font-size:10px;">1:00 PM · 4/4 players</div>
+  </div>
+  <div style="background:#d1fae5;color:#065f46;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">COMMITTED</div>
+</div>
+<div style="margin:0 14px 12px;background:#fff;border:2px solid #1a1a1a;border-radius:12px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+  <div style="width:34px;height:34px;border-radius:8px;background:#fce7f3;border:1.5px solid #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+    <div style="font-size:7px;color:#c73078;font-weight:700;">TUE</div>
+    <div style="font-size:13px;color:#1a1a1a;font-weight:800;line-height:1;">4/29</div>
+  </div>
+  <div style="flex:1;min-width:0;">
+    <div style="color:#1a1a1a;font-size:12px;font-weight:700;">Lin's Open Tournament</div>
+    <div style="color:#888;font-size:10px;">5:30 PM · 2/4 players</div>
+  </div>
+  <div style="background:#fef3c7;color:#92400e;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">PENDING</div>
+</div>
+</div>
+<div class="tbar">
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-plus"><div class="tb-plus-btn"><svg><use href="#plus"/></svg></div></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
+</div>
+</div>
+</div>`;
+}
+
+// Append each iteration HTML into the existing .row container
+const rowEl = document.querySelector('.row');
+iters.forEach(it => rowEl.insertAdjacentHTML('beforeend', renderIter(it)));
+</script>
+
+</div>
+</body>
+</html>
+
