@@ -3,12 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BamBuddies · Pink + Pickleheads-style · 5 Concepts</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&family=Bungee&family=Pacifico&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=ZCOOL+KuaiLe&family=Liu+Jian+Mao+Cao&family=Long+Cang&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<title>BamBuddies · Pink + Cartoon · 5 Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&family=Bungee&family=Pacifico&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;font-family:'Outfit',sans-serif;}
@@ -16,8 +12,7 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 .page-sub{color:#888;text-align:center;font-size:14px;margin-bottom:8px;}
 .color-note{text-align:center;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:#c73078;color:#fff;border-radius:99px;font-weight:600;font-size:12px;margin-bottom:32px;}
 .color-swatch{width:12px;height:12px;border-radius:50%;background:#fff;}
-.stage-wrap{display:flex;justify-content:center;}
-.row{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;max-width:2400px;}
+.row{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;max-width:2400px;margin:0 auto;}
 .col{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:20px;}
 .mix-num{color:#555;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:4px;}
 .label-lg{color:#fff;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;letter-spacing:-.3px;}
@@ -30,113 +25,186 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 .scr{position:absolute;top:52px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 20px;}
 .scr::-webkit-scrollbar{display:none;}
 
-/* Shared tab bar */
 .tbar{position:absolute;bottom:0;left:0;right:0;height:70px;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid #eee;display:flex;align-items:flex-start;padding-top:8px;z-index:40;}
 .tb-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:600;color:#bbb;}
-.tb-item i{font-size:22px;}
+.tb-item svg{width:22px;height:22px;}
 .tb-item.act{color:#c73078;}
 
+/* Cursive Sarah - LOCKED style */
+.sarah{font-family:'Caveat',cursive;font-weight:700;color:#c73078;letter-spacing:.3px;}
+
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-2px);}}
+
+/* Cartoon action tile base */
+.cart-btn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;}
+.cart-tile{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;position:relative;}
+.cart-label{font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;}
 </style>
+
+<!-- ============================================================
+     CUSTOM CARTOON SVG ICONS (defs — reused across concepts)
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute;" xmlns="http://www.w3.org/2000/svg">
+<defs>
+
+  <!-- Icon 1: Mahjong Tile Buddy (Start Game) — a rounded tile with a face and a red ZHONG dot -->
+  <symbol id="icon-tile-buddy" viewBox="0 0 64 64">
+    <!-- Tile body -->
+    <rect x="12" y="10" width="40" height="48" rx="7" fill="#fefce8" stroke="#1a1a1a" stroke-width="2.5"/>
+    <rect x="14" y="12" width="36" height="44" rx="5" fill="#fffef7" opacity=".7"/>
+    <!-- Red dragon character stylized -->
+    <rect x="26" y="18" width="12" height="3" rx="1" fill="#dc2626"/>
+    <rect x="28" y="22" width="8" height="2" rx="1" fill="#dc2626"/>
+    <rect x="26" y="25" width="12" height="2.5" rx="1" fill="#dc2626"/>
+    <!-- Eyes -->
+    <circle cx="24" cy="40" r="2.5" fill="#1a1a1a"/>
+    <circle cx="40" cy="40" r="2.5" fill="#1a1a1a"/>
+    <circle cx="24.5" cy="39.5" r=".8" fill="#fff"/>
+    <circle cx="40.5" cy="39.5" r=".8" fill="#fff"/>
+    <!-- Smile -->
+    <path d="M 24 47 Q 32 52 40 47" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Little blush -->
+    <circle cx="19" cy="44" r="2" fill="#fda4af" opacity=".7"/>
+    <circle cx="45" cy="44" r="2" fill="#fda4af" opacity=".7"/>
+  </symbol>
+
+  <!-- Icon 2: Three Friends (Start Group) — three overlapping tile-heads -->
+  <symbol id="icon-three-friends" viewBox="0 0 64 64">
+    <!-- Back tile -->
+    <rect x="8" y="18" width="24" height="30" rx="5" fill="#fef3c7" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="16" cy="30" r="1.5" fill="#1a1a1a"/>
+    <circle cx="24" cy="30" r="1.5" fill="#1a1a1a"/>
+    <path d="M 16 37 Q 20 40 24 37" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <!-- Middle tile (larger, front-ish) -->
+    <rect x="20" y="12" width="24" height="30" rx="5" fill="#d1fae5" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="28" cy="24" r="1.5" fill="#1a1a1a"/>
+    <circle cx="36" cy="24" r="1.5" fill="#1a1a1a"/>
+    <path d="M 28 31 Q 32 34 36 31" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <!-- Front tile -->
+    <rect x="32" y="18" width="24" height="30" rx="5" fill="#fce7f3" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="40" cy="30" r="1.5" fill="#1a1a1a"/>
+    <circle cx="48" cy="30" r="1.5" fill="#1a1a1a"/>
+    <path d="M 40 37 Q 44 40 48 37" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- Icon 3: Map with Pin (Find Games) — folded map with trail and heart pin -->
+  <symbol id="icon-map-pin" viewBox="0 0 64 64">
+    <!-- Folded map: three panels with diagonal fold shading -->
+    <path d="M 8 20 L 24 14 L 40 20 L 56 14 L 56 50 L 40 56 L 24 50 L 8 56 Z" fill="#fff9f0" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 24 14 L 24 50" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <path d="M 40 20 L 40 56" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <!-- Trail -->
+    <path d="M 14 40 Q 22 32 30 36 Q 38 42 46 36" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="3 2.5"/>
+    <circle cx="14" cy="40" r="2.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+    <!-- Heart pin (pink) -->
+    <path d="M 46 28 C 48 25, 52 25, 52 29 C 52 33, 46 38, 46 38 C 46 38, 40 33, 40 29 C 40 25, 44 25, 46 28 Z" fill="#c73078" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="46" cy="30" r="1.5" fill="#fff"/>
+  </symbol>
+
+  <!-- Icon 4: Chat Bubble (Messages) — speech bubble with peeking tile and typing dots -->
+  <symbol id="icon-chat-bubble" viewBox="0 0 64 64">
+    <!-- Bubble -->
+    <path d="M 10 14 L 54 14 Q 58 14 58 18 L 58 40 Q 58 44 54 44 L 28 44 L 20 52 L 22 44 L 10 44 Q 6 44 6 40 L 6 18 Q 6 14 10 14 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- Typing dots -->
+    <circle cx="20" cy="29" r="2.8" fill="#c73078"/>
+    <circle cx="32" cy="29" r="2.8" fill="#fbbf24"/>
+    <circle cx="44" cy="29" r="2.8" fill="#3b82f6"/>
+  </symbol>
+
+  <!-- Icon 5: Book with Tiles (Learn) — open book + floating tile + sparkle -->
+  <symbol id="icon-learn" viewBox="0 0 64 64">
+    <!-- Book base (two pages) -->
+    <path d="M 8 22 Q 8 20 10 20 L 30 20 L 32 26 L 34 20 L 54 20 Q 56 20 56 22 L 56 52 Q 56 54 54 54 L 34 54 L 32 50 L 30 54 L 10 54 Q 8 54 8 52 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- Center spine -->
+    <path d="M 32 26 L 32 50" stroke="#1a1a1a" stroke-width="1.5"/>
+    <!-- Page lines -->
+    <line x1="13" y1="32" x2="28" y2="32" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="13" y1="37" x2="28" y2="37" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="13" y1="42" x2="24" y2="42" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="36" y1="32" x2="51" y2="32" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="36" y1="37" x2="51" y2="37" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="36" y1="42" x2="48" y2="42" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Floating tile -->
+    <rect x="22" y="6" width="16" height="18" rx="2.5" fill="#fef3c7" stroke="#1a1a1a" stroke-width="2"/>
+    <circle cx="28" cy="14" r="1.3" fill="#dc2626"/>
+    <circle cx="32" cy="14" r="1.3" fill="#dc2626"/>
+    <circle cx="30" cy="18" r="1.3" fill="#dc2626"/>
+    <!-- Sparkle -->
+    <path d="M 50 10 L 51 14 L 55 15 L 51 16 L 50 20 L 49 16 L 45 15 L 49 14 Z" fill="#fbbf24" stroke="#1a1a1a" stroke-width="1.2"/>
+  </symbol>
+
+  <!-- Tab bar icons (simpler, consistent) -->
+  <symbol id="tab-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v10a1 1 0 01-1 1h-4v-6h-8v6H4a1 1 0 01-1-1z" fill="currentColor"/></symbol>
+  <symbol id="tab-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="currentColor"/></symbol>
+  <symbol id="tab-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor"/><rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor"/><rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor"/><rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor"/></symbol>
+  <symbol id="tab-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="currentColor"/><circle cx="17" cy="9" r="2.8" fill="currentColor"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5v1H3zm14-4c2 0 4 1.5 4 4v1h-5" fill="currentColor"/></symbol>
+  <symbol id="bell" viewBox="0 0 24 24"><path d="M12 4a6 6 0 016 6v3.5l1.5 2.5H4.5L6 13.5V10a6 6 0 016-6z" fill="currentColor"/><path d="M10 19a2 2 0 004 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="currentColor"/></symbol>
+
+</defs>
+</svg>
+
 </head>
 <body>
 
-<div class="page-title">Pink + Pickleheads Style · 5 Concepts</div>
-<div class="page-sub">New default color + fun action row + 5 different font approaches</div>
-<div style="text-align:center;margin-bottom:32px;"><span class="color-note"><span class="color-swatch"></span>Pink #c73078 · primary</span></div>
+<div class="page-title">Pink + Cartoon Icons · 5 Concepts</div>
+<div class="page-sub">Custom SVG icons (no icon libraries) · Tiles use cream/neutral bg · Sarah locked to Caveat cursive</div>
+<div style="text-align:center;margin-bottom:32px;"><span class="color-note"><span class="color-swatch"></span>Pink #c73078 · accent only · not tile shading</span></div>
 
 <div class="row">
 
 <!-- ===================================================================== -->
-<!-- CONCEPT 1: Rounded Friendly (Fredoka)                                  -->
+<!-- CONCEPT 1: Fredoka (rounded friendly) — cream tiles, library greeting -->
 <!-- ===================================================================== -->
 <div class="col">
 <div class="mix-num">CONCEPT 01</div>
 <div class="label-lg" style="font-family:'Fredoka',sans-serif;font-weight:700;">Fredoka Rounded</div>
-<div class="label-sm">Rounded, friendly, cartoon-adjacent. Pickleheads energy.</div>
-<div class="font-note">Fredoka · rounded modern</div>
+<div class="label-sm">Rounded friendly UI · warm cream tile backgrounds · pink only on the heart-pin + accents</div>
+<div class="font-note">Fredoka · headings + UI · Caveat for name</div>
 
-<div class="phone" style="font-family:'Fredoka',sans-serif;background:#fff5f9;">
+<div class="phone" style="font-family:'Fredoka',sans-serif;background:#fffaf5;">
 <div class="notch"></div>
 <div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
 <div class="scr">
 
-<!-- Header -->
-<div style="padding:6px 16px 12px;display:flex;align-items:center;justify-content:space-between;background:#fff5f9;">
-  <div style="display:flex;align-items:center;gap:10px;">
-    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;border:3px solid #c73078;">
-    <div>
-      <div style="font-family:'DM Serif Display',serif;color:#1a1a1a;font-size:22px;letter-spacing:-.5px;line-height:1;">Hi, Sarah!</div>
-      <div style="color:#888;font-size:12px;margin-top:2px;">3 upcoming · 2 invites</div>
-    </div>
+<!-- Header with library greeting -->
+<div style="padding:8px 16px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;border:3px solid #c73078;flex-shrink:0;">
+    <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;">East, South, West, North... let's go, <span class="sarah" style="font-size:22px;vertical-align:-2px;">Sarah</span>!</div>
   </div>
-  <div style="position:relative;cursor:pointer;width:42px;height:42px;border-radius:14px;background:#fff;border:1px solid #f0dce7;display:flex;align-items:center;justify-content:center;">
-    <i class="ph ph-bell" style="font-size:20px;color:#1a1a1a;"></i>
-    <div style="position:absolute;top:-3px;right:-3px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff5f9;">3</div>
+  <div style="position:relative;cursor:pointer;width:40px;height:40px;border-radius:14px;background:#fff;border:1px solid #f2e6d8;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <svg width="20" height="20" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:-3px;right:-3px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fffaf5;">3</div>
   </div>
 </div>
 
-<!-- Pickleheads-style Action Row -->
-<div style="padding:8px 10px 16px;display:flex;gap:8px;overflow-x:auto;">
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:78px;cursor:pointer;">
-    <div style="width:66px;height:66px;border-radius:50%;background:#fff;border:2px solid #f0dce7;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(199,48,120,.12);">
-      <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#fde2ef,#fbc4dd);display:flex;align-items:center;justify-content:center;position:relative;">
-        <div style="font-size:26px;position:relative;z-index:1;">🀄</div>
-      </div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Start a Game</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:78px;cursor:pointer;">
-    <div style="width:66px;height:66px;border-radius:50%;background:#fff;border:2px solid #f0dce7;display:flex;align-items:center;justify-content:center;">
-      <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#ffe4d1,#ffcfb0);display:flex;align-items:center;justify-content:center;">
-        <i class="ph-duotone ph-users-three" style="font-size:28px;color:#f97316;"></i>
-      </div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Start Group</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:78px;cursor:pointer;">
-    <div style="width:66px;height:66px;border-radius:50%;background:#fff;border:2px solid #f0dce7;display:flex;align-items:center;justify-content:center;">
-      <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#d1ecff,#a7d8ff);display:flex;align-items:center;justify-content:center;">
-        <i class="ph-duotone ph-map-trifold" style="font-size:28px;color:#3b82f6;"></i>
-      </div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Find Games</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:78px;cursor:pointer;">
-    <div style="width:66px;height:66px;border-radius:50%;background:#fff;border:2px solid #f0dce7;display:flex;align-items:center;justify-content:center;position:relative;">
-      <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#ddf2e0,#a7e3b3);display:flex;align-items:center;justify-content:center;">
-        <i class="ph-duotone ph-chats-circle" style="font-size:28px;color:#16a34a;"></i>
-      </div>
-      <div style="position:absolute;top:-2px;right:-2px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff5f9;">3</div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Messages</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:78px;cursor:pointer;">
-    <div style="width:66px;height:66px;border-radius:50%;background:#fff;border:2px solid #f0dce7;display:flex;align-items:center;justify-content:center;">
-      <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#f3e5ff,#e0c3ff);display:flex;align-items:center;justify-content:center;">
-        <i class="ph-duotone ph-book-open" style="font-size:28px;color:#9333ea;"></i>
-      </div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Learn</div>
-  </div>
+<!-- Action Row -->
+<div style="padding:4px 12px 16px;display:flex;gap:8px;overflow-x:auto;">
+  <div class="cart-btn"><div class="cart-tile" style="background:#fefce8;border:2px solid #1a1a1a;box-shadow:3px 3px 0 rgba(26,26,26,.12);"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div class="cart-label">Start Game</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff7ed;border:2px solid #1a1a1a;box-shadow:3px 3px 0 rgba(26,26,26,.12);"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div class="cart-label">Start Group</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#ecfdf5;border:2px solid #1a1a1a;box-shadow:3px 3px 0 rgba(26,26,26,.12);"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div class="cart-label">Find Games</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#eff6ff;border:2px solid #1a1a1a;box-shadow:3px 3px 0 rgba(26,26,26,.12);position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #fffaf5;">3</div></div><div class="cart-label">Messages</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#faf5ff;border:2px solid #1a1a1a;box-shadow:3px 3px 0 rgba(26,26,26,.12);"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div class="cart-label">Learn</div></div>
 </div>
 
 <!-- Ad Banner -->
-<div style="margin:0 14px 14px;background:linear-gradient(135deg,#fde4f0,#fbc4dd);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
-  <div style="font-size:38px;line-height:1;">🀄</div>
+<div style="margin:0 14px 14px;background:#fff;border:2px solid #1a1a1a;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:3px 3px 0 rgba(26,26,26,.1);">
+  <svg width="46" height="46"><use href="#icon-tile-buddy"/></svg>
   <div style="flex:1;">
-    <div style="color:#7a1e4b;font-size:9px;font-weight:700;letter-spacing:1px;">SPONSORED</div>
-    <div style="color:#1a1a1a;font-size:16px;font-weight:700;line-height:1.2;margin-top:1px;">Master the Winds</div>
+    <div style="color:#92400e;font-size:9px;font-weight:700;letter-spacing:1px;">SPONSORED</div>
+    <div style="color:#1a1a1a;font-size:16px;font-weight:700;line-height:1.2;margin-top:2px;">Master the Winds</div>
     <div style="color:#c73078;font-size:12px;font-weight:600;margin-top:2px;cursor:pointer;">Learn Strategy Tips →</div>
   </div>
 </div>
 
 <!-- Next Game -->
-<div style="margin:0 14px 14px;background:#fff;border-radius:18px;overflow:hidden;border:1px solid #f0dce7;box-shadow:0 4px 16px rgba(199,48,120,.06);">
+<div style="margin:0 14px 14px;background:#fff;border-radius:18px;overflow:hidden;border:2px solid #1a1a1a;box-shadow:3px 3px 0 rgba(26,26,26,.1);">
   <div style="position:relative;height:86px;overflow:hidden;">
     <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.55));"></div>
-    <div style="position:absolute;top:8px;left:8px;background:#fff;border-radius:8px;padding:3px 8px;font-size:10px;font-weight:700;color:#1a1a1a;">SAT 4/19</div>
+    <div style="position:absolute;top:8px;left:8px;background:#fff;border:1.5px solid #1a1a1a;border-radius:8px;padding:3px 8px;font-size:10px;font-weight:700;color:#1a1a1a;">SAT 4/19</div>
     <div style="position:absolute;top:8px;right:8px;background:#c73078;color:#fff;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 2s infinite;"></span>NEXT GAME</div>
     <div style="position:absolute;bottom:8px;left:12px;right:12px;color:#fff;">
       <div style="font-size:17px;font-weight:700;letter-spacing:-.3px;line-height:1.1;">2:00 – 4:00 PM</div>
@@ -145,7 +213,7 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
   </div>
   <div style="padding:10px 14px 12px;">
     <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;">
-      <i class="ph ph-map-pin" style="font-size:13px;color:#aaa;"></i>
+      <svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>
       <span>Sarah's Home, Portland</span>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -169,117 +237,88 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
   <div style="background:#c73078;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
 </div>
 
-<div style="margin:0 14px 8px;background:#fff;border:1px solid #f0dce7;border-radius:16px;padding:10px 12px;">
+<div style="margin:0 14px 8px;background:#fff;border:2px solid #1a1a1a;border-radius:14px;padding:10px 12px;box-shadow:3px 3px 0 rgba(26,26,26,.1);">
   <div style="display:flex;align-items:center;gap:10px;">
     <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
     <div style="flex:1;min-width:0;">
       <div style="color:#1a1a1a;font-size:13px;font-weight:700;">Amy's Tuesday Game</div>
       <div style="color:#888;font-size:11px;margin-top:1px;">Tue, Apr 22 · 7:00 PM</div>
     </div>
-    <button style="background:#c73078;color:#fff;border:none;padding:8px 14px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;box-shadow:0 3px 10px rgba(199,48,120,.3);">Accept</button>
+    <button style="background:#c73078;color:#fff;border:2px solid #1a1a1a;padding:7px 12px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;box-shadow:2px 2px 0 #1a1a1a;">Accept</button>
   </div>
-  <div style="text-align:right;margin-top:4px;"><span style="color:#9ca3af;font-size:11px;text-decoration:underline;text-decoration-color:#d1d5db;cursor:pointer;">Decline</span></div>
+  <div style="text-align:right;margin-top:4px;"><span style="color:#9ca3af;font-size:11px;text-decoration:underline;">Decline</span></div>
 </div>
 
 </div>
 
 <div class="tbar">
-  <div class="tb-item act"><i class="ph-fill ph-house-simple"></i><span>Home</span></div>
-  <div class="tb-item"><i class="ph ph-compass"></i><span>Nearby</span></div>
-  <div class="tb-item"><i class="ph ph-squares-four"></i><span>Games</span></div>
-  <div class="tb-item"><i class="ph ph-users-three"></i><span>Groups</span></div>
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
 </div>
 </div>
 </div>
 
 <!-- ===================================================================== -->
-<!-- CONCEPT 2: Ma Shan Zheng - Brush Chinese-style                           -->
+<!-- CONCEPT 2: Ma Shan Zheng — Chinese brush + cream tiles -->
 <!-- ===================================================================== -->
 <div class="col">
 <div class="mix-num">CONCEPT 02</div>
 <div class="label-lg" style="font-family:'Ma Shan Zheng',serif;font-weight:400;font-size:26px;">Ma Shan Zheng</div>
-<div class="label-sm">Brushed Chinese calligraphy-inspired for brand + headlines. Mahjong heritage feel.</div>
-<div class="font-note">Ma Shan Zheng + Outfit</div>
+<div class="label-sm">Brushed Chinese calligraphy for headlines · neutral tiles · pink for bloom accents</div>
+<div class="font-note">Ma Shan Zheng + Outfit · Caveat for name</div>
 
-<div class="phone" style="font-family:'Outfit',sans-serif;background:#fff8f9;">
+<div class="phone" style="font-family:'Outfit',sans-serif;background:#fff9f5;">
 <div class="notch"></div>
 <div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
 <div class="scr">
 
-<!-- Header -->
-<div style="padding:10px 18px 14px;display:flex;align-items:flex-start;justify-content:space-between;">
-  <div style="display:flex;align-items:center;gap:10px;">
+<div style="padding:10px 16px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
     <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;">
-    <div>
-      <div style="color:#888;font-size:11px;">GOOD EVENING</div>
-      <div style="font-family:'Ma Shan Zheng',serif;color:#c73078;font-size:26px;line-height:1;margin-top:2px;">Sarah</div>
-    </div>
+    <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;">May the winds be in your favor, <span class="sarah" style="font-size:22px;vertical-align:-2px;">Sarah</span>!</div>
   </div>
-  <div style="position:relative;cursor:pointer;padding-top:8px;">
-    <i class="ph ph-bell" style="font-size:22px;color:#1a1a1a;"></i>
-    <div style="position:absolute;top:4px;right:-4px;width:8px;height:8px;background:#c73078;border-radius:50%;border:2px solid #fff8f9;"></div>
+  <div style="position:relative;cursor:pointer;padding-top:8px;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:4px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff9f5;">3</div>
   </div>
 </div>
 
-<!-- Pickleheads-style Action Row (brush-circle) -->
-<div style="padding:4px 14px 18px;display:flex;gap:10px;overflow-x:auto;">
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#fce7f3);display:flex;align-items:center;justify-content:center;border:2.5px solid #c73078;position:relative;">
-      <div style="font-size:28px;">🀄</div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;">Start Game</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#fef3c7);display:flex;align-items:center;justify-content:center;border:2.5px solid #eab308;">
-      <i class="ph-fill ph-users-three" style="font-size:28px;color:#b45309;"></i>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;">Start Group</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#d1fae5);display:flex;align-items:center;justify-content:center;border:2.5px solid #10b981;">
-      <i class="ph-fill ph-map-trifold" style="font-size:28px;color:#047857;"></i>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;">Find Games</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#dbeafe);display:flex;align-items:center;justify-content:center;border:2.5px solid #3b82f6;position:relative;">
-      <i class="ph-fill ph-chats-circle" style="font-size:28px;color:#1d4ed8;"></i>
-      <div style="position:absolute;top:-2px;right:-2px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff8f9;">3</div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;">Messages</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#f3e8ff);display:flex;align-items:center;justify-content:center;border:2.5px solid #a855f7;">
-      <i class="ph-fill ph-book-open" style="font-size:28px;color:#7e22ce;"></i>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;">Learn</div>
-  </div>
+<!-- Action Row - cream tiles with red dragon brush character -->
+<div style="padding:4px 14px 16px;display:flex;gap:10px;overflow-x:auto;">
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div class="cart-label">Start Game</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div class="cart-label">Start Group</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div class="cart-label">Find Games</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #fff9f5;">3</div></div><div class="cart-label">Messages</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff9f0;border:2.5px solid #1a1a1a;"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div class="cart-label">Learn</div></div>
 </div>
 
-<!-- Ad Banner with brush stroke -->
-<div style="margin:0 14px 14px;background:linear-gradient(135deg,#fff5e8,#fde4d0);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;border-left:4px solid #c73078;">
-  <div style="font-size:34px;line-height:1;">🀄</div>
-  <div style="flex:1;">
+<!-- Ad Banner with brush stroke + 風 char -->
+<div style="margin:0 14px 14px;background:#fff;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;border:2px solid #1a1a1a;position:relative;overflow:hidden;">
+  <div style="position:absolute;right:-10px;top:-20px;font-family:'Ma Shan Zheng',serif;color:rgba(199,48,120,.1);font-size:110px;line-height:1;">風</div>
+  <svg width="42" height="42" style="position:relative;z-index:1;"><use href="#icon-tile-buddy"/></svg>
+  <div style="flex:1;position:relative;z-index:1;">
     <div style="color:#92400e;font-size:9px;font-weight:700;letter-spacing:1px;">SPONSORED</div>
-    <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:22px;line-height:1.1;margin-top:2px;">风 · Master the Winds</div>
+    <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:22px;line-height:1.1;margin-top:2px;">Master the Winds</div>
     <div style="color:#c73078;font-size:12px;font-weight:600;margin-top:2px;">Learn Strategy Tips →</div>
   </div>
 </div>
 
 <!-- Next Game -->
-<div style="margin:0 14px 14px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #f0dce7;">
+<div style="margin:0 14px 14px;background:#fff;border-radius:16px;overflow:hidden;border:2px solid #1a1a1a;">
   <div style="position:relative;height:82px;overflow:hidden;">
     <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.6));"></div>
-    <div style="position:absolute;top:8px;left:8px;background:#fff;border-radius:7px;padding:3px 8px;font-size:10px;font-weight:700;">SAT 4/19</div>
-    <div style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,.95);color:#c73078;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;top:8px;left:8px;background:#fff;border:1.5px solid #1a1a1a;border-radius:7px;padding:3px 8px;font-size:10px;font-weight:700;">SAT 4/19</div>
+    <div style="position:absolute;top:8px;right:8px;background:#fff;color:#c73078;border:1.5px solid #c73078;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
     <div style="position:absolute;bottom:6px;left:12px;right:12px;color:#fff;">
       <div style="font-size:17px;font-weight:700;letter-spacing:-.3px;line-height:1.1;">2:00 – 4:00 PM</div>
-      <div style="font-family:'Ma Shan Zheng',serif;font-size:16px;opacity:.95;line-height:1;margin-top:1px;">Saturday Mahjong</div>
+      <div style="font-family:'Ma Shan Zheng',serif;font-size:17px;line-height:1;margin-top:2px;">Saturday Mahjong</div>
     </div>
   </div>
   <div style="padding:10px 14px 12px;">
-    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><i class="ph ph-map-pin" style="font-size:13px;color:#aaa;"></i>Sarah's Home, Portland</div>
+    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
     <div style="display:flex;align-items:center;justify-content:space-between;">
       <div style="display:flex;align-items:center;gap:8px;">
         <div style="display:flex;">
@@ -295,13 +334,12 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
   </div>
 </div>
 
-<!-- Needs Your Attention -->
 <div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
   <div style="font-family:'Ma Shan Zheng',serif;color:#1a1a1a;font-size:22px;line-height:1;">Needs Your Attention</div>
   <div style="background:#c73078;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
 </div>
 
-<div style="margin:0 14px 8px;background:#fff;border:1px solid #f0dce7;border-radius:14px;padding:10px 12px;">
+<div style="margin:0 14px 8px;background:#fff;border:2px solid #1a1a1a;border-radius:14px;padding:10px 12px;">
   <div style="display:flex;align-items:center;gap:10px;">
     <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
     <div style="flex:1;min-width:0;">
@@ -316,104 +354,69 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 </div>
 
 <div class="tbar">
-  <div class="tb-item act"><i class="ph-fill ph-house-simple"></i><span>Home</span></div>
-  <div class="tb-item"><i class="ph ph-compass"></i><span>Nearby</span></div>
-  <div class="tb-item"><i class="ph ph-squares-four"></i><span>Games</span></div>
-  <div class="tb-item"><i class="ph ph-users-three"></i><span>Groups</span></div>
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
 </div>
 </div>
 </div>
 
 <!-- ===================================================================== -->
-<!-- CONCEPT 3: Bungee + ZCOOL — Bold blocky playful                          -->
+<!-- CONCEPT 3: Bungee — blocky retro fun -->
 <!-- ===================================================================== -->
 <div class="col">
 <div class="mix-num">CONCEPT 03</div>
 <div class="label-lg" style="font-family:'Bungee',sans-serif;letter-spacing:.5px;">BUNGEE BOLD</div>
-<div class="label-sm">Blocky, retro-game vibe. Pickleheads playfulness turned up.</div>
-<div class="font-note">Bungee + Outfit</div>
+<div class="label-sm">Retro-game chunky type · cream tiles w/ hard black outline + offset shadow</div>
+<div class="font-note">Bungee + Outfit · Caveat for name</div>
 
 <div class="phone" style="font-family:'Outfit',sans-serif;background:#fff;">
 <div class="notch"></div>
 <div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
 <div class="scr">
 
-<!-- Header: Logo as Bungee -->
-<div style="padding:10px 16px 12px;display:flex;align-items:center;justify-content:space-between;background:#fff;">
-  <div style="display:flex;align-items:center;gap:10px;">
-    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:42px;height:42px;border-radius:14px;object-fit:cover;">
-    <div>
-      <div style="color:#888;font-size:11px;font-weight:500;">Hey</div>
-      <div style="font-family:'Bungee',sans-serif;color:#c73078;font-size:18px;letter-spacing:.5px;line-height:1;margin-top:1px;">SARAH!</div>
-    </div>
+<div style="padding:10px 16px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:14px;object-fit:cover;border:2px solid #1a1a1a;box-shadow:2px 2px 0 #c73078;">
+    <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;">Three bams and a dream, <span class="sarah" style="font-size:22px;vertical-align:-2px;">Sarah</span>!</div>
   </div>
-  <div style="position:relative;cursor:pointer;width:40px;height:40px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #c73078;">
-    <i class="ph-fill ph-bell" style="font-size:18px;color:#fff;"></i>
+  <div style="position:relative;cursor:pointer;width:40px;height:40px;border-radius:10px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:3px 3px 0 #c73078;">
+    <svg width="18" height="18" style="color:#fff;"><use href="#bell"/></svg>
     <div style="position:absolute;top:-5px;right:-5px;background:#fde047;color:#1a1a1a;font-size:9px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;">3</div>
   </div>
 </div>
 
-<!-- Pickleheads-style Action Row (blocky with shadow) -->
 <div style="padding:0 12px 16px;display:flex;gap:8px;overflow-x:auto;">
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:16px;background:#c73078;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #1a1a1a;">
-      <div style="font-size:30px;">🀄</div>
-    </div>
-    <div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">START<br>GAME</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:16px;background:#fbbf24;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #1a1a1a;">
-      <i class="ph-fill ph-users-three" style="font-size:28px;color:#1a1a1a;"></i>
-    </div>
-    <div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">START<br>GROUP</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:16px;background:#10b981;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #1a1a1a;">
-      <i class="ph-fill ph-map-trifold" style="font-size:28px;color:#fff;"></i>
-    </div>
-    <div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">FIND<br>GAMES</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="position:relative;">
-      <div style="width:62px;height:62px;border-radius:16px;background:#3b82f6;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #1a1a1a;">
-        <i class="ph-fill ph-chats-circle" style="font-size:28px;color:#fff;"></i>
-      </div>
-      <div style="position:absolute;top:-6px;right:-6px;background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:22px;height:22px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;">3</div>
-    </div>
-    <div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">MESS-<br>AGES</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:16px;background:#a855f7;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #1a1a1a;">
-      <i class="ph-fill ph-book-open" style="font-size:28px;color:#fff;"></i>
-    </div>
-    <div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">LEARN</div>
-  </div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fffef7;border:2.5px solid #1a1a1a;border-radius:14px;box-shadow:3px 3px 0 #c73078;"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">START<br>GAME</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fffbeb;border:2.5px solid #1a1a1a;border-radius:14px;box-shadow:3px 3px 0 #c73078;"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">START<br>GROUP</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#f0fdf4;border:2.5px solid #1a1a1a;border-radius:14px;box-shadow:3px 3px 0 #c73078;"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">FIND<br>GAMES</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#eff6ff;border:2.5px solid #1a1a1a;border-radius:14px;box-shadow:3px 3px 0 #c73078;position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-7px;right:-7px;background:#fde047;color:#1a1a1a;font-size:10px;font-weight:800;min-width:22px;height:22px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2.5px solid #1a1a1a;">3</div></div><div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">MESS-<br>AGES</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#faf5ff;border:2.5px solid #1a1a1a;border-radius:14px;box-shadow:3px 3px 0 #c73078;"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div style="font-family:'Bungee',sans-serif;font-size:9px;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:.3px;">LEARN</div></div>
 </div>
 
-<!-- Ad Banner -->
 <div style="margin:0 14px 14px;background:#1a1a1a;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:4px 4px 0 #c73078;">
-  <div style="font-size:32px;">🀄</div>
+  <svg width="42" height="42" style="filter:drop-shadow(1px 1px 0 rgba(0,0,0,.5));"><use href="#icon-tile-buddy"/></svg>
   <div style="flex:1;">
     <div style="color:#fde047;font-size:9px;font-weight:700;letter-spacing:1px;font-family:'Bungee',sans-serif;">SPONSORED</div>
     <div style="font-family:'Bungee',sans-serif;color:#fff;font-size:16px;letter-spacing:.3px;margin-top:2px;line-height:1.1;">MASTER THE WINDS</div>
-    <div style="color:#fde047;font-size:12px;font-weight:700;margin-top:2px;cursor:pointer;">Learn Strategy Tips →</div>
+    <div style="color:#fde047;font-size:12px;font-weight:700;margin-top:2px;">Learn Strategy →</div>
   </div>
 </div>
 
-<!-- Next Game -->
-<div style="margin:0 14px 14px;background:#fff;border-radius:14px;overflow:hidden;border:3px solid #1a1a1a;box-shadow:4px 4px 0 #c73078;">
+<div style="margin:0 14px 14px;background:#fff;border-radius:14px;overflow:hidden;border:2.5px solid #1a1a1a;box-shadow:4px 4px 0 #c73078;">
   <div style="position:relative;height:82px;overflow:hidden;">
     <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.55));"></div>
-    <div style="position:absolute;top:8px;left:8px;background:#fde047;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:800;color:#1a1a1a;font-family:'Bungee',sans-serif;letter-spacing:.5px;">SAT 4/19</div>
-    <div style="position:absolute;top:8px;right:8px;background:#c73078;color:#fff;border-radius:99px;padding:3px 10px;font-size:9px;font-weight:800;letter-spacing:.8px;display:flex;align-items:center;gap:4px;font-family:'Bungee',sans-serif;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;top:8px;left:8px;background:#fde047;border:1.5px solid #1a1a1a;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:800;color:#1a1a1a;font-family:'Bungee',sans-serif;letter-spacing:.5px;">SAT 4/19</div>
+    <div style="position:absolute;top:8px;right:8px;background:#c73078;color:#fff;border:1.5px solid #1a1a1a;border-radius:99px;padding:3px 10px;font-size:9px;font-weight:800;letter-spacing:.8px;display:flex;align-items:center;gap:4px;font-family:'Bungee',sans-serif;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 2s infinite;"></span>NEXT GAME</div>
     <div style="position:absolute;bottom:6px;left:12px;right:12px;color:#fff;">
       <div style="font-family:'Bungee',sans-serif;font-size:16px;letter-spacing:.2px;line-height:1.1;">2:00 – 4:00 PM</div>
       <div style="font-size:12px;opacity:.9;">Saturday Mahjong</div>
     </div>
   </div>
   <div style="padding:10px 14px 12px;">
-    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><i class="ph ph-map-pin" style="font-size:13px;color:#aaa;"></i>Sarah's Home, Portland</div>
+    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
     <div style="display:flex;align-items:center;justify-content:space-between;">
       <div style="display:flex;align-items:center;gap:8px;">
         <div style="display:flex;">
@@ -429,7 +432,6 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
   </div>
 </div>
 
-<!-- Needs Your Attention -->
 <div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
   <div style="font-family:'Bungee',sans-serif;color:#1a1a1a;font-size:14px;letter-spacing:.3px;">NEEDS YOUR ATTENTION</div>
   <div style="background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
@@ -449,84 +451,50 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 
 </div>
 
-<div class="tbar" style="background:#1a1a1a;">
-  <div class="tb-item" style="color:#c73078;"><i class="ph-fill ph-house-simple"></i><span style="font-family:'Bungee',sans-serif;font-size:8px;letter-spacing:.3px;">HOME</span></div>
-  <div class="tb-item" style="color:#666;"><i class="ph ph-compass"></i><span style="font-family:'Bungee',sans-serif;font-size:8px;letter-spacing:.3px;">NEARBY</span></div>
-  <div class="tb-item" style="color:#666;"><i class="ph ph-squares-four"></i><span style="font-family:'Bungee',sans-serif;font-size:8px;letter-spacing:.3px;">GAMES</span></div>
-  <div class="tb-item" style="color:#666;"><i class="ph ph-users-three"></i><span style="font-family:'Bungee',sans-serif;font-size:8px;letter-spacing:.3px;">GROUPS</span></div>
+<div class="tbar" style="background:#1a1a1a;border-top:none;">
+  <div class="tb-item" style="color:#c73078;"><svg><use href="#tab-home"/></svg><span style="font-family:'Bungee',sans-serif;font-size:8px;letter-spacing:.3px;">HOME</span></div>
+  <div class="tb-item" style="color:#666;"><svg><use href="#tab-compass"/></svg><span style="font-family:'Bungee',sans-serif;font-size:8px;letter-spacing:.3px;">NEARBY</span></div>
+  <div class="tb-item" style="color:#666;"><svg><use href="#tab-grid"/></svg><span style="font-family:'Bungee',sans-serif;font-size:8px;letter-spacing:.3px;">GAMES</span></div>
+  <div class="tb-item" style="color:#666;"><svg><use href="#tab-users"/></svg><span style="font-family:'Bungee',sans-serif;font-size:8px;letter-spacing:.3px;">GROUPS</span></div>
 </div>
 </div>
 </div>
 
 <!-- ===================================================================== -->
-<!-- CONCEPT 4: Pacifico Script — Flowing playful                             -->
+<!-- CONCEPT 4: Pacifico script — flowing playful, pastel non-pink tiles -->
 <!-- ===================================================================== -->
 <div class="col">
 <div class="mix-num">CONCEPT 04</div>
 <div class="label-lg" style="font-family:'Pacifico',cursive;font-weight:400;font-size:26px;">Pacifico Script</div>
-<div class="label-sm">Flowing script for brand. Feels like a handwritten welcome.</div>
-<div class="font-note">Pacifico + Outfit</div>
+<div class="label-sm">Flowing script for brand · soft pastel tile bgs (peach/mint/sky/lavender) · no pink shading</div>
+<div class="font-note">Pacifico + Outfit · Caveat for name</div>
 
 <div class="phone" style="font-family:'Outfit',sans-serif;background:linear-gradient(180deg,#fff0f6 0%,#fff 30%);">
 <div class="notch"></div>
 <div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
 <div class="scr">
 
-<!-- Header -->
-<div style="padding:12px 18px 10px;display:flex;align-items:center;justify-content:space-between;">
-  <div style="display:flex;align-items:center;gap:10px;">
+<div style="padding:10px 16px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
     <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;">
-    <div>
-      <div style="font-family:'Pacifico',cursive;color:#c73078;font-size:22px;line-height:1.1;">Hi there,</div>
-      <div style="font-family:'Pacifico',cursive;color:#1a1a1a;font-size:24px;line-height:1;margin-top:-2px;">Sarah!</div>
-    </div>
+    <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;">Red dragon energy today, <span class="sarah" style="font-size:22px;vertical-align:-2px;">Sarah</span>!</div>
   </div>
-  <div style="position:relative;cursor:pointer;">
-    <i class="ph ph-bell" style="font-size:24px;color:#1a1a1a;"></i>
-    <div style="position:absolute;top:-4px;right:-6px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff0f6;">3</div>
+  <div style="position:relative;cursor:pointer;padding-top:8px;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:4px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;padding:0 4px;display:flex;align-items:center;justify-content:center;border:2px solid #fff0f6;">3</div>
   </div>
 </div>
 
-<!-- Action Row - soft gradient pastels -->
 <div style="padding:4px 14px 16px;display:flex;gap:10px;overflow-x:auto;">
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:22px;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(199,48,120,.18);">
-      <div style="font-size:28px;">🀄</div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Start a Game</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:22px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(234,179,8,.18);">
-      <i class="ph-fill ph-users-three" style="font-size:28px;color:#92400e;"></i>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Start Group</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:22px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(59,130,246,.18);">
-      <i class="ph-fill ph-map-trifold" style="font-size:28px;color:#1d4ed8;"></i>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Find Games</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="position:relative;">
-      <div style="width:62px;height:62px;border-radius:22px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(16,185,129,.18);">
-        <i class="ph-fill ph-chats-circle" style="font-size:28px;color:#047857;"></i>
-      </div>
-      <div style="position:absolute;top:-3px;right:-3px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #fff0f6;">3</div>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Messages</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:22px;background:linear-gradient(135deg,#f3e8ff,#e9d5ff);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(168,85,247,.18);">
-      <i class="ph-fill ph-book-open" style="font-size:28px;color:#7e22ce;"></i>
-    </div>
-    <div style="font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;">Learn</div>
-  </div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff7ed;border:2px solid #1a1a1a;box-shadow:0 4px 0 #1a1a1a;"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div class="cart-label">Start Game</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fef3c7;border:2px solid #1a1a1a;box-shadow:0 4px 0 #1a1a1a;"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div class="cart-label">Start Group</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#d1fae5;border:2px solid #1a1a1a;box-shadow:0 4px 0 #1a1a1a;"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div class="cart-label">Find Games</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#dbeafe;border:2px solid #1a1a1a;box-shadow:0 4px 0 #1a1a1a;position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #fff0f6;">3</div></div><div class="cart-label">Messages</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#e9d5ff;border:2px solid #1a1a1a;box-shadow:0 4px 0 #1a1a1a;"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div class="cart-label">Learn</div></div>
 </div>
 
-<!-- Ad Banner -->
-<div style="margin:0 14px 14px;background:#fff;border:1px solid #fce7f3;border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
-  <div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;align-items:center;justify-content:center;font-size:26px;">🀄</div>
+<div style="margin:0 14px 14px;background:#fff;border:2px solid #1a1a1a;border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 0 #1a1a1a;">
+  <svg width="42" height="42"><use href="#icon-tile-buddy"/></svg>
   <div style="flex:1;">
     <div style="color:#9f1239;font-size:9px;font-weight:700;letter-spacing:1px;">SPONSORED</div>
     <div style="font-family:'Pacifico',cursive;color:#1a1a1a;font-size:20px;line-height:1.1;margin-top:2px;">Master the Winds</div>
@@ -534,20 +502,19 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
   </div>
 </div>
 
-<!-- Next Game -->
-<div style="margin:0 14px 14px;background:#fff;border-radius:18px;overflow:hidden;border:1px solid #f0dce7;">
+<div style="margin:0 14px 14px;background:#fff;border-radius:18px;overflow:hidden;border:2px solid #1a1a1a;box-shadow:0 4px 0 #1a1a1a;">
   <div style="position:relative;height:82px;overflow:hidden;">
     <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.55));"></div>
-    <div style="position:absolute;top:8px;left:8px;background:#fff;border-radius:8px;padding:3px 8px;font-size:10px;font-weight:700;">SAT 4/19</div>
-    <div style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,.95);color:#c73078;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;top:8px;left:8px;background:#fff;border:1.5px solid #1a1a1a;border-radius:8px;padding:3px 8px;font-size:10px;font-weight:700;">SAT 4/19</div>
+    <div style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,.95);color:#c73078;border:1.5px solid #c73078;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
     <div style="position:absolute;bottom:6px;left:12px;right:12px;color:#fff;">
       <div style="font-size:17px;font-weight:700;letter-spacing:-.3px;line-height:1.1;">2:00 – 4:00 PM</div>
       <div style="font-family:'Pacifico',cursive;font-size:18px;line-height:1;margin-top:-1px;">Saturday Mahjong</div>
     </div>
   </div>
   <div style="padding:10px 14px 12px;">
-    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><i class="ph ph-map-pin" style="font-size:13px;color:#aaa;"></i>Sarah's Home, Portland</div>
+    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
     <div style="display:flex;align-items:center;justify-content:space-between;">
       <div style="display:flex;align-items:center;gap:8px;">
         <div style="display:flex;">
@@ -563,20 +530,19 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
   </div>
 </div>
 
-<!-- Needs Your Attention -->
 <div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
   <div style="font-family:'Pacifico',cursive;color:#1a1a1a;font-size:22px;line-height:1;">Needs your attention</div>
   <div style="background:#c73078;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
 </div>
 
-<div style="margin:0 14px 8px;background:#fff;border:1px solid #f0dce7;border-radius:16px;padding:10px 12px;">
+<div style="margin:0 14px 8px;background:#fff;border:2px solid #1a1a1a;border-radius:16px;padding:10px 12px;box-shadow:0 4px 0 #1a1a1a;">
   <div style="display:flex;align-items:center;gap:10px;">
     <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
     <div style="flex:1;min-width:0;">
       <div style="color:#1a1a1a;font-size:13px;font-weight:700;">Amy's Tuesday Game</div>
       <div style="color:#888;font-size:11px;margin-top:1px;">Tue, Apr 22 · 7:00 PM</div>
     </div>
-    <button style="background:linear-gradient(135deg,#c73078,#e74c99);color:#fff;border:none;padding:8px 14px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 4px 12px rgba(199,48,120,.3);">Accept</button>
+    <button style="background:#c73078;color:#fff;border:2px solid #1a1a1a;padding:7px 14px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Accept</button>
   </div>
   <div style="text-align:right;margin-top:4px;"><span style="color:#9ca3af;font-size:11px;text-decoration:underline;">Decline</span></div>
 </div>
@@ -584,85 +550,51 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 </div>
 
 <div class="tbar">
-  <div class="tb-item act"><i class="ph-fill ph-house-simple"></i><span>Home</span></div>
-  <div class="tb-item"><i class="ph ph-compass"></i><span>Nearby</span></div>
-  <div class="tb-item"><i class="ph ph-squares-four"></i><span>Games</span></div>
-  <div class="tb-item"><i class="ph ph-users-three"></i><span>Groups</span></div>
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
 </div>
 </div>
 </div>
 
 <!-- ===================================================================== -->
-<!-- CONCEPT 5: ZCOOL XiaoWei + ZCOOL KuaiLe — Modern Asian geometric         -->
+<!-- CONCEPT 5: ZCOOL XiaoWei — modern Asian sophisticated -->
 <!-- ===================================================================== -->
 <div class="col">
 <div class="mix-num">CONCEPT 05</div>
 <div class="label-lg" style="font-family:'ZCOOL XiaoWei',serif;font-weight:400;font-size:24px;">ZCOOL XiaoWei</div>
-<div class="label-sm">Modern Asian-inspired serif. Clean, cultural heritage, sophisticated.</div>
-<div class="font-note">ZCOOL XiaoWei + ZCOOL KuaiLe + Inter</div>
+<div class="label-sm">Modern Asian-inspired serif · minimal white tiles with subtle shadow</div>
+<div class="font-note">ZCOOL XiaoWei + Inter · Caveat for name</div>
 
 <div class="phone" style="font-family:'Inter',sans-serif;background:#fff;">
 <div class="notch"></div>
 <div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
 <div class="scr">
 
-<!-- Header with big serif Name -->
-<div style="padding:14px 18px 10px;display:flex;align-items:flex-start;justify-content:space-between;">
-  <div>
-    <div style="color:#888;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;">Good Evening</div>
-    <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
-      <div style="font-family:'ZCOOL XiaoWei',serif;color:#1a1a1a;font-size:30px;line-height:1;">Sarah</div>
-      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:38px;height:38px;border-radius:50%;border:2px solid #c73078;">
-    </div>
-    <div style="color:#888;font-size:12px;margin-top:4px;">3 upcoming · 2 invites</div>
+<div style="padding:12px 18px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;">
+    <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;">Let's turn those tiles into triumphs, <span class="sarah" style="font-size:22px;vertical-align:-2px;">Sarah</span>!</div>
   </div>
-  <div style="position:relative;cursor:pointer;padding-top:8px;">
-    <i class="ph ph-bell" style="font-size:22px;color:#1a1a1a;"></i>
+  <div style="position:relative;cursor:pointer;padding-top:8px;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
     <div style="position:absolute;top:4px;right:-4px;width:8px;height:8px;background:#c73078;border-radius:50%;border:2px solid #fff;"></div>
   </div>
 </div>
 
-<!-- Action Row - sleek square tiles -->
+<!-- Action Row - clean white tiles with subtle shadow -->
 <div style="padding:4px 14px 18px;display:flex;gap:10px;overflow-x:auto;">
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:18px;background:#c73078;display:flex;align-items:center;justify-content:center;position:relative;">
-      <div style="font-size:26px;position:relative;z-index:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2));">🀄</div>
-    </div>
-    <div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Start Game</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:18px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;">
-      <i class="ph-fill ph-users-three" style="font-size:28px;color:#fff;"></i>
-    </div>
-    <div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Start Group</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:18px;background:#fde047;display:flex;align-items:center;justify-content:center;">
-      <i class="ph-fill ph-map-trifold" style="font-size:28px;color:#1a1a1a;"></i>
-    </div>
-    <div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Find Games</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="position:relative;">
-      <div style="width:62px;height:62px;border-radius:18px;background:#fff;border:2px solid #1a1a1a;display:flex;align-items:center;justify-content:center;">
-        <i class="ph-fill ph-chats-circle" style="font-size:28px;color:#1a1a1a;"></i>
-      </div>
-      <div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:20px;height:20px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;">3</div>
-    </div>
-    <div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Messages</div>
-  </div>
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:70px;cursor:pointer;">
-    <div style="width:62px;height:62px;border-radius:18px;background:#fff;border:2px solid #1a1a1a;display:flex;align-items:center;justify-content:center;">
-      <i class="ph-fill ph-book-open" style="font-size:28px;color:#1a1a1a;"></i>
-    </div>
-    <div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Learn</div>
-  </div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;box-shadow:0 3px 10px rgba(0,0,0,.06);"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Start Game</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;box-shadow:0 3px 10px rgba(0,0,0,.06);"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Start Group</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;box-shadow:0 3px 10px rgba(0,0,0,.06);"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Find Games</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;box-shadow:0 3px 10px rgba(0,0,0,.06);position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:20px;height:20px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;">3</div></div><div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Messages</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;box-shadow:0 3px 10px rgba(0,0,0,.06);"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div style="font-family:'ZCOOL KuaiLe',sans-serif;font-size:12px;color:#1a1a1a;text-align:center;line-height:1.1;">Learn</div></div>
 </div>
 
-<!-- Ad Banner -->
 <div style="margin:0 14px 14px;background:#1a1a1a;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;overflow:hidden;position:relative;">
   <div style="position:absolute;right:-20px;top:-20px;font-family:'ZCOOL XiaoWei',serif;color:rgba(199,48,120,.25);font-size:100px;line-height:1;">風</div>
-  <div style="font-size:30px;position:relative;z-index:1;">🀄</div>
+  <svg width="40" height="40" style="position:relative;z-index:1;"><use href="#icon-tile-buddy"/></svg>
   <div style="flex:1;position:relative;z-index:1;">
     <div style="color:#c73078;font-size:9px;font-weight:700;letter-spacing:1.5px;">SPONSORED</div>
     <div style="font-family:'ZCOOL XiaoWei',serif;color:#fff;font-size:22px;line-height:1;margin-top:3px;">Master the Winds</div>
@@ -670,8 +602,7 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
   </div>
 </div>
 
-<!-- Next Game -->
-<div style="margin:0 14px 14px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #eee;">
+<div style="margin:0 14px 14px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e5e5e0;box-shadow:0 4px 16px rgba(0,0,0,.04);">
   <div style="position:relative;height:82px;overflow:hidden;">
     <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
     <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.6));"></div>
@@ -683,7 +614,7 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
     </div>
   </div>
   <div style="padding:10px 14px 12px;">
-    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><i class="ph ph-map-pin" style="font-size:13px;color:#aaa;"></i>Sarah's Home, Portland</div>
+    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
     <div style="display:flex;align-items:center;justify-content:space-between;">
       <div style="display:flex;align-items:center;gap:8px;">
         <div style="display:flex;">
@@ -699,13 +630,12 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
   </div>
 </div>
 
-<!-- Needs Your Attention -->
 <div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
   <div style="font-family:'ZCOOL XiaoWei',serif;color:#1a1a1a;font-size:22px;line-height:1;">Needs Your Attention</div>
   <div style="background:#c73078;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
 </div>
 
-<div style="margin:0 14px 8px;background:#fff;border:1px solid #eee;border-radius:12px;padding:10px 12px;">
+<div style="margin:0 14px 8px;background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:10px 12px;">
   <div style="display:flex;align-items:center;gap:10px;">
     <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
     <div style="flex:1;min-width:0;">
@@ -720,10 +650,10 @@ body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;
 </div>
 
 <div class="tbar">
-  <div class="tb-item act"><i class="ph-fill ph-house-simple"></i><span>Home</span></div>
-  <div class="tb-item"><i class="ph ph-compass"></i><span>Nearby</span></div>
-  <div class="tb-item"><i class="ph ph-squares-four"></i><span>Games</span></div>
-  <div class="tb-item"><i class="ph ph-users-three"></i><span>Groups</span></div>
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
 </div>
 </div>
 </div>
