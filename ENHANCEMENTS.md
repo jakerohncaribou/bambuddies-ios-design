@@ -17,6 +17,11 @@ UI pattern: tap "New" → modal sheet with 3 destination types → select recipi
 
 Mockup placeholder exists on Page 21 (Inbox) — "New" button visible but not functional.
 
+## Invites
+
+### Import Contacts
+Full phonebook / Google Contacts import so users can pick who to invite (to group or game) from their entire address book — both existing BamBuddies users and non-users (who would receive SMS/email invites). Removed from initial launch on 2026-04-17. Requires OS-level contacts permission UX, de-duping against existing BamBuddies users by phone/email, batch invite sending, and ongoing sync UX. Deferred post-launch.
+
 ## Groups
 
 ### Discoverable Groups

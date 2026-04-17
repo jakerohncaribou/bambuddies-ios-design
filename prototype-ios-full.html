@@ -92,7 +92,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 <!-- PAGE REFERENCE LIST (collapsible) -->
 <details style="max-width:920px;margin:0 auto 24px;background:#141414;border:1px solid #222;border-radius:14px;overflow:hidden;font-family:'Outfit',sans-serif;">
   <summary style="cursor:pointer;padding:12px 18px;color:#aaa;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:space-between;list-style:none;">
-    <span><i class="ph ph-list-numbers" style="margin-right:6px;vertical-align:-2px;"></i> Page Reference (29 pages) — click to expand</span>
+    <span><i class="ph ph-list-numbers" style="margin-right:6px;vertical-align:-2px;"></i> Page Reference (30 pages) — click to expand</span>
     <i class="ph ph-caret-down" style="font-size:14px;"></i>
   </summary>
   <div id="pageIndex" style="padding:14px 18px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;border-top:1px solid #222;"></div>
@@ -120,7 +120,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <!-- Top Bar: Avatar + Greeting + Actions -->
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:14px;">
-        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;cursor:pointer;" onclick="go('login')">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;cursor:pointer;" onclick="go('profileSettings')">
           <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" width="44" height="44" class="avatar" alt="Sarah" style="flex-shrink:0;">
           <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;font-family:'Inter',sans-serif;">East, South, West, North... let's go, <span style="font-family:'Caveat',cursive;font-weight:700;color:#7c3aed;font-size:22px;vertical-align:-2px;">Sarah</span>!</div>
         </div>
@@ -771,7 +771,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div id="inviteTabs" style="display:flex;gap:4px;background:#f5f3ee;border-radius:10px;padding:3px;margin-bottom:12px;">
           <button id="tabManual" onclick="setInviteTab('manual')" class="ip-tab active" style="flex:1;background:#fff;color:#7c3aed;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.05);">Manual</button>
           <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
-          <button id="tabContacts" onclick="setInviteTab('contacts')" class="ip-tab" style="flex:1;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Contacts</button>
           <button id="tabGroup" onclick="setInviteTab('group')" class="ip-tab" style="flex:1;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:none;">Group</button>
         </div>
 
@@ -822,30 +821,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;">
             <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Jessica W.</div><div style="color:#888;font-size:10px;">3 games together</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
-          </div>
-        </div>
-
-        <!-- Contacts panel -->
-        <div id="panelContacts" class="ip-panel" style="display:none;">
-          <div style="display:flex;gap:6px;margin-bottom:10px;">
-            <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:7px;border-radius:9px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ph-fill ph-device-mobile" style="font-size:12px;"></i> iPhone</div>
-            <div style="flex:1;background:#fff;border:1px solid #e8e4e0;color:#000;text-align:center;padding:7px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;">Google</div>
-          </div>
-          <div style="background:#ede9fe;border:1px solid #c4b5fd;border-radius:10px;padding:8px 10px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
-            <i class="ph-fill ph-shield-check" style="font-size:15px;color:#7c3aed;flex-shrink:0;"></i>
-            <div style="color:#5b21b6;font-size:10px;line-height:1.3;">Only contacts you select are invited. Nothing synced without your tap.</div>
-          </div>
-          <div style="color:#065f46;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:5px;">Already on BamBuddies</div>
-          <div style="background:#ede9fe;border:1.5px solid #7c3aed;border-radius:10px;padding:7px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;border-radius:50%;" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Lisa Martinez</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:10px;color:#fff;"></i></div>
-          </div>
-          <div style="color:#6b7280;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-top:10px;margin-bottom:5px;">Not on App</div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;color:#d97706;font-size:10px;font-weight:700;">KT</div>
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Karen Taylor</div><div style="color:#888;font-size:10px;">Will receive invite</div></div>
             <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
           </div>
         </div>
@@ -2118,16 +2093,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <i class="ph ph-caret-right" style="font-size:18px;color:#ccc;"></i>
       </div>
 
-      <!-- Option: Import Contacts -->
-      <div onclick="go('inviteContacts')" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:12px;">
-        <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-fill ph-address-book" style="font-size:22px;color:#2563eb;"></i></div>
-        <div style="flex:1;">
-          <div style="color:#000;font-size:14px;font-weight:700;">Import Contacts</div>
-          <div style="color:#888;font-size:12px;margin-top:1px;">Invite from your phone or Google contacts</div>
-        </div>
-        <i class="ph ph-caret-right" style="font-size:18px;color:#ccc;"></i>
-      </div>
-
       <!-- Shareable link alt -->
       <div style="background:#f5f3ee;border:1px dashed #d1d5db;border-radius:12px;padding:12px 14px;margin-top:18px;display:flex;align-items:center;gap:10px;">
         <i class="ph ph-link-simple" style="font-size:20px;color:#6b7280;"></i>
@@ -2149,13 +2114,31 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div onclick="go('groupDetail')" style="color:#7c3aed;font-size:14px;font-weight:700;cursor:pointer;">Done</div>
       </div>
 
-      <div style="color:#888;font-size:12px;margin-bottom:12px;">Enter a name, email, or phone number. We'll send them an invite.</div>
+      <div style="color:#888;font-size:12px;margin-bottom:14px;">Enter a name plus email or phone. We'll send them an invite.</div>
 
-      <!-- Input row -->
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
-        <i class="ph ph-user-plus" style="font-size:18px;color:#7c3aed;"></i>
-        <input type="text" placeholder="Name, email, or phone" style="flex:1;border:none;outline:none;font-size:14px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
-        <button style="background:#7c3aed;color:#fff;border:none;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Add</button>
+      <!-- Separated input fields -->
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px;margin-bottom:10px;">
+        <div style="margin-bottom:10px;">
+          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:4px;"><i class="ph ph-user" style="font-size:13px;color:#7c3aed;"></i> Name <span style="color:#f43f5e;">*</span></div>
+          <input type="text" placeholder="Full name" style="width:100%;border:1px solid #e8e4e0;border-radius:8px;padding:9px 10px;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:#faf8f6;outline:none;box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:10px;">
+          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:4px;"><i class="ph ph-envelope" style="font-size:13px;color:#7c3aed;"></i> Email</div>
+          <input type="email" placeholder="name@example.com" style="width:100%;border:1px solid #e8e4e0;border-radius:8px;padding:9px 10px;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:#faf8f6;outline:none;box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:10px;">
+          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:4px;"><i class="ph ph-phone" style="font-size:13px;color:#7c3aed;"></i> Phone</div>
+          <div style="display:flex;gap:6px;">
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:8px;padding:9px 8px;display:flex;align-items:center;gap:4px;cursor:pointer;flex-shrink:0;">
+              <span style="font-size:14px;line-height:1;">&#127482;&#127480;</span>
+              <span style="color:#000;font-size:12px;font-weight:600;">+1</span>
+              <i class="ph ph-caret-down" style="font-size:10px;color:#888;"></i>
+            </div>
+            <input type="tel" placeholder="(555) 123-4567" style="flex:1;border:1px solid #e8e4e0;border-radius:8px;padding:9px 10px;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:#faf8f6;outline:none;box-sizing:border-box;">
+          </div>
+        </div>
+        <div style="color:#888;font-size:10px;font-style:italic;margin-bottom:10px;">Email or phone required &middot; at least one so we can reach them</div>
+        <button style="width:100%;background:#7c3aed;color:#fff;border:none;padding:10px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-bold ph-user-plus" style="font-size:14px;"></i> Add Person</button>
       </div>
 
       <!-- Already added -->
@@ -2248,66 +2231,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div onclick="go('groupDetail')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-top:20px;">Invite 3 Selected</div>
     </div>
 
-    <!-- ==================== INVITE · IMPORT CONTACTS ==================== -->
-    <div class="screen" data-screen="inviteContacts" style="padding:16px;background:#faf8f6;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div onclick="go('groupInviteMembers')" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:22px;color:#000;"></i></div>
-        <div style="color:#000;font-size:16px;font-weight:700;">Import Contacts</div>
-        <div onclick="go('groupDetail')" style="color:#7c3aed;font-size:14px;font-weight:700;cursor:pointer;">Done</div>
-      </div>
-
-      <!-- Source tabs -->
-      <div style="display:flex;gap:8px;margin-bottom:16px;">
-        <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:10px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><i class="ph-fill ph-device-mobile" style="font-size:14px;"></i> iPhone</div>
-        <div style="flex:1;background:#fff;border:1px solid #e8e4e0;color:#000;text-align:center;padding:10px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
-          <svg width="14" height="14" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Google
-        </div>
-      </div>
-
-      <!-- Permission banner -->
-      <div style="background:#ede9fe;border:1px solid #c4b5fd;border-radius:12px;padding:10px 12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
-        <i class="ph-fill ph-shield-check" style="font-size:20px;color:#7c3aed;flex-shrink:0;"></i>
-        <div style="flex:1;color:#5b21b6;font-size:11px;line-height:1.4;">We'll only show contacts matched to BamBuddies or manually selected for invite. Nothing synced without your tap.</div>
-      </div>
-
-      <!-- Search -->
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-        <i class="ph ph-magnifying-glass" style="font-size:16px;color:#aaa;"></i>
-        <span style="color:#aaa;font-size:13px;">Search contacts...</span>
-      </div>
-
-      <!-- On BamBuddies -->
-      <div style="color:#065f46;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px;"><i class="ph-fill ph-check-circle" style="font-size:13px;"></i> Already on BamBuddies &middot; 4</div>
-
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;flex-shrink:0;" alt="">
-        <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Lisa Martinez</div><div style="color:#888;font-size:11px;">lisa.m@email.com</div></div>
-        <div style="width:22px;height:22px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-check" style="font-size:12px;color:#fff;"></i></div>
-      </div>
-
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;flex-shrink:0;" alt="">
-        <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Jessica Wong</div><div style="color:#888;font-size:11px;">+1 (555) 111-2233</div></div>
-        <div style="width:22px;height:22px;border-radius:50%;border:1.5px solid #d1d5db;flex-shrink:0;"></div>
-      </div>
-
-      <!-- Not on app -->
-      <div style="color:#6b7280;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:16px;margin-bottom:8px;display:flex;align-items:center;gap:5px;"><i class="ph ph-user-plus" style="font-size:13px;"></i> Not on BamBuddies &middot; 2</div>
-
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;color:#d97706;font-weight:700;font-size:11px;flex-shrink:0;">KT</div>
-        <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Karen Taylor</div><div style="color:#888;font-size:11px;">karen.t@email.com &middot; Will receive invite</div></div>
-        <div style="width:22px;height:22px;border-radius:50%;border:1.5px solid #d1d5db;flex-shrink:0;"></div>
-      </div>
-
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;color:#2563eb;font-weight:700;font-size:11px;flex-shrink:0;">DC</div>
-        <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">David Chen</div><div style="color:#888;font-size:11px;">+1 (555) 888-4567 &middot; Will receive SMS invite</div></div>
-        <div style="width:22px;height:22px;border-radius:50%;border:1.5px solid #d1d5db;flex-shrink:0;"></div>
-      </div>
-
-      <div onclick="go('groupDetail')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-top:20px;">Invite 1 Selected</div>
-    </div>
 
     <!-- ==================== GROUP DISCOVERY ==================== -->
     <div class="screen has-tab" data-screen="groupDiscovery" style="padding:16px;background:#faf8f6;">
@@ -2343,6 +2266,244 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div style="margin-top:12px;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">Apply to Join</div>
       </div>
+    </div>
+
+    <!-- ==================== PROFILE & SETTINGS ==================== -->
+    <div class="screen" data-screen="profileSettings" style="padding:0;background:#faf8f6;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;">
+        <div onclick="go('dashboard')" style="cursor:pointer;padding:4px;"><i class="ph ph-x" style="font-size:22px;color:#000;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">Profile & Settings</div>
+        <div style="width:24px;"></div>
+      </div>
+
+      <!-- Profile header -->
+      <div style="text-align:center;padding:8px 16px 18px;">
+        <div style="position:relative;display:inline-block;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop&crop=face" style="width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.08);" alt="Sarah">
+          <div style="position:absolute;bottom:0;right:0;width:28px;height:28px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;border:2px solid #faf8f6;cursor:pointer;"><i class="ph-fill ph-camera" style="font-size:13px;color:#fff;"></i></div>
+        </div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#000;margin-top:10px;line-height:1;">Sarah Rodriguez</div>
+        <div style="color:#888;font-size:12px;margin-top:3px;">Intermediate &middot; Portland, OR</div>
+        <div style="display:flex;gap:16px;justify-content:center;margin-top:12px;">
+          <div style="text-align:center;"><div style="color:#000;font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;">24</div><div style="color:#888;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Games</div></div>
+          <div style="text-align:center;"><div style="color:#000;font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;">3</div><div style="color:#888;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Groups</div></div>
+          <div style="text-align:center;"><div style="color:#000;font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;">97%</div><div style="color:#888;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Attended</div></div>
+        </div>
+      </div>
+
+      <div style="padding:0 16px 16px;">
+
+        <!-- Personal Info -->
+        <div style="color:#888;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;margin-left:4px;">Personal Info</div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;margin-bottom:16px;">
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-user" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Full Name</div><div style="color:#888;font-size:11px;margin-top:1px;">Sarah Rodriguez</div></div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;"><i class="ph ph-envelope" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Email</div><div style="color:#888;font-size:11px;margin-top:1px;">sarah.rodriguez@gmail.com</div></div><span style="background:#f5f3ee;color:#888;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;">LOCKED</span></div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-phone" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Phone</div><div style="color:#888;font-size:11px;margin-top:1px;">+1 (555) 123-4567</div></div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-trophy" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Player Level</div><div style="color:#888;font-size:11px;margin-top:1px;">Intermediate</div></div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-map-pin" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Home Address</div><div style="color:#888;font-size:11px;margin-top:1px;">456 Oak Ave, Portland, OR</div></div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+        </div>
+
+        <!-- Theme Color Picker -->
+        <div style="color:#888;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;margin-left:4px;">App Theme</div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:16px;">
+          <div style="color:#000;font-size:13px;font-weight:700;margin-bottom:4px;">Primary Color</div>
+          <div style="color:#888;font-size:11px;margin-bottom:12px;">Pick a theme — affects buttons, badges, and accents app-wide.</div>
+          <div style="display:flex;gap:10px;justify-content:space-between;">
+            <div style="text-align:center;cursor:pointer;">
+              <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #fff, 0 0 0 5px #7c3aed;margin-bottom:5px;"><i class="ph-bold ph-check" style="font-size:18px;color:#fff;"></i></div>
+              <div style="color:#7c3aed;font-size:10px;font-weight:700;">Mauve</div>
+            </div>
+            <div style="text-align:center;cursor:pointer;">
+              <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#059669,#10b981);margin-bottom:5px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.08);"></div>
+              <div style="color:#888;font-size:10px;font-weight:600;">Emerald</div>
+            </div>
+            <div style="text-align:center;cursor:pointer;">
+              <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#e11d48,#fb7185);margin-bottom:5px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.08);"></div>
+              <div style="color:#888;font-size:10px;font-weight:600;">Rose</div>
+            </div>
+            <div style="text-align:center;cursor:pointer;">
+              <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#60a5fa);margin-bottom:5px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.08);"></div>
+              <div style="color:#888;font-size:10px;font-weight:600;">Cobalt</div>
+            </div>
+            <div style="text-align:center;cursor:pointer;">
+              <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ea580c,#fb923c);margin-bottom:5px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.08);"></div>
+              <div style="color:#888;font-size:10px;font-weight:600;">Terra</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid #f5f3ee;">
+            <div><div style="color:#000;font-size:13px;font-weight:600;">Dark Mode</div><div style="color:#888;font-size:10px;margin-top:1px;">Follow system</div></div>
+            <div style="width:44px;height:24px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;box-shadow:0 1px 3px rgba(0,0,0,.15);"></div></div>
+          </div>
+        </div>
+
+        <!-- Notifications -->
+        <div style="color:#888;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;margin-left:4px;">Notifications</div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;margin-bottom:16px;">
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;"><i class="ph ph-bell-ringing" style="font-size:18px;color:#7c3aed;"></i><div><div style="color:#000;font-size:13px;font-weight:600;">Push Notifications</div><div style="color:#888;font-size:11px;margin-top:1px;">Game alerts, invites, messages</div></div></div>
+            <div style="width:44px;height:24px;border-radius:12px;background:#7c3aed;position:relative;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;box-shadow:0 1px 3px rgba(0,0,0,.15);"></div></div>
+          </div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;"><i class="ph ph-envelope" style="font-size:18px;color:#7c3aed;"></i><div><div style="color:#000;font-size:13px;font-weight:600;">Email</div><div style="color:#888;font-size:11px;margin-top:1px;">Weekly digest + confirmations</div></div></div>
+            <div style="width:44px;height:24px;border-radius:12px;background:#7c3aed;position:relative;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;box-shadow:0 1px 3px rgba(0,0,0,.15);"></div></div>
+          </div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;"><i class="ph ph-chat-text" style="font-size:18px;color:#7c3aed;"></i><div><div style="color:#000;font-size:13px;font-weight:600;">SMS</div><div style="color:#888;font-size:11px;margin-top:1px;">Urgent updates only</div></div></div>
+            <div style="width:44px;height:24px;border-radius:12px;background:#e8e4e0;position:relative;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;box-shadow:0 1px 3px rgba(0,0,0,.15);"></div></div>
+          </div>
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-sliders-horizontal" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Per-Game Alerts</div><div style="color:#888;font-size:11px;margin-top:1px;">Mute specific games or groups</div></div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+        </div>
+
+        <!-- Saved Locations -->
+        <div style="color:#888;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;margin-left:4px;">Saved Locations</div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;margin-bottom:16px;">
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:10px;background:#ede9fe;display:flex;align-items:center;justify-content:center;"><i class="ph ph-house" style="font-size:16px;color:#7c3aed;"></i></div>
+            <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">My Home</div><div style="color:#888;font-size:11px;">456 Oak Ave, Portland</div></div>
+            <i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i>
+          </div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:10px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;"><i class="ph ph-buildings" style="font-size:16px;color:#888;"></i></div>
+            <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Mom's House</div><div style="color:#888;font-size:11px;">789 Elm St, Manhattan</div></div>
+            <i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i>
+          </div>
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;color:#7c3aed;font-size:13px;font-weight:700;"><i class="ph-bold ph-plus" style="font-size:14px;"></i> Add Location</div>
+        </div>
+
+        <!-- Account -->
+        <div style="color:#888;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;margin-left:4px;">Account</div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;margin-bottom:16px;">
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-lock-key" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;color:#000;font-size:13px;font-weight:600;">Change Password</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-shield-check" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;color:#000;font-size:13px;font-weight:600;">Privacy Settings</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-link" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;color:#000;font-size:13px;font-weight:600;">Connected Accounts</div><div style="color:#888;font-size:11px;">Google</div></div>
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-question" style="font-size:18px;color:#7c3aed;"></i><div style="flex:1;color:#000;font-size:13px;font-weight:600;">Help & Support</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+        </div>
+
+        <!-- Sign Out -->
+        <div onclick="go('login')" style="background:#fff;border:1px solid #fecaca;color:#ef4444;text-align:center;padding:14px;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:6px;"><i class="ph ph-sign-out" style="font-size:16px;"></i> Sign Out</div>
+        <div style="text-align:center;color:#aaa;font-size:11px;margin-top:6px;">BamBuddies v1.0.0 &middot; <span style="color:#7c3aed;font-weight:600;cursor:pointer;">Terms</span> &middot; <span style="color:#7c3aed;font-weight:600;cursor:pointer;">Privacy</span></div>
+      </div>
+    </div>
+
+    <!-- ==================== DASHBOARD · EMPTY STATE (First-Time User) ==================== -->
+    <div class="screen has-tab" data-screen="dashboardEmpty" style="padding:16px 16px 0;">
+
+      <!-- Top Bar -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;cursor:pointer;" onclick="go('profileSettings')">
+          <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ede9fe,#c4b5fd);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#7c3aed;font-weight:800;font-size:15px;font-family:'Outfit',sans-serif;">SR</div>
+          <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;font-family:'Inter',sans-serif;">Welcome to BamBuddies, <span style="font-family:'Caveat',cursive;font-weight:700;color:#7c3aed;font-size:22px;vertical-align:-2px;">Sarah</span>!</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding-top:10px;">
+          <i class="ph ph-chat-circle-dots" style="font-size:22px;color:#ccc;"></i>
+          <i class="ph ph-bell" style="font-size:22px;color:#ccc;"></i>
+        </div>
+      </div>
+
+      <!-- BIG Welcome Hero -->
+      <div style="background:linear-gradient(135deg,#7c3aed,#a78bfa,#ec4899);border-radius:20px;padding:22px 20px;margin-bottom:18px;color:#fff;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.25),transparent 60%);"></div>
+        <div style="position:relative;">
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;line-height:1.15;margin-bottom:6px;">Let's get you to your first game</div>
+          <div style="color:rgba(255,255,255,.85);font-size:13px;margin-bottom:14px;line-height:1.4;">A few quick steps and you'll be playing mahjong with new friends.</div>
+
+          <!-- Progress -->
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <span style="font-size:10px;font-weight:700;letter-spacing:1px;opacity:.7;">1 OF 3 DONE</span>
+          </div>
+          <div style="height:6px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;">
+            <div style="width:33%;height:100%;background:#fff;border-radius:3px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onboarding Checklist -->
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
+        <!-- Step 1: complete -->
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;opacity:.75;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#10b981;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-check" style="font-size:14px;color:#fff;"></i></div>
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;text-decoration:line-through;text-decoration-color:#10b981;">Create your account</div><div style="color:#10b981;font-size:11px;font-weight:600;margin-top:1px;">Done!</div></div>
+        </div>
+
+        <!-- Step 2: next/active -->
+        <div onclick="go('discover')" style="background:#fff;border:2px solid #7c3aed;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 4px 12px rgba(124,58,237,.15);">
+          <div style="width:28px;height:28px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:13px;font-weight:800;">2</div>
+          <div style="flex:1;">
+            <div style="color:#000;font-size:13px;font-weight:700;">Find your first game</div>
+            <div style="color:#666;font-size:11px;margin-top:1px;">Browse open games near you</div>
+          </div>
+          <i class="ph ph-caret-right" style="font-size:16px;color:#7c3aed;"></i>
+        </div>
+
+        <!-- Step 3: pending -->
+        <div onclick="go('creation1')" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#f5f3ee;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#888;font-size:13px;font-weight:800;">3</div>
+          <div style="flex:1;">
+            <div style="color:#000;font-size:13px;font-weight:700;">Or host your own</div>
+            <div style="color:#888;font-size:11px;margin-top:1px;">Invite your mahjong crew</div>
+          </div>
+          <i class="ph ph-caret-right" style="font-size:16px;color:#ccc;"></i>
+        </div>
+      </div>
+
+      <!-- Ad Banner (still shown) -->
+      <div style="background:linear-gradient(135deg,#f5f0ec,#efe6de);border-radius:14px;padding:12px 14px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;">
+        <div style="flex:1;">
+          <div style="color:#8a7355;font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:2px;">SPONSORED</div>
+          <div style="color:#5a4030;font-size:15px;font-family:'DM Serif Display',serif;line-height:1.2;">New to mahjong?</div>
+          <div style="color:#7c3aed;font-size:12px;font-weight:600;margin-top:2px;cursor:pointer;">Learn the basics &rarr;</div>
+        </div>
+        <div style="display:flex;gap:4px;transform:rotate(-5deg);opacity:.7;"><div style="width:24px;height:30px;border-radius:5px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-diamond" style="font-size:12px;color:#7c3aed;"></i></div></div>
+      </div>
+
+      <!-- Empty: Next Game -->
+      <div style="color:#000;font-size:16px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">Upcoming</div>
+      <div style="background:#fff;border:2px dashed #e8e4e0;border-radius:16px;padding:28px 20px;text-align:center;margin-bottom:18px;">
+        <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;"><i class="ph ph-calendar-blank" style="font-size:28px;color:#7c3aed;"></i></div>
+        <div style="color:#000;font-size:15px;font-weight:700;margin-bottom:4px;">No upcoming games yet</div>
+        <div style="color:#888;font-size:12px;line-height:1.5;margin-bottom:14px;">Find a game nearby or host your own — both are just a tap away.</div>
+        <div style="display:flex;gap:8px;">
+          <div onclick="go('discover')" style="flex:1;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;">Find a Game</div>
+          <div onclick="go('creation1')" style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid #7c3aed;">Host One</div>
+        </div>
+      </div>
+
+      <!-- Suggested -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="color:#000;font-size:16px;font-weight:700;font-family:'Outfit',sans-serif;">Suggested for you</div>
+        <div onclick="go('discover')" style="color:#7c3aed;font-size:13px;font-weight:600;cursor:pointer;">See all &rarr;</div>
+      </div>
+      <div class="scroll-x" style="margin-bottom:18px;">
+        <div onclick="go('gameDetail')" style="min-width:220px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;cursor:pointer;flex-shrink:0;">
+          <div style="height:84px;background:url('https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=400') center/cover;"></div>
+          <div style="padding:10px 12px;">
+            <div style="color:#000;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Piedmont Park Mahjong</div>
+            <div style="color:#888;font-size:11px;margin-top:2px;">Sat 4/19 &middot; 0.8 mi away</div>
+            <div style="background:#fef3c7;color:#d97706;font-size:9px;font-weight:700;letter-spacing:.3px;padding:3px 7px;border-radius:99px;display:inline-block;margin-top:6px;">OPEN &middot; NEEDS 2</div>
+          </div>
+        </div>
+        <div onclick="go('gameDetail')" style="min-width:220px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;overflow:hidden;cursor:pointer;flex-shrink:0;">
+          <div style="height:84px;background:linear-gradient(135deg,#a78bfa,#ec4899);position:relative;"><div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.3),transparent 60%);"></div></div>
+          <div style="padding:10px 12px;">
+            <div style="color:#000;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Midtown Cafe Night</div>
+            <div style="color:#888;font-size:11px;margin-top:2px;">Sun 4/20 &middot; 1.2 mi away</div>
+            <div style="background:#fef3c7;color:#d97706;font-size:9px;font-weight:700;letter-spacing:.3px;padding:3px 7px;border-radius:99px;display:inline-block;margin-top:6px;">OPEN &middot; NEEDS 1</div>
+          </div>
+        </div>
+        <div onclick="go('groupDiscovery')" style="min-width:220px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);border:1px dashed #a78bfa;border-radius:14px;padding:16px 12px;cursor:pointer;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <i class="ph-fill ph-users-three" style="font-size:28px;color:#7c3aed;margin-bottom:6px;"></i>
+          <div style="color:#7c3aed;font-size:13px;font-weight:700;text-align:center;">Find Groups Nearby</div>
+          <div style="color:#5b21b6;font-size:11px;margin-top:2px;text-align:center;">12 groups in Portland</div>
+        </div>
+      </div>
+
+      <!-- Connect Contacts CTA -->
+      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px 14px;margin-bottom:18px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-fill ph-address-book" style="font-size:18px;color:#2563eb;"></i></div>
+        <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Find friends on BamBuddies</div><div style="color:#888;font-size:11px;margin-top:1px;">Who from your network already plays?</div></div>
+        <button style="background:#f5f3ee;color:#7c3aed;border:1px solid #e8e4e0;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Find</button>
+      </div>
+
     </div>
 
     <!-- ==================== MODAL OVERLAY ==================== -->
@@ -2401,10 +2562,10 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
 <script>
 const history = ['dashboard'];
-const tabMap = {dashboard:'dashboard',discover:'discover',myGames:'myGames',groups:'groups',
+const tabMap = {dashboard:'dashboard',dashboardEmpty:'dashboard',discover:'discover',myGames:'myGames',groups:'groups',
   gameDetail:'myGames',creation1:'myGames',creation2:'myGames',creation3:'myGames',groupDetail:'groups',inbox:'dashboard',
   chat:'dashboard',notifications:'dashboard'};
-const noTabScreens = ['creation1','creation2','creation3','chat','login','register','forgotPassword','resetPassword','verifyPhone','completeProfile','gameEdit','applicants','applicantProfile','gameReview','groupCreation','groupDiscovery','modalFirstGame','groupInviteMembers','inviteManual','inviteFavorites','inviteContacts'];
+const noTabScreens = ['creation1','creation2','creation3','chat','login','register','forgotPassword','resetPassword','verifyPhone','completeProfile','gameEdit','applicants','applicantProfile','gameReview','groupCreation','groupDiscovery','modalFirstGame','groupInviteMembers','inviteManual','inviteFavorites','profileSettings'];
 
 // Page numbering — ordered by logical user flow
 const pageOrder = [
@@ -2415,6 +2576,7 @@ const pageOrder = [
   ['verifyPhone','Verify Phone'],
   ['completeProfile','Complete Profile'],
   ['dashboard','Dashboard'],
+  ['dashboardEmpty','Dashboard · Empty State'],
   ['myGames','My Games'],
   ['gameDetail','Game Detail'],
   ['creation1','Create Game · Step 1'],
@@ -2431,11 +2593,11 @@ const pageOrder = [
   ['groupInviteMembers','Invite Members'],
   ['inviteManual','Invite · Manual'],
   ['inviteFavorites','Invite · Favorites'],
-  ['inviteContacts','Invite · Contacts'],
   ['groupDiscovery','Discover Groups'],
   ['inbox','Inbox'],
   ['chat','Chat Thread'],
   ['notifications','Notifications'],
+  ['profileSettings','Profile & Settings'],
   ['modalFirstGame','Modal · First Game']
 ];
 const pageMap = {};
@@ -2699,7 +2861,7 @@ function setGameType(type){
 }
 
 function setInviteTab(tab){
-  ['Manual','Favorites','Contacts','Group'].forEach(name=>{
+  ['Manual','Favorites','Group'].forEach(name=>{
     const btn = document.getElementById('tab'+name);
     const panel = document.getElementById('panel'+name);
     if(btn){
