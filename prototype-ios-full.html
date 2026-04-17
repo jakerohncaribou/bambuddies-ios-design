@@ -1628,13 +1628,90 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
     <!-- ==================== COMPLETE PROFILE ==================== -->
     <div class="screen" data-screen="completeProfile" style="padding:24px;background:#faf8f6;">
-      <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#000;line-height:1.2;margin-bottom:4px;">One more thing</div>
-      <div style="color:#888;font-size:13px;margin-bottom:20px;">Complete your profile to get started.</div>
-      <div style="text-align:center;margin-bottom:20px;"><div style="width:80px;height:80px;border-radius:50%;background:#ede9fe;display:inline-flex;align-items:center;justify-content:center;"><i class="ph ph-camera" style="font-size:32px;color:#7c3aed;"></i></div><div style="color:#7c3aed;font-size:12px;font-weight:600;margin-top:6px;">Add photo</div></div>
-      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Phone</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">+1 (555) 123-4567</div></div>
-      <div style="margin-bottom:10px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Player Level</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;"><span>Intermediate</span><i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i></div></div>
-      <div style="margin-bottom:16px;"><div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Home Address</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;">Enter your address</div></div>
-      <div onclick="go('dashboard')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Complete Profile</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#000;line-height:1.2;margin-bottom:4px;">Welcome, Sarah!</div>
+      <div style="color:#888;font-size:13px;margin-bottom:18px;">We just need a few more details to set up your account.</div>
+
+      <!-- Imported from Google banner -->
+      <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border:1px solid #c4b5fd;border-radius:12px;padding:10px 12px;margin-bottom:18px;display:flex;align-items:center;gap:10px;">
+        <svg width="20" height="20" viewBox="0 0 48 48" style="flex-shrink:0;"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        <div style="flex:1;color:#5b21b6;font-size:11px;line-height:1.4;font-weight:600;">Pre-filled from your Google account. Tap any field to edit.</div>
+      </div>
+
+      <!-- Avatar from Google -->
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="position:relative;display:inline-block;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=160&h=160&fit=crop&crop=face" style="width:86px;height:86px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 16px rgba(0,0,0,.1);" alt="Sarah">
+          <div style="position:absolute;bottom:0;right:0;width:28px;height:28px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;border:2px solid #faf8f6;cursor:pointer;">
+            <i class="ph-fill ph-pencil-simple" style="font-size:13px;color:#fff;"></i>
+          </div>
+        </div>
+        <div style="color:#10b981;font-size:11px;font-weight:700;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px;"><i class="ph-fill ph-check-circle" style="font-size:13px;"></i> Photo imported from Google</div>
+      </div>
+
+      <!-- Pre-filled: Name -->
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <div style="color:#000;font-size:12px;font-weight:600;">Full Name</div>
+          <span style="color:#10b981;font-size:10px;font-weight:700;display:flex;align-items:center;gap:3px;"><i class="ph-fill ph-check-circle" style="font-size:11px;"></i> From Google</span>
+        </div>
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#000;font-size:13px;font-weight:500;">Sarah Rodriguez</div>
+      </div>
+
+      <!-- Pre-filled: Email (locked) -->
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <div style="color:#000;font-size:12px;font-weight:600;">Email</div>
+          <span style="color:#6b7280;font-size:10px;font-weight:600;display:flex;align-items:center;gap:3px;"><i class="ph-fill ph-lock-simple" style="font-size:11px;"></i> Locked</span>
+        </div>
+        <div style="background:#f5f3ee;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#000;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:space-between;">
+          <span>sarah.rodriguez@gmail.com</span>
+          <i class="ph ph-lock-simple" style="font-size:13px;color:#aaa;"></i>
+        </div>
+      </div>
+
+      <!-- Divider: Missing Info -->
+      <div style="display:flex;align-items:center;gap:10px;margin:18px 0 14px;">
+        <div style="flex:1;height:1px;background:#e8e4e0;"></div>
+        <div style="color:#d97706;font-size:10px;font-weight:700;letter-spacing:1.5px;background:#fef3c7;padding:3px 9px;border-radius:99px;">STILL NEEDED</div>
+        <div style="flex:1;height:1px;background:#e8e4e0;"></div>
+      </div>
+
+      <!-- Needs: Phone with country code -->
+      <div style="margin-bottom:10px;">
+        <div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Phone <span style="color:#f43f5e;">*</span></div>
+        <div style="display:flex;gap:6px;">
+          <div style="background:#fff;border:1.5px solid #c4b5fd;border-radius:10px;padding:12px 10px;display:flex;align-items:center;gap:6px;cursor:pointer;flex-shrink:0;">
+            <span style="font-size:18px;line-height:1;">&#127482;&#127480;</span>
+            <span style="color:#000;font-size:13px;font-weight:600;">+1</span>
+            <i class="ph ph-caret-down" style="font-size:12px;color:#888;"></i>
+          </div>
+          <div style="flex:1;background:#fff;border:1.5px solid #c4b5fd;border-radius:10px;padding:12px;color:#aaa;font-size:13px;box-shadow:0 0 0 3px rgba(124,58,237,.1);">(555) 123-4567</div>
+        </div>
+      </div>
+
+      <!-- Needs: Player Level -->
+      <div style="margin-bottom:10px;">
+        <div style="color:#000;font-size:12px;font-weight:600;margin-bottom:5px;">Player Level <span style="color:#f43f5e;">*</span></div>
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;color:#aaa;">
+          <span>Select your skill level</span>
+          <i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i>
+        </div>
+      </div>
+
+      <!-- Needs: Home Address -->
+      <div style="margin-bottom:18px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <div style="color:#000;font-size:12px;font-weight:600;">Home Address</div>
+          <span style="color:#9ca3af;font-size:11px;font-weight:500;font-style:italic;">Optional</span>
+        </div>
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:13px;display:flex;align-items:center;gap:8px;">
+          <i class="ph ph-map-pin" style="font-size:16px;color:#aaa;"></i>
+          <span>Helps find games nearby</span>
+        </div>
+      </div>
+
+      <div onclick="go('dashboard')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,58,237,.3);">Complete Profile</div>
+      <div style="text-align:center;color:#9ca3af;font-size:11px;margin-top:10px;">You can change any of this later in Settings</div>
     </div>
 
     <!-- ==================== GAME EDIT ==================== -->
