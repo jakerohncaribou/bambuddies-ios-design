@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies · Pink + Cartoon · 5 MORE Concepts (06-10)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:#1a1a1a;min-height:100vh;padding:40px 20px 80px;overflow-x:auto;font-family:'Outfit',sans-serif;}
+.page-title{color:#fff;text-align:center;font-size:30px;font-weight:800;letter-spacing:-.8px;margin-bottom:4px;}
+.page-sub{color:#888;text-align:center;font-size:14px;margin-bottom:8px;}
+.color-note{text-align:center;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:#c73078;color:#fff;border-radius:99px;font-weight:600;font-size:12px;margin-bottom:32px;}
+.color-swatch{width:12px;height:12px;border-radius:50%;background:#fff;}
+.row{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;max-width:2400px;margin:0 auto;}
+.col{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:20px;}
+.mix-num{color:#555;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;margin-bottom:4px;}
+.label-lg{color:#fff;font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;letter-spacing:-.3px;}
+.label-sm{color:#888;font-size:11px;font-family:'Outfit',sans-serif;margin-bottom:8px;text-align:center;max-width:280px;line-height:1.4;}
+.font-note{background:#222;color:#aaa;font-size:10px;font-family:monospace;padding:4px 8px;border-radius:6px;margin-bottom:6px;}
+
+.phone{width:375px;height:812px;border-radius:46px;border:3px solid #222;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;}
+.notch{width:120px;height:34px;background:#000;border-radius:18px;position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:90;}
+.sbar{height:52px;padding:12px 26px 0;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;position:relative;z-index:10;color:#1a1a1a;}
+.scr{position:absolute;top:52px;left:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 20px;}
+.scr::-webkit-scrollbar{display:none;}
+.tbar{position:absolute;bottom:0;left:0;right:0;height:70px;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid #eee;display:flex;align-items:flex-start;padding-top:8px;z-index:40;}
+.tb-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:600;color:#bbb;}
+.tb-item svg{width:22px;height:22px;}
+.tb-item.act{color:#c73078;}
+.sarah{font-family:'Caveat',cursive;font-weight:700;color:#c73078;letter-spacing:.3px;}
+.cart-btn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;cursor:pointer;}
+.cart-tile{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;position:relative;}
+.cart-label{font-size:11px;font-weight:600;color:#1a1a1a;text-align:center;line-height:1.15;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+</style>
+
+<!-- Reused cartoon SVG icon set (same as v2) -->
+<svg width="0" height="0" style="position:absolute;" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <symbol id="icon-tile-buddy" viewBox="0 0 64 64">
+    <rect x="12" y="10" width="40" height="48" rx="7" fill="#fefce8" stroke="#1a1a1a" stroke-width="2.5"/>
+    <rect x="14" y="12" width="36" height="44" rx="5" fill="#fffef7" opacity=".7"/>
+    <rect x="26" y="18" width="12" height="3" rx="1" fill="#dc2626"/>
+    <rect x="28" y="22" width="8" height="2" rx="1" fill="#dc2626"/>
+    <rect x="26" y="25" width="12" height="2.5" rx="1" fill="#dc2626"/>
+    <circle cx="24" cy="40" r="2.5" fill="#1a1a1a"/>
+    <circle cx="40" cy="40" r="2.5" fill="#1a1a1a"/>
+    <circle cx="24.5" cy="39.5" r=".8" fill="#fff"/>
+    <circle cx="40.5" cy="39.5" r=".8" fill="#fff"/>
+    <path d="M 24 47 Q 32 52 40 47" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="19" cy="44" r="2" fill="#fda4af" opacity=".7"/>
+    <circle cx="45" cy="44" r="2" fill="#fda4af" opacity=".7"/>
+  </symbol>
+  <symbol id="icon-three-friends" viewBox="0 0 64 64">
+    <rect x="8" y="18" width="24" height="30" rx="5" fill="#fef3c7" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="16" cy="30" r="1.5" fill="#1a1a1a"/>
+    <circle cx="24" cy="30" r="1.5" fill="#1a1a1a"/>
+    <path d="M 16 37 Q 20 40 24 37" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <rect x="20" y="12" width="24" height="30" rx="5" fill="#d1fae5" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="28" cy="24" r="1.5" fill="#1a1a1a"/>
+    <circle cx="36" cy="24" r="1.5" fill="#1a1a1a"/>
+    <path d="M 28 31 Q 32 34 36 31" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <rect x="32" y="18" width="24" height="30" rx="5" fill="#fce7f3" stroke="#1a1a1a" stroke-width="2.5"/>
+    <circle cx="40" cy="30" r="1.5" fill="#1a1a1a"/>
+    <circle cx="48" cy="30" r="1.5" fill="#1a1a1a"/>
+    <path d="M 40 37 Q 44 40 48 37" stroke="#1a1a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-map-pin" viewBox="0 0 64 64">
+    <path d="M 8 20 L 24 14 L 40 20 L 56 14 L 56 50 L 40 56 L 24 50 L 8 56 Z" fill="#fff9f0" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 24 14 L 24 50" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <path d="M 40 20 L 40 56" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <path d="M 14 40 Q 22 32 30 36 Q 38 42 46 36" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="3 2.5"/>
+    <circle cx="14" cy="40" r="2.5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+    <path d="M 46 28 C 48 25, 52 25, 52 29 C 52 33, 46 38, 46 38 C 46 38, 40 33, 40 29 C 40 25, 44 25, 46 28 Z" fill="#c73078" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="46" cy="30" r="1.5" fill="#fff"/>
+  </symbol>
+  <symbol id="icon-chat-bubble" viewBox="0 0 64 64">
+    <path d="M 10 14 L 54 14 Q 58 14 58 18 L 58 40 Q 58 44 54 44 L 28 44 L 20 52 L 22 44 L 10 44 Q 6 44 6 40 L 6 18 Q 6 14 10 14 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="20" cy="29" r="2.8" fill="#c73078"/>
+    <circle cx="32" cy="29" r="2.8" fill="#fbbf24"/>
+    <circle cx="44" cy="29" r="2.8" fill="#3b82f6"/>
+  </symbol>
+  <symbol id="icon-learn" viewBox="0 0 64 64">
+    <path d="M 8 22 Q 8 20 10 20 L 30 20 L 32 26 L 34 20 L 54 20 Q 56 20 56 22 L 56 52 Q 56 54 54 54 L 34 54 L 32 50 L 30 54 L 10 54 Q 8 54 8 52 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 32 26 L 32 50" stroke="#1a1a1a" stroke-width="1.5"/>
+    <line x1="13" y1="32" x2="28" y2="32" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="13" y1="37" x2="28" y2="37" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="13" y1="42" x2="24" y2="42" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="36" y1="32" x2="51" y2="32" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="36" y1="37" x2="51" y2="37" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="36" y1="42" x2="48" y2="42" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+    <rect x="22" y="6" width="16" height="18" rx="2.5" fill="#fef3c7" stroke="#1a1a1a" stroke-width="2"/>
+    <circle cx="28" cy="14" r="1.3" fill="#dc2626"/>
+    <circle cx="32" cy="14" r="1.3" fill="#dc2626"/>
+    <circle cx="30" cy="18" r="1.3" fill="#dc2626"/>
+    <path d="M 50 10 L 51 14 L 55 15 L 51 16 L 50 20 L 49 16 L 45 15 L 49 14 Z" fill="#fbbf24" stroke="#1a1a1a" stroke-width="1.2"/>
+  </symbol>
+  <symbol id="tab-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v10a1 1 0 01-1 1h-4v-6h-8v6H4a1 1 0 01-1-1z" fill="currentColor"/></symbol>
+  <symbol id="tab-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="currentColor"/></symbol>
+  <symbol id="tab-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor"/><rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor"/><rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor"/><rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor"/></symbol>
+  <symbol id="tab-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="currentColor"/><circle cx="17" cy="9" r="2.8" fill="currentColor"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5v1H3zm14-4c2 0 4 1.5 4 4v1h-5" fill="currentColor"/></symbol>
+  <symbol id="bell" viewBox="0 0 24 24"><path d="M12 4a6 6 0 016 6v3.5l1.5 2.5H4.5L6 13.5V10a6 6 0 016-6z" fill="currentColor"/><path d="M10 19a2 2 0 004 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" fill="currentColor"/></symbol>
+</defs>
+</svg>
+</head>
+<body>
+
+<div class="page-title">5 More Concepts (06–10)</div>
+<div class="page-sub">Custom SVG icons · Cream/neutral tiles · Sarah in Caveat · New fonts + layouts</div>
+<div style="text-align:center;margin-bottom:32px;"><span class="color-note"><span class="color-swatch"></span>Pink #c73078 · accent only</span></div>
+
+<div class="row">
+
+<!-- ================ CONCEPT 06: Instrument Serif + Nunito — Editorial ================ -->
+<div class="col">
+<div class="mix-num">CONCEPT 06</div>
+<div class="label-lg" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:26px;">Instrument Serif</div>
+<div class="label-sm">Editorial magazine italic serif · elegant + airy · cream bg, warm shadows</div>
+<div class="font-note">Instrument Serif italic + Nunito · Caveat for name</div>
+
+<div class="phone" style="font-family:'Nunito',sans-serif;background:#faf7f2;">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
+<div class="scr">
+
+<div style="padding:14px 20px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="flex:1;min-width:0;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:42px;height:42px;border-radius:50%;flex-shrink:0;">
+      <div style="font-family:'Instrument Serif',serif;font-style:italic;color:#1a1a1a;font-size:20px;line-height:1.25;">Your lucky tile<br>awaits, <span class="sarah" style="font-size:26px;vertical-align:-3px;">Sarah</span></div>
+    </div>
+  </div>
+  <div style="position:relative;cursor:pointer;padding-top:10px;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:6px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #faf7f2;">3</div>
+  </div>
+</div>
+
+<div style="padding:0 14px 18px;display:flex;gap:10px;overflow-x:auto;">
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;box-shadow:0 6px 18px rgba(140,100,60,.08);"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div class="cart-label" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:13px;font-weight:400;">Start Game</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;box-shadow:0 6px 18px rgba(140,100,60,.08);"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div class="cart-label" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:13px;font-weight:400;">Start Group</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;box-shadow:0 6px 18px rgba(140,100,60,.08);"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div class="cart-label" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:13px;font-weight:400;">Find Games</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;box-shadow:0 6px 18px rgba(140,100,60,.08);position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #faf7f2;">3</div></div><div class="cart-label" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:13px;font-weight:400;">Messages</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;box-shadow:0 6px 18px rgba(140,100,60,.08);"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div class="cart-label" style="font-family:'Instrument Serif',serif;font-style:italic;font-size:13px;font-weight:400;">Learn</div></div>
+</div>
+
+<div style="margin:0 14px 14px;background:#fff;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 6px 18px rgba(140,100,60,.08);">
+  <svg width="44" height="44"><use href="#icon-tile-buddy"/></svg>
+  <div style="flex:1;">
+    <div style="color:#9c6f3d;font-size:9px;font-weight:700;letter-spacing:1.5px;">SPONSORED</div>
+    <div style="font-family:'Instrument Serif',serif;font-style:italic;color:#1a1a1a;font-size:22px;line-height:1.1;margin-top:2px;">Master the Winds</div>
+    <div style="color:#c73078;font-size:12px;font-weight:700;margin-top:3px;border-bottom:1px solid #c73078;display:inline-block;">Learn Strategy Tips</div>
+  </div>
+</div>
+
+<div style="margin:0 14px 14px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 6px 18px rgba(140,100,60,.1);">
+  <div style="position:relative;height:86px;overflow:hidden;">
+    <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.55));"></div>
+    <div style="position:absolute;top:8px;left:8px;background:#fff;border-radius:8px;padding:3px 8px;font-size:10px;font-weight:700;color:#1a1a1a;font-family:'Nunito',sans-serif;">SAT 4/19</div>
+    <div style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,.95);color:#c73078;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;bottom:8px;left:12px;right:12px;color:#fff;">
+      <div style="font-size:17px;font-weight:800;letter-spacing:-.3px;line-height:1.1;">2:00 – 4:00 PM</div>
+      <div style="font-family:'Instrument Serif',serif;font-style:italic;font-size:17px;opacity:.95;margin-top:1px;">Saturday Mahjong</div>
+    </div>
+  </div>
+  <div style="padding:10px 14px 12px;">
+    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="display:flex;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+        </div>
+        <span style="color:#666;font-size:12px;">4/4 players</span>
+      </div>
+      <div style="background:#fce7f3;color:#c73078;font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:99px;">COMMITTED</div>
+    </div>
+  </div>
+</div>
+
+<div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+  <div style="font-family:'Instrument Serif',serif;font-style:italic;color:#1a1a1a;font-size:22px;line-height:1;">Needs your attention</div>
+  <div style="background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
+</div>
+
+<div style="margin:0 14px 8px;background:#fff;border-radius:14px;padding:10px 12px;box-shadow:0 6px 18px rgba(140,100,60,.08);">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:14px;font-weight:800;">Amy's Tuesday Game</div>
+      <div style="color:#888;font-size:11px;margin-top:1px;">Tue, Apr 22 · 7:00 PM</div>
+    </div>
+    <button style="background:#c73078;color:#fff;border:none;padding:8px 14px;border-radius:99px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;">Accept</button>
+  </div>
+  <div style="text-align:right;margin-top:4px;"><span style="color:#9ca3af;font-size:11px;text-decoration:underline;">Decline</span></div>
+</div>
+
+</div>
+<div class="tbar">
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
+</div>
+</div>
+</div>
+
+<!-- ================ CONCEPT 07: Space Grotesk — Modern Tech ================ -->
+<div class="col">
+<div class="mix-num">CONCEPT 07</div>
+<div class="label-lg" style="font-family:'Space Grotesk',sans-serif;font-weight:700;">Space Grotesk</div>
+<div class="label-sm">Geometric tech-modern · clean white tiles · pink as single accent bar</div>
+<div class="font-note">Space Grotesk + JetBrains Mono · Caveat for name</div>
+
+<div class="phone" style="font-family:'Space Grotesk',sans-serif;background:#fff;">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
+<div class="scr">
+
+<div style="padding:14px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;border-bottom:1px solid #f0f0f0;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:42px;height:42px;border-radius:12px;flex-shrink:0;">
+    <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.35;">Bam! You're back, <span class="sarah" style="font-size:22px;vertical-align:-2px;">Sarah</span></div>
+  </div>
+  <div style="position:relative;cursor:pointer;padding-top:8px;flex-shrink:0;">
+    <svg width="20" height="20" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:4px;right:-5px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;padding:0 4px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;">3</div>
+  </div>
+</div>
+
+<div style="padding:14px 14px 16px;display:flex;gap:8px;overflow-x:auto;">
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;border-radius:14px;"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div class="cart-label" style="font-weight:600;font-size:10.5px;">Start Game</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;border-radius:14px;"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div class="cart-label" style="font-weight:600;font-size:10.5px;">Start Group</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;border-radius:14px;"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div class="cart-label" style="font-weight:600;font-size:10.5px;">Find Games</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;border-radius:14px;position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;font-family:'JetBrains Mono',monospace;">3</div></div><div class="cart-label" style="font-weight:600;font-size:10.5px;">Messages</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:1px solid #e5e5e0;border-radius:14px;"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div class="cart-label" style="font-weight:600;font-size:10.5px;">Learn</div></div>
+</div>
+
+<div style="margin:0 14px 14px;background:#fafaf9;border:1px solid #e5e5e0;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;position:relative;">
+  <div style="position:absolute;left:0;top:12px;bottom:12px;width:3px;background:#c73078;border-radius:0 2px 2px 0;"></div>
+  <svg width="42" height="42"><use href="#icon-tile-buddy"/></svg>
+  <div style="flex:1;">
+    <div style="color:#666;font-size:9px;font-weight:700;letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;">SPONSORED</div>
+    <div style="color:#1a1a1a;font-size:16px;font-weight:700;line-height:1.2;margin-top:2px;letter-spacing:-.4px;">Master the Winds</div>
+    <div style="color:#c73078;font-size:12px;font-weight:600;margin-top:2px;">Learn Strategy Tips →</div>
+  </div>
+</div>
+
+<div style="margin:0 14px 14px;background:#fff;border:1px solid #e5e5e0;border-radius:14px;overflow:hidden;">
+  <div style="position:relative;height:86px;overflow:hidden;">
+    <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.6));"></div>
+    <div style="position:absolute;top:8px;left:8px;background:#fff;border-radius:4px;padding:3px 8px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;">SAT_04.19</div>
+    <div style="position:absolute;top:8px;right:8px;background:#c73078;color:#fff;border-radius:4px;padding:3px 9px;font-size:10px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;bottom:6px;left:12px;right:12px;color:#fff;">
+      <div style="font-size:17px;font-weight:700;letter-spacing:-.4px;line-height:1.1;">2:00 – 4:00 PM</div>
+      <div style="font-size:12px;opacity:.9;">Saturday Mahjong</div>
+    </div>
+  </div>
+  <div style="padding:10px 14px 12px;">
+    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="display:flex;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+        </div>
+        <span style="color:#666;font-size:12px;font-family:'JetBrains Mono',monospace;">4/4</span>
+      </div>
+      <div style="background:#fce7f3;color:#c73078;font-size:10px;font-weight:700;letter-spacing:.5px;padding:3px 9px;border-radius:4px;">COMMITTED</div>
+    </div>
+  </div>
+</div>
+
+<div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+  <div style="color:#1a1a1a;font-size:16px;font-weight:700;letter-spacing:-.3px;">Needs your attention</div>
+  <div style="background:#c73078;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;">2</div>
+</div>
+
+<div style="margin:0 14px 8px;background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:10px 12px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:13px;font-weight:700;">Amy's Tuesday Game</div>
+      <div style="color:#888;font-size:11px;margin-top:1px;font-family:'JetBrains Mono',monospace;">TUE 04.22 · 7:00 PM</div>
+    </div>
+    <button style="background:#c73078;color:#fff;border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif;">Accept</button>
+  </div>
+  <div style="text-align:right;margin-top:4px;"><span style="color:#9ca3af;font-size:11px;text-decoration:underline;">Decline</span></div>
+</div>
+
+</div>
+<div class="tbar">
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
+</div>
+</div>
+</div>
+
+<!-- ================ CONCEPT 08: Caveat + Quicksand — Journal/Scrapbook ================ -->
+<div class="col">
+<div class="mix-num">CONCEPT 08</div>
+<div class="label-lg" style="font-family:'Caveat',cursive;font-weight:700;font-size:28px;">Caveat Journal</div>
+<div class="label-sm">Handwritten scrapbook feel · ALL headings in Caveat · wavy dashed borders</div>
+<div class="font-note">Caveat + Quicksand · Sarah (still) Caveat pink</div>
+
+<div class="phone" style="font-family:'Quicksand',sans-serif;background:#fffbf4;">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
+<div class="scr">
+
+<div style="padding:10px 18px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;flex-shrink:0;">
+    <div style="font-family:'Caveat',cursive;color:#1a1a1a;font-size:22px;font-weight:600;line-height:1.1;">Tiles up, phones down, let's play, <span class="sarah" style="font-size:26px;">Sarah</span>!</div>
+  </div>
+  <div style="position:relative;cursor:pointer;padding-top:10px;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:6px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;padding:0 4px;display:flex;align-items:center;justify-content:center;border:2px solid #fffbf4;">3</div>
+  </div>
+</div>
+
+<div style="padding:4px 14px 16px;display:flex;gap:10px;overflow-x:auto;">
+  <div class="cart-btn"><div class="cart-tile" style="background:#fff;border:2px dashed #1a1a1a;border-radius:22px;"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div style="font-family:'Caveat',cursive;font-size:16px;font-weight:600;color:#1a1a1a;">Start Game</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#fef9e7;border:2px dashed #1a1a1a;border-radius:22px;"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div style="font-family:'Caveat',cursive;font-size:16px;font-weight:600;color:#1a1a1a;">Start Group</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#eefbef;border:2px dashed #1a1a1a;border-radius:22px;"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div style="font-family:'Caveat',cursive;font-size:16px;font-weight:600;color:#1a1a1a;">Find Games</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#eef5ff;border:2px dashed #1a1a1a;border-radius:22px;position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #fffbf4;">3</div></div><div style="font-family:'Caveat',cursive;font-size:16px;font-weight:600;color:#1a1a1a;">Messages</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#faeefe;border:2px dashed #1a1a1a;border-radius:22px;"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div style="font-family:'Caveat',cursive;font-size:16px;font-weight:600;color:#1a1a1a;">Learn</div></div>
+</div>
+
+<div style="margin:0 14px 14px;background:#fff;border:2px dashed #1a1a1a;border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+  <svg width="44" height="44"><use href="#icon-tile-buddy"/></svg>
+  <div style="flex:1;">
+    <div style="font-family:'Caveat',cursive;color:#9c6f3d;font-size:15px;font-weight:600;letter-spacing:.3px;">— sponsored —</div>
+    <div style="font-family:'Caveat',cursive;color:#1a1a1a;font-size:26px;line-height:1;font-weight:700;">Master the Winds</div>
+    <div style="color:#c73078;font-size:13px;font-weight:600;margin-top:2px;">Learn Strategy Tips →</div>
+  </div>
+</div>
+
+<div style="margin:0 14px 14px;background:#fff;border:2px dashed #1a1a1a;border-radius:18px;overflow:hidden;">
+  <div style="position:relative;height:86px;overflow:hidden;">
+    <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.55));"></div>
+    <div style="position:absolute;top:8px;left:8px;background:#fff;border:1.5px dashed #1a1a1a;border-radius:8px;padding:3px 8px;font-family:'Caveat',cursive;font-size:13px;font-weight:600;color:#1a1a1a;line-height:1;">Sat 4/19</div>
+    <div style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,.95);color:#c73078;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;bottom:6px;left:12px;right:12px;color:#fff;">
+      <div style="font-size:17px;font-weight:700;letter-spacing:-.3px;line-height:1.1;">2:00 – 4:00 PM</div>
+      <div style="font-family:'Caveat',cursive;font-size:22px;line-height:1;margin-top:-1px;">Saturday Mahjong</div>
+    </div>
+  </div>
+  <div style="padding:10px 14px 12px;">
+    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="display:flex;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+        </div>
+        <span style="color:#666;font-size:12px;">4/4 players</span>
+      </div>
+      <div style="background:#fce7f3;color:#c73078;font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:99px;">COMMITTED</div>
+    </div>
+  </div>
+</div>
+
+<div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+  <div style="font-family:'Caveat',cursive;color:#1a1a1a;font-size:26px;font-weight:700;line-height:1;">Needs your attention</div>
+  <div style="background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
+</div>
+
+<div style="margin:0 14px 8px;background:#fff;border:2px dashed #1a1a1a;border-radius:18px;padding:10px 12px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:13px;font-weight:700;">Amy's Tuesday Game</div>
+      <div style="color:#888;font-size:11px;margin-top:1px;">Tue, Apr 22 · 7:00 PM</div>
+    </div>
+    <button style="background:#c73078;color:#fff;border:2px dashed #1a1a1a;padding:6px 14px;border-radius:99px;font-family:'Caveat',cursive;font-size:16px;font-weight:700;cursor:pointer;">Accept</button>
+  </div>
+  <div style="text-align:right;margin-top:4px;"><span style="color:#9ca3af;font-size:11px;text-decoration:underline;">Decline</span></div>
+</div>
+
+</div>
+<div class="tbar">
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
+</div>
+</div>
+</div>
+
+<!-- ================ CONCEPT 09: Poppins Black — Poster Bold ================ -->
+<div class="col">
+<div class="mix-num">CONCEPT 09</div>
+<div class="label-lg" style="font-family:'Poppins',sans-serif;font-weight:900;letter-spacing:-1px;">POPPINS BLACK</div>
+<div class="label-sm">Bold poster-magazine · saturated non-pink tile colors · big confident type</div>
+<div class="font-note">Poppins Black + Regular · Caveat for name</div>
+
+<div class="phone" style="font-family:'Poppins',sans-serif;background:#fff;">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
+<div class="scr">
+
+<div style="padding:14px 18px 6px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:40px;height:40px;border-radius:50%;flex-shrink:0;">
+    <div style="color:#888;font-size:12px;font-weight:500;">Fortune favors the bold player</div>
+  </div>
+  <div style="position:relative;cursor:pointer;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:-4px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;padding:0 4px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;">3</div>
+  </div>
+</div>
+
+<div style="padding:0 18px 14px;">
+  <div style="font-family:'Poppins',sans-serif;color:#1a1a1a;font-size:38px;font-weight:900;line-height:.95;letter-spacing:-1.5px;">Hi, <span class="sarah" style="font-size:42px;font-weight:700;letter-spacing:0;">Sarah</span>.</div>
+</div>
+
+<div style="padding:0 12px 18px;display:flex;gap:8px;overflow-x:auto;">
+  <div class="cart-btn"><div class="cart-tile" style="background:#1e3a8a;border-radius:18px;"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div><div class="cart-label" style="font-weight:700;font-size:10.5px;">Start Game</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#b45309;border-radius:18px;"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div><div class="cart-label" style="font-weight:700;font-size:10.5px;">Start Group</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#0e7490;border-radius:18px;"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div><div class="cart-label" style="font-weight:700;font-size:10.5px;">Find Games</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#1a1a1a;border-radius:18px;position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:20px;height:20px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;">3</div></div><div class="cart-label" style="font-weight:700;font-size:10.5px;">Messages</div></div>
+  <div class="cart-btn"><div class="cart-tile" style="background:#9a3412;border-radius:18px;"><svg width="44" height="44"><use href="#icon-learn"/></svg></div><div class="cart-label" style="font-weight:700;font-size:10.5px;">Learn</div></div>
+</div>
+
+<div style="margin:0 14px 14px;background:#fafaf9;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+  <svg width="42" height="42"><use href="#icon-tile-buddy"/></svg>
+  <div style="flex:1;">
+    <div style="color:#666;font-size:9px;font-weight:700;letter-spacing:1.5px;">SPONSORED</div>
+    <div style="font-family:'Poppins',sans-serif;color:#1a1a1a;font-size:18px;font-weight:900;line-height:1;margin-top:3px;letter-spacing:-.5px;">MASTER THE WINDS</div>
+    <div style="color:#c73078;font-size:12px;font-weight:700;margin-top:3px;">Learn Strategy Tips →</div>
+  </div>
+</div>
+
+<div style="margin:0 14px 14px;background:#fff;border:1px solid #e5e5e0;border-radius:16px;overflow:hidden;">
+  <div style="position:relative;height:86px;overflow:hidden;">
+    <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.6));"></div>
+    <div style="position:absolute;top:8px;left:8px;background:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:800;color:#1a1a1a;letter-spacing:.3px;">SAT 4/19</div>
+    <div style="position:absolute;top:8px;right:8px;background:#c73078;color:#fff;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+    <div style="position:absolute;bottom:6px;left:12px;right:12px;color:#fff;">
+      <div style="font-family:'Poppins',sans-serif;font-size:18px;font-weight:900;letter-spacing:-.5px;line-height:1;">2:00 – 4:00 PM</div>
+      <div style="font-size:12px;font-weight:500;opacity:.9;margin-top:2px;">Saturday Mahjong</div>
+    </div>
+  </div>
+  <div style="padding:10px 14px 12px;">
+    <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="display:flex;">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+        </div>
+        <span style="color:#666;font-size:12px;font-weight:600;">4/4 players</span>
+      </div>
+      <div style="background:#c73078;color:#fff;font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:6px;">COMMITTED</div>
+    </div>
+  </div>
+</div>
+
+<div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+  <div style="font-family:'Poppins',sans-serif;color:#1a1a1a;font-size:18px;font-weight:900;letter-spacing:-.5px;line-height:1;">NEEDS YOUR ATTENTION</div>
+  <div style="background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
+</div>
+
+<div style="margin:0 14px 8px;background:#fff;border:1px solid #e5e5e0;border-radius:14px;padding:10px 12px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
+    <div style="flex:1;min-width:0;">
+      <div style="color:#1a1a1a;font-size:13px;font-weight:800;">Amy's Tuesday Game</div>
+      <div style="color:#888;font-size:11px;margin-top:1px;font-weight:500;">Tue, Apr 22 · 7:00 PM</div>
+    </div>
+    <button style="background:#1a1a1a;color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Poppins',sans-serif;letter-spacing:.3px;">ACCEPT</button>
+  </div>
+  <div style="text-align:right;margin-top:4px;"><span style="color:#9ca3af;font-size:11px;text-decoration:underline;">Decline</span></div>
+</div>
+
+</div>
+<div class="tbar">
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span style="font-weight:700;">Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span style="font-weight:600;">Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span style="font-weight:600;">Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span style="font-weight:600;">Groups</span></div>
+</div>
+</div>
+</div>
+
+<!-- ================ CONCEPT 10: Fraunces — Layered Paper Sophisticated ================ -->
+<div class="col">
+<div class="mix-num">CONCEPT 10</div>
+<div class="label-lg" style="font-family:'Fraunces',serif;font-weight:700;font-variation-settings:'opsz' 144;">Fraunces</div>
+<div class="label-sm">Variable serif sophisticated · layered paper cards with 2° offset · warm cream</div>
+<div class="font-note">Fraunces + Work Sans · Caveat for name</div>
+
+<div class="phone" style="font-family:'Work Sans',sans-serif;background:#faf5ee;">
+<div class="notch"></div>
+<div class="sbar"><span>9:41</span><span style="font-size:10px;color:#999;">●●●●</span></div>
+<div class="scr">
+
+<div style="padding:14px 18px 12px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+  <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;flex-shrink:0;">
+    <div style="color:#1a1a1a;font-family:'Fraunces',serif;font-size:20px;font-weight:500;line-height:1.15;font-variation-settings:'opsz' 144;">Today's forecast: mahjong, <span class="sarah" style="font-size:26px;vertical-align:-2px;">Sarah</span></div>
+  </div>
+  <div style="position:relative;cursor:pointer;padding-top:10px;flex-shrink:0;">
+    <svg width="22" height="22" style="color:#1a1a1a;"><use href="#bell"/></svg>
+    <div style="position:absolute;top:6px;right:-4px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;padding:0 4px;display:flex;align-items:center;justify-content:center;border:2px solid #faf5ee;">3</div>
+  </div>
+</div>
+
+<div style="padding:0 14px 16px;display:flex;gap:10px;overflow-x:auto;">
+  <div class="cart-btn"><div style="position:relative;"><div style="position:absolute;inset:0;background:#e9d8c1;border-radius:18px;transform:rotate(-2deg);"></div><div class="cart-tile" style="background:#fff;border:1px solid #e9d8c1;position:relative;"><svg width="44" height="44"><use href="#icon-tile-buddy"/></svg></div></div><div class="cart-label" style="font-family:'Fraunces',serif;font-size:12px;font-weight:500;">Start Game</div></div>
+  <div class="cart-btn"><div style="position:relative;"><div style="position:absolute;inset:0;background:#e9d8c1;border-radius:18px;transform:rotate(2deg);"></div><div class="cart-tile" style="background:#fff;border:1px solid #e9d8c1;position:relative;"><svg width="44" height="44"><use href="#icon-three-friends"/></svg></div></div><div class="cart-label" style="font-family:'Fraunces',serif;font-size:12px;font-weight:500;">Start Group</div></div>
+  <div class="cart-btn"><div style="position:relative;"><div style="position:absolute;inset:0;background:#e9d8c1;border-radius:18px;transform:rotate(-2deg);"></div><div class="cart-tile" style="background:#fff;border:1px solid #e9d8c1;position:relative;"><svg width="44" height="44"><use href="#icon-map-pin"/></svg></div></div><div class="cart-label" style="font-family:'Fraunces',serif;font-size:12px;font-weight:500;">Find Games</div></div>
+  <div class="cart-btn"><div style="position:relative;"><div style="position:absolute;inset:0;background:#e9d8c1;border-radius:18px;transform:rotate(2deg);"></div><div class="cart-tile" style="background:#fff;border:1px solid #e9d8c1;position:relative;"><svg width="44" height="44"><use href="#icon-chat-bubble"/></svg><div style="position:absolute;top:-5px;right:-5px;background:#c73078;color:#fff;font-size:9px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;border:2px solid #faf5ee;">3</div></div></div><div class="cart-label" style="font-family:'Fraunces',serif;font-size:12px;font-weight:500;">Messages</div></div>
+  <div class="cart-btn"><div style="position:relative;"><div style="position:absolute;inset:0;background:#e9d8c1;border-radius:18px;transform:rotate(-2deg);"></div><div class="cart-tile" style="background:#fff;border:1px solid #e9d8c1;position:relative;"><svg width="44" height="44"><use href="#icon-learn"/></svg></div></div><div class="cart-label" style="font-family:'Fraunces',serif;font-size:12px;font-weight:500;">Learn</div></div>
+</div>
+
+<div style="margin:0 14px 14px;position:relative;">
+  <div style="position:absolute;inset:0;background:#e9d8c1;border-radius:16px;transform:rotate(-1.5deg);"></div>
+  <div style="background:#fff;border:1px solid #e9d8c1;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;position:relative;">
+    <svg width="44" height="44"><use href="#icon-tile-buddy"/></svg>
+    <div style="flex:1;">
+      <div style="color:#9c6f3d;font-size:9px;font-weight:700;letter-spacing:1.5px;">SPONSORED</div>
+      <div style="font-family:'Fraunces',serif;color:#1a1a1a;font-size:22px;font-weight:600;line-height:1.05;margin-top:2px;font-variation-settings:'opsz' 144;">Master the Winds</div>
+      <div style="color:#c73078;font-size:12px;font-weight:600;margin-top:2px;border-bottom:1.5px solid #c73078;display:inline-block;">Learn Strategy Tips</div>
+    </div>
+  </div>
+</div>
+
+<div style="margin:0 14px 14px;position:relative;">
+  <div style="position:absolute;inset:0;background:#e9d8c1;border-radius:18px;transform:rotate(1.5deg);"></div>
+  <div style="background:#fff;border:1px solid #e9d8c1;border-radius:18px;overflow:hidden;position:relative;">
+    <div style="position:relative;height:86px;overflow:hidden;">
+      <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.55));"></div>
+      <div style="position:absolute;top:8px;left:8px;background:#fff;border-radius:8px;padding:3px 8px;font-size:10px;font-weight:700;font-family:'Fraunces',serif;">SAT 4/19</div>
+      <div style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,.95);color:#c73078;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="width:5px;height:5px;border-radius:50%;background:#c73078;animation:pulse 2s infinite;"></span>NEXT GAME</div>
+      <div style="position:absolute;bottom:6px;left:12px;right:12px;color:#fff;">
+        <div style="font-family:'Fraunces',serif;font-size:19px;font-weight:600;letter-spacing:-.2px;line-height:1;font-variation-settings:'opsz' 144;">2:00 – 4:00 PM</div>
+        <div style="font-size:12px;opacity:.9;">Saturday Mahjong</div>
+      </div>
+    </div>
+    <div style="padding:10px 14px 12px;">
+      <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;"><svg width="13" height="13" style="color:#aaa;"><use href="#pin"/></svg>Sarah's Home, Portland</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="display:flex;">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;">
+          </div>
+          <span style="color:#666;font-size:12px;">4/4 players</span>
+        </div>
+        <div style="background:#fce7f3;color:#c73078;font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:99px;">COMMITTED</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="padding:0 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+  <div style="font-family:'Fraunces',serif;color:#1a1a1a;font-size:22px;font-weight:600;line-height:1;font-variation-settings:'opsz' 144;">Needs your attention</div>
+  <div style="background:#c73078;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
+</div>
+
+<div style="margin:0 14px 8px;position:relative;">
+  <div style="position:absolute;inset:0;background:#e9d8c1;border-radius:14px;transform:rotate(-1deg);"></div>
+  <div style="background:#fff;border:1px solid #e9d8c1;border-radius:14px;padding:10px 12px;position:relative;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
+      <div style="flex:1;min-width:0;">
+        <div style="color:#1a1a1a;font-size:13px;font-weight:700;">Amy's Tuesday Game</div>
+        <div style="color:#888;font-size:11px;margin-top:1px;">Tue, Apr 22 · 7:00 PM</div>
+      </div>
+      <button style="background:#c73078;color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Work Sans',sans-serif;">Accept</button>
+    </div>
+    <div style="text-align:right;margin-top:4px;"><span style="color:#9ca3af;font-size:11px;text-decoration:underline;">Decline</span></div>
+  </div>
+</div>
+
+</div>
+<div class="tbar">
+  <div class="tb-item act"><svg><use href="#tab-home"/></svg><span>Home</span></div>
+  <div class="tb-item"><svg><use href="#tab-compass"/></svg><span>Nearby</span></div>
+  <div class="tb-item"><svg><use href="#tab-grid"/></svg><span>Games</span></div>
+  <div class="tb-item"><svg><use href="#tab-users"/></svg><span>Groups</span></div>
+</div>
+</div>
+</div>
+
+</div>
+
+</body>
+</html>
