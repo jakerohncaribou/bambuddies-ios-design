@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies Admin Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+:root{
+  --primary:#059669; --primary-soft:#10b981; --primary-bg:#d1fae5;
+  --primary-grad:linear-gradient(135deg,#059669,#10b981);
+  --primary-shadow:rgba(5,150,105,.3);
+  --slate:#1e293b; --slate-2:#334155; --slate-3:#475569; --slate-text:#cbd5e1;
+  --page:#fafaf9; --card:#fff; --border:#e5e5e0;
+  --text:#1a1a1a; --muted:#6b7280;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0f172a;font-family:'Outfit',sans-serif;min-height:100vh;padding:24px 0;color:#fff;}
+.page-head{text-align:center;margin-bottom:20px;}
+.page-head h1{font-family:'DM Serif Display',serif;font-size:32px;color:#fff;}
+.page-head p{color:#94a3b8;font-size:14px;margin-top:4px;font-family:'Inter',sans-serif;}
+
+.role-switcher{display:flex;justify-content:center;gap:8px;margin:14px auto 18px;background:#1e293b;border:1px solid #334155;padding:6px;border-radius:12px;width:fit-content;}
+.role-btn{background:transparent;color:#94a3b8;border:none;padding:10px 22px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+.role-btn.active{background:var(--primary-grad);color:#fff;box-shadow:0 4px 14px rgba(5,150,105,.35);}
+.role-btn:hover:not(.active){color:#fff;}
+
+.frame-wrap{display:flex;justify-content:center;padding:0 20px;}
+.browser-frame{background:#2a2a2a;border-radius:14px;box-shadow:0 25px 80px rgba(0,0,0,.6);overflow:hidden;border:1px solid #3a3a3a;width:1280px;}
+.browser-chrome{background:#2a2a2a;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #1a1a1a;}
+.dots{display:flex;gap:6px;}
+.dot{width:11px;height:11px;border-radius:50%;}
+.dot.r{background:#ff5f56;} .dot.y{background:#ffbd2e;} .dot.g{background:#27c93f;}
+.addr{flex:1;background:#1a1a1a;color:#8a8a8a;border-radius:6px;padding:6px 12px;font-size:12px;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:8px;}
+.addr i{color:#4ade80;}
+.chrome-icons{display:flex;gap:10px;color:#8a8a8a;}
+.viewport-area{background:var(--page);color:var(--text);min-height:860px;font-family:'Outfit',sans-serif;position:relative;overflow:hidden;}
+
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* ============ AUTH ============ */
+.auth-wrap{min-height:860px;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
+.auth-wrap.platform{background:linear-gradient(135deg,#0f172a 0%,#1e293b 55%,#334155 100%);}
+.auth-wrap.org{background:linear-gradient(135deg,#fafaf9 0%,#e7f7ef 100%);}
+.auth-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:38px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+.auth-wordmark{text-align:center;margin-bottom:18px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.wm-text{font-family:'DM Serif Display',serif;font-size:32px;letter-spacing:-.5px;}
+.wm-text .bam{color:#1a1a1a;}
+.wm-text .buddies{background:var(--primary-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.admin-pill{display:inline-flex;align-items:center;gap:4px;background:var(--slate);color:#fff;font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;padding:4px 10px;border-radius:99px;}
+.admin-pill.org{background:var(--primary);}
+.auth-title{font-family:'DM Serif Display',serif;font-size:26px;text-align:center;margin-bottom:6px;color:var(--text);}
+.auth-sub{text-align:center;color:var(--muted);font-family:'Inter',sans-serif;font-size:13px;margin-bottom:26px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;font-family:'Outfit',sans-serif;}
+.input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:#fff;color:var(--text);font-family:'Inter',sans-serif;transition:all .15s;}
+.input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,150,105,.15);}
+.checkbox{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px;color:var(--text);cursor:pointer;font-family:'Inter',sans-serif;}
+.checkbox input{accent-color:var(--primary);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;border:none;transition:all .15s;text-decoration:none;white-space:nowrap;}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-primary:hover{background:#047857;}
+.btn-slate{background:var(--slate);color:#fff;}
+.btn-slate:hover{background:#0f172a;}
+.btn-secondary{background:#fff;color:var(--text);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--primary);color:var(--primary);}
+.btn-danger{background:#dc2626;color:#fff;}
+.btn-danger:hover{background:#b91c1c;}
+.btn-block{width:100%;}
+.btn-lg{padding:13px 18px;font-size:15px;}
+.btn-sm{padding:6px 12px;font-size:12px;border-radius:6px;}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+.btn-ghost:hover{color:var(--text);border-color:#d4d4cc;}
+
+.auth-warning{margin-top:22px;background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;font-size:12px;color:#92400e;font-family:'Inter',sans-serif;display:flex;align-items:flex-start;gap:8px;}
+.auth-warning i{font-size:16px;flex-shrink:0;margin-top:1px;}
+.two-fa-note{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:-6px;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+.two-fa-note i{color:var(--primary);}
+
+/* ============ APP LAYOUT ============ */
+.app-layout{display:grid;grid-template-columns:240px 1fr;min-height:860px;}
+.app-layout.with-right{grid-template-columns:240px 1fr 300px;}
+
+/* PLATFORM SIDEBAR (dark slate) */
+.sidebar-platform{background:var(--slate);border-right:1px solid #0f172a;padding:20px 14px;display:flex;flex-direction:column;gap:4px;height:860px;overflow-y:auto;}
+.sidebar-platform .sidebar-logo{display:flex;align-items:center;gap:10px;padding:4px 10px 20px;margin-bottom:8px;border-bottom:1px solid #334155;}
+.sidebar-platform .sidebar-logo-mark{width:34px;height:34px;border-radius:9px;background:var(--primary-grad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0;}
+.sidebar-platform .logo-wrap{display:flex;flex-direction:column;line-height:1.1;}
+.sidebar-platform .logo-brand{font-family:'DM Serif Display',serif;font-size:16px;color:#fff;}
+.sidebar-platform .logo-sub{font-size:9px;font-weight:800;letter-spacing:2px;color:#10b981;font-family:'Outfit',sans-serif;margin-top:2px;}
+.sidebar-platform .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--slate-text);font-size:13.5px;font-weight:500;transition:all .15s;}
+.sidebar-platform .nav-item i{font-size:19px;flex-shrink:0;}
+.sidebar-platform .nav-item:hover{background:#334155;color:#fff;}
+.sidebar-platform .nav-item.active{background:var(--primary);color:#fff;font-weight:600;box-shadow:0 3px 10px rgba(5,150,105,.3);}
+.sidebar-platform .nav-badge{margin-left:auto;background:#dc2626;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.sidebar-platform .sidebar-footer{margin-top:auto;padding-top:12px;border-top:1px solid #334155;}
+.sidebar-platform .sidebar-user{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer;}
+.sidebar-platform .sidebar-user:hover{background:#334155;}
+.sidebar-platform .sidebar-user img{width:32px;height:32px;border-radius:50%;object-fit:cover;}
+.sidebar-platform .sidebar-user-name{font-size:13px;font-weight:600;color:#fff;}
+.sidebar-platform .sidebar-user-role{font-size:11px;color:#94a3b8;}
+
+/* ORG SIDEBAR (white) */
+.sidebar-org{background:#fff;border-right:1px solid var(--border);padding:20px 14px;display:flex;flex-direction:column;gap:4px;height:860px;overflow-y:auto;}
+.sidebar-org .sidebar-logo{display:flex;align-items:center;gap:10px;padding:4px 10px 20px;margin-bottom:8px;border-bottom:1px solid var(--border);}
+.sidebar-org .sidebar-logo-mark{width:34px;height:34px;border-radius:9px;background:var(--primary-grad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0;}
+.sidebar-org .logo-wrap{display:flex;flex-direction:column;line-height:1.1;}
+.sidebar-org .logo-brand{font-family:'DM Serif Display',serif;font-size:16px;color:var(--text);}
+.sidebar-org .logo-sub{font-size:11px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;}
+.sidebar-org .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:500;transition:all .15s;}
+.sidebar-org .nav-item i{font-size:19px;flex-shrink:0;}
+.sidebar-org .nav-item:hover{background:#f5f5f2;color:var(--text);}
+.sidebar-org .nav-item.active{background:var(--primary-bg);color:var(--primary);font-weight:600;}
+.sidebar-org .nav-badge{margin-left:auto;background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.sidebar-org .sidebar-footer{margin-top:auto;padding-top:12px;border-top:1px solid var(--border);}
+.sidebar-org .sidebar-user{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer;}
+.sidebar-org .sidebar-user:hover{background:#f5f5f2;}
+.sidebar-org .sidebar-user img{width:32px;height:32px;border-radius:50%;object-fit:cover;}
+.sidebar-org .sidebar-user-name{font-size:13px;font-weight:600;color:var(--text);}
+.sidebar-org .sidebar-user-role{font-size:11px;color:var(--muted);}
+
+.main{padding:24px 28px;overflow-y:auto;max-height:860px;}
+.right-rail{background:#fff;border-left:1px solid var(--border);padding:22px 20px;overflow-y:auto;max-height:860px;}
+
+/* ============ TOP HEADER ============ */
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);}
+.page-sub{color:var(--muted);font-size:13px;font-family:'Inter',sans-serif;margin-top:2px;}
+.top-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:16px;flex-wrap:wrap;}
+.search-box{position:relative;flex:1;max-width:360px;}
+.search-box i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;}
+.search-box input{width:100%;padding:9px 12px 9px 34px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fff;color:var(--text);font-family:'Inter',sans-serif;}
+.search-box input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,150,105,.15);}
+.top-actions{display:flex;align-items:center;gap:10px;}
+.icon-btn{width:38px;height:38px;border-radius:8px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);position:relative;}
+.icon-btn:hover{border-color:var(--primary);color:var(--primary);}
+.icon-btn .badge{position:absolute;top:-4px;right:-4px;background:#dc2626;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+
+/* ============ CARDS / COMMON ============ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.card-pad{padding:18px 20px;}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.card-title{font-size:15px;font-weight:700;color:var(--text);font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:8px;}
+.card-title .count{background:#dc2626;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.section-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;font-family:'Outfit',sans-serif;}
+.pill-green{background:var(--primary-bg);color:var(--primary);}
+.pill-amber{background:#fef3c7;color:#d97706;}
+.pill-red{background:#fee2e2;color:#dc2626;}
+.pill-blue{background:#dbeafe;color:#2563eb;}
+.pill-gray{background:#f3f4f6;color:#6b7280;}
+.pill-slate{background:#e2e8f0;color:#334155;}
+.pill-violet{background:#ede9fe;color:#7c3aed;}
+
+/* stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;}
+.stat-label{color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;}
+.stat-label i{color:var(--primary);font-size:14px;}
+.stat-val{font-family:'DM Serif Display',serif;font-size:30px;color:var(--text);margin-top:6px;line-height:1;}
+.stat-delta{font-size:11px;color:var(--primary);font-weight:600;margin-top:6px;display:flex;align-items:center;gap:4px;}
+.stat-delta.down{color:#dc2626;}
+.stat-delta.muted{color:var(--muted);}
+
+/* tables */
+.table{width:100%;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;border-collapse:collapse;}
+.table th{text-align:left;padding:11px 14px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);background:#fafaf9;font-family:'Outfit',sans-serif;}
+.table td{padding:13px 14px;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text);font-family:'Inter',sans-serif;}
+.table tr:last-child td{border-bottom:none;}
+.table tr:hover td{background:#fafaf9;cursor:pointer;}
+.table .avatar-cell{display:flex;align-items:center;gap:10px;}
+.table .avatar-cell img{width:32px;height:32px;border-radius:50%;object-fit:cover;}
+.table .avatar-cell .nm{font-weight:600;color:var(--text);font-family:'Outfit',sans-serif;}
+.table .avatar-cell .sub{font-size:11px;color:var(--muted);}
+.action-menu{color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:6px;}
+.action-menu:hover{background:#f5f5f2;color:var(--text);}
+
+/* filter bar */
+.filter-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.filter-select{padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;cursor:pointer;}
+.chip{padding:6px 12px;border-radius:99px;font-size:12px;font-weight:500;border:1px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600;}
+.chip:hover:not(.active){border-color:var(--primary);color:var(--primary);}
+
+/* pagination */
+.pagination{display:flex;align-items:center;justify-content:space-between;margin-top:14px;font-size:13px;color:var(--muted);font-family:'Inter',sans-serif;}
+.pg-btns{display:flex;gap:4px;}
+.pg-btn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--text);}
+.pg-btn.active{background:var(--slate);color:#fff;border-color:var(--slate);}
+.pg-btn:hover:not(.active){border-color:var(--primary);color:var(--primary);}
+
+/* chart card */
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.chart-head h4{font-size:15px;font-weight:700;color:var(--text);}
+.spark{width:100%;height:auto;}
+
+/* activity list */
+.activity-row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.activity-row:last-child{border-bottom:none;}
+.act-icon{width:34px;height:34px;border-radius:8px;background:var(--primary-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.act-icon.blue{background:#dbeafe;color:#2563eb;}
+.act-icon.amber{background:#fef3c7;color:#d97706;}
+.act-icon.red{background:#fee2e2;color:#dc2626;}
+.act-icon.violet{background:#ede9fe;color:#7c3aed;}
+.act-content{flex:1;}
+.act-title{font-size:13px;color:var(--text);font-family:'Inter',sans-serif;}
+.act-title b{font-weight:600;}
+.act-time{font-size:11px;color:var(--muted);margin-top:2px;font-family:'Inter',sans-serif;}
+
+/* detail profile */
+.profile-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px;text-align:center;}
+.profile-card .avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto 12px;border:4px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,.08);}
+.profile-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);}
+.profile-meta{display:flex;flex-direction:column;gap:8px;margin-top:16px;text-align:left;}
+.profile-meta-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;}
+.profile-meta-row i{color:var(--muted);font-size:16px;width:18px;}
+.profile-meta-row .lbl{color:var(--muted);width:72px;font-size:12px;}
+
+.tab-bar{display:flex;gap:6px;border-bottom:1px solid var(--border);margin-bottom:18px;}
+.tab{padding:10px 14px;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;}
+.tab.active{color:var(--primary);border-color:var(--primary);font-weight:600;}
+.tab:hover:not(.active){color:var(--text);}
+
+/* feature toggles */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-row .t-title{font-size:14px;font-weight:600;color:var(--text);font-family:'Outfit',sans-serif;}
+.toggle-row .t-desc{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;}
+.switch{position:relative;width:40px;height:22px;border-radius:99px;background:#d4d4cc;cursor:pointer;transition:.2s;flex-shrink:0;}
+.switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.switch.on{background:var(--primary);}
+.switch.on::after{left:20px;}
+
+/* donut for 2FA etc */
+.dot-live{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary);margin-right:6px;animation:pulse 2s infinite;}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+
+.divider{height:1px;background:var(--border);margin:16px 0;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.text-muted{color:var(--muted);}
+.text-primary{color:var(--primary);}
+.fw-6{font-weight:600;} .fw-7{font-weight:700;}
+
+/* org hero */
+.org-hero{background:linear-gradient(135deg,#059669,#10b981);color:#fff;border-radius:14px;padding:28px 30px;display:flex;align-items:center;gap:22px;margin-bottom:22px;}
+.org-hero-logo{width:80px;height:80px;border-radius:16px;background:#fff;color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;}
+.org-hero-name{font-family:'DM Serif Display',serif;font-size:28px;line-height:1.1;}
+.org-hero-sub{font-family:'Inter',sans-serif;font-size:13px;opacity:.9;margin-top:4px;}
+.org-hero-stats{display:flex;gap:24px;margin-top:10px;}
+.org-hero-stat .v{font-family:'DM Serif Display',serif;font-size:22px;}
+.org-hero-stat .l{font-size:11px;opacity:.85;text-transform:uppercase;letter-spacing:.5px;font-family:'Outfit',sans-serif;}
+
+/* breadcrumb */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-family:'Inter',sans-serif;margin-bottom:14px;}
+.breadcrumb a{color:var(--muted);text-decoration:none;cursor:pointer;}
+.breadcrumb a:hover{color:var(--primary);}
+.breadcrumb .cur{color:var(--text);font-weight:600;}
+
+/* funnel */
+.funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.funnel-bar{flex:1;height:28px;border-radius:6px;background:linear-gradient(90deg,#059669,#10b981);display:flex;align-items:center;padding:0 12px;color:#fff;font-size:12px;font-weight:600;font-family:'Outfit',sans-serif;}
+.funnel-label{width:120px;font-size:13px;color:var(--text);font-family:'Inter',sans-serif;}
+.funnel-val{width:80px;text-align:right;font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;}
+
+/* viewport scrollbar */
+.viewport-area *::-webkit-scrollbar{width:8px;height:8px;}
+.viewport-area *::-webkit-scrollbar-thumb{background:#d4d4cc;border-radius:4px;}
+.viewport-area *::-webkit-scrollbar-track{background:transparent;}
+
+/* color swatches */
+.swatch-row{display:flex;gap:10px;margin-top:10px;}
+.swatch{width:44px;height:44px;border-radius:10px;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1px var(--border);transition:all .15s;}
+.swatch.active{box-shadow:0 0 0 2px var(--primary);transform:scale(1.05);}
+
+/* upload zone */
+.upload-zone{border:2px dashed #d4d4cc;border-radius:12px;padding:28px;text-align:center;color:var(--muted);background:#fafaf9;cursor:pointer;}
+.upload-zone:hover{border-color:var(--primary);color:var(--primary);}
+.upload-zone i{font-size:32px;display:block;margin-bottom:8px;}
+
+/* danger zone */
+.danger-zone{border:1px solid #fecaca;background:#fef2f2;border-radius:12px;padding:18px;}
+.danger-zone h4{color:#991b1b;font-size:14px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:6px;}
+.danger-zone p{color:#7f1d1d;font-size:12px;font-family:'Inter',sans-serif;margin-bottom:12px;}
+
+/* audit log item */
+.audit-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-family:'Inter',sans-serif;}
+.audit-item:last-child{border-bottom:none;}
+.audit-ts{color:var(--muted);font-size:11px;width:120px;flex-shrink:0;font-variant-numeric:tabular-nums;}
+.audit-body{flex:1;font-size:13px;color:var(--text);}
+.audit-ip{color:var(--muted);font-size:11px;margin-left:8px;font-family:'JetBrains Mono',monospace;}
+
+/* role tag */
+.role-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;font-family:'Outfit',sans-serif;}
+.role-tag.owner{background:#fef3c7;color:#92400e;}
+.role-tag.admin{background:#dbeafe;color:#1e40af;}
+.role-tag.member{background:#f3f4f6;color:#475569;}
+
+/* avatars stack */
+.avatars-stack{display:flex;}
+.avatars-stack img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:2px solid #fff;margin-left:-8px;}
+.avatars-stack img:first-child{margin-left:0;}
+
+/* coming soon badge */
+.coming-soon{background:#ede9fe;color:#7c3aed;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;margin-left:8px;text-transform:uppercase;letter-spacing:.5px;font-family:'Outfit',sans-serif;}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>BamBuddies Admin</h1>
+  <p>Platform &amp; Organization admin prototypes — desktop only</p>
+</div>
+
+<div class="role-switcher">
+  <button class="role-btn active" data-role="platform" onclick="setRole('platform')"><i class="ph-bold ph-shield-star"></i> Platform Admin</button>
+  <button class="role-btn" data-role="org" onclick="setRole('org')"><i class="ph-bold ph-buildings"></i> Org Admin</button>
+</div>
+
+<div id="pageBadge" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#059669,#10b981);color:#fff;padding:10px 22px;border-radius:99px;font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;letter-spacing:.2px;box-shadow:0 6px 22px rgba(5,150,105,.35);margin:0 auto 18px;width:fit-content;">
+  <span style="opacity:.75;font-weight:600;font-size:11px;letter-spacing:2px;text-transform:uppercase;">Page</span>
+  <span id="pageNum" style="font-size:20px;font-weight:800;letter-spacing:-.5px;">01</span>
+  <span style="opacity:.5;">·</span>
+  <span id="pageName">Admin Login</span>
+</div>
+
+<details style="max-width:1100px;margin:0 auto 22px;background:#141414;border:1px solid #222;border-radius:14px;overflow:hidden;font-family:'Outfit',sans-serif;">
+  <summary style="cursor:pointer;padding:12px 18px;color:#aaa;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:space-between;list-style:none;">
+    <span><i class="ph ph-list-numbers" style="margin-right:6px;vertical-align:-2px;"></i> <span id="pageRefTitle">Platform Admin — 12 pages</span> — click to expand</span>
+    <i class="ph ph-caret-down" style="font-size:14px;"></i>
+  </summary>
+  <div id="pageIndex" style="padding:14px 18px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;border-top:1px solid #222;"></div>
+</details>
+
+<div class="frame-wrap">
+  <div class="browser-frame" id="frame">
+    <div class="browser-chrome">
+      <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <div class="addr"><i class="ph-fill ph-lock-simple"></i> <span id="addr-text">admin.bambuddies.com/login</span></div>
+      <div class="chrome-icons"><i class="ph ph-arrow-clockwise"></i><i class="ph ph-star"></i><i class="ph ph-dots-three-vertical"></i></div>
+    </div>
+    <div class="viewport-area" id="viewport">
+      <div id="screens">
+
+<!-- ============ PLATFORM: ADMIN LOGIN ============ -->
+<div class="screen active" data-screen="pLogin">
+  <div class="auth-wrap platform">
+    <div class="auth-card">
+      <div class="auth-wordmark">
+        <div class="wm-text"><span class="bam">Bam</span><span class="buddies">Buddies</span></div>
+        <div class="admin-pill"><i class="ph-fill ph-shield-star"></i> ADMIN</div>
+      </div>
+      <div class="auth-title">Staff sign in</div>
+      <div class="auth-sub">Platform administration portal</div>
+      <div class="field"><label>Work email</label><input class="input" type="email" value="admin@bambuddies.com"></div>
+      <div class="field"><label>Password</label><input class="input" type="password" value="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"></div>
+      <div class="two-fa-note"><i class="ph-fill ph-shield-check"></i> Two-factor authentication enabled</div>
+      <button class="btn btn-slate btn-block btn-lg" onclick="go('pDashboard')">Sign in with 2FA</button>
+      <div class="auth-warning">
+        <i class="ph-fill ph-warning"></i>
+        <div>This portal is for authorized BamBuddies staff only. All activity is logged and monitored.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: DASHBOARD ============ -->
+<div class="screen" data-screen="pDashboard">
+  <div class="app-layout with-right" data-role="platform">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Platform Overview</div>
+          <div class="page-sub"><span class="dot-live"></span> Live data · Updated 12s ago</div>
+        </div>
+        <div class="top-actions">
+          <div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search users, games, orgs..."></div>
+          <div class="icon-btn"><i class="ph ph-bell"></i><span class="badge">12</span></div>
+          <button class="btn btn-slate"><i class="ph-bold ph-download-simple"></i> Export</button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-label"><i class="ph-fill ph-users"></i> Total Users</div>
+          <div class="stat-val">12,347</div>
+          <div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +847 this month</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><i class="ph-fill ph-game-controller"></i> Active Games</div>
+          <div class="stat-val">89</div>
+          <div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +12 this week</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><i class="ph-fill ph-buildings"></i> Organizations</div>
+          <div class="stat-val">12</div>
+          <div class="stat-delta muted">No change</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><i class="ph-fill ph-currency-dollar"></i> MRR</div>
+          <div class="stat-val">$4,280</div>
+          <div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +8.2% MoM</div>
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:20px;">
+        <div class="chart-head">
+          <h4>User growth</h4>
+          <div style="display:flex;gap:6px;">
+            <span class="chip active">12M</span>
+            <span class="chip">6M</span>
+            <span class="chip">3M</span>
+            <span class="chip">30D</span>
+          </div>
+        </div>
+        <svg class="spark" viewBox="0 0 700 200" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="grad1" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#10b981" stop-opacity=".35"/>
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g stroke="#f0f0eb" stroke-width="1">
+            <line x1="0" y1="40" x2="700" y2="40"/>
+            <line x1="0" y1="80" x2="700" y2="80"/>
+            <line x1="0" y1="120" x2="700" y2="120"/>
+            <line x1="0" y1="160" x2="700" y2="160"/>
+          </g>
+          <path d="M0,170 L58,165 L116,150 L174,145 L232,128 L290,112 L348,95 L406,80 L464,68 L522,52 L580,40 L640,28 L700,18 L700,200 L0,200 Z" fill="url(#grad1)"/>
+          <path d="M0,170 L58,165 L116,150 L174,145 L232,128 L290,112 L348,95 L406,80 L464,68 L522,52 L580,40 L640,28 L700,18" stroke="#059669" stroke-width="2.5" fill="none"/>
+          <g fill="#059669">
+            <circle cx="58" cy="165" r="3"/><circle cx="232" cy="128" r="3"/><circle cx="406" cy="80" r="3"/><circle cx="580" cy="40" r="3"/><circle cx="700" cy="18" r="4"/>
+          </g>
+          <g font-family="Inter,sans-serif" font-size="10" fill="#9ca3af">
+            <text x="0" y="195">May</text><text x="120" y="195">Jul</text><text x="240" y="195">Sep</text><text x="360" y="195">Nov</text><text x="480" y="195">Jan</text><text x="600" y="195">Mar</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-clock-countdown"></i> Recent Activity</div></div>
+          <div style="padding:6px 18px 18px;">
+            <div class="activity-row"><div class="act-icon"><i class="ph-fill ph-user-plus"></i></div><div class="act-content"><div class="act-title">New user <b>Priya Rao</b> signed up via Google</div><div class="act-time">2 minutes ago</div></div></div>
+            <div class="activity-row"><div class="act-icon blue"><i class="ph-fill ph-game-controller"></i></div><div class="act-content"><div class="act-title"><b>Sarah Rodriguez</b> created "Saturday Mahjong" game</div><div class="act-time">14 minutes ago</div></div></div>
+            <div class="activity-row"><div class="act-icon amber"><i class="ph-fill ph-flag"></i></div><div class="act-content"><div class="act-title">New report filed: spam in "Seattle Mahjong Co." chat</div><div class="act-time">38 minutes ago</div></div></div>
+            <div class="activity-row"><div class="act-icon violet"><i class="ph-fill ph-buildings"></i></div><div class="act-content"><div class="act-title">Portland Mahjong Club upgraded to Pro plan</div><div class="act-time">1 hour ago</div></div></div>
+            <div class="activity-row"><div class="act-icon"><i class="ph-fill ph-user-plus"></i></div><div class="act-content"><div class="act-title">New user <b>Marcus Lee</b> signed up via phone</div><div class="act-time">2 hours ago</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-pulse"></i> System Health</div><span class="pill pill-green"><span class="dot-live"></span> All systems operational</span></div>
+          <div style="padding:18px 20px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:14px;"><span style="color:var(--muted);font-size:13px;font-family:'Inter',sans-serif;">API uptime (30d)</span><span class="fw-7" style="color:var(--primary);">99.94%</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:14px;"><span style="color:var(--muted);font-size:13px;font-family:'Inter',sans-serif;">Avg response time</span><span class="fw-7">124ms</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:14px;"><span style="color:var(--muted);font-size:13px;font-family:'Inter',sans-serif;">Error rate (24h)</span><span class="fw-7" style="color:var(--primary);">0.02%</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:14px;"><span style="color:var(--muted);font-size:13px;font-family:'Inter',sans-serif;">Database latency</span><span class="fw-7">8ms</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);font-size:13px;font-family:'Inter',sans-serif;">SMS delivery rate</span><span class="fw-7" style="color:var(--primary);">99.2%</span></div>
+            <div class="divider"></div>
+            <div style="font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;">Last incident: 14 days ago — brief SMS provider outage (11 min)</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="right-rail">
+      <div class="section-title"><i class="ph-fill ph-warning" style="color:#dc2626;"></i> Open Reports <span style="background:#dc2626;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:4px;">12</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px;cursor:pointer;" onclick="go('pReports')">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+            <span class="pill pill-red">HIGH</span>
+            <span style="font-size:11px;color:var(--muted);">2h ago</span>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);">Harassment in game chat</div>
+          <div style="font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;">Reported by Lisa Martinez</div>
+        </div>
+        <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px;cursor:pointer;" onclick="go('pReports')">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+            <span class="pill pill-amber">MED</span>
+            <span style="font-size:11px;color:var(--muted);">5h ago</span>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);">Spam messages</div>
+          <div style="font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;">3 similar reports</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;" onclick="go('pReports')">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+            <span class="pill pill-gray">LOW</span>
+            <span style="font-size:11px;color:var(--muted);">1d ago</span>
+          </div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);">Inappropriate avatar</div>
+          <div style="font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;">Reported by Amy Tan</div>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-block" style="margin-top:14px;" onclick="go('pReports')">View all reports</button>
+      <div class="divider"></div>
+      <div class="section-title">Quick Actions</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-megaphone"></i> Broadcast message</button>
+        <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-warning-octagon"></i> Maintenance mode</button>
+        <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-export"></i> Export analytics</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: USERS LIST ============ -->
+<div class="screen" data-screen="pUsers">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Users</div>
+          <div class="page-sub">12,347 total · 1,847 active in last 7 days</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary"><i class="ph ph-file-csv"></i> Export CSV</button>
+          <button class="btn btn-slate"><i class="ph-bold ph-plus"></i> Add User</button>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="search-box" style="max-width:280px;"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search by name, email, phone..."></div>
+        <select class="filter-select"><option>All statuses</option><option>Active</option><option>Suspended</option><option>Pending</option></select>
+        <select class="filter-select"><option>All roles</option><option>Member</option><option>Org Admin</option><option>Platform Admin</option></select>
+        <select class="filter-select"><option>Joined anytime</option><option>Last 7 days</option><option>Last 30 days</option><option>Last 90 days</option></select>
+        <select class="filter-select"><option>Any location</option><option>Portland, OR</option><option>Seattle, WA</option><option>New York, NY</option></select>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>User</th><th>Phone</th><th>Joined</th><th>Games</th><th>Status</th><th>Last active</th><th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr onclick="go('pUserDetail')">
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face"><div><div class="nm">Sarah Rodriguez</div><div class="sub">sarah.r@example.com</div></div></div></td>
+            <td>+1 (555) 201-4418</td><td>Jan 14, 2024</td><td>24</td><td><span class="pill pill-green">Active</span></td><td>2m ago</td><td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face"><div><div class="nm">Lisa Martinez</div><div class="sub">lisa.m@example.com</div></div></div></td>
+            <td>+1 (555) 334-9902</td><td>Mar 02, 2024</td><td>18</td><td><span class="pill pill-green">Active</span></td><td>1h ago</td><td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face"><div><div class="nm">Amy Tan</div><div class="sub">amy.tan@example.com</div></div></div></td>
+            <td>+1 (555) 771-0834</td><td>Feb 11, 2024</td><td>31</td><td><span class="pill pill-green">Active</span></td><td>3h ago</td><td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"><div><div class="nm">Rachel Kim</div><div class="sub">rachel.k@example.com</div></div></div></td>
+            <td>+1 (555) 412-7788</td><td>Apr 05, 2026</td><td>2</td><td><span class="pill pill-amber">Pending verify</span></td><td>4h ago</td><td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face"><div><div class="nm">Jessica Wong</div><div class="sub">jess.wong@example.com</div></div></div></td>
+            <td>+1 (555) 998-2214</td><td>Nov 20, 2023</td><td>42</td><td><span class="pill pill-green">Active</span></td><td>8h ago</td><td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"><div><div class="nm">Marcus Lee</div><div class="sub">marcus.lee@example.com</div></div></div></td>
+            <td>+1 (555) 665-1120</td><td>Apr 17, 2026</td><td>0</td><td><span class="pill pill-amber">Pending verify</span></td><td>Just now</td><td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=80&h=80&fit=crop&crop=face"><div><div class="nm">Priya Rao</div><div class="sub">priya.r@example.com</div></div></div></td>
+            <td>+1 (555) 220-7733</td><td>Apr 17, 2026</td><td>0</td><td><span class="pill pill-green">Active</span></td><td>Just now</td><td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" style="filter:grayscale(.6);"><div><div class="nm">Helen Park</div><div class="sub">helen.p@example.com</div></div></div></td>
+            <td>+1 (555) 338-4455</td><td>Sep 14, 2024</td><td>7</td><td><span class="pill pill-red">Suspended</span></td><td>14d ago</td><td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <span>Showing 1-8 of 12,347 users</span>
+        <div class="pg-btns">
+          <span class="pg-btn"><i class="ph ph-caret-left"></i></span>
+          <span class="pg-btn active">1</span><span class="pg-btn">2</span><span class="pg-btn">3</span><span class="pg-btn">4</span><span class="pg-btn">…</span><span class="pg-btn">1544</span>
+          <span class="pg-btn"><i class="ph ph-caret-right"></i></span>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: USER DETAIL ============ -->
+<div class="screen" data-screen="pUserDetail">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="btn btn-ghost btn-sm" onclick="go('pUsers')"><i class="ph ph-arrow-left"></i> Back to users</span>
+      </div>
+      <div class="top-header">
+        <div>
+          <div class="page-title">Sarah Rodriguez</div>
+          <div class="page-sub">User ID: usr_8f4a2b1c · Member since Jan 14, 2024</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary"><i class="ph ph-envelope"></i> Send email</button>
+          <button class="btn btn-danger"><i class="ph ph-prohibit"></i> Suspend</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;">
+        <div>
+          <div class="profile-card">
+            <img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop&crop=face">
+            <div class="profile-name">Sarah Rodriguez</div>
+            <span class="pill pill-green" style="margin-top:6px;">Active · Verified</span>
+            <div class="profile-meta">
+              <div class="profile-meta-row"><i class="ph ph-envelope"></i><span class="lbl">Email</span><span>sarah.r@example.com</span></div>
+              <div class="profile-meta-row"><i class="ph ph-phone"></i><span class="lbl">Phone</span><span>+1 (555) 201-4418</span></div>
+              <div class="profile-meta-row"><i class="ph ph-calendar"></i><span class="lbl">Joined</span><span>Jan 14, 2024</span></div>
+              <div class="profile-meta-row"><i class="ph ph-map-pin"></i><span class="lbl">Location</span><span>Portland, OR</span></div>
+              <div class="profile-meta-row"><i class="ph ph-trophy"></i><span class="lbl">Level</span><span>Intermediate</span></div>
+              <div class="profile-meta-row"><i class="ph ph-clock"></i><span class="lbl">Last seen</span><span>2 minutes ago</span></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px;">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-shield-warning"></i> Admin Actions</div></div>
+            <div style="padding:12px;display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-key"></i> Reset password</button>
+              <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-shield-check"></i> Force 2FA</button>
+              <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-user-switch"></i> Merge accounts</button>
+              <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-envelope-simple"></i> Send message</button>
+              <button class="btn btn-danger" style="justify-content:flex-start;"><i class="ph ph-prohibit"></i> Suspend account</button>
+              <button class="btn btn-danger" style="justify-content:flex-start;"><i class="ph ph-trash"></i> Delete account</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="tab-bar">
+            <div class="tab active">Games (24)</div>
+            <div class="tab">Groups (4)</div>
+            <div class="tab">Activity</div>
+            <div class="tab">Devices</div>
+            <div class="tab">Audit Log</div>
+          </div>
+
+          <div class="stats-row" style="grid-template-columns:repeat(3,1fr);">
+            <div class="stat"><div class="stat-label">Games played</div><div class="stat-val">24</div><div class="stat-delta">+6 this month</div></div>
+            <div class="stat"><div class="stat-label">Games hosted</div><div class="stat-val">9</div><div class="stat-delta muted">38% of total</div></div>
+            <div class="stat"><div class="stat-label">Show rate</div><div class="stat-val">96%</div><div class="stat-delta">Excellent</div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-game-controller"></i> Recent Games</div></div>
+            <table class="table" style="border:none;border-radius:0;">
+              <thead><tr><th>Date</th><th>Game</th><th>Role</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Apr 19, 2026</td><td>Saturday Mahjong</td><td><span class="role-tag owner">Host</span></td><td><span class="pill pill-blue">Committed</span></td></tr>
+                <tr><td>Apr 12, 2026</td><td>PDX Sunday Social</td><td><span class="role-tag member">Player</span></td><td><span class="pill pill-green">Completed</span></td></tr>
+                <tr><td>Apr 05, 2026</td><td>Downtown Meetup</td><td><span class="role-tag member">Player</span></td><td><span class="pill pill-green">Completed</span></td></tr>
+                <tr><td>Mar 29, 2026</td><td>Laurelhurst Mahjong</td><td><span class="role-tag owner">Host</span></td><td><span class="pill pill-green">Completed</span></td></tr>
+                <tr><td>Mar 22, 2026</td><td>Beginner Night</td><td><span class="role-tag member">Player</span></td><td><span class="pill pill-gray">Cancelled</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card" style="margin-top:16px;">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-scroll"></i> Admin Audit Log</div></div>
+            <div style="padding:8px 18px 18px;">
+              <div class="audit-item"><div class="audit-ts">Apr 17 09:14</div><div class="audit-body"><b>Jake (admin)</b> updated user's email preference<span class="audit-ip">192.168.1.12</span></div></div>
+              <div class="audit-item"><div class="audit-ts">Apr 02 14:33</div><div class="audit-body"><b>System</b> auto-verified phone number<span class="audit-ip">—</span></div></div>
+              <div class="audit-item"><div class="audit-ts">Jan 14 08:22</div><div class="audit-body"><b>System</b> account created via email signup<span class="audit-ip">76.14.203.8</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<!-- ============ PLATFORM: GAMES LIST ============ -->
+<div class="screen" data-screen="pGames">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Games</div>
+          <div class="page-sub">89 active · 1,244 completed · 18 cancelled this month</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary"><i class="ph ph-file-csv"></i> Export</button>
+          <button class="btn btn-slate"><i class="ph ph-funnel"></i> Advanced filters</button>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <span class="chip active">All (89)</span>
+        <span class="chip">Pending (12)</span>
+        <span class="chip">Committed (24)</span>
+        <span class="chip">Started (6)</span>
+        <span class="chip">Completed (1244)</span>
+        <span class="chip">Cancelled (18)</span>
+        <span class="chip">Reported (3)</span>
+      </div>
+
+      <div class="filter-bar">
+        <div class="search-box" style="max-width:280px;"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search games..."></div>
+        <select class="filter-select"><option>Any type</option><option>American MJ</option><option>Hong Kong</option><option>Japanese Riichi</option></select>
+        <select class="filter-select"><option>Any date</option><option>Today</option><option>This week</option><option>This month</option></select>
+        <select class="filter-select"><option>Any organizer</option><option>Individual</option><option>Organization</option></select>
+      </div>
+
+      <table class="table">
+        <thead><tr><th>Date</th><th>Game</th><th>Organizer</th><th>Players</th><th>Location</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr onclick="go('pGameDetail')">
+            <td><div class="fw-6">Apr 19, 2026</div><div class="text-muted" style="font-size:11px;">Sat, 2:00 PM</div></td>
+            <td><div class="fw-6">Saturday Mahjong</div><div class="text-muted" style="font-size:11px;">American · 3hrs</div></td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Sarah Rodriguez</span></div></td>
+            <td>4/4</td><td>Portland, OR</td><td><span class="pill pill-blue">Committed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 19, 2026</div><div class="text-muted" style="font-size:11px;">Sat, 7:00 PM</div></td>
+            <td><div class="fw-6">NYC Riichi Night</div><div class="text-muted" style="font-size:11px;">Japanese · 4hrs</div></td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Marcus Lee</span></div></td>
+            <td>3/4</td><td>Brooklyn, NY</td><td><span class="pill pill-amber">Pending</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 20, 2026</div><div class="text-muted" style="font-size:11px;">Sun, 11:00 AM</div></td>
+            <td><div class="fw-6">Sunday Brunch Mahjong</div><div class="text-muted" style="font-size:11px;">American · 3hrs</div></td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Lisa Martinez</span></div></td>
+            <td>4/4</td><td>Austin, TX</td><td><span class="pill pill-blue">Committed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 17, 2026</div><div class="text-muted" style="font-size:11px;">Thu, 6:00 PM</div></td>
+            <td><div class="fw-6">Seattle Thursday</div><div class="text-muted" style="font-size:11px;">Hong Kong · 3hrs</div></td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Amy Tan</span></div></td>
+            <td>4/4</td><td>Seattle, WA</td><td><span class="pill pill-violet">Started</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 15, 2026</div><div class="text-muted" style="font-size:11px;">Tue, 7:30 PM</div></td>
+            <td><div class="fw-6">Beginner Night</div><div class="text-muted" style="font-size:11px;">American · 2hrs</div></td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Jessica Wong</span></div></td>
+            <td>4/4</td><td>Portland, OR</td><td><span class="pill pill-green">Completed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 12, 2026</div><div class="text-muted" style="font-size:11px;">Sat, 1:00 PM</div></td>
+            <td><div class="fw-6">Downtown Meetup</div><div class="text-muted" style="font-size:11px;">American · 3hrs</div></td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Rachel Kim</span></div></td>
+            <td>3/4</td><td>Portland, OR</td><td><span class="pill pill-gray">Cancelled</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 10, 2026</div><div class="text-muted" style="font-size:11px;">Thu, 8:00 PM</div></td>
+            <td><div class="fw-6">NYC Tournament Prep</div><div class="text-muted" style="font-size:11px;">Japanese · 4hrs</div></td>
+            <td><div class="avatar-cell"><i class="ph-fill ph-buildings" style="color:var(--primary);font-size:22px;"></i><span>NYC Mahjong Society</span></div></td>
+            <td>8/8</td><td>Manhattan, NY</td><td><span class="pill pill-green">Completed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 08, 2026</div><div class="text-muted" style="font-size:11px;">Tue, 6:30 PM</div></td>
+            <td><div class="fw-6">Austin Weekly</div><div class="text-muted" style="font-size:11px;">American · 3hrs</div></td>
+            <td><div class="avatar-cell"><i class="ph-fill ph-buildings" style="color:var(--primary);font-size:22px;"></i><span>Austin Players</span></div></td>
+            <td>4/4</td><td>Austin, TX</td><td><span class="pill pill-green">Completed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 05, 2026</div><div class="text-muted" style="font-size:11px;">Sat, 2:00 PM</div></td>
+            <td><div class="fw-6">Laurelhurst Mahjong <span class="pill pill-red" style="margin-left:6px;">Reported</span></div><div class="text-muted" style="font-size:11px;">American · 3hrs</div></td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Priya Rao</span></div></td>
+            <td>4/4</td><td>Portland, OR</td><td><span class="pill pill-green">Completed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 03, 2026</div><div class="text-muted" style="font-size:11px;">Thu, 7:00 PM</div></td>
+            <td><div class="fw-6">Seattle Co. Social</div><div class="text-muted" style="font-size:11px;">Hong Kong · 3hrs</div></td>
+            <td><div class="avatar-cell"><i class="ph-fill ph-buildings" style="color:var(--primary);font-size:22px;"></i><span>Seattle Mahjong Co.</span></div></td>
+            <td>4/4</td><td>Seattle, WA</td><td><span class="pill pill-green">Completed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <span>Showing 1-10 of 89 active games</span>
+        <div class="pg-btns">
+          <span class="pg-btn"><i class="ph ph-caret-left"></i></span>
+          <span class="pg-btn active">1</span><span class="pg-btn">2</span><span class="pg-btn">3</span>…<span class="pg-btn">9</span>
+          <span class="pg-btn"><i class="ph ph-caret-right"></i></span>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: GAME DETAIL ============ -->
+<div class="screen" data-screen="pGameDetail">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="btn btn-ghost btn-sm" onclick="go('pGames')"><i class="ph ph-arrow-left"></i> Back to games</span>
+      </div>
+      <div class="top-header">
+        <div>
+          <div class="page-title">Saturday Mahjong</div>
+          <div class="page-sub">Game ID: gm_4e82a1f · Saturday, Apr 19, 2026 · 2:00 PM PST</div>
+        </div>
+        <div class="top-actions">
+          <span class="pill pill-blue" style="font-size:13px;padding:6px 14px;">Committed</span>
+          <button class="btn btn-secondary"><i class="ph ph-eye"></i> View as player</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 300px;gap:20px;">
+        <div>
+          <div class="card card-pad" style="margin-bottom:16px;">
+            <div class="card-title" style="margin-bottom:12px;"><i class="ph-fill ph-info"></i> Game Info</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-family:'Inter',sans-serif;font-size:13px;">
+              <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Organizer</div><div class="fw-6 mt-1">Sarah Rodriguez</div></div>
+              <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Type</div><div class="fw-6 mt-1">American Mahjong</div></div>
+              <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Duration</div><div class="fw-6 mt-1">3 hours</div></div>
+              <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Location</div><div class="fw-6 mt-1">1245 SE Hawthorne, Portland</div></div>
+              <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Created</div><div class="fw-6 mt-1">Apr 14, 2026 10:22 AM</div></div>
+              <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Organization</div><div class="fw-6 mt-1">Portland Mahjong Club</div></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:16px;">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-users"></i> Participants (4/4)</div></div>
+            <div style="padding:8px;">
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:40px;height:40px;border-radius:50%;">
+                <div style="flex:1;"><div class="fw-6">Sarah Rodriguez</div><div class="text-muted" style="font-size:12px;">Host · Intermediate</div></div>
+                <span class="pill pill-green">Confirmed</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" style="width:40px;height:40px;border-radius:50%;">
+                <div style="flex:1;"><div class="fw-6">Lisa Martinez</div><div class="text-muted" style="font-size:12px;">Intermediate</div></div>
+                <span class="pill pill-green">Confirmed</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face" style="width:40px;height:40px;border-radius:50%;">
+                <div style="flex:1;"><div class="fw-6">Amy Tan</div><div class="text-muted" style="font-size:12px;">Advanced</div></div>
+                <span class="pill pill-green">Confirmed</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" style="width:40px;height:40px;border-radius:50%;">
+                <div style="flex:1;"><div class="fw-6">Rachel Kim</div><div class="text-muted" style="font-size:12px;">Beginner</div></div>
+                <span class="pill pill-green">Confirmed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-scroll"></i> Audit Log</div></div>
+            <div style="padding:8px 18px 18px;">
+              <div class="audit-item"><div class="audit-ts">Apr 17 14:22</div><div class="audit-body"><b>Rachel Kim</b> confirmed attendance<span class="audit-ip">app-ios/2.4.1</span></div></div>
+              <div class="audit-item"><div class="audit-ts">Apr 16 09:18</div><div class="audit-body"><b>Amy Tan</b> applied and was accepted<span class="audit-ip">app-ios/2.4.1</span></div></div>
+              <div class="audit-item"><div class="audit-ts">Apr 15 20:44</div><div class="audit-body"><b>Lisa Martinez</b> applied and was accepted<span class="audit-ip">web</span></div></div>
+              <div class="audit-item"><div class="audit-ts">Apr 14 10:22</div><div class="audit-body"><b>Sarah Rodriguez</b> created game<span class="audit-ip">192.168.1.12</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-shield-warning"></i> Admin Actions</div></div>
+            <div style="padding:12px;display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-user-switch"></i> Transfer organizer</button>
+              <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-chat-circle-slash"></i> Lock thread</button>
+              <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-currency-dollar"></i> Issue refund</button>
+              <button class="btn btn-danger" style="justify-content:flex-start;"><i class="ph ph-x-circle"></i> Cancel game</button>
+              <button class="btn btn-danger" style="justify-content:flex-start;"><i class="ph ph-prohibit"></i> Ban players</button>
+            </div>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-title" style="margin-bottom:10px;"><i class="ph-fill ph-package"></i> What to bring</div>
+            <div style="font-size:13px;font-family:'Inter',sans-serif;color:var(--text);">
+              <div style="margin-bottom:6px;">• Sarah: mahjong set</div>
+              <div style="margin-bottom:6px;">• Lisa: snacks</div>
+              <div style="margin-bottom:6px;">• Amy: drinks</div>
+              <div>• Rachel: dessert</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: ORGS LIST ============ -->
+<div class="screen" data-screen="pOrgs">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Organizations</div>
+          <div class="page-sub">12 active · 2,489 total members across all orgs</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary"><i class="ph ph-file-csv"></i> Export</button>
+          <button class="btn btn-slate"><i class="ph-bold ph-plus"></i> New Organization</button>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card card-pad" style="cursor:pointer;" onclick="go('pOrgDetail')">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:48px;height:48px;border-radius:12px;background:var(--primary-grad);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;">PM</div>
+            <div style="flex:1;"><div class="fw-7" style="font-size:15px;">Portland Mahjong Club</div><div class="text-muted" style="font-size:12px;">Portland, OR</div></div>
+            <span class="pill pill-green">Active</span>
+          </div>
+          <div style="display:flex;gap:20px;padding-top:12px;border-top:1px solid var(--border);">
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Members</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">142</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Games</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">48</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Plan</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">Pro</div></div>
+          </div>
+          <button class="btn btn-secondary btn-block" style="margin-top:14px;">Manage <i class="ph ph-arrow-right"></i></button>
+        </div>
+
+        <div class="card card-pad" style="cursor:pointer;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;">NY</div>
+            <div style="flex:1;"><div class="fw-7" style="font-size:15px;">NYC Mahjong Society</div><div class="text-muted" style="font-size:12px;">New York, NY</div></div>
+            <span class="pill pill-green">Active</span>
+          </div>
+          <div style="display:flex;gap:20px;padding-top:12px;border-top:1px solid var(--border);">
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Members</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">318</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Games</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">127</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Plan</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">Pro</div></div>
+          </div>
+          <button class="btn btn-secondary btn-block" style="margin-top:14px;">Manage <i class="ph ph-arrow-right"></i></button>
+        </div>
+
+        <div class="card card-pad" style="cursor:pointer;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;">AP</div>
+            <div style="flex:1;"><div class="fw-7" style="font-size:15px;">Austin Players</div><div class="text-muted" style="font-size:12px;">Austin, TX</div></div>
+            <span class="pill pill-green">Active</span>
+          </div>
+          <div style="display:flex;gap:20px;padding-top:12px;border-top:1px solid var(--border);">
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Members</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">87</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Games</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">34</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Plan</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">Free</div></div>
+          </div>
+          <button class="btn btn-secondary btn-block" style="margin-top:14px;">Manage <i class="ph ph-arrow-right"></i></button>
+        </div>
+
+        <div class="card card-pad" style="cursor:pointer;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#06b6d4,#3b82f6);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;">SE</div>
+            <div style="flex:1;"><div class="fw-7" style="font-size:15px;">Seattle Mahjong Co.</div><div class="text-muted" style="font-size:12px;">Seattle, WA</div></div>
+            <span class="pill pill-green">Active</span>
+          </div>
+          <div style="display:flex;gap:20px;padding-top:12px;border-top:1px solid var(--border);">
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Members</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">203</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Games</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">62</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Plan</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">Pro</div></div>
+          </div>
+          <button class="btn btn-secondary btn-block" style="margin-top:14px;">Manage <i class="ph ph-arrow-right"></i></button>
+        </div>
+
+        <div class="card card-pad" style="cursor:pointer;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#ec4899,#f97316);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;">LA</div>
+            <div style="flex:1;"><div class="fw-7" style="font-size:15px;">LA Bamboo Club</div><div class="text-muted" style="font-size:12px;">Los Angeles, CA</div></div>
+            <span class="pill pill-green">Active</span>
+          </div>
+          <div style="display:flex;gap:20px;padding-top:12px;border-top:1px solid var(--border);">
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Members</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">156</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Games</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">52</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Plan</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">Pro</div></div>
+          </div>
+          <button class="btn btn-secondary btn-block" style="margin-top:14px;">Manage <i class="ph ph-arrow-right"></i></button>
+        </div>
+
+        <div class="card card-pad" style="cursor:pointer;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:48px;height:48px;border-radius:12px;background:#94a3b8;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;">CH</div>
+            <div style="flex:1;"><div class="fw-7" style="font-size:15px;">Chicago West Loop</div><div class="text-muted" style="font-size:12px;">Chicago, IL</div></div>
+            <span class="pill pill-red">Suspended</span>
+          </div>
+          <div style="display:flex;gap:20px;padding-top:12px;border-top:1px solid var(--border);">
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Members</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">44</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Games</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">0</div></div>
+            <div><div class="text-muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Plan</div><div class="fw-7" style="font-size:18px;font-family:'DM Serif Display',serif;">Free</div></div>
+          </div>
+          <button class="btn btn-secondary btn-block" style="margin-top:14px;">Review <i class="ph ph-arrow-right"></i></button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<!-- ============ PLATFORM: ORG DETAIL ============ -->
+<div class="screen" data-screen="pOrgDetail">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="btn btn-ghost btn-sm" onclick="go('pOrgs')"><i class="ph ph-arrow-left"></i> Back to organizations</span>
+      </div>
+
+      <div class="org-hero">
+        <div class="org-hero-logo"><i class="ph-fill ph-buildings"></i></div>
+        <div style="flex:1;">
+          <div class="org-hero-name">Portland Mahjong Club</div>
+          <div class="org-hero-sub">Portland, OR · Founded Jan 2024 · Pro plan</div>
+          <div class="org-hero-stats">
+            <div class="org-hero-stat"><div class="v">142</div><div class="l">Members</div></div>
+            <div class="org-hero-stat"><div class="v">48</div><div class="l">Games</div></div>
+            <div class="org-hero-stat"><div class="v">12</div><div class="l">This month</div></div>
+            <div class="org-hero-stat"><div class="v">4.8</div><div class="l">Avg rating</div></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button class="btn btn-secondary" style="background:#fff;color:var(--primary);"><i class="ph ph-eye"></i> View public page</button>
+          <button class="btn btn-secondary" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.3);"><i class="ph ph-prohibit"></i> Suspend</button>
+        </div>
+      </div>
+
+      <div class="tab-bar">
+        <div class="tab active">Overview</div>
+        <div class="tab">Members (142)</div>
+        <div class="tab">Games (48)</div>
+        <div class="tab">Admins (3)</div>
+        <div class="tab">Billing</div>
+        <div class="tab">Branding</div>
+        <div class="tab">Settings</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="chart-card">
+          <div class="chart-head"><h4>Member growth</h4></div>
+          <svg class="spark" viewBox="0 0 500 160" preserveAspectRatio="none">
+            <g stroke="#f0f0eb"><line x1="0" y1="40" x2="500" y2="40"/><line x1="0" y1="80" x2="500" y2="80"/><line x1="0" y1="120" x2="500" y2="120"/></g>
+            <defs><linearGradient id="g2" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity=".3"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,130 L80,122 L160,105 L240,90 L320,72 L400,50 L500,28 L500,160 L0,160 Z" fill="url(#g2)"/>
+            <path d="M0,130 L80,122 L160,105 L240,90 L320,72 L400,50 L500,28" stroke="#059669" stroke-width="2.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="chart-card">
+          <div class="chart-head"><h4>Games per week</h4></div>
+          <svg class="spark" viewBox="0 0 500 160" preserveAspectRatio="none">
+            <g stroke="#f0f0eb"><line x1="0" y1="40" x2="500" y2="40"/><line x1="0" y1="80" x2="500" y2="80"/><line x1="0" y1="120" x2="500" y2="120"/></g>
+            <g fill="#059669">
+              <rect x="20" y="100" width="28" height="40" rx="4"/>
+              <rect x="68" y="80" width="28" height="60" rx="4"/>
+              <rect x="116" y="90" width="28" height="50" rx="4"/>
+              <rect x="164" y="70" width="28" height="70" rx="4"/>
+              <rect x="212" y="60" width="28" height="80" rx="4"/>
+              <rect x="260" y="50" width="28" height="90" rx="4"/>
+              <rect x="308" y="40" width="28" height="100" rx="4"/>
+              <rect x="356" y="55" width="28" height="85" rx="4"/>
+              <rect x="404" y="30" width="28" height="110" rx="4"/>
+              <rect x="452" y="20" width="28" height="120" rx="4"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-star"></i> Top Games</div></div>
+          <table class="table" style="border:none;border-radius:0;">
+            <thead><tr><th>Game</th><th>Attendance</th><th>Rating</th></tr></thead>
+            <tbody>
+              <tr><td class="fw-6">Saturday Mahjong</td><td>96%</td><td>4.9 ★</td></tr>
+              <tr><td class="fw-6">Beginner Night</td><td>92%</td><td>4.8 ★</td></tr>
+              <tr><td class="fw-6">Downtown Meetup</td><td>88%</td><td>4.7 ★</td></tr>
+              <tr><td class="fw-6">Laurelhurst Mahjong</td><td>84%</td><td>4.6 ★</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-trophy"></i> Most Active Members</div></div>
+          <div style="padding:8px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;">
+              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:34px;height:34px;border-radius:50%;">
+              <div style="flex:1;"><div class="fw-6">Sarah Rodriguez</div><div class="text-muted" style="font-size:12px;">24 games</div></div>
+              <span class="role-tag owner">Owner</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:34px;height:34px;border-radius:50%;">
+              <div style="flex:1;"><div class="fw-6">Lisa Martinez</div><div class="text-muted" style="font-size:12px;">18 games</div></div>
+              <span class="role-tag admin">Admin</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:34px;height:34px;border-radius:50%;">
+              <div style="flex:1;"><div class="fw-6">Amy Tan</div><div class="text-muted" style="font-size:12px;">15 games</div></div>
+              <span class="role-tag member">Member</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;">
+              <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:34px;height:34px;border-radius:50%;">
+              <div style="flex:1;"><div class="fw-6">Jessica Wong</div><div class="text-muted" style="font-size:12px;">12 games</div></div>
+              <span class="role-tag member">Member</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: ANALYTICS ============ -->
+<div class="screen" data-screen="pAnalytics">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="breadcrumb">
+            <a>All Orgs</a><i class="ph ph-caret-right" style="font-size:11px;"></i>
+            <a>Portland Mahjong Club</a><i class="ph ph-caret-right" style="font-size:11px;"></i>
+            <span class="cur">Events</span>
+          </div>
+          <div class="page-title">Analytics</div>
+          <div class="page-sub">Platform-wide engagement & growth</div>
+        </div>
+        <div class="top-actions">
+          <select class="filter-select"><option>Last 30 days</option><option>Last 90 days</option><option>This year</option></select>
+          <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+            <span class="btn btn-secondary btn-sm" style="border-radius:0;border:none;">Day</span>
+            <span class="btn btn-slate btn-sm" style="border-radius:0;border:none;">Week</span>
+            <span class="btn btn-secondary btn-sm" style="border-radius:0;border:none;">Month</span>
+          </div>
+          <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Export</button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat"><div class="stat-label">DAU</div><div class="stat-val">2,104</div><div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +12% WoW</div></div>
+        <div class="stat"><div class="stat-label">WAU</div><div class="stat-val">4,892</div><div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +8% WoW</div></div>
+        <div class="stat"><div class="stat-label">MAU</div><div class="stat-val">8,215</div><div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +15% MoM</div></div>
+        <div class="stat"><div class="stat-label">DAU/MAU</div><div class="stat-val">25.6%</div><div class="stat-delta muted">Stickiness</div></div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div class="chart-card">
+          <div class="chart-head"><h4>Daily active users</h4><span class="text-muted" style="font-size:12px;">Last 30 days</span></div>
+          <svg class="spark" viewBox="0 0 500 180" preserveAspectRatio="none">
+            <g stroke="#f0f0eb"><line x1="0" y1="45" x2="500" y2="45"/><line x1="0" y1="90" x2="500" y2="90"/><line x1="0" y1="135" x2="500" y2="135"/></g>
+            <defs><linearGradient id="g3" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity=".3"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,120 Q30,110 60,100 T120,85 T180,75 T240,82 T300,60 T360,55 T420,40 T500,30 L500,180 L0,180 Z" fill="url(#g3)"/>
+            <path d="M0,120 Q30,110 60,100 T120,85 T180,75 T240,82 T300,60 T360,55 T420,40 T500,30" stroke="#059669" stroke-width="2.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="chart-card">
+          <div class="chart-head"><h4>Games created</h4><span class="text-muted" style="font-size:12px;">Last 30 days</span></div>
+          <svg class="spark" viewBox="0 0 500 180" preserveAspectRatio="none">
+            <g stroke="#f0f0eb"><line x1="0" y1="45" x2="500" y2="45"/><line x1="0" y1="90" x2="500" y2="90"/><line x1="0" y1="135" x2="500" y2="135"/></g>
+            <g fill="#3b82f6" opacity=".85">
+              <rect x="5" y="100" width="12" height="60" rx="2"/><rect x="22" y="120" width="12" height="40" rx="2"/><rect x="39" y="95" width="12" height="65" rx="2"/><rect x="56" y="90" width="12" height="70" rx="2"/><rect x="73" y="85" width="12" height="75" rx="2"/><rect x="90" y="110" width="12" height="50" rx="2"/><rect x="107" y="125" width="12" height="35" rx="2"/><rect x="124" y="80" width="12" height="80" rx="2"/><rect x="141" y="75" width="12" height="85" rx="2"/><rect x="158" y="70" width="12" height="90" rx="2"/><rect x="175" y="95" width="12" height="65" rx="2"/><rect x="192" y="115" width="12" height="45" rx="2"/><rect x="209" y="65" width="12" height="95" rx="2"/><rect x="226" y="60" width="12" height="100" rx="2"/><rect x="243" y="55" width="12" height="105" rx="2"/><rect x="260" y="90" width="12" height="70" rx="2"/><rect x="277" y="110" width="12" height="50" rx="2"/><rect x="294" y="50" width="12" height="110" rx="2"/><rect x="311" y="45" width="12" height="115" rx="2"/><rect x="328" y="40" width="12" height="120" rx="2"/><rect x="345" y="85" width="12" height="75" rx="2"/><rect x="362" y="105" width="12" height="55" rx="2"/><rect x="379" y="35" width="12" height="125" rx="2"/><rect x="396" y="30" width="12" height="130" rx="2"/><rect x="413" y="25" width="12" height="135" rx="2"/><rect x="430" y="80" width="12" height="80" rx="2"/><rect x="447" y="100" width="12" height="60" rx="2"/><rect x="464" y="20" width="12" height="140" rx="2"/><rect x="481" y="15" width="12" height="145" rx="2"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:20px;">
+        <div class="chart-head"><h4>Engagement funnel</h4></div>
+        <div>
+          <div class="funnel-row"><div class="funnel-label">Visit</div><div class="funnel-bar" style="width:100%;">Sign up page</div><div class="funnel-val">100%</div></div>
+          <div class="funnel-row"><div class="funnel-label">Sign up</div><div class="funnel-bar" style="width:68%;">Account created</div><div class="funnel-val">68%</div></div>
+          <div class="funnel-row"><div class="funnel-label">Verify</div><div class="funnel-bar" style="width:54%;">Phone verified</div><div class="funnel-val">54%</div></div>
+          <div class="funnel-row"><div class="funnel-label">Profile</div><div class="funnel-bar" style="width:48%;">Profile complete</div><div class="funnel-val">48%</div></div>
+          <div class="funnel-row"><div class="funnel-label">First game</div><div class="funnel-bar" style="width:32%;">Applied/hosted</div><div class="funnel-val">32%</div></div>
+          <div class="funnel-row"><div class="funnel-label">Confirmed</div><div class="funnel-bar" style="width:24%;">Game confirmed</div><div class="funnel-val">24%</div></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-crown"></i> Top Organizations</div></div>
+          <table class="table" style="border:none;border-radius:0;">
+            <thead><tr><th>Org</th><th>Members</th><th>Games</th></tr></thead>
+            <tbody>
+              <tr><td class="fw-6">NYC Mahjong Society</td><td>318</td><td>127</td></tr>
+              <tr><td class="fw-6">Seattle Mahjong Co.</td><td>203</td><td>62</td></tr>
+              <tr><td class="fw-6">LA Bamboo Club</td><td>156</td><td>52</td></tr>
+              <tr><td class="fw-6">Portland Mahjong Club</td><td>142</td><td>48</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-chart-line"></i> Retention cohort (30d)</div></div>
+          <div style="padding:18px;">
+            <div style="display:flex;flex-direction:column;gap:8px;font-family:'Inter',sans-serif;font-size:13px;">
+              <div style="display:flex;gap:8px;align-items:center;"><span style="width:80px;" class="text-muted">Week 1</span><div style="flex:1;height:20px;background:#d1fae5;border-radius:4px;position:relative;"><div style="width:92%;height:100%;background:var(--primary);border-radius:4px;"></div></div><span class="fw-6" style="width:50px;text-align:right;">92%</span></div>
+              <div style="display:flex;gap:8px;align-items:center;"><span style="width:80px;" class="text-muted">Week 2</span><div style="flex:1;height:20px;background:#d1fae5;border-radius:4px;position:relative;"><div style="width:74%;height:100%;background:var(--primary);border-radius:4px;"></div></div><span class="fw-6" style="width:50px;text-align:right;">74%</span></div>
+              <div style="display:flex;gap:8px;align-items:center;"><span style="width:80px;" class="text-muted">Week 3</span><div style="flex:1;height:20px;background:#d1fae5;border-radius:4px;position:relative;"><div style="width:62%;height:100%;background:var(--primary);border-radius:4px;"></div></div><span class="fw-6" style="width:50px;text-align:right;">62%</span></div>
+              <div style="display:flex;gap:8px;align-items:center;"><span style="width:80px;" class="text-muted">Week 4</span><div style="flex:1;height:20px;background:#d1fae5;border-radius:4px;position:relative;"><div style="width:54%;height:100%;background:var(--primary);border-radius:4px;"></div></div><span class="fw-6" style="width:50px;text-align:right;">54%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: REPORTS ============ -->
+<div class="screen" data-screen="pReports">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Moderation Queue</div>
+          <div class="page-sub">12 open · 2 escalated · 147 resolved this month</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary"><i class="ph ph-file-csv"></i> Export</button>
+          <button class="btn btn-slate"><i class="ph ph-gear"></i> Moderation settings</button>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <span class="chip active">All (12)</span>
+        <span class="chip">Spam (4)</span>
+        <span class="chip">Harassment (3)</span>
+        <span class="chip">Inappropriate (2)</span>
+        <span class="chip">Policy Violation (2)</span>
+        <span class="chip">Other (1)</span>
+      </div>
+
+      <div class="filter-bar">
+        <select class="filter-select"><option>Any priority</option><option>High</option><option>Medium</option><option>Low</option></select>
+        <select class="filter-select"><option>Any status</option><option>Open</option><option>In Review</option><option>Resolved</option></select>
+        <select class="filter-select"><option>Any type</option><option>User</option><option>Game</option><option>Message</option></select>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="card card-pad" style="border-left:4px solid #dc2626;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:42px;height:42px;border-radius:50%;">
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                <span class="pill pill-red">HIGH</span>
+                <span class="pill pill-gray">Harassment</span>
+                <span class="pill pill-amber">Open</span>
+              </div>
+              <div class="fw-6" style="font-size:14px;">Harassment in Saturday Mahjong chat</div>
+              <div style="color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Reported by <b>Lisa Martinez</b> against <b>Helen Park</b> · 2 hours ago</div>
+              <div style="margin-top:10px;padding:10px 12px;background:#fef2f2;border-radius:8px;font-size:13px;color:#991b1b;font-family:'Inter',sans-serif;font-style:italic;">"Flagged message contained repeated personal attacks targeting another player..."</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-danger btn-sm"><i class="ph ph-prohibit"></i> Suspend user</button>
+              <button class="btn btn-secondary btn-sm">Review</button>
+              <button class="btn btn-ghost btn-sm">Dismiss</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-pad" style="border-left:4px solid #d97706;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:42px;height:42px;border-radius:50%;">
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                <span class="pill pill-amber">MED</span>
+                <span class="pill pill-gray">Spam</span>
+                <span class="pill pill-blue">In Review</span>
+              </div>
+              <div class="fw-6" style="font-size:14px;">Repeated promotional messages</div>
+              <div style="color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Reported by <b>Amy Tan</b> (3 similar reports) · 5 hours ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-secondary btn-sm">Warn user</button>
+              <button class="btn btn-secondary btn-sm">Review</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-pad" style="border-left:4px solid #d97706;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:42px;height:42px;border-radius:50%;">
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                <span class="pill pill-amber">MED</span>
+                <span class="pill pill-gray">Policy Violation</span>
+                <span class="pill pill-amber">Open</span>
+              </div>
+              <div class="fw-6" style="font-size:14px;">Game hosted without clear location</div>
+              <div style="color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Reported by <b>Jessica Wong</b> · 8 hours ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-secondary btn-sm">Review</button>
+              <button class="btn btn-ghost btn-sm">Escalate</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-pad" style="border-left:4px solid #94a3b8;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face" style="width:42px;height:42px;border-radius:50%;">
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                <span class="pill pill-gray">LOW</span>
+                <span class="pill pill-gray">Inappropriate</span>
+                <span class="pill pill-amber">Open</span>
+              </div>
+              <div class="fw-6" style="font-size:14px;">Inappropriate profile avatar</div>
+              <div style="color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Reported by <b>Priya Rao</b> · 1 day ago</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="btn btn-secondary btn-sm">Review</button>
+              <button class="btn btn-ghost btn-sm">Dismiss</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: SETTINGS ============ -->
+<div class="screen" data-screen="pSettings">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">System Settings</div>
+          <div class="page-sub">Global configuration · Changes are logged to audit trail</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary">Discard</button>
+          <button class="btn btn-slate"><i class="ph ph-floppy-disk"></i> Save changes</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-toggle-right"></i> Feature Flags</div></div>
+          <div class="toggle-row">
+            <div><div class="t-title">Phone verification required</div><div class="t-desc">All new users must verify SMS code</div></div>
+            <div class="switch on"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="t-title">Multi-table games</div><div class="t-desc">Allow hosts to create tournaments with 8+ players</div></div>
+            <div class="switch on"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="t-title">Group discoverability</div><div class="t-desc">Show groups in public discover feed</div></div>
+            <div class="switch"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="t-title">Org branding</div><div class="t-desc">Allow orgs to customize their theme colors</div></div>
+            <div class="switch on"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="t-title">In-app payments</div><div class="t-desc">Enable buy-in collection via Stripe</div></div>
+            <div class="switch"></div>
+          </div>
+          <div class="toggle-row">
+            <div><div class="t-title">Video chat</div><div class="t-desc">WebRTC video in game threads</div></div>
+            <div class="switch"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-sliders"></i> Config Values</div></div>
+            <div style="padding:18px;display:flex;flex-direction:column;gap:14px;">
+              <div class="field" style="margin:0;"><label>SMS provider</label><select class="input"><option>Twilio (active)</option><option>AWS SNS</option></select></div>
+              <div class="field" style="margin:0;"><label>Email provider</label><select class="input"><option>Postmark (active)</option><option>SendGrid</option><option>AWS SES</option></select></div>
+              <div class="grid-2">
+                <div class="field" style="margin:0;"><label>Max game size</label><input class="input" type="number" value="16"></div>
+                <div class="field" style="margin:0;"><label>Default duration (hrs)</label><input class="input" type="number" value="3"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:16px;">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-warning-octagon"></i> Maintenance Mode</div><span class="pill pill-green">Off</span></div>
+            <div style="padding:18px;">
+              <p class="text-muted" style="font-size:13px;font-family:'Inter',sans-serif;margin-bottom:12px;">Display a banner to all users warning of planned downtime or active issues.</p>
+              <button class="btn btn-secondary"><i class="ph ph-warning"></i> Enable maintenance banner</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title"><i class="ph-fill ph-key"></i> API Keys</div></div>
+            <div style="padding:18px;display:flex;flex-direction:column;gap:10px;font-family:'Inter',sans-serif;font-size:13px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#fafaf9;border-radius:6px;"><span>Stripe (live)</span><code style="color:var(--muted);">sk_live_••••••••4f2a</code><i class="ph ph-copy" style="cursor:pointer;"></i></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#fafaf9;border-radius:6px;"><span>Twilio</span><code style="color:var(--muted);">AC••••••••e7b1</code><i class="ph ph-copy" style="cursor:pointer;"></i></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#fafaf9;border-radius:6px;"><span>Postmark</span><code style="color:var(--muted);">pm_••••••••9d38</code><i class="ph ph-copy" style="cursor:pointer;"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title"><i class="ph-fill ph-database"></i> Backup &amp; Restore</div></div>
+        <div style="padding:18px;display:flex;gap:12px;align-items:center;">
+          <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Download latest backup</button>
+          <button class="btn btn-secondary"><i class="ph ph-upload-simple"></i> Restore from backup</button>
+          <span class="text-muted" style="font-size:13px;font-family:'Inter',sans-serif;margin-left:auto;">Last backup: Apr 17, 2026 03:00 AM UTC · 247 MB</span>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ PLATFORM: ACTIVITY LOG ============ -->
+<div class="screen" data-screen="pActivity">
+  <div class="app-layout" data-role="platform">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Admin Activity Log</div>
+          <div class="page-sub">Complete audit trail of all staff actions · Retained for 2 years</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary"><i class="ph ph-file-csv"></i> Export</button>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="search-box" style="max-width:260px;"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search actions, targets..."></div>
+        <select class="filter-select"><option>Any admin</option><option>Jake</option><option>Sarah (admin)</option><option>System</option></select>
+        <select class="filter-select"><option>Any action type</option><option>User actions</option><option>Game actions</option><option>Settings changes</option><option>Financial</option></select>
+        <select class="filter-select"><option>Any date</option><option>Today</option><option>This week</option><option>This month</option></select>
+      </div>
+
+      <div class="card">
+        <table class="table" style="border:none;border-radius:0;">
+          <thead><tr><th>Timestamp</th><th>Admin</th><th>Action</th><th>Target</th><th>IP Address</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;">Apr 17, 2026<br>14:22:08 UTC</td>
+              <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span class="fw-6">Jake R.</span></div></td>
+              <td><span class="pill pill-red">Suspend</span> suspended user account</td>
+              <td class="fw-6">Helen Park (usr_a8f21)</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">192.168.1.12</td>
+            </tr>
+            <tr>
+              <td style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;">Apr 17, 2026<br>11:45:33 UTC</td>
+              <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span class="fw-6">Sarah (admin)</span></div></td>
+              <td><span class="pill pill-blue">Update</span> modified feature flag</td>
+              <td class="fw-6">multi-table-games → enabled</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">10.0.22.104</td>
+            </tr>
+            <tr>
+              <td style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;">Apr 17, 2026<br>09:14:02 UTC</td>
+              <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span class="fw-6">Jake R.</span></div></td>
+              <td><span class="pill pill-amber">Warn</span> sent warning to user</td>
+              <td class="fw-6">Marcus Lee</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">192.168.1.12</td>
+            </tr>
+            <tr>
+              <td style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;">Apr 16, 2026<br>18:33:14 UTC</td>
+              <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span class="fw-6">Sarah (admin)</span></div></td>
+              <td><span class="pill pill-violet">Create</span> created organization</td>
+              <td class="fw-6">LA Bamboo Club (org_b77c3)</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">10.0.22.104</td>
+            </tr>
+            <tr>
+              <td style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;">Apr 16, 2026<br>15:02:49 UTC</td>
+              <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span class="fw-6">Jake R.</span></div></td>
+              <td><span class="pill pill-green">Resolve</span> resolved report</td>
+              <td class="fw-6">Report #rpt_2844 — Spam</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">192.168.1.12</td>
+            </tr>
+            <tr>
+              <td style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;">Apr 16, 2026<br>10:17:23 UTC</td>
+              <td><div class="avatar-cell"><div style="width:26px;height:26px;border-radius:50%;background:var(--slate);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;"><i class="ph-fill ph-robot"></i></div><span class="fw-6">System</span></div></td>
+              <td><span class="pill pill-gray">Auto</span> executed nightly backup</td>
+              <td class="fw-6">s3://bb-backups/2026-04-16</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">—</td>
+            </tr>
+            <tr>
+              <td style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;">Apr 15, 2026<br>22:48:11 UTC</td>
+              <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span class="fw-6">Sarah (admin)</span></div></td>
+              <td><span class="pill pill-red">Cancel</span> cancelled game</td>
+              <td class="fw-6">gm_552e1 — PDX Sunday</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">10.0.22.104</td>
+            </tr>
+            <tr>
+              <td style="font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;">Apr 15, 2026<br>16:20:05 UTC</td>
+              <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span class="fw-6">Jake R.</span></div></td>
+              <td><span class="pill pill-blue">Update</span> upgraded org to Pro plan</td>
+              <td class="fw-6">Portland Mahjong Club</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);">192.168.1.12</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+<!-- ============ ORG: LOGIN ============ -->
+<div class="screen" data-screen="oLogin">
+  <div class="auth-wrap org">
+    <div class="auth-card">
+      <div class="auth-wordmark">
+        <div style="width:56px;height:56px;border-radius:14px;background:var(--primary-grad);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;">PM</div>
+        <div class="wm-text" style="font-size:22px;">Portland Mahjong Club</div>
+        <div class="admin-pill org"><i class="ph-fill ph-buildings"></i> ORG ADMIN</div>
+      </div>
+      <div class="auth-title">Admin sign in</div>
+      <div class="auth-sub">Manage your organization</div>
+      <div class="field"><label>Email</label><input class="input" type="email" value="sarah@portlandmahjong.club"></div>
+      <div class="field"><label>Password</label><input class="input" type="password" value="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <label class="checkbox"><input type="checkbox" checked> Remember me</label>
+        <span style="font-size:13px;font-weight:600;color:var(--primary);cursor:pointer;">Forgot password?</span>
+      </div>
+      <button class="btn btn-primary btn-block btn-lg" onclick="go('oDashboard')">Sign in</button>
+      <div style="text-align:center;margin-top:18px;font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;">
+        Powered by <span class="text-primary fw-6">BamBuddies</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ORG: DASHBOARD ============ -->
+<div class="screen" data-screen="oDashboard">
+  <div class="app-layout with-right" data-role="org">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Portland Mahjong Club</div>
+          <div class="page-sub">Good evening, Sarah · 5 pending applications need your attention</div>
+        </div>
+        <div class="top-actions">
+          <div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search members, games..."></div>
+          <div class="icon-btn"><i class="ph ph-bell"></i><span class="badge">5</span></div>
+          <button class="btn btn-primary"><i class="ph-bold ph-plus"></i> New Game</button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-label"><i class="ph-fill ph-users"></i> Total Members</div>
+          <div class="stat-val">142</div>
+          <div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +8 this month</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><i class="ph-fill ph-game-controller"></i> Active Games</div>
+          <div class="stat-val">3</div>
+          <div class="stat-delta muted">12 this month</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><i class="ph-fill ph-calendar-check"></i> Games This Month</div>
+          <div class="stat-val">12</div>
+          <div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +3 vs last month</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label"><i class="ph-fill ph-user-plus"></i> Pending Apps</div>
+          <div class="stat-val">5</div>
+          <div class="stat-delta">Review needed</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:16px;">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-calendar"></i> Upcoming Games</div><span class="see-all" style="font-size:12px;color:var(--primary);cursor:pointer;" onclick="go('oGames')">See all →</span></div>
+          <div style="padding:8px;">
+            <div style="display:flex;align-items:center;gap:14px;padding:12px;border-radius:8px;background:#fafaf9;margin-bottom:6px;">
+              <div style="width:48px;height:54px;background:var(--primary);color:#fff;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="font-size:10px;font-weight:700;">APR</div><div style="font-family:'DM Serif Display',serif;font-size:20px;line-height:1;">19</div></div>
+              <div style="flex:1;"><div class="fw-6">Saturday Mahjong</div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Sat 2:00 PM · 4/4 players · Sarah R.</div></div>
+              <span class="pill pill-blue">Committed</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;padding:12px;border-radius:8px;background:#fafaf9;margin-bottom:6px;">
+              <div style="width:48px;height:54px;background:var(--primary);color:#fff;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="font-size:10px;font-weight:700;">APR</div><div style="font-family:'DM Serif Display',serif;font-size:20px;line-height:1;">22</div></div>
+              <div style="flex:1;"><div class="fw-6">Beginner Night</div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Tue 7:30 PM · 2/4 players · Jessica W.</div></div>
+              <span class="pill pill-amber">Pending</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;padding:12px;border-radius:8px;background:#fafaf9;">
+              <div style="width:48px;height:54px;background:var(--primary);color:#fff;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;"><div style="font-size:10px;font-weight:700;">APR</div><div style="font-family:'DM Serif Display',serif;font-size:20px;line-height:1;">26</div></div>
+              <div style="flex:1;"><div class="fw-6">Downtown Meetup</div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Sat 1:00 PM · 3/4 players · Rachel K.</div></div>
+              <span class="pill pill-amber">Pending</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-user-plus"></i> Pending Applications <span class="count">5</span></div></div>
+          <div style="padding:8px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
+              <div style="flex:1;"><div class="fw-6">Priya Rao</div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Applied 2 hours ago</div></div>
+              <button class="btn btn-sm btn-primary">Approve</button>
+              <button class="btn btn-sm btn-ghost">Decline</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
+              <div style="flex:1;"><div class="fw-6">Marcus Lee</div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Applied 4 hours ago</div></div>
+              <button class="btn btn-sm btn-primary">Approve</button>
+              <button class="btn btn-sm btn-ghost">Decline</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;">
+              <div style="flex:1;"><div class="fw-6">Rachel Kim</div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Applied yesterday</div></div>
+              <button class="btn btn-sm btn-primary">Approve</button>
+              <button class="btn btn-sm btn-ghost">Decline</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head"><h4>Member growth</h4><span class="text-muted" style="font-size:12px;">Last 6 months</span></div>
+        <svg class="spark" viewBox="0 0 700 160" preserveAspectRatio="none">
+          <g stroke="#f0f0eb"><line x1="0" y1="40" x2="700" y2="40"/><line x1="0" y1="80" x2="700" y2="80"/><line x1="0" y1="120" x2="700" y2="120"/></g>
+          <defs><linearGradient id="g4" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity=".3"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0,130 L117,115 L234,92 L351,75 L468,55 L585,30 L700,18 L700,160 L0,160 Z" fill="url(#g4)"/>
+          <path d="M0,130 L117,115 L234,92 L351,75 L468,55 L585,30 L700,18" stroke="#059669" stroke-width="2.5" fill="none"/>
+        </svg>
+      </div>
+    </main>
+
+    <aside class="right-rail">
+      <div class="section-title">Quick Actions</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
+        <button class="btn btn-primary" style="justify-content:flex-start;"><i class="ph ph-user-plus"></i> Invite members</button>
+        <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-calendar-plus"></i> Schedule game</button>
+        <button class="btn btn-secondary" style="justify-content:flex-start;"><i class="ph ph-megaphone"></i> Broadcast message</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-title">Announcements</div>
+      <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:12px;font-family:'Inter',sans-serif;font-size:12px;color:#92400e;margin-bottom:10px;">
+        <i class="ph-fill ph-star" style="color:#d97706;"></i> <b>Your org is now on the Pro plan!</b><br>Enjoy branding, analytics & unlimited games.
+      </div>
+      <div style="background:var(--primary-bg);border:1px solid #a7f3d0;border-radius:10px;padding:12px;font-family:'Inter',sans-serif;font-size:12px;color:#065f46;">
+        <i class="ph-fill ph-sparkle" style="color:var(--primary);"></i> <b>New feature:</b> multi-table tournaments are now available.
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ============ ORG: GAMES ============ -->
+<div class="screen" data-screen="oGames">
+  <div class="app-layout" data-role="org">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Games</div>
+          <div class="page-sub">Portland Mahjong Club · 48 games all-time · 12 this month</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary"><i class="ph ph-calendar"></i> Calendar view</button>
+          <button class="btn btn-primary"><i class="ph-bold ph-plus"></i> Schedule Game</button>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <span class="chip active">Upcoming (3)</span>
+        <span class="chip">Past (45)</span>
+        <span class="chip">All (48)</span>
+      </div>
+
+      <table class="table">
+        <thead><tr><th>Date</th><th>Game</th><th>Organizer</th><th>Players</th><th>Location</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="fw-6">Apr 19, 2026</div><div class="text-muted" style="font-size:11px;">Sat, 2:00 PM</div></td>
+            <td class="fw-6">Saturday Mahjong</td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Sarah R.</span></div></td>
+            <td>4/4</td><td>Sarah's home</td><td><span class="pill pill-blue">Committed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 22, 2026</div><div class="text-muted" style="font-size:11px;">Tue, 7:30 PM</div></td>
+            <td class="fw-6">Beginner Night</td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Jessica W.</span></div></td>
+            <td>2/4</td><td>Community Center</td><td><span class="pill pill-amber">Pending</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 26, 2026</div><div class="text-muted" style="font-size:11px;">Sat, 1:00 PM</div></td>
+            <td class="fw-6">Downtown Meetup</td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Rachel K.</span></div></td>
+            <td>3/4</td><td>Cafe Downtown</td><td><span class="pill pill-amber">Pending</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 12, 2026</div><div class="text-muted" style="font-size:11px;">Sat, 1:00 PM</div></td>
+            <td class="fw-6">PDX Sunday Social</td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Sarah R.</span></div></td>
+            <td>4/4</td><td>Sarah's home</td><td><span class="pill pill-green">Completed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="fw-6">Apr 05, 2026</div><div class="text-muted" style="font-size:11px;">Sat, 2:00 PM</div></td>
+            <td class="fw-6">Laurelhurst Mahjong</td>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Priya R.</span></div></td>
+            <td>4/4</td><td>Laurelhurst Park</td><td><span class="pill pill-green">Completed</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</div>
+
+<!-- ============ ORG: MEMBERS ============ -->
+<div class="screen" data-screen="oMembers">
+  <div class="app-layout" data-role="org">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Members</div>
+          <div class="page-sub">142 members · 5 pending applications</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary"><i class="ph ph-export"></i> Export</button>
+          <button class="btn btn-primary"><i class="ph-bold ph-user-plus"></i> Invite Members</button>
+        </div>
+      </div>
+
+      <div class="tab-bar">
+        <div class="tab active">All members (142)</div>
+        <div class="tab">Applications (5)</div>
+        <div class="tab">Invited (8)</div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="search-box" style="max-width:260px;"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search members..."></div>
+        <select class="filter-select"><option>All roles</option><option>Owner</option><option>Admin</option><option>Member</option></select>
+        <select class="filter-select"><option>All statuses</option><option>Active</option><option>Inactive</option></select>
+      </div>
+
+      <table class="table">
+        <thead><tr><th>Member</th><th>Role</th><th>Joined</th><th>Games Played</th><th>Last Active</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face"><div><div class="nm">Sarah Rodriguez</div><div class="sub">sarah@portlandmahjong.club</div></div></div></td>
+            <td><span class="role-tag owner">Owner</span></td><td>Jan 14, 2024</td><td>24</td><td>2m ago</td><td><span class="pill pill-green">Active</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face"><div><div class="nm">Lisa Martinez</div><div class="sub">lisa.m@example.com</div></div></div></td>
+            <td><span class="role-tag admin">Admin</span></td><td>Feb 08, 2024</td><td>18</td><td>1h ago</td><td><span class="pill pill-green">Active</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face"><div><div class="nm">Amy Tan</div><div class="sub">amy.tan@example.com</div></div></div></td>
+            <td><span class="role-tag admin">Admin</span></td><td>Feb 11, 2024</td><td>15</td><td>3h ago</td><td><span class="pill pill-green">Active</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face"><div><div class="nm">Jessica Wong</div><div class="sub">jess.wong@example.com</div></div></div></td>
+            <td><span class="role-tag member">Member</span></td><td>Mar 20, 2024</td><td>12</td><td>8h ago</td><td><span class="pill pill-green">Active</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"><div><div class="nm">Rachel Kim</div><div class="sub">rachel.k@example.com</div></div></div></td>
+            <td><span class="role-tag member">Member</span></td><td>Apr 05, 2026</td><td>2</td><td>4h ago</td><td><span class="pill pill-green">Active</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face"><div><div class="nm">Priya Rao</div><div class="sub">priya.r@example.com</div></div></div></td>
+            <td><span class="role-tag member">Member</span></td><td>Apr 17, 2026</td><td>0</td><td>Just now</td><td><span class="pill pill-green">Active</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+          <tr>
+            <td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face"><div><div class="nm">Marcus Lee</div><div class="sub">marcus.lee@example.com</div></div></div></td>
+            <td><span class="role-tag member">Member</span></td><td>Apr 17, 2026</td><td>0</td><td>Just now</td><td><span class="pill pill-amber">Inactive</span></td>
+            <td><span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</div>
+
+<!-- ============ ORG: ANALYTICS ============ -->
+<div class="screen" data-screen="oAnalytics">
+  <div class="app-layout" data-role="org">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Analytics</div>
+          <div class="page-sub">Insights for Portland Mahjong Club</div>
+        </div>
+        <div class="top-actions">
+          <select class="filter-select"><option>Last 30 days</option><option>Last 90 days</option><option>This year</option></select>
+          <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Export</button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat"><div class="stat-label">Members</div><div class="stat-val">142</div><div class="stat-delta"><i class="ph-bold ph-trend-up"></i> +8 MoM</div></div>
+        <div class="stat"><div class="stat-label">Games hosted</div><div class="stat-val">12</div><div class="stat-delta">This month</div></div>
+        <div class="stat"><div class="stat-label">Show rate</div><div class="stat-val">94%</div><div class="stat-delta">Excellent</div></div>
+        <div class="stat"><div class="stat-label">Avg rating</div><div class="stat-val">4.8</div><div class="stat-delta">Out of 5</div></div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:16px;">
+        <div class="chart-card">
+          <div class="chart-head"><h4>Games per week</h4></div>
+          <svg class="spark" viewBox="0 0 500 160" preserveAspectRatio="none">
+            <g stroke="#f0f0eb"><line x1="0" y1="40" x2="500" y2="40"/><line x1="0" y1="80" x2="500" y2="80"/><line x1="0" y1="120" x2="500" y2="120"/></g>
+            <g fill="#059669">
+              <rect x="20" y="100" width="28" height="40" rx="4"/>
+              <rect x="68" y="90" width="28" height="50" rx="4"/>
+              <rect x="116" y="80" width="28" height="60" rx="4"/>
+              <rect x="164" y="100" width="28" height="40" rx="4"/>
+              <rect x="212" y="70" width="28" height="70" rx="4"/>
+              <rect x="260" y="60" width="28" height="80" rx="4"/>
+              <rect x="308" y="50" width="28" height="90" rx="4"/>
+              <rect x="356" y="70" width="28" height="70" rx="4"/>
+              <rect x="404" y="40" width="28" height="100" rx="4"/>
+              <rect x="452" y="30" width="28" height="110" rx="4"/>
+            </g>
+          </svg>
+        </div>
+        <div class="chart-card">
+          <div class="chart-head"><h4>Attendance rate</h4></div>
+          <svg class="spark" viewBox="0 0 500 160" preserveAspectRatio="none">
+            <g stroke="#f0f0eb"><line x1="0" y1="40" x2="500" y2="40"/><line x1="0" y1="80" x2="500" y2="80"/><line x1="0" y1="120" x2="500" y2="120"/></g>
+            <defs><linearGradient id="g5" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity=".3"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0,50 L80,45 L160,38 L240,42 L320,35 L400,30 L500,25 L500,160 L0,160 Z" fill="url(#g5)"/>
+            <path d="M0,50 L80,45 L160,38 L240,42 L320,35 L400,30 L500,25" stroke="#059669" stroke-width="2.5" fill="none"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-trophy"></i> Most Active Members</div></div>
+          <table class="table" style="border:none;border-radius:0;">
+            <thead><tr><th>Member</th><th>Games</th><th>Show rate</th></tr></thead>
+            <tbody>
+              <tr><td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Sarah R.</span></div></td><td>24</td><td>100%</td></tr>
+              <tr><td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Lisa M.</span></div></td><td>18</td><td>96%</td></tr>
+              <tr><td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Amy T.</span></div></td><td>15</td><td>93%</td></tr>
+              <tr><td><div class="avatar-cell"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:26px;height:26px;"><span>Jessica W.</span></div></td><td>12</td><td>92%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-chat-circle-dots"></i> Sentiment (from reviews)</div></div>
+          <div style="padding:18px;">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+              <div style="font-family:'DM Serif Display',serif;font-size:52px;color:var(--primary);line-height:1;">4.8</div>
+              <div style="flex:1;">
+                <div style="color:#d97706;font-size:20px;margin-bottom:4px;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Based on 47 reviews</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-family:'Inter',sans-serif;font-size:12px;">
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;">5★</span><div style="flex:1;height:8px;background:#f5f5f2;border-radius:4px;overflow:hidden;"><div style="width:82%;height:100%;background:var(--primary);"></div></div><span style="width:30px;text-align:right;color:var(--muted);">82%</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;">4★</span><div style="flex:1;height:8px;background:#f5f5f2;border-radius:4px;overflow:hidden;"><div style="width:14%;height:100%;background:var(--primary);"></div></div><span style="width:30px;text-align:right;color:var(--muted);">14%</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;">3★</span><div style="flex:1;height:8px;background:#f5f5f2;border-radius:4px;overflow:hidden;"><div style="width:4%;height:100%;background:var(--primary);"></div></div><span style="width:30px;text-align:right;color:var(--muted);">4%</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;">2★</span><div style="flex:1;height:8px;background:#f5f5f2;border-radius:4px;overflow:hidden;"></div><span style="width:30px;text-align:right;color:var(--muted);">0%</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;">1★</span><div style="flex:1;height:8px;background:#f5f5f2;border-radius:4px;overflow:hidden;"></div><span style="width:30px;text-align:right;color:var(--muted);">0%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ ORG: BRANDING ============ -->
+<div class="screen" data-screen="oBranding">
+  <div class="app-layout" data-role="org">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Branding</div>
+          <div class="page-sub">Customize how your org appears to members</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary">Discard</button>
+          <button class="btn btn-primary"><i class="ph ph-floppy-disk"></i> Save changes</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;">
+        <div>
+          <div class="card card-pad" style="margin-bottom:16px;">
+            <div class="card-title" style="margin-bottom:14px;"><i class="ph-fill ph-image"></i> Logo</div>
+            <div class="upload-zone">
+              <i class="ph ph-cloud-arrow-up"></i>
+              Drop your logo here, or click to browse<br>
+              <span style="font-size:11px;">Recommended: 512×512 PNG · max 2MB</span>
+            </div>
+          </div>
+
+          <div class="card card-pad" style="margin-bottom:16px;">
+            <div class="card-title" style="margin-bottom:14px;"><i class="ph-fill ph-palette"></i> Primary color</div>
+            <div class="text-muted" style="font-size:13px;font-family:'Inter',sans-serif;margin-bottom:10px;">Choose the accent color shown throughout your org's pages.</div>
+            <div class="swatch-row">
+              <div class="swatch active" style="background:#059669;"></div>
+              <div class="swatch" style="background:#2563eb;"></div>
+              <div class="swatch" style="background:#7c3aed;"></div>
+              <div class="swatch" style="background:#db2777;"></div>
+              <div class="swatch" style="background:#ea580c;"></div>
+            </div>
+          </div>
+
+          <div class="card card-pad" style="margin-bottom:16px;">
+            <div class="card-title" style="margin-bottom:14px;"><i class="ph-fill ph-image-square"></i> Cover photo</div>
+            <div class="upload-zone" style="padding:40px 28px;">
+              <i class="ph ph-image"></i>
+              Upload a cover photo<br>
+              <span style="font-size:11px;">Recommended: 1600×400 · max 5MB</span>
+            </div>
+          </div>
+
+          <div class="card card-pad">
+            <div class="card-title" style="margin-bottom:14px;"><i class="ph-fill ph-chat-circle-text"></i> Welcome message</div>
+            <textarea class="input" rows="4" placeholder="Write a welcome message shown to new members..." style="font-family:'Inter',sans-serif;">Welcome to Portland Mahjong Club! We're so glad you're here. Check out upcoming games and introduce yourself in the chat.</textarea>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;font-family:'Outfit',sans-serif;">Preview</div>
+          <div class="card" style="overflow:hidden;">
+            <div style="height:100px;background:var(--primary-grad);"></div>
+            <div style="padding:20px;">
+              <div style="margin-top:-42px;width:64px;height:64px;border-radius:14px;background:#fff;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;color:var(--primary);font-family:'DM Serif Display',serif;font-size:24px;">PM</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:20px;margin-top:10px;">Portland Mahjong Club</div>
+              <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">142 members · Portland, OR</div>
+              <div style="margin-top:12px;padding:12px;background:#fafaf9;border-radius:8px;font-size:12px;font-family:'Inter',sans-serif;color:var(--text);">Welcome to Portland Mahjong Club! We're so glad you're here...</div>
+              <button class="btn btn-primary btn-block" style="margin-top:14px;">Apply to join</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ ORG: SETTINGS ============ -->
+<div class="screen" data-screen="oSettings">
+  <div class="app-layout" data-role="org">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Organization Settings</div>
+          <div class="page-sub">Portland Mahjong Club · Pro plan</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-primary"><i class="ph ph-floppy-disk"></i> Save</button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:16px;">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-info"></i> General</div></div>
+          <div style="padding:18px;display:flex;flex-direction:column;gap:14px;">
+            <div class="field" style="margin:0;"><label>Organization name</label><input class="input" value="Portland Mahjong Club"></div>
+            <div class="field" style="margin:0;"><label>Description</label><textarea class="input" rows="3">A welcoming mahjong community for players of all levels in the Portland metro area. We play American, Hong Kong, and Japanese Riichi styles.</textarea></div>
+            <div class="grid-2">
+              <div class="field" style="margin:0;"><label>City</label><input class="input" value="Portland, OR"></div>
+              <div class="field" style="margin:0;"><label>Neighborhood</label><input class="input" value="Laurelhurst"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div class="card-title"><i class="ph-fill ph-sliders"></i> Defaults</div></div>
+          <div style="padding:18px;display:flex;flex-direction:column;gap:14px;">
+            <div class="field" style="margin:0;"><label>Default game type</label><select class="input"><option>American Mahjong</option><option>Hong Kong</option><option>Japanese Riichi</option></select></div>
+            <div class="field" style="margin:0;"><label>Default location</label><input class="input" value="Portland Community Center"></div>
+            <div class="field" style="margin:0;"><label>Default duration (hrs)</label><input class="input" type="number" value="3"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title"><i class="ph-fill ph-toggle-right"></i> Features</div></div>
+        <div class="toggle-row">
+          <div><div class="t-title">Discoverable <span class="coming-soon">Coming Soon</span></div><div class="t-desc">Allow non-members to find your org in the public directory</div></div>
+          <div class="switch"></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="t-title">Auto-invite to future games</div><div class="t-desc">Automatically invite all members when a new game is scheduled</div></div>
+          <div class="switch on"></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="t-title">Allow member-created games</div><div class="t-desc">Members can create games on behalf of the org</div></div>
+          <div class="switch on"></div>
+        </div>
+        <div class="toggle-row">
+          <div><div class="t-title">Require approval for new members</div><div class="t-desc">Admin must approve each application</div></div>
+          <div class="switch on"></div>
+        </div>
+      </div>
+
+      <div class="danger-zone">
+        <h4><i class="ph-fill ph-warning-octagon"></i> Danger zone</h4>
+        <p>Deleting your organization is permanent. All games, member records, and analytics will be permanently removed. Members will be notified.</p>
+        <button class="btn btn-danger"><i class="ph ph-trash"></i> Delete organization</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ ORG: ADMINS ============ -->
+<div class="screen" data-screen="oAdmins">
+  <div class="app-layout" data-role="org">
+    <main class="main">
+      <div class="top-header">
+        <div>
+          <div class="page-title">Admins</div>
+          <div class="page-sub">1 owner · 2 admins · Manage who can modify this org</div>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-primary"><i class="ph-bold ph-user-plus"></i> Add admin</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-head"><div class="card-title"><i class="ph-fill ph-crown"></i> Owner</div></div>
+        <div style="padding:8px;">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px;">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" style="width:48px;height:48px;border-radius:50%;">
+            <div style="flex:1;">
+              <div class="fw-7" style="font-size:15px;">Sarah Rodriguez</div>
+              <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">sarah@portlandmahjong.club · Owner since Jan 14, 2024</div>
+            </div>
+            <span class="role-tag owner">Owner</span>
+            <button class="btn btn-secondary btn-sm"><i class="ph ph-user-switch"></i> Transfer ownership</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title"><i class="ph-fill ph-shield-star"></i> Admins (2)</div></div>
+        <div style="padding:8px;">
+          <div style="display:flex;align-items:center;gap:14px;padding:14px;border-bottom:1px solid var(--border);">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;">
+            <div style="flex:1;">
+              <div class="fw-7" style="font-size:14px;">Lisa Martinez</div>
+              <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">lisa.m@example.com · Admin since Feb 08, 2024</div>
+            </div>
+            <span class="role-tag admin">Admin</span>
+            <span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:14px;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;">
+            <div style="flex:1;">
+              <div class="fw-7" style="font-size:14px;">Amy Tan</div>
+              <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">amy.tan@example.com · Admin since Feb 11, 2024</div>
+            </div>
+            <span class="role-tag admin">Admin</span>
+            <span class="action-menu"><i class="ph ph-dots-three-vertical"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-pad" style="margin-top:16px;">
+        <div class="card-title" style="margin-bottom:12px;"><i class="ph-fill ph-user-plus"></i> Invite new admin</div>
+        <div style="display:flex;gap:10px;">
+          <div class="search-box" style="flex:1;max-width:none;"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search members by name or email..."></div>
+          <button class="btn btn-primary"><i class="ph ph-paper-plane-tilt"></i> Send invite</button>
+        </div>
+        <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:10px;">Admins can manage members, schedule games, and edit branding. Only the owner can delete the org or transfer ownership.</div>
+      </div>
+    </main>
+  </div>
+</div>
+      </div><!-- /#screens -->
+    </div><!-- /.viewport-area -->
+  </div><!-- /.browser-frame -->
+</div><!-- /.frame-wrap -->
+
+<script>
+const platformPages = [
+  ['pLogin','Admin Login','admin.bambuddies.com/login'],
+  ['pDashboard','Dashboard','admin.bambuddies.com/dashboard'],
+  ['pUsers','Users List','admin.bambuddies.com/users'],
+  ['pUserDetail','User Detail','admin.bambuddies.com/users/sarah-rodriguez'],
+  ['pGames','Games List','admin.bambuddies.com/games'],
+  ['pGameDetail','Game Detail (Admin)','admin.bambuddies.com/games/saturday-mahjong'],
+  ['pOrgs','Organizations','admin.bambuddies.com/orgs'],
+  ['pOrgDetail','Organization Detail','admin.bambuddies.com/orgs/portland-mahjong-club'],
+  ['pAnalytics','Analytics','admin.bambuddies.com/analytics'],
+  ['pReports','Moderation Queue','admin.bambuddies.com/reports'],
+  ['pSettings','System Settings','admin.bambuddies.com/settings'],
+  ['pActivity','Admin Activity Log','admin.bambuddies.com/activity']
+];
+const orgPages = [
+  ['oLogin','Org Login','portlandmahjong.club/admin/login'],
+  ['oDashboard','Org Dashboard','portlandmahjong.club/admin'],
+  ['oGames','Games Management','portlandmahjong.club/admin/games'],
+  ['oMembers','Members','portlandmahjong.club/admin/members'],
+  ['oAnalytics','Org Analytics','portlandmahjong.club/admin/analytics'],
+  ['oBranding','Branding','portlandmahjong.club/admin/branding'],
+  ['oSettings','Org Settings','portlandmahjong.club/admin/settings'],
+  ['oAdmins','Admins Management','portlandmahjong.club/admin/admins']
+];
+
+const PLATFORM_SIDEBAR = `
+<aside class="sidebar-platform">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark"><i class="ph-fill ph-diamond"></i></div>
+    <div class="logo-wrap"><div class="logo-brand">BamBuddies</div><div class="logo-sub">PLATFORM ADMIN</div></div>
+  </div>
+  <div class="nav-item" data-nav="pDashboard" onclick="go('pDashboard')"><i class="ph ph-house"></i>Dashboard</div>
+  <div class="nav-item" data-nav="pUsers" onclick="go('pUsers')"><i class="ph ph-users"></i>Users</div>
+  <div class="nav-item" data-nav="pGames" onclick="go('pGames')"><i class="ph ph-game-controller"></i>Games</div>
+  <div class="nav-item" data-nav="pOrgs" onclick="go('pOrgs')"><i class="ph ph-buildings"></i>Organizations</div>
+  <div class="nav-item" data-nav="pAnalytics" onclick="go('pAnalytics')"><i class="ph ph-chart-line"></i>Analytics</div>
+  <div class="nav-item" data-nav="pReports" onclick="go('pReports')"><i class="ph ph-warning"></i>Reports<span class="nav-badge">12</span></div>
+  <div class="nav-item" data-nav="pSettings" onclick="go('pSettings')"><i class="ph ph-gear"></i>Settings</div>
+  <div class="nav-item" data-nav="pActivity" onclick="go('pActivity')"><i class="ph ph-scroll"></i>Activity Log</div>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face" alt="">
+      <div style="flex:1;"><div class="sidebar-user-name">Jake Rohn</div><div class="sidebar-user-role">Staff · 2FA</div></div>
+      <i class="ph ph-sign-out" style="color:#94a3b8;cursor:pointer;" onclick="event.stopPropagation();go('pLogin')"></i>
+    </div>
+  </div>
+</aside>`;
+
+const ORG_SIDEBAR = `
+<aside class="sidebar-org">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark"><i class="ph-fill ph-buildings"></i></div>
+    <div class="logo-wrap"><div class="logo-brand">Portland MJ</div><div class="logo-sub">Org Admin</div></div>
+  </div>
+  <div class="nav-item" data-nav="oDashboard" onclick="go('oDashboard')"><i class="ph ph-house"></i>Dashboard</div>
+  <div class="nav-item" data-nav="oGames" onclick="go('oGames')"><i class="ph ph-game-controller"></i>Games</div>
+  <div class="nav-item" data-nav="oMembers" onclick="go('oMembers')"><i class="ph ph-users"></i>Members<span class="nav-badge">5</span></div>
+  <div class="nav-item" data-nav="oAdmins" onclick="go('oAdmins')"><i class="ph ph-star"></i>Admins</div>
+  <div class="nav-item" data-nav="oAnalytics" onclick="go('oAnalytics')"><i class="ph ph-chart-line"></i>Analytics</div>
+  <div class="nav-item" data-nav="oBranding" onclick="go('oBranding')"><i class="ph ph-palette"></i>Branding</div>
+  <div class="nav-item" data-nav="oSettings" onclick="go('oSettings')"><i class="ph ph-gear"></i>Settings</div>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt="">
+      <div style="flex:1;"><div class="sidebar-user-name">Sarah R.</div><div class="sidebar-user-role">Owner</div></div>
+      <i class="ph ph-sign-out" style="color:var(--muted);cursor:pointer;" onclick="event.stopPropagation();go('oLogin')"></i>
+    </div>
+  </div>
+</aside>`;
+
+let currentRole = 'platform';
+let pageMap = {};
+
+function buildPageMap(){
+  pageMap = {};
+  const list = currentRole === 'platform' ? platformPages : orgPages;
+  list.forEach((p,i)=>{ pageMap[p[0]] = {num:i+1, name:p[1], url:p[2]}; });
+}
+
+function setRole(role){
+  currentRole = role;
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.toggle('active', b.dataset.role===role));
+  buildPageMap();
+  const titleEl = document.getElementById('pageRefTitle');
+  if(titleEl) titleEl.textContent = role==='platform' ? 'Platform Admin — 12 pages' : 'Org Admin — 8 pages';
+  renderPageIndex();
+  go(role==='platform' ? 'pLogin' : 'oLogin');
+}
+
+function renderPageIndex(){
+  const idx = document.getElementById('pageIndex');
+  if(!idx) return;
+  idx.innerHTML='';
+  const list = currentRole === 'platform' ? platformPages : orgPages;
+  const gradColor = currentRole === 'platform' ? 'linear-gradient(135deg,#1e293b,#334155)' : 'linear-gradient(135deg,#059669,#10b981)';
+  list.forEach((p,i)=>{
+    const el = document.createElement('div');
+    el.style.cssText='cursor:pointer;padding:8px 10px;border-radius:8px;background:#1a1a1a;color:#ddd;font-size:12px;display:flex;align-items:center;gap:8px;transition:background .15s;';
+    el.onmouseover=()=>el.style.background='#252525';
+    el.onmouseout=()=>el.style.background='#1a1a1a';
+    el.onclick=()=>go(p[0]);
+    el.innerHTML='<span style="background:'+gradColor+';color:#fff;min-width:28px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;">'+String(i+1).padStart(2,'0')+'</span><span>'+p[1]+'</span>';
+    idx.appendChild(el);
+  });
+}
+
+function updateBadge(screen){
+  const p = pageMap[screen]; if(!p) return;
+  document.getElementById('pageNum').textContent = String(p.num).padStart(2,'0');
+  document.getElementById('pageName').textContent = p.name;
+  document.getElementById('addr-text').textContent = p.url;
+}
+
+function go(screen){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el = document.querySelector('[data-screen="'+screen+'"]');
+  if(!el) return;
+  el.classList.add('active');
+  const main = el.querySelector('.main'); if(main) main.scrollTop = 0;
+  // Role context switch if needed
+  const isPlatform = screen.startsWith('p');
+  const expectedRole = isPlatform ? 'platform' : 'org';
+  if(expectedRole !== currentRole){
+    currentRole = expectedRole;
+    document.querySelectorAll('.role-btn').forEach(b=>b.classList.toggle('active', b.dataset.role===currentRole));
+    buildPageMap();
+    const titleEl = document.getElementById('pageRefTitle');
+    if(titleEl) titleEl.textContent = currentRole==='platform' ? 'Platform Admin — 12 pages' : 'Org Admin — 8 pages';
+    renderPageIndex();
+  }
+  updateBadge(screen);
+  // active nav
+  const sidebar = el.querySelector('.sidebar-platform, .sidebar-org');
+  if(sidebar){
+    sidebar.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.nav===screen));
+  }
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  // inject sidebars
+  document.querySelectorAll('.app-layout').forEach(layout=>{
+    const role = layout.dataset.role;
+    if(role==='platform' && !layout.querySelector('.sidebar-platform')){
+      layout.insertAdjacentHTML('afterbegin', PLATFORM_SIDEBAR);
+    } else if(role==='org' && !layout.querySelector('.sidebar-org')){
+      layout.insertAdjacentHTML('afterbegin', ORG_SIDEBAR);
+    }
+  });
+  buildPageMap();
+  renderPageIndex();
+  // Start on Platform Login
+  go('pLogin');
+});
+</script>
+
+</body>
+</html>
