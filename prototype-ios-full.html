@@ -92,7 +92,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 <!-- PAGE REFERENCE LIST (collapsible) -->
 <details style="max-width:920px;margin:0 auto 24px;background:#141414;border:1px solid #222;border-radius:14px;overflow:hidden;font-family:'Outfit',sans-serif;">
   <summary style="cursor:pointer;padding:12px 18px;color:#aaa;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:space-between;list-style:none;">
-    <span><i class="ph ph-list-numbers" style="margin-right:6px;vertical-align:-2px;"></i> Page Reference (28 pages) — click to expand</span>
+    <span><i class="ph ph-list-numbers" style="margin-right:6px;vertical-align:-2px;"></i> Page Reference (29 pages) — click to expand</span>
     <i class="ph ph-caret-down" style="font-size:14px;"></i>
   </summary>
   <div id="pageIndex" style="padding:14px 18px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;border-top:1px solid #222;"></div>
@@ -269,127 +269,203 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     <!-- ==================== 2. GAME DETAIL ==================== -->
     <div class="screen has-tab" data-screen="gameDetail" style="padding:0;">
 
-      <!-- Top Nav -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;">
-        <div style="cursor:pointer;padding:4px;" onclick="goBack()">
-          <i class="ph ph-caret-left" style="font-size:24px;color:#1a1a1a;"></i>
+      <!-- Hero Image w/ overlay nav -->
+      <div style="position:relative;height:160px;overflow:hidden;">
+        <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=800" style="width:100%;height:100%;object-fit:cover;" alt="">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,transparent 35%,rgba(0,0,0,.7) 100%);"></div>
+
+        <!-- Top nav overlay -->
+        <div style="position:absolute;top:10px;left:10px;right:10px;display:flex;align-items:center;justify-content:space-between;">
+          <div onclick="goBack()" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-caret-left" style="font-size:20px;color:#fff;"></i></div>
+          <div style="display:flex;gap:8px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-share-network" style="font-size:17px;color:#fff;"></i></div>
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-dots-three" style="font-size:20px;color:#fff;"></i></div>
+          </div>
         </div>
-        <div style="color:#000;font-size:16px;font-weight:600;">Game Detail</div>
-        <i class="ph ph-dots-three" style="font-size:24px;color:#1a1a1a;cursor:pointer;"></i>
+
+        <!-- Title overlay -->
+        <div style="position:absolute;bottom:12px;left:16px;right:16px;color:#fff;">
+          <!-- PROMINENT STATUS -->
+          <div class="pill" style="background:rgba(255,255,255,.95);color:#d97706;font-size:10px;font-weight:800;letter-spacing:1px;display:inline-flex;align-items:center;gap:4px;margin-bottom:6px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#d97706;animation:pulse 2s infinite;"></span>
+            PENDING &middot; NEEDS 1 MORE
+          </div>
+          <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.3px;line-height:1.1;">Saturday Mahjong</div>
+          <div style="font-size:12px;font-weight:500;opacity:.9;margin-top:3px;display:flex;align-items:center;gap:5px;">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:16px;height:16px;border-radius:50%;">
+            Hosted by Sarah R.
+          </div>
+        </div>
       </div>
 
-      <!-- Status Pill -->
-      <div style="padding:0 16px 10px;">
-        <div class="pill" style="background:#ede9fe;color:#7c3aed;">CONFIRMED</div>
-      </div>
-
-      <!-- Hero Image -->
-      <div style="position:relative;height:120px;margin:0 16px;border-radius:14px;overflow:hidden;">
-        <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;" alt="">
-        <div style="position:absolute;top:10px;left:10px;background:#fff;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;color:#000;">SAT 4/19</div>
-        <div style="position:absolute;top:10px;right:40px;"><i class="ph-fill ph-crown" style="font-size:18px;color:#d97706;"></i></div>
-        <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);border-radius:10px;padding:2px 8px;font-size:11px;font-weight:600;color:#fff;">4/4</div>
+      <!-- ===== PRIMARY ACTIONS (above fold) ===== -->
+      <div style="padding:14px 16px 12px;background:#fff;border-bottom:1px solid #e8e4e0;">
+        <div style="display:flex;gap:8px;">
+          <div onclick="event.stopPropagation();go('chat')" style="flex:1;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 4px 12px rgba(124,58,237,.25);"><i class="ph-fill ph-chat-circle-dots" style="font-size:15px;"></i> Message</div>
+          <div style="flex:1;background:#fff;color:#000;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph ph-calendar-plus" style="font-size:15px;color:#7c3aed;"></i> Add to Cal</div>
+          <div style="flex:1;background:#fff;color:#000;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph ph-navigation-arrow" style="font-size:15px;color:#7c3aed;"></i> Directions</div>
+        </div>
+        <!-- Organizer Actions row -->
+        <div style="display:flex;gap:6px;margin-top:8px;">
+          <div onclick="event.stopPropagation();go('gameEdit')" style="flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#7c3aed;background:#ede9fe;">Edit</div>
+          <div onclick="event.stopPropagation();go('applicants')" style="flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#7c3aed;background:#ede9fe;">Applicants <span style="background:#f43f5e;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:2px;">3</span></div>
+          <div onclick="event.stopPropagation();go('gameReview')" style="flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#7c3aed;background:#ede9fe;">Review</div>
+          <div style="flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#7c3aed;background:#ede9fe;">Invite</div>
+        </div>
       </div>
 
       <div style="padding:16px;">
-        <div style="color:#000;font-size:22px;font-weight:700;font-family:'Outfit',sans-serif;">Saturday Mahjong</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
-          <div style="color:#888;font-size:13px;">Hosted by <span style="color:#000;font-weight:600;">Sarah R.</span></div>
-        </div>
 
         <!-- Details Card -->
-        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:16px;">
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
             <i class="ph ph-calendar-blank" style="font-size:20px;color:#7c3aed;"></i>
-            <div><div style="color:#000;font-size:14px;font-weight:600;">Sat, April 19</div><div style="color:#888;font-size:12px;">2:00 PM &ndash; 4:00 PM</div></div>
+            <div><div style="color:#000;font-size:14px;font-weight:600;">Sat, April 19</div><div style="color:#888;font-size:12px;">2:00 PM &ndash; 4:00 PM ET &middot; 2 hours</div></div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <i class="ph ph-clock" style="font-size:20px;color:#7c3aed;"></i>
-            <div style="color:#000;font-size:14px;font-weight:600;">2 hours</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <i class="ph ph-map-pin" style="font-size:20px;color:#7c3aed;"></i>
-            <div style="color:#000;font-size:14px;font-weight:600;">Sarah's Home, Portland</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
+            <i class="ph ph-map-pin" style="font-size:20px;color:#7c3aed;margin-top:1px;"></i>
+            <div style="flex:1;">
+              <div style="color:#000;font-size:14px;font-weight:600;">Sarah's Home</div>
+              <div style="color:#666;font-size:12px;margin-top:1px;">456 Oak Ave, Unit 3B</div>
+              <div style="color:#666;font-size:12px;">Portland, OR 97209</div>
+            </div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
             <i class="ph ph-globe-simple" style="font-size:20px;color:#7c3aed;"></i>
-            <div style="color:#000;font-size:14px;font-weight:600;">Open Public</div>
+            <div style="color:#000;font-size:14px;font-weight:600;">Open Public &middot; All Levels</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <i class="ph ph-users" style="font-size:20px;color:#7c3aed;"></i>
-            <div style="color:#000;font-size:14px;font-weight:600;">4 / 4 Players</div>
+            <div style="color:#000;font-size:14px;font-weight:600;">3 / 4 players <span style="color:#d97706;font-weight:600;font-size:12px;">&middot; 1 invited</span></div>
           </div>
         </div>
 
         <!-- Roster Card -->
-        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:12px;">
-          <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:12px;">Players 4/4</div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
+          <div style="color:#000;font-size:15px;font-weight:700;margin-bottom:12px;">Players <span style="color:#888;font-weight:500;">3/4 confirmed</span></div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R. <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;vertical-align:middle;"></i></div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Accepted</div>
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R. <span style="background:#fef3c7;color:#d97706;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;">HOST</span></div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;font-weight:700;letter-spacing:.3px;">ACCEPTED</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:11px;">Advanced</div></div>
-            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Accepted</div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;font-weight:700;letter-spacing:.3px;">ACCEPTED</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:11px;">Beginner</div></div>
-            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Accepted</div>
+            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;font-weight:700;letter-spacing:.3px;">ACCEPTED</div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-            <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;">Invited</div>
+            <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;font-weight:700;letter-spacing:.3px;">INVITED</div>
           </div>
         </div>
 
         <!-- Bring Items Card -->
-        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:12px;">
-          <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:12px;">What to Bring</div>
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
+          <div style="color:#000;font-size:15px;font-weight:700;margin-bottom:12px;">What to Bring</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
             <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-puzzle-piece" style="font-size:16px;color:#7c3aed;"></i> Tile Set</div>
-            <div class="pill" style="background:#ede9fe;color:#7c3aed;font-size:10px;">Covered</div>
+            <div class="pill" style="background:#d1fae5;color:#065f46;font-size:10px;font-weight:700;letter-spacing:.3px;">COVERED</div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
             <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-cookie" style="font-size:16px;color:#d97706;"></i> Snacks</div>
-            <div style="background:#7c3aed;color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;">Claim</div>
+            <div style="background:#7c3aed;color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Claim</div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-wine" style="font-size:16px;color:#f43f5e;"></i> Drinks</div>
-            <div style="color:#888;font-size:12px;">Lisa M.</div>
+            <div style="color:#666;font-size:12px;display:flex;align-items:center;gap:4px;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:18px;height:18px;border-radius:50%;"> Lisa M.</div>
           </div>
         </div>
 
-        <!-- Chat Preview -->
-        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-top:12px;">
+        <!-- Table Visualization -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <div style="color:#000;font-size:15px;font-weight:700;">Table Layout</div>
+            <div style="color:#888;font-size:11px;font-weight:600;">1 table &middot; 4 seats</div>
+          </div>
+          <!-- SVG Table -->
+          <div style="display:flex;justify-content:center;padding:8px 0;">
+            <svg width="220" height="220" viewBox="0 0 220 220">
+              <!-- Table surface -->
+              <circle cx="110" cy="110" r="62" fill="#f5f0eb" stroke="#d4b896" stroke-width="2"/>
+              <circle cx="110" cy="110" r="62" fill="url(#woodGrain)" opacity=".3"/>
+              <defs>
+                <radialGradient id="woodGrain"><stop offset="0%" stop-color="#c9a276"/><stop offset="100%" stop-color="#a67f55"/></radialGradient>
+              </defs>
+              <!-- Center logo area -->
+              <circle cx="110" cy="110" r="20" fill="#fff" stroke="#e8e4e0" stroke-width="1"/>
+              <text x="110" y="108" text-anchor="middle" font-family="DM Serif Display,serif" font-size="10" fill="#7c3aed" font-weight="700">Bam</text>
+              <text x="110" y="120" text-anchor="middle" font-family="DM Serif Display,serif" font-size="9" fill="#a78bfa">Buddies</text>
+
+              <!-- EAST seat (right) -->
+              <g>
+                <circle cx="186" cy="110" r="20" fill="#7c3aed" stroke="#fff" stroke-width="3"/>
+                <text x="186" y="113" text-anchor="middle" font-family="Outfit" font-size="10" fill="#fff" font-weight="700">SR</text>
+                <text x="186" y="145" text-anchor="middle" font-family="Outfit" font-size="8" fill="#666" font-weight="600">East</text>
+                <text x="186" y="155" text-anchor="middle" font-family="Outfit" font-size="9" fill="#1a1a1a" font-weight="700">Sarah</text>
+              </g>
+              <!-- NORTH seat (top) -->
+              <g>
+                <circle cx="110" cy="34" r="20" fill="#a78bfa" stroke="#fff" stroke-width="3"/>
+                <text x="110" y="37" text-anchor="middle" font-family="Outfit" font-size="10" fill="#fff" font-weight="700">LM</text>
+                <text x="110" y="10" text-anchor="middle" font-family="Outfit" font-size="8" fill="#666" font-weight="600">North</text>
+                <text x="110" y="20" text-anchor="middle" font-family="Outfit" font-size="9" fill="#1a1a1a" font-weight="700">Lisa</text>
+              </g>
+              <!-- WEST seat (left) -->
+              <g>
+                <circle cx="34" cy="110" r="20" fill="#a78bfa" stroke="#fff" stroke-width="3"/>
+                <text x="34" y="113" text-anchor="middle" font-family="Outfit" font-size="10" fill="#fff" font-weight="700">AT</text>
+                <text x="34" y="145" text-anchor="middle" font-family="Outfit" font-size="8" fill="#666" font-weight="600">West</text>
+                <text x="34" y="155" text-anchor="middle" font-family="Outfit" font-size="9" fill="#1a1a1a" font-weight="700">Amy</text>
+              </g>
+              <!-- SOUTH seat (bottom) — Rachel (invited, outlined) -->
+              <g>
+                <circle cx="110" cy="186" r="20" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="4 3"/>
+                <text x="110" y="189" text-anchor="middle" font-family="Outfit" font-size="10" fill="#d97706" font-weight="700">RK</text>
+                <text x="110" y="213" text-anchor="middle" font-family="Outfit" font-size="8" fill="#666" font-weight="600">South</text>
+              </g>
+            </svg>
+          </div>
+          <div style="display:flex;gap:12px;justify-content:center;font-size:10px;color:#888;margin-top:6px;">
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>Host</span>
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#a78bfa;display:inline-block;"></span>Confirmed</span>
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#fff;border:1.5px dashed #d97706;display:inline-block;"></span>Invited</span>
+          </div>
+        </div>
+
+        <!-- Chat Preview (messageable) -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-            <div style="color:#000;font-size:16px;font-weight:700;">Game Chat</div>
-            <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;">12</div>
+            <div style="color:#000;font-size:15px;font-weight:700;">Game Chat</div>
+            <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;min-width:22px;height:22px;border-radius:99px;padding:0 6px;display:flex;align-items:center;justify-content:center;">12</div>
           </div>
-          <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
-            <div><div style="color:#000;font-size:12px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:12px;">I'll bring the drinks!</div></div>
+          <div onclick="event.stopPropagation();go('chat')" style="cursor:pointer;">
+            <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
+              <div><div style="color:#000;font-size:12px;font-weight:600;">Lisa M. <span style="color:#aaa;font-weight:400;">&middot; 15m</span></div><div style="color:#666;font-size:12px;margin-top:1px;">I'll bring the drinks!</div></div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px;">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
+              <div><div style="color:#000;font-size:12px;font-weight:600;">Amy T. <span style="color:#aaa;font-weight:400;">&middot; 2m</span></div><div style="color:#666;font-size:12px;margin-top:1px;">Can't wait, see you all Sat!</div></div>
+            </div>
           </div>
-          <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;">
-            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" alt="">
-            <div><div style="color:#000;font-size:12px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:12px;">Can't wait, see you all Sat!</div></div>
+          <!-- Inline composer -->
+          <div onclick="event.stopPropagation();go('chat')" style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:99px;padding:8px 10px 8px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <i class="ph ph-smiley" style="font-size:16px;color:#aaa;"></i>
+            <span style="flex:1;color:#aaa;font-size:12px;">Message the group...</span>
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-paper-plane-tilt" style="font-size:13px;color:#fff;"></i></div>
           </div>
-          <div style="color:#a78bfa;font-size:13px;font-weight:600;cursor:pointer;text-align:center;" onclick="event.stopPropagation();go('chat')">View All Messages &rarr;</div>
         </div>
 
-        <!-- Action Buttons -->
-        <div style="display:flex;gap:8px;margin-top:16px;padding-bottom:8px;">
-          <div onclick="event.stopPropagation();go('gameEdit')" style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Edit</div>
-          <div onclick="event.stopPropagation();go('applicants')" style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Applicants</div>
-          <div onclick="event.stopPropagation();go('gameReview')" style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Review</div>
-        </div>
-        <div style="display:flex;gap:10px;padding-bottom:16px;">
-          <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Invite Players</div>
-          <div style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid #7c3aed;">Complete Game</div>
+        <!-- Secondary Actions -->
+        <div style="display:flex;gap:10px;padding-bottom:8px;">
+          <div style="flex:1;background:#fff;color:#7c3aed;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid #7c3aed;">Complete Game</div>
+          <div style="flex:1;background:transparent;color:#ef4444;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;border:1.5px solid #fecaca;">Cancel Participation</div>
         </div>
       </div>
     </div><!-- /gameDetail -->
@@ -1719,14 +1795,17 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
         <div onclick="goBack()" style="cursor:pointer;padding:4px;"><i class="ph ph-x" style="font-size:22px;color:#000;"></i></div>
         <div style="color:#000;font-size:16px;font-weight:700;">Edit Game</div>
-        <div style="color:#7c3aed;font-size:14px;font-weight:700;cursor:pointer;" onclick="goBack()">Save</div>
+        <div style="width:24px;"></div>
       </div>
       <div style="background:#fef3c7;color:#92400e;padding:10px 14px;border-radius:10px;font-size:12px;margin-bottom:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-info" style="font-size:16px;"></i> Players will be notified of changes</div>
       <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Game Name</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#000;font-size:14px;">Saturday Mahjong</div></div>
       <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Date & Time</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:14px;display:flex;justify-content:space-between;align-items:center;"><span>Sat, Apr 19 · 2:00 PM</span><i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i></div></div>
       <div style="margin-bottom:12px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Estimated Length</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;font-size:14px;display:flex;justify-content:space-between;align-items:center;"><span>2 hours</span><i class="ph ph-caret-down" style="font-size:14px;color:#888;"></i></div></div>
       <div style="margin-bottom:20px;"><div style="color:#000;font-size:13px;font-weight:600;margin-bottom:6px;">Note for Players</div><div style="background:#fff;border:1px solid #e8e4e0;border-radius:10px;padding:12px;color:#aaa;font-size:14px;min-height:80px;">Any updates or notes...</div></div>
-      <div onclick="go('gameDetail')" style="background:transparent;border:1.5px solid #ef4444;color:#ef4444;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">Cancel Game</div>
+      <!-- Save (prominent) -->
+      <div onclick="go('gameDetail')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;box-shadow:0 4px 16px rgba(124,58,237,.3);">Save Changes</div>
+      <!-- Cancel Game (secondary / destructive, de-emphasized) -->
+      <div onclick="go('gameDetail')" style="background:transparent;border:1px solid #fecaca;color:#ef4444;text-align:center;padding:12px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;">Cancel Game</div>
     </div>
 
     <!-- ==================== APPLICANTS ==================== -->
@@ -1738,10 +1817,15 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
       <div style="color:#888;font-size:13px;margin-bottom:14px;">3 pending · Saturday Mahjong</div>
 
+      <div style="color:#888;font-size:11px;margin-bottom:14px;font-style:italic;">Tap a card to view profile &middot; No personal info shown</div>
+
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;">
-        <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+        <div onclick="event.stopPropagation();go('applicantProfile')" style="display:flex;gap:12px;align-items:center;margin-bottom:10px;cursor:pointer;">
           <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" alt="">
-          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Jessica W.</div><div style="color:#888;font-size:12px;">Advanced · Applied 2h ago</div></div>
+          <div style="flex:1;">
+            <div style="color:#000;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;">Jessica W. <i class="ph ph-caret-right" style="font-size:13px;color:#9ca3af;"></i></div>
+            <div style="color:#888;font-size:12px;">Advanced · 24 games · Applied 2h ago</div>
+          </div>
         </div>
         <div style="color:#666;font-size:12px;margin-bottom:10px;font-style:italic;">"Would love to join! I'm free Saturday."</div>
         <div style="display:flex;gap:8px;">
@@ -1751,9 +1835,12 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
 
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;">
-        <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+        <div onclick="event.stopPropagation();go('applicantProfile')" style="display:flex;gap:12px;align-items:center;margin-bottom:10px;cursor:pointer;">
           <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" alt="">
-          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Marcus L.</div><div style="color:#888;font-size:12px;">Intermediate · Applied 5h ago</div></div>
+          <div style="flex:1;">
+            <div style="color:#000;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;">Marcus L. <i class="ph ph-caret-right" style="font-size:13px;color:#9ca3af;"></i></div>
+            <div style="color:#888;font-size:12px;">Intermediate · 8 games · Applied 5h ago</div>
+          </div>
         </div>
         <div style="display:flex;gap:8px;">
           <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;">Approve</div>
@@ -1762,13 +1849,105 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
 
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;">
-        <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+        <div onclick="event.stopPropagation();go('applicantProfile')" style="display:flex;gap:12px;align-items:center;margin-bottom:10px;cursor:pointer;">
           <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" alt="">
-          <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:700;">Priya R.</div><div style="color:#888;font-size:12px;">Beginner · Applied 1d ago</div></div>
+          <div style="flex:1;">
+            <div style="color:#000;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;">Priya R. <i class="ph ph-caret-right" style="font-size:13px;color:#9ca3af;"></i></div>
+            <div style="color:#888;font-size:12px;">Beginner · 2 games · Applied 1d ago</div>
+          </div>
         </div>
         <div style="display:flex;gap:8px;">
           <div style="flex:1;background:#7c3aed;color:#fff;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;">Approve</div>
           <div style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:8px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;">Decline</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== APPLICANT PROFILE (PII-safe) ==================== -->
+    <div class="screen" data-screen="applicantProfile" style="padding:0;background:#faf8f6;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;">
+        <div onclick="go('applicants')" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:24px;color:#000;"></i></div>
+        <div style="color:#000;font-size:16px;font-weight:700;">Player Profile</div>
+        <i class="ph ph-flag" style="font-size:20px;color:#888;cursor:pointer;"></i>
+      </div>
+
+      <!-- Hero -->
+      <div style="text-align:center;padding:8px 16px 20px;">
+        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&h=200&fit=crop&crop=face" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,.1);" alt="Jessica W.">
+        <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#000;margin-top:10px;line-height:1;">Jessica W.</div>
+        <div style="color:#888;font-size:13px;margin-top:4px;">Member since Jan 2024 &middot; Portland area</div>
+        <div style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;background:#d1fae5;color:#065f46;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:700;"><i class="ph-fill ph-check-circle" style="font-size:12px;"></i> Verified player</div>
+      </div>
+
+      <!-- Privacy banner -->
+      <div style="margin:0 16px 14px;background:#ede9fe;border:1px solid #c4b5fd;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;">
+        <i class="ph-fill ph-shield-check" style="font-size:18px;color:#7c3aed;flex-shrink:0;"></i>
+        <div style="color:#5b21b6;font-size:11px;line-height:1.4;">Contact info stays private until you approve the application.</div>
+      </div>
+
+      <div style="padding:0 16px;">
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;">
+          <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px;text-align:center;">
+            <div style="color:#000;font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;line-height:1;">24</div>
+            <div style="color:#888;font-size:10px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.5px;">Games Played</div>
+          </div>
+          <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px;text-align:center;">
+            <div style="color:#000;font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;line-height:1;">96%</div>
+            <div style="color:#888;font-size:10px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.5px;">Attended</div>
+          </div>
+          <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px;text-align:center;">
+            <div style="color:#7c3aed;font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;line-height:1;">Adv</div>
+            <div style="color:#888;font-size:10px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.5px;">Skill</div>
+          </div>
+        </div>
+
+        <!-- Mutual connections -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:12px;">
+          <div style="color:#000;font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;"><i class="ph-fill ph-users-three" style="font-size:16px;color:#7c3aed;"></i> 2 mutual connections</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:11px;">Played 3 games together</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Rachel K.</div><div style="color:#888;font-size:11px;">Played 1 game together</div></div>
+          </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:12px;">
+          <div style="color:#000;font-size:14px;font-weight:700;margin-bottom:6px;">About</div>
+          <div style="color:#555;font-size:13px;line-height:1.5;">Been playing American mahjong for 8 years. Usually host a weekly game in the Pearl District. Love meeting new players!</div>
+        </div>
+
+        <!-- Application note -->
+        <div class="card" style="background:#ede9fe;border:1px solid #c4b5fd;border-radius:14px;padding:14px;margin-bottom:12px;">
+          <div style="color:#5b21b6;font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:4px;">THEIR MESSAGE TO YOU</div>
+          <div style="color:#1a1a1a;font-size:13px;line-height:1.5;font-style:italic;">"Would love to join! I'm free Saturday and have been looking for a regular group in Portland."</div>
+        </div>
+
+        <!-- Recent games (other hosts, PII-free) -->
+        <div class="card" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:16px;">
+          <div style="color:#000;font-size:14px;font-weight:700;margin-bottom:10px;">Recent games</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check" style="font-size:14px;color:#7c3aed;"></i></div>
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Westside Wednesday</div><div style="color:#888;font-size:11px;">Apr 10 &middot; Attended</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check" style="font-size:14px;color:#7c3aed;"></i></div>
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Pearl District Play</div><div style="color:#888;font-size:11px;">Apr 3 &middot; Attended</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check" style="font-size:14px;color:#7c3aed;"></i></div>
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Sunday Regulars</div><div style="color:#888;font-size:11px;">Mar 30 &middot; Attended</div></div>
+          </div>
+        </div>
+
+        <!-- Actions (sticky-ish at bottom) -->
+        <div style="display:flex;gap:10px;padding-bottom:16px;">
+          <div onclick="go('applicants')" style="flex:2;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,58,237,.3);"><i class="ph-bold ph-check" style="font-size:14px;vertical-align:-2px;"></i> Approve</div>
+          <div onclick="go('applicants')" style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#ef4444;text-align:center;padding:14px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">Decline</div>
         </div>
       </div>
     </div>
@@ -1792,30 +1971,52 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="margin-top:10px;display:flex;align-items:center;gap:8px;color:#7c3aed;font-size:13px;font-weight:600;cursor:pointer;"><i class="ph ph-camera" style="font-size:18px;"></i> Add a photo</div>
       </div>
 
-      <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:10px;margin-top:16px;">Rate the players</div>
+      <div style="color:#000;font-size:16px;font-weight:700;margin-bottom:4px;margin-top:16px;">Player feedback</div>
+      <div style="color:#888;font-size:11px;margin-bottom:10px;">Help players with skill-level tags. No public ratings.</div>
 
+      <!-- Lisa M. -->
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;margin-bottom:8px;">
-        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;">
           <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;" alt="">
-          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:11px;">Advanced</div></div>
-          <div style="display:flex;gap:2px;"><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i></div>
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:11px;">Currently: Advanced</div></div>
         </div>
+        <div style="color:#000;font-size:11px;font-weight:600;margin-bottom:5px;">Observed skill level</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px;">
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Beginner</div>
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Intermediate</div>
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#7c3aed;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">Advanced</div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:8px;padding:8px 10px;color:#aaa;font-size:12px;">Comments (optional)</div>
       </div>
 
+      <!-- Amy T. -->
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;margin-bottom:8px;">
-        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;">
           <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;" alt="">
-          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:11px;">Beginner</div></div>
-          <div style="display:flex;gap:2px;"><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph-fill ph-star" style="font-size:18px;color:#fbbf24;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i></div>
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:11px;">Currently: Beginner</div></div>
         </div>
+        <div style="color:#000;font-size:11px;font-weight:600;margin-bottom:5px;">Observed skill level</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px;">
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Beginner</div>
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#7c3aed;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">Intermediate</div>
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Advanced</div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:8px;padding:8px 10px;color:#000;font-size:12px;">Played much better than her level suggests — ready to move up!</div>
       </div>
 
+      <!-- Rachel K. -->
       <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;margin-bottom:16px;">
-        <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;">
           <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;" alt="">
-          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-          <div style="display:flex;gap:2px;"><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i><i class="ph ph-star" style="font-size:18px;color:#ddd;"></i></div>
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:11px;">Currently: Intermediate</div></div>
         </div>
+        <div style="color:#000;font-size:11px;font-weight:600;margin-bottom:5px;">Observed skill level</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px;">
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Beginner</div>
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Intermediate</div>
+          <div style="text-align:center;padding:7px 4px;border-radius:8px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Advanced</div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:8px;padding:8px 10px;color:#aaa;font-size:12px;">Comments (optional)</div>
       </div>
 
       <div onclick="go('dashboard')" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;">Submit Reviews</div>
@@ -2203,7 +2404,7 @@ const history = ['dashboard'];
 const tabMap = {dashboard:'dashboard',discover:'discover',myGames:'myGames',groups:'groups',
   gameDetail:'myGames',creation1:'myGames',creation2:'myGames',creation3:'myGames',groupDetail:'groups',inbox:'dashboard',
   chat:'dashboard',notifications:'dashboard'};
-const noTabScreens = ['creation1','creation2','creation3','chat','login','register','forgotPassword','resetPassword','verifyPhone','completeProfile','gameEdit','applicants','gameReview','groupCreation','groupDiscovery','modalFirstGame','groupInviteMembers','inviteManual','inviteFavorites','inviteContacts'];
+const noTabScreens = ['creation1','creation2','creation3','chat','login','register','forgotPassword','resetPassword','verifyPhone','completeProfile','gameEdit','applicants','applicantProfile','gameReview','groupCreation','groupDiscovery','modalFirstGame','groupInviteMembers','inviteManual','inviteFavorites','inviteContacts'];
 
 // Page numbering — ordered by logical user flow
 const pageOrder = [
@@ -2221,6 +2422,7 @@ const pageOrder = [
   ['creation3','Create Game · Step 3'],
   ['gameEdit','Edit Game'],
   ['applicants','Applicants'],
+  ['applicantProfile','Applicant Profile'],
   ['gameReview','Game Review'],
   ['discover','Discover (Map)'],
   ['groups','My Groups'],
