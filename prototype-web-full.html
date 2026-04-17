@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies Web Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+:root{
+  --primary:#059669; --primary-soft:#10b981; --primary-bg:#d1fae5;
+  --primary-grad:linear-gradient(135deg,#059669,#10b981);
+  --primary-shadow:rgba(5,150,105,.3);
+  --page:#fafaf9; --card:#fff; --border:#e5e5e0;
+  --text:#1a1a1a; --muted:#6b7280;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#1a1a1a;font-family:'Outfit',sans-serif;min-height:100vh;padding:24px 0;color:#fff;}
+.page-head{text-align:center;margin-bottom:20px;}
+.page-head h1{font-family:'DM Serif Display',serif;font-size:32px;color:#fff;}
+.page-head p{color:#9ca3af;font-size:14px;margin-top:4px;font-family:'Inter',sans-serif;}
+.viewport-switcher{display:flex;justify-content:center;gap:8px;margin:14px 0 20px;}
+.vp-btn{background:#2a2a2a;color:#bbb;border:1px solid #3a3a3a;padding:8px 16px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.vp-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.vp-btn:hover:not(.active){background:#333;color:#fff;}
+
+.frame-wrap{display:flex;justify-content:center;padding:0 20px;}
+.browser-frame{background:#2a2a2a;border-radius:14px;box-shadow:0 25px 80px rgba(0,0,0,.6);overflow:hidden;transition:width .3s ease;border:1px solid #3a3a3a;}
+.browser-frame.desktop{width:1280px;}
+.browser-frame.tablet{width:768px;}
+.browser-frame.mobile{width:375px;}
+.browser-chrome{background:#2a2a2a;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #1a1a1a;}
+.dots{display:flex;gap:6px;}
+.dot{width:11px;height:11px;border-radius:50%;}
+.dot.r{background:#ff5f56;} .dot.y{background:#ffbd2e;} .dot.g{background:#27c93f;}
+.addr{flex:1;background:#1a1a1a;color:#8a8a8a;border-radius:6px;padding:6px 12px;font-size:12px;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:8px;}
+.addr i{color:#4ade80;}
+.chrome-icons{display:flex;gap:10px;color:#8a8a8a;}
+.viewport-area{background:var(--page);color:var(--text);min-height:820px;font-family:'Outfit',sans-serif;position:relative;overflow:hidden;}
+
+/* Screen transitions */
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* Auth pages */
+.auth-wrap{min-height:820px;display:flex;align-items:center;justify-content:center;padding:40px 20px;background:linear-gradient(135deg,#fafaf9 0%,#e7f7ef 100%);}
+.auth-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:40px;width:100%;max-width:480px;box-shadow:0 10px 40px rgba(0,0,0,.04);}
+.auth-logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:24px;}
+.auth-logo-mark{width:42px;height:42px;border-radius:12px;background:var(--primary-grad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;}
+.auth-logo-text{font-family:'DM Serif Display',serif;font-size:24px;color:var(--text);}
+.auth-title{font-family:'DM Serif Display',serif;font-size:28px;text-align:center;margin-bottom:8px;color:var(--text);}
+.auth-sub{text-align:center;color:var(--muted);font-family:'Inter',sans-serif;font-size:14px;margin-bottom:28px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;font-family:'Outfit',sans-serif;}
+.input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:#fff;color:var(--text);font-family:'Inter',sans-serif;transition:all .15s;}
+.input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,150,105,.15);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:8px;font-size:14px;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;border:none;transition:all .15s;text-decoration:none;}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-primary:hover{background:#047857;transform:translateY(-1px);box-shadow:0 6px 20px var(--primary-shadow);}
+.btn-secondary{background:#fff;color:var(--text);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--primary);color:var(--primary);}
+.btn-ghost{background:transparent;color:var(--primary);}
+.btn-block{width:100%;}
+.btn-lg{padding:14px 20px;font-size:15px;}
+
+/* Sidebar Layout */
+.app-layout{display:grid;grid-template-columns:240px 1fr;min-height:820px;}
+.app-layout.with-right{grid-template-columns:240px 1fr 300px;}
+.viewport-area.tablet-mode .app-layout{grid-template-columns:72px 1fr;}
+.viewport-area.tablet-mode .app-layout.with-right{grid-template-columns:72px 1fr;}
+.viewport-area.mobile-mode .app-layout{grid-template-columns:1fr;padding-bottom:70px;}
+.viewport-area.mobile-mode .app-layout.with-right{grid-template-columns:1fr;padding-bottom:70px;}
+
+.sidebar{background:#fff;border-right:1px solid var(--border);padding:20px 16px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;max-height:820px;overflow-y:auto;}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:4px 10px 20px;margin-bottom:8px;border-bottom:1px solid var(--border);}
+.sidebar-logo-mark{width:36px;height:36px;border-radius:10px;background:var(--primary-grad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0;}
+.sidebar-logo-text{font-family:'DM Serif Display',serif;font-size:20px;color:var(--text);}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:500;transition:all .15s;position:relative;}
+.nav-item i{font-size:20px;flex-shrink:0;}
+.nav-item:hover{background:#f5f5f2;color:var(--text);}
+.nav-item.active{background:var(--primary-bg);color:var(--primary);font-weight:600;}
+.nav-badge{margin-left:auto;background:#f43f5e;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.viewport-area.tablet-mode .sidebar-logo-text,
+.viewport-area.tablet-mode .nav-label,
+.viewport-area.tablet-mode .sidebar-user-info,
+.viewport-area.tablet-mode .nav-badge{display:none;}
+.viewport-area.tablet-mode .sidebar{padding:20px 10px;}
+.viewport-area.tablet-mode .sidebar-logo{justify-content:center;padding:4px 0 20px;}
+.viewport-area.tablet-mode .nav-item{justify-content:center;padding:10px;}
+.viewport-area.mobile-mode .sidebar{display:none;}
+.sidebar-footer{margin-top:auto;padding-top:12px;border-top:1px solid var(--border);}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;cursor:pointer;}
+.sidebar-user:hover{background:#f5f5f2;}
+.sidebar-user img{width:32px;height:32px;border-radius:50%;object-fit:cover;}
+.sidebar-user-info{flex:1;min-width:0;}
+.sidebar-user-name{font-size:13px;font-weight:600;color:var(--text);}
+.sidebar-user-role{font-size:11px;color:var(--muted);}
+
+/* Mobile bottom tab */
+.mobile-tabbar{display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:8px 4px 10px;z-index:50;}
+.viewport-area.mobile-mode .mobile-tabbar{display:flex;justify-content:space-around;align-items:center;}
+.mt-item{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);cursor:pointer;padding:4px 10px;}
+.mt-item.active{color:var(--primary);}
+.mt-item i{font-size:22px;}
+.mt-item span{font-size:10px;font-weight:500;}
+
+/* Main content */
+.main{padding:24px 32px;max-width:1040px;width:100%;overflow-y:auto;max-height:820px;}
+.viewport-area.mobile-mode .main{padding:16px;}
+.viewport-area.tablet-mode .main{padding:20px 24px;}
+.right-rail{background:#fff;border-left:1px solid var(--border);padding:24px 20px;overflow-y:auto;max-height:820px;}
+.viewport-area.tablet-mode .right-rail,.viewport-area.mobile-mode .right-rail{display:none;}
+
+/* Top header */
+.top-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:16px;flex-wrap:wrap;}
+.search-box{position:relative;flex:1;max-width:420px;}
+.search-box i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;}
+.search-box input{width:100%;padding:9px 12px 9px 36px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fff;color:var(--text);font-family:'Inter',sans-serif;}
+.search-box input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,150,105,.15);}
+.top-actions{display:flex;align-items:center;gap:12px;}
+.icon-btn{width:40px;height:40px;border-radius:8px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);position:relative;}
+.icon-btn:hover{border-color:var(--primary);color:var(--primary);}
+.icon-btn .badge{position:absolute;top:-4px;right:-4px;background:#f43f5e;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;}
+
+/* Cards & generic */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.card-pad{padding:20px;}
+.card:hover{border-color:#d4d4cc;}
+.card.clickable{cursor:pointer;transition:all .15s;}
+.card.clickable:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06);border-color:#d4d4cc;}
+.avatar{border-radius:50%;object-fit:cover;}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;font-family:'Outfit',sans-serif;}
+.pill-green{background:var(--primary-bg);color:var(--primary);}
+.pill-amber{background:#fef3c7;color:#d97706;}
+.pill-red{background:#fee2e2;color:#dc2626;}
+.pill-blue{background:#dbeafe;color:#2563eb;}
+.pill-gray{background:#f3f4f6;color:#6b7280;}
+.section-title{font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.section-title .count{background:#f43f5e;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.see-all{color:var(--primary);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;}
+.see-all:hover{text-decoration:underline;}
+
+/* Grid helpers */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.viewport-area.mobile-mode .grid-2,
+.viewport-area.mobile-mode .grid-3,
+.viewport-area.mobile-mode .grid-4{grid-template-columns:1fr;}
+.viewport-area.tablet-mode .grid-3,
+.viewport-area.tablet-mode .grid-4{grid-template-columns:repeat(2,1fr);}
+
+.stack{display:flex;flex-direction:column;gap:12px;}
+.row{display:flex;align-items:center;gap:12px;}
+
+/* Hero stat */
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.viewport-area.mobile-mode .hero-stats{grid-template-columns:repeat(2,1fr);}
+.stat{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.stat-label{color:var(--muted);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;font-family:'Inter',sans-serif;}
+.stat-val{font-family:'DM Serif Display',serif;font-size:30px;color:var(--text);margin-top:4px;}
+.stat-delta{font-size:12px;color:var(--primary);font-weight:600;margin-top:4px;}
+.stat-delta.down{color:#dc2626;}
+
+/* Game card */
+.game-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;transition:all .15s;}
+.game-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06);border-color:#d4d4cc;}
+.game-hero{position:relative;height:120px;background:#e8e4e0;}
+.game-hero img{width:100%;height:100%;object-fit:cover;}
+.game-date{position:absolute;top:12px;left:12px;background:#fff;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--text);}
+.game-players{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;color:#fff;}
+.game-body{padding:14px 16px;}
+.avatars-stack{display:flex;margin-left:-4px;}
+.avatars-stack img{border:2px solid #fff;margin-left:-4px;}
+
+/* Mini calendar */
+.mini-cal{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;}
+.mini-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.mini-cal-head h4{font-size:14px;font-weight:600;}
+.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:11px;font-family:'Inter',sans-serif;}
+.mini-cal-grid .dow{color:var(--muted);font-weight:600;padding:4px 0;}
+.mini-cal-grid .day{padding:6px 0;border-radius:6px;cursor:pointer;color:var(--text);}
+.mini-cal-grid .day.muted{color:#cbd5e1;}
+.mini-cal-grid .day.today{background:var(--primary);color:#fff;font-weight:700;}
+.mini-cal-grid .day.has{font-weight:700;position:relative;}
+.mini-cal-grid .day.has::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:var(--primary);border-radius:50%;}
+.mini-cal-grid .day:hover:not(.today){background:#f5f5f2;}
+
+/* Tabs */
+.tab-bar{display:flex;gap:6px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.tab{padding:10px 16px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;}
+.tab.active{color:var(--primary);border-color:var(--primary);font-weight:600;}
+.tab:hover:not(.active){color:var(--text);}
+
+.chip{padding:6px 14px;border-radius:99px;font-size:13px;font-weight:500;border:1px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600;}
+.chip:hover:not(.active){border-color:var(--primary);color:var(--primary);}
+
+/* Forms */
+textarea.input{resize:vertical;min-height:90px;font-family:'Inter',sans-serif;}
+select.input{cursor:pointer;}
+.stepper{display:flex;align-items:center;gap:8px;margin-bottom:24px;}
+.step{display:flex;align-items:center;gap:8px;}
+.step-num{width:26px;height:26px;border-radius:50%;background:#f3f4f6;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.step.active .step-num{background:var(--primary);color:#fff;}
+.step.done .step-num{background:var(--primary-bg);color:var(--primary);}
+.step-label{font-size:13px;font-weight:500;color:var(--muted);}
+.step.active .step-label{color:var(--text);font-weight:600;}
+.step-line{flex:1;height:2px;background:var(--border);}
+.step.done + .step-line{background:var(--primary-bg);}
+
+/* Lists */
+.list-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:#fff;border:1px solid var(--border);border-radius:10px;transition:all .15s;cursor:pointer;}
+.list-row:hover{border-color:#d4d4cc;background:#fafaf9;}
+.list-row + .list-row{margin-top:8px;}
+.row-thumb{width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;background:#e8e4e0;}
+.row-thumb img{width:100%;height:100%;object-fit:cover;}
+.row-date{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:9px;font-weight:700;text-align:center;padding:1px;}
+.row-main{flex:1;min-width:0;}
+.row-title{font-size:14px;font-weight:600;color:var(--text);}
+.row-sub{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;}
+.row-side{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.row-side .mini{font-size:11px;color:var(--muted);}
+
+/* Inbox */
+.inbox-layout{display:grid;grid-template-columns:360px 1fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;height:720px;}
+.viewport-area.mobile-mode .inbox-layout{grid-template-columns:1fr;height:auto;}
+.inbox-list{border-right:1px solid var(--border);overflow-y:auto;}
+.inbox-search{padding:14px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:5;}
+.thread-item{padding:14px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;gap:12px;}
+.thread-item:hover{background:#fafaf9;}
+.thread-item.active{background:var(--primary-bg);}
+.thread-item.unread .thread-name{font-weight:700;}
+.thread-item img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+.thread-content{flex:1;min-width:0;}
+.thread-name{font-size:13px;color:var(--text);margin-bottom:2px;display:flex;justify-content:space-between;gap:8px;}
+.thread-time{font-size:11px;color:var(--muted);font-weight:400;}
+.thread-preview{font-size:12px;color:var(--muted);font-family:'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.inbox-main{display:flex;flex-direction:column;overflow:hidden;}
+.inbox-main-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.inbox-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;background:#fafaf9;}
+.msg{display:flex;gap:10px;max-width:70%;}
+.msg-body{background:#fff;border:1px solid var(--border);padding:10px 14px;border-radius:12px;font-size:14px;color:var(--text);font-family:'Inter',sans-serif;}
+.msg-meta{font-size:11px;color:var(--muted);margin-top:4px;}
+.msg.me{margin-left:auto;flex-direction:row-reverse;}
+.msg.me .msg-body{background:var(--primary);color:#fff;border-color:var(--primary);}
+.msg.me .msg-meta{text-align:right;}
+.msg img{width:32px;height:32px;border-radius:50%;}
+.msg-composer{padding:14px;border-top:1px solid var(--border);background:#fff;display:flex;gap:10px;align-items:center;}
+.msg-composer input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:99px;font-size:14px;font-family:'Inter',sans-serif;}
+.msg-composer input:focus{outline:none;border-color:var(--primary);}
+
+/* Notifications */
+.notif-row{display:flex;gap:14px;padding:14px;background:#fff;border:1px solid var(--border);border-radius:10px;align-items:flex-start;}
+.notif-row + .notif-row{margin-top:8px;}
+.notif-row.unread{background:#f0fdf4;border-color:#bbf7d0;}
+.notif-icon{width:40px;height:40px;border-radius:10px;background:var(--primary-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.notif-icon.amber{background:#fef3c7;color:#d97706;}
+.notif-icon.red{background:#fee2e2;color:#dc2626;}
+.notif-icon.blue{background:#dbeafe;color:#2563eb;}
+.notif-content{flex:1;}
+.notif-title{font-size:14px;font-weight:600;color:var(--text);}
+.notif-desc{font-size:13px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:2px;}
+.notif-time{font-size:11px;color:var(--muted);margin-top:4px;font-family:'Inter',sans-serif;}
+
+/* Discover / Map */
+.discover-layout{display:grid;grid-template-columns:260px 1fr;gap:20px;}
+.viewport-area.mobile-mode .discover-layout{grid-template-columns:1fr;}
+.viewport-area.tablet-mode .discover-layout{grid-template-columns:220px 1fr;}
+.filter-panel{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;height:fit-content;}
+.filter-group{margin-bottom:18px;}
+.filter-group-title{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:600;margin-bottom:10px;font-family:'Inter',sans-serif;}
+.checkbox{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px;color:var(--text);cursor:pointer;font-family:'Inter',sans-serif;}
+.checkbox input{accent-color:var(--primary);}
+.map-area{position:relative;background:#e8f3ed;border:1px solid var(--border);border-radius:12px;height:560px;overflow:hidden;background-image:linear-gradient(45deg,#d1e9dc 25%,transparent 25%),linear-gradient(-45deg,#d1e9dc 25%,transparent 25%);background-size:40px 40px;}
+.map-pin{position:absolute;width:34px;height:42px;display:flex;align-items:flex-start;justify-content:center;cursor:pointer;filter:drop-shadow(0 3px 6px rgba(0,0,0,.2));}
+.map-pin i{font-size:36px;color:var(--primary);}
+.map-pin:hover i{color:#047857;transform:scale(1.1);}
+.map-pin span{position:absolute;top:6px;color:#fff;font-size:11px;font-weight:700;}
+.map-controls{position:absolute;top:16px;right:16px;display:flex;flex-direction:column;gap:6px;}
+.map-ctl{width:36px;height:36px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.map-legend{position:absolute;bottom:16px;left:16px;background:#fff;border-radius:10px;padding:10px 14px;font-size:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);}
+
+/* Game detail layout */
+.detail-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;}
+.viewport-area.mobile-mode .detail-grid,
+.viewport-area.tablet-mode .detail-grid{grid-template-columns:1fr;}
+
+/* Admin */
+.admin-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.viewport-area.mobile-mode .admin-stat-row{grid-template-columns:repeat(2,1fr);}
+.table{width:100%;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;border-collapse:collapse;}
+.table th{text-align:left;padding:12px 16px;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);background:#fafaf9;}
+.table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:14px;color:var(--text);}
+.table tr:last-child td{border-bottom:none;}
+.table tr:hover{background:#fafaf9;}
+
+/* Empty/placeholder */
+.empty{text-align:center;padding:40px 20px;color:var(--muted);}
+.empty i{font-size:48px;color:#cbd5e1;margin-bottom:12px;display:block;}
+
+/* Utility */
+.flex{display:flex;}
+.flex-1{flex:1;}
+.mt-1{margin-top:8px;} .mt-2{margin-top:16px;} .mt-3{margin-top:24px;}
+.mb-1{margin-bottom:8px;} .mb-2{margin-bottom:16px;} .mb-3{margin-bottom:24px;}
+.gap-1{gap:8px;} .gap-2{gap:16px;} .gap-3{gap:24px;}
+.text-muted{color:var(--muted);}
+.text-primary{color:var(--primary);}
+.fw-6{font-weight:600;} .fw-7{font-weight:700;}
+.divider{height:1px;background:var(--border);margin:20px 0;}
+
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+.pulse-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--primary);animation:pulse 2s infinite;margin-right:4px;}
+
+.viewport-area *::-webkit-scrollbar{width:8px;height:8px;}
+.viewport-area *::-webkit-scrollbar-thumb{background:#d4d4cc;border-radius:4px;}
+.viewport-area *::-webkit-scrollbar-track{background:transparent;}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>BamBuddies Web</h1>
+  <p>Responsive prototype — use viewport switcher</p>
+</div>
+
+<div class="viewport-switcher">
+  <button class="vp-btn active" data-vp="desktop" onclick="setViewport('desktop')"><i class="ph ph-desktop"></i> Desktop</button>
+  <button class="vp-btn" data-vp="tablet" onclick="setViewport('tablet')"><i class="ph ph-device-tablet"></i> Tablet</button>
+  <button class="vp-btn" data-vp="mobile" onclick="setViewport('mobile')"><i class="ph ph-device-mobile"></i> Mobile</button>
+</div>
+
+<div class="frame-wrap">
+  <div class="browser-frame desktop" id="frame">
+    <div class="browser-chrome">
+      <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <div class="addr"><i class="ph-fill ph-lock-simple"></i> <span id="addr-text">bambuddies.com/dashboard</span></div>
+      <div class="chrome-icons"><i class="ph ph-arrow-clockwise"></i><i class="ph ph-star"></i><i class="ph ph-dots-three-vertical"></i></div>
+    </div>
+    <div class="viewport-area" id="viewport">
+      <!-- SCREENS -->
+      <div id="screens">
+
+      <!-- ============ LOGIN ============ -->
+      <div class="screen" data-screen="login">
+        <div class="auth-wrap">
+          <div class="auth-card">
+            <div class="auth-logo">
+              <div class="auth-logo-mark"><i class="ph-fill ph-diamond"></i></div>
+              <div class="auth-logo-text">BamBuddies</div>
+            </div>
+            <div class="auth-title">Welcome back</div>
+            <div class="auth-sub">Sign in to find your next mahjong game</div>
+            <div class="field"><label>Email or phone</label><input class="input" type="text" value="sarah@example.com"></div>
+            <div class="field"><label>Password</label><input class="input" type="password" value="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+              <label class="checkbox"><input type="checkbox" checked> Remember me</label>
+              <span class="btn-ghost" style="font-size:13px;font-weight:600;color:var(--primary);cursor:pointer;" onclick="go('forgot')">Forgot password?</span>
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" onclick="go('dashboard')">Sign in</button>
+            <div style="text-align:center;margin:20px 0;color:var(--muted);font-size:13px;position:relative;">
+              <span style="background:#fff;padding:0 12px;position:relative;z-index:1;">or continue with</span>
+              <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border);"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <button class="btn btn-secondary"><i class="ph ph-google-logo"></i> Google</button>
+              <button class="btn btn-secondary"><i class="ph-fill ph-apple-logo"></i> Apple</button>
+            </div>
+            <div style="text-align:center;margin-top:24px;font-size:13px;color:var(--muted);font-family:'Inter',sans-serif;">
+              New here? <span class="text-primary fw-6" style="cursor:pointer;" onclick="go('register')">Create account</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ REGISTER ============ -->
+      <div class="screen" data-screen="register">
+        <div class="auth-wrap">
+          <div class="auth-card">
+            <div class="auth-logo">
+              <div class="auth-logo-mark"><i class="ph-fill ph-diamond"></i></div>
+              <div class="auth-logo-text">BamBuddies</div>
+            </div>
+            <div class="auth-title">Create your account</div>
+            <div class="auth-sub">Join a community of mahjong enthusiasts</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+              <div class="field" style="margin:0;"><label>First name</label><input class="input" type="text" placeholder="Sarah"></div>
+              <div class="field" style="margin:0;"><label>Last name</label><input class="input" type="text" placeholder="Reynolds"></div>
+            </div>
+            <div class="field"><label>Email</label><input class="input" type="email" placeholder="you@example.com"></div>
+            <div class="field"><label>Phone</label><input class="input" type="tel" placeholder="+1 (555) 123-4567"></div>
+            <div class="field"><label>Password</label><input class="input" type="password" placeholder="At least 8 characters"></div>
+            <label class="checkbox" style="margin-bottom:16px;"><input type="checkbox"> I agree to the <span class="text-primary">Terms</span> and <span class="text-primary">Privacy Policy</span></label>
+            <button class="btn btn-primary btn-block btn-lg" onclick="go('verify')">Create account</button>
+            <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--muted);font-family:'Inter',sans-serif;">
+              Already have an account? <span class="text-primary fw-6" style="cursor:pointer;" onclick="go('login')">Sign in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ FORGOT PASSWORD ============ -->
+      <div class="screen" data-screen="forgot">
+        <div class="auth-wrap">
+          <div class="auth-card">
+            <div class="auth-logo">
+              <div class="auth-logo-mark"><i class="ph-fill ph-diamond"></i></div>
+              <div class="auth-logo-text">BamBuddies</div>
+            </div>
+            <div class="auth-title">Reset your password</div>
+            <div class="auth-sub">We'll send a reset link to your email</div>
+            <div class="field"><label>Email</label><input class="input" type="email" value="sarah@example.com"></div>
+            <button class="btn btn-primary btn-block btn-lg" onclick="go('reset')">Send reset link</button>
+            <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--muted);font-family:'Inter',sans-serif;">
+              Remembered it? <span class="text-primary fw-6" style="cursor:pointer;" onclick="go('login')">Back to sign in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ RESET PASSWORD ============ -->
+      <div class="screen" data-screen="reset">
+        <div class="auth-wrap">
+          <div class="auth-card">
+            <div class="auth-logo">
+              <div class="auth-logo-mark"><i class="ph-fill ph-diamond"></i></div>
+              <div class="auth-logo-text">BamBuddies</div>
+            </div>
+            <div class="auth-title">Set new password</div>
+            <div class="auth-sub">Choose a strong password you'll remember</div>
+            <div class="field"><label>New password</label><input class="input" type="password" placeholder="At least 8 characters"></div>
+            <div class="field"><label>Confirm password</label><input class="input" type="password" placeholder="Re-enter password"></div>
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 12px;font-size:12px;color:#166534;margin-bottom:16px;font-family:'Inter',sans-serif;">
+              <i class="ph ph-check-circle"></i> At least 8 characters, one number, one uppercase
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" onclick="go('login')">Update password</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ VERIFY PHONE ============ -->
+      <div class="screen" data-screen="verify">
+        <div class="auth-wrap">
+          <div class="auth-card">
+            <div class="auth-logo">
+              <div class="auth-logo-mark"><i class="ph-fill ph-diamond"></i></div>
+              <div class="auth-logo-text">BamBuddies</div>
+            </div>
+            <div class="auth-title">Verify your phone</div>
+            <div class="auth-sub">We sent a code to +1 (555) 123-4567</div>
+            <div style="display:flex;gap:10px;justify-content:center;margin:24px 0;">
+              <input class="input" style="width:52px;text-align:center;font-size:22px;font-weight:700;" maxlength="1" value="4">
+              <input class="input" style="width:52px;text-align:center;font-size:22px;font-weight:700;" maxlength="1" value="2">
+              <input class="input" style="width:52px;text-align:center;font-size:22px;font-weight:700;" maxlength="1" value="8">
+              <input class="input" style="width:52px;text-align:center;font-size:22px;font-weight:700;" maxlength="1" value="1">
+              <input class="input" style="width:52px;text-align:center;font-size:22px;font-weight:700;" maxlength="1" value="">
+              <input class="input" style="width:52px;text-align:center;font-size:22px;font-weight:700;" maxlength="1" value="">
+            </div>
+            <button class="btn btn-primary btn-block btn-lg" onclick="go('completeProfile')">Verify</button>
+            <div style="text-align:center;margin-top:20px;font-size:13px;color:var(--muted);font-family:'Inter',sans-serif;">
+              Didn't get a code? <span class="text-primary fw-6" style="cursor:pointer;">Resend in 0:42</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ DASHBOARD ============ -->
+      <div class="screen active" data-screen="dashboard">
+        <div class="app-layout with-right">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--text);">Good evening, Sarah</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">Here's what's happening with your games</div>
+              </div>
+              <div class="top-actions">
+                <div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search games, players, groups..."></div>
+                <div class="icon-btn" onclick="go('inbox')"><i class="ph ph-chat-circle-dots"></i><span class="badge">3</span></div>
+                <div class="icon-btn" onclick="go('notifications')"><i class="ph ph-bell"></i><span class="badge">5</span></div>
+                <button class="btn btn-primary" onclick="go('gameCreate1')"><i class="ph-bold ph-plus"></i> New Game</button>
+              </div>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat"><div class="stat-label">Upcoming</div><div class="stat-val">3</div><div class="stat-delta">+1 this week</div></div>
+              <div class="stat"><div class="stat-label">Pending Invites</div><div class="stat-val">2</div><div class="stat-delta">Tue, Thu</div></div>
+              <div class="stat"><div class="stat-label">Games Played</div><div class="stat-val">24</div><div class="stat-delta">+6 this month</div></div>
+              <div class="stat"><div class="stat-label">Groups</div><div class="stat-val">4</div><div class="stat-delta">1 new invite</div></div>
+            </div>
+
+            <div class="section-head">
+              <div class="section-title">Next Game</div>
+              <span class="see-all" onclick="go('myGames')">See all games &rarr;</span>
+            </div>
+            <div class="card clickable mb-3" onclick="go('gameDetail')" style="display:grid;grid-template-columns:280px 1fr;">
+              <div style="position:relative;">
+                <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;min-height:180px;" alt="">
+                <div class="game-date">SAT 4/19</div>
+                <div class="game-players">4/4</div>
+              </div>
+              <div style="padding:20px 24px;">
+                <div style="color:var(--primary);font-size:11px;font-weight:700;letter-spacing:.6px;"><span class="pulse-dot"></span> NEXT GAME &middot; IN 2 DAYS</div>
+                <div style="font-family:'DM Serif Display',serif;font-size:24px;margin-top:6px;">Saturday Mahjong</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:4px;">Hosted by Sarah R. &middot; 2:00 PM – 4:00 PM</div>
+                <div style="display:flex;align-items:center;gap:16px;margin-top:12px;color:var(--muted);font-size:13px;">
+                  <span><i class="ph ph-map-pin"></i> Sarah's Home, Portland</span>
+                  <span><i class="ph ph-crown-simple" style="color:#d97706;"></i> Host</span>
+                </div>
+                <div class="row mt-2" style="justify-content:space-between;">
+                  <div class="avatars-stack">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="32" height="32" class="avatar">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="32" height="32" class="avatar">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="32" height="32" class="avatar">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="32" height="32" class="avatar">
+                  </div>
+                  <div style="display:flex;gap:10px;">
+                    <button class="btn btn-secondary" onclick="event.stopPropagation();go('chat')"><i class="ph ph-chat-circle"></i> Chat</button>
+                    <button class="btn btn-primary" onclick="event.stopPropagation();go('gameDetail')">View details</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-head">
+              <div class="section-title">Pending Invites <span class="count">2</span></div>
+            </div>
+            <div class="grid-2 mb-3">
+              <div class="card card-pad">
+                <div class="row mb-1">
+                  <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="44" height="44" class="avatar">
+                  <div class="flex-1">
+                    <div class="fw-7">Amy's Tuesday Game</div>
+                    <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Tue, Apr 22 &middot; 7:00 PM &middot; Amy's Place</div>
+                  </div>
+                  <span class="pill pill-amber">3/4</span>
+                </div>
+                <div class="text-muted" style="font-size:13px;font-family:'Inter',sans-serif;margin:8px 0 12px;">"Looking for one more player to round out the game this week!"</div>
+                <div style="display:flex;gap:8px;">
+                  <button class="btn btn-primary flex-1"><i class="ph-bold ph-check"></i> Accept</button>
+                  <button class="btn btn-secondary flex-1">Decline</button>
+                </div>
+              </div>
+              <div class="card card-pad">
+                <div class="row mb-1">
+                  <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="44" height="44" class="avatar">
+                  <div class="flex-1">
+                    <div class="fw-7">Rachel's Open Game</div>
+                    <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Thu, Apr 24 &middot; 3:00 PM &middot; Community Center</div>
+                  </div>
+                  <span class="pill pill-amber">2/4</span>
+                </div>
+                <div class="text-muted" style="font-size:13px;font-family:'Inter',sans-serif;margin:8px 0 12px;">"Public game — beginners welcome! Tiles provided."</div>
+                <div style="display:flex;gap:8px;">
+                  <button class="btn btn-primary flex-1"><i class="ph-bold ph-check"></i> Accept</button>
+                  <button class="btn btn-secondary flex-1">Decline</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-head">
+              <div class="section-title">Coming Up</div>
+              <span class="see-all" onclick="go('myGames')">See all &rarr;</span>
+            </div>
+            <div class="stack mb-3">
+              <div class="list-row" onclick="go('gameDetail')">
+                <div class="row-thumb"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" alt=""><div class="row-date">4/22</div></div>
+                <div class="row-main"><div class="row-title">Amy's Tuesday Game</div><div class="row-sub">Tue 7:00 PM &middot; Amy's Place &middot; Intermediate</div></div>
+                <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
+                <div class="row-side"><span class="mini">3/4</span><span class="pill pill-amber">Needs 1</span></div>
+              </div>
+              <div class="list-row" onclick="go('gameDetail')">
+                <div class="row-thumb" style="background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;"><span style="color:#4338ca;font-size:10px;font-weight:700;">4/26</span></div>
+                <div class="row-main"><div class="row-title">Rachel's Open Game</div><div class="row-sub">Sat 1:00 PM &middot; Community Center &middot; Open Public</div></div>
+                <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
+                <div class="row-side"><span class="mini">2/4</span><span class="pill pill-amber">Pending</span></div>
+              </div>
+              <div class="list-row" onclick="go('gameDetail')">
+                <div class="row-thumb" style="background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;"><span style="color:#059669;font-size:10px;font-weight:700;">5/03</span></div>
+                <div class="row-main"><div class="row-title">Sunday Afternoon Session <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;"></i></div><div class="row-sub">Sun 3:00 PM &middot; Lisa's House &middot; Advanced</div></div>
+                <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
+                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">Confirmed</span></div>
+              </div>
+            </div>
+
+            <div class="grid-2 mb-3">
+              <div class="card card-pad">
+                <div class="section-title" style="font-size:16px;margin-bottom:14px;">Your Groups</div>
+                <div class="stack">
+                  <div class="row"><div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;color:#fff;"><i class="ph-fill ph-users-three"></i></div><div class="flex-1"><div class="fw-6" style="font-size:14px;">Portland Mahjong Club</div><div class="text-muted" style="font-size:12px;">24 members &middot; 3 upcoming</div></div><i class="ph ph-caret-right text-muted"></i></div>
+                  <div class="row"><div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#f43f5e,#f97316);display:flex;align-items:center;justify-content:center;color:#fff;"><i class="ph-fill ph-fire"></i></div><div class="flex-1"><div class="fw-6" style="font-size:14px;">Sunday Regulars</div><div class="text-muted" style="font-size:12px;">8 members &middot; 1 upcoming</div></div><i class="ph ph-caret-right text-muted"></i></div>
+                  <div class="row"><div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#8b5cf6,#6366f1);display:flex;align-items:center;justify-content:center;color:#fff;"><i class="ph-fill ph-coffee"></i></div><div class="flex-1"><div class="fw-6" style="font-size:14px;">Pearl District Play</div><div class="text-muted" style="font-size:12px;">12 members &middot; Weekly</div></div><i class="ph ph-caret-right text-muted"></i></div>
+                </div>
+                <button class="btn btn-secondary btn-block mt-2" onclick="go('groups')">View all groups</button>
+              </div>
+              <div class="card card-pad">
+                <div class="section-title" style="font-size:16px;margin-bottom:14px;">Recent Activity</div>
+                <div class="stack">
+                  <div class="row" style="align-items:flex-start;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="30" height="30" class="avatar"><div class="flex-1"><div style="font-size:13px;"><span class="fw-6">Lisa M.</span> accepted your invite</div><div class="text-muted" style="font-size:11px;">2 hours ago</div></div></div>
+                  <div class="row" style="align-items:flex-start;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="30" height="30" class="avatar"><div class="flex-1"><div style="font-size:13px;"><span class="fw-6">Amy T.</span> commented on Saturday Mahjong</div><div class="text-muted" style="font-size:11px;">5 hours ago</div></div></div>
+                  <div class="row" style="align-items:flex-start;"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="30" height="30" class="avatar"><div class="flex-1"><div style="font-size:13px;"><span class="fw-6">Rachel K.</span> created a new game</div><div class="text-muted" style="font-size:11px;">Yesterday</div></div></div>
+                  <div class="row" style="align-items:flex-start;"><div style="width:30px;height:30px;border-radius:50%;background:var(--primary-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;"><i class="ph ph-star"></i></div><div class="flex-1"><div style="font-size:13px;">You earned <span class="fw-6">Host Badge</span></div><div class="text-muted" style="font-size:11px;">2 days ago</div></div></div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+          <aside class="right-rail">
+            <div class="mini-cal mb-2">
+              <div class="mini-cal-head"><h4>April 2026</h4><div style="display:flex;gap:4px;"><i class="ph ph-caret-left" style="cursor:pointer;color:var(--muted);"></i><i class="ph ph-caret-right" style="cursor:pointer;color:var(--muted);"></i></div></div>
+              <div class="mini-cal-grid">
+                <span class="dow">S</span><span class="dow">M</span><span class="dow">T</span><span class="dow">W</span><span class="dow">T</span><span class="dow">F</span><span class="dow">S</span>
+                <span class="day muted">30</span><span class="day muted">31</span><span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span>
+                <span class="day">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span>
+                <span class="day">13</span><span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day today">17</span><span class="day">18</span><span class="day has">19</span>
+                <span class="day">20</span><span class="day">21</span><span class="day has">22</span><span class="day">23</span><span class="day has">24</span><span class="day">25</span><span class="day has">26</span>
+                <span class="day">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day muted">1</span><span class="day muted">2</span><span class="day muted">3</span>
+              </div>
+            </div>
+            <div class="card card-pad mb-2">
+              <div class="fw-7 mb-1" style="font-size:14px;">This Week</div>
+              <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-bottom:10px;">3 events scheduled</div>
+              <div class="stack" style="gap:8px;">
+                <div class="row"><div style="width:3px;height:32px;background:var(--primary);border-radius:2px;"></div><div class="flex-1"><div style="font-size:13px;font-weight:600;">Saturday Mahjong</div><div class="text-muted" style="font-size:11px;">Sat 2:00 PM</div></div></div>
+                <div class="row"><div style="width:3px;height:32px;background:#f97316;border-radius:2px;"></div><div class="flex-1"><div style="font-size:13px;font-weight:600;">Amy's Tuesday</div><div class="text-muted" style="font-size:11px;">Tue 7:00 PM</div></div></div>
+                <div class="row"><div style="width:3px;height:32px;background:#6366f1;border-radius:2px;"></div><div class="flex-1"><div style="font-size:13px;font-weight:600;">Rachel's Open</div><div class="text-muted" style="font-size:11px;">Thu 3:00 PM</div></div></div>
+              </div>
+            </div>
+            <div class="card card-pad" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#bbf7d0;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><i class="ph-fill ph-sparkle" style="color:var(--primary);font-size:20px;"></i><div class="fw-7" style="font-size:14px;">Host a Game</div></div>
+              <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-bottom:12px;">Set up your next mahjong meetup in under a minute.</div>
+              <button class="btn btn-primary btn-block" onclick="go('gameCreate1')"><i class="ph-bold ph-plus"></i> New Game</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- ============ MY GAMES ============ -->
+      <div class="screen" data-screen="myGames">
+        <div class="app-layout">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">My Games</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">Manage your upcoming and past games</div>
+              </div>
+              <div class="top-actions">
+                <div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search games..."></div>
+                <button class="btn btn-secondary"><i class="ph ph-funnel"></i> Filter</button>
+                <button class="btn btn-primary" onclick="go('gameCreate1')"><i class="ph-bold ph-plus"></i> New Game</button>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+              <span class="chip active">All <span style="background:rgba(255,255,255,.25);padding:1px 6px;border-radius:8px;margin-left:4px;">12</span></span>
+              <span class="chip">Upcoming <span style="background:#f3f4f6;padding:1px 6px;border-radius:8px;margin-left:4px;">5</span></span>
+              <span class="chip">Past <span style="background:#f3f4f6;padding:1px 6px;border-radius:8px;margin-left:4px;">6</span></span>
+              <span class="chip">Cancelled <span style="background:#f3f4f6;padding:1px 6px;border-radius:8px;margin-left:4px;">1</span></span>
+              <span class="chip">Hosting by me</span>
+            </div>
+
+            <div class="section-head">
+              <div class="section-title">Pending Invites <span class="count">2</span></div>
+            </div>
+            <div class="grid-2 mb-3">
+              <div class="card card-pad">
+                <div class="row mb-1">
+                  <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="44" height="44" class="avatar">
+                  <div class="flex-1">
+                    <div class="fw-7">Amy's Tuesday Game</div>
+                    <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Tue, Apr 22 &middot; 6:30 PM &middot; Amy T.</div>
+                  </div>
+                  <span class="pill pill-amber">3/4</span>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:10px;">
+                  <button class="btn btn-primary flex-1"><i class="ph-bold ph-check"></i> Accept</button>
+                  <button class="btn btn-secondary flex-1">Decline</button>
+                </div>
+              </div>
+              <div class="card card-pad">
+                <div class="row mb-1">
+                  <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="44" height="44" class="avatar">
+                  <div class="flex-1">
+                    <div class="fw-7">Rachel's Open Game</div>
+                    <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Thu, Apr 24 &middot; 3:00 PM &middot; Open</div>
+                  </div>
+                  <span class="pill pill-amber">2/4</span>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:10px;">
+                  <button class="btn btn-primary flex-1"><i class="ph-bold ph-check"></i> Accept</button>
+                  <button class="btn btn-secondary flex-1">Decline</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title" style="font-size:16px;">Upcoming Games</div>
+            <div class="stack mb-3">
+              <div class="list-row" onclick="go('gameDetail')">
+                <div class="row-thumb"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" alt=""><div class="row-date">4/19</div></div>
+                <div class="row-main"><div class="row-title">Saturday Mahjong <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;"></i></div><div class="row-sub">Sat 2:00 PM &middot; Sarah's Home &middot; Intermediate</div></div>
+                <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
+                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">Confirmed</span></div>
+              </div>
+              <div class="list-row" onclick="go('gameDetail')">
+                <div class="row-thumb"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" alt=""><div class="row-date">4/22</div></div>
+                <div class="row-main"><div class="row-title">Amy's Tuesday Game</div><div class="row-sub">Tue 7:00 PM &middot; Amy's Place &middot; Intermediate</div></div>
+                <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
+                <div class="row-side"><span class="mini">3/4</span><span class="pill pill-amber">Needs 1</span></div>
+              </div>
+              <div class="list-row" onclick="go('gameDetail')">
+                <div class="row-thumb" style="background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;"><span style="color:#4338ca;font-size:10px;font-weight:700;">4/26</span></div>
+                <div class="row-main"><div class="row-title">Rachel's Open Game</div><div class="row-sub">Sat 1:00 PM &middot; Community Center &middot; Open Public</div></div>
+                <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
+                <div class="row-side"><span class="mini">2/4</span><span class="pill pill-amber">Pending</span></div>
+              </div>
+              <div class="list-row" onclick="go('gameDetail')">
+                <div class="row-thumb" style="background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;"><span style="color:#059669;font-size:10px;font-weight:700;">5/03</span></div>
+                <div class="row-main"><div class="row-title">Sunday Afternoon <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;"></i></div><div class="row-sub">Sun 3:00 PM &middot; Lisa's House &middot; Advanced</div></div>
+                <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
+                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">Confirmed</span></div>
+              </div>
+            </div>
+
+            <div class="section-title" style="font-size:16px;">Past Games</div>
+            <div class="stack">
+              <div class="list-row" style="opacity:.8;" onclick="go('gameReview')">
+                <div class="row-thumb" style="background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;align-items:center;justify-content:center;"><span style="color:#6b7280;font-size:10px;font-weight:700;">4/12</span></div>
+                <div class="row-main"><div class="row-title">Easter Weekend Game</div><div class="row-sub">Sat Apr 12 &middot; Sarah's Home</div></div>
+                <div class="row-side"><span class="pill pill-gray">Completed</span><span class="text-primary" style="font-size:11px;font-weight:600;cursor:pointer;">Leave review &rarr;</span></div>
+              </div>
+              <div class="list-row" style="opacity:.8;">
+                <div class="row-thumb" style="background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;align-items:center;justify-content:center;"><span style="color:#6b7280;font-size:10px;font-weight:700;">4/05</span></div>
+                <div class="row-main"><div class="row-title">Lisa's Weekly</div><div class="row-sub">Sat Apr 5 &middot; Lisa's House</div></div>
+                <div class="row-side"><span class="pill pill-gray">Completed</span><span class="text-muted" style="font-size:11px;"><i class="ph-fill ph-star" style="color:#d97706;"></i> Reviewed</span></div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GAME DETAIL ============ -->
+      <div class="screen" data-screen="gameDetail">
+        <div class="app-layout">
+          <main class="main">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('myGames')"><i class="ph ph-caret-left"></i> Back to games</span>
+              <span style="color:#cbd5e1;">/</span>
+              <span style="font-size:13px;color:var(--text);font-weight:600;">Saturday Mahjong</span>
+            </div>
+
+            <div class="card mb-3" style="position:relative;">
+              <div style="position:relative;height:220px;">
+                <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=1200" style="width:100%;height:100%;object-fit:cover;" alt="">
+                <div class="game-date">SAT 4/19</div>
+                <div class="game-players">4/4</div>
+                <div style="position:absolute;bottom:16px;left:20px;right:20px;color:#fff;">
+                  <span class="pill pill-green" style="background:rgba(209,250,229,.95);">CONFIRMED</span>
+                  <div style="font-family:'DM Serif Display',serif;font-size:32px;color:#fff;margin-top:8px;text-shadow:0 2px 8px rgba(0,0,0,.4);">Saturday Mahjong</div>
+                  <div style="font-size:14px;font-family:'Inter',sans-serif;opacity:.9;margin-top:4px;">2:00 PM – 4:00 PM &middot; Sarah's Home, Portland</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-grid">
+              <div>
+                <div class="card card-pad mb-2">
+                  <div class="row" style="justify-content:space-between;align-items:flex-start;">
+                    <div class="row" style="gap:10px;">
+                      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" width="46" height="46" class="avatar">
+                      <div>
+                        <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Hosted by</div>
+                        <div class="fw-7">Sarah R. <i class="ph-fill ph-crown" style="font-size:13px;color:#d97706;"></i></div>
+                        <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;"><i class="ph-fill ph-star" style="color:#d97706;"></i> 4.9 &middot; 18 games hosted</div>
+                      </div>
+                    </div>
+                    <button class="btn btn-secondary"><i class="ph ph-chat-circle"></i> Message host</button>
+                  </div>
+                </div>
+
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;margin-bottom:16px;">Game details</div>
+                  <div class="grid-2">
+                    <div class="row"><i class="ph ph-calendar-blank" style="font-size:22px;color:var(--primary);"></i><div><div class="fw-6" style="font-size:13px;">Saturday, April 19</div><div class="text-muted" style="font-size:12px;">2:00 PM – 4:00 PM</div></div></div>
+                    <div class="row"><i class="ph ph-clock" style="font-size:22px;color:var(--primary);"></i><div><div class="fw-6" style="font-size:13px;">2 hours</div><div class="text-muted" style="font-size:12px;">Doors open 1:45 PM</div></div></div>
+                    <div class="row"><i class="ph ph-map-pin" style="font-size:22px;color:var(--primary);"></i><div><div class="fw-6" style="font-size:13px;">Sarah's Home</div><div class="text-muted" style="font-size:12px;">123 Main St, Portland OR</div></div></div>
+                    <div class="row"><i class="ph ph-globe-simple" style="font-size:22px;color:var(--primary);"></i><div><div class="fw-6" style="font-size:13px;">Open Public</div><div class="text-muted" style="font-size:12px;">Anyone can apply</div></div></div>
+                    <div class="row"><i class="ph ph-users" style="font-size:22px;color:var(--primary);"></i><div><div class="fw-6" style="font-size:13px;">4 / 4 Players</div><div class="text-muted" style="font-size:12px;">Intermediate level</div></div></div>
+                    <div class="row"><i class="ph ph-currency-dollar" style="font-size:22px;color:var(--primary);"></i><div><div class="fw-6" style="font-size:13px;">Free to join</div><div class="text-muted" style="font-size:12px;">BYO snacks</div></div></div>
+                  </div>
+                  <div class="divider"></div>
+                  <div style="font-size:14px;color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;">Come join us for a relaxed Saturday afternoon of American Mahjong. All tiles provided. We'll play 2-3 rounds with breaks for snacks. Intermediate level — comfortable with the basics.</div>
+                </div>
+
+                <div class="card card-pad mb-2">
+                  <div class="section-head" style="margin-bottom:14px;">
+                    <div class="section-title" style="font-size:16px;margin-bottom:0;">What to Bring</div>
+                    <span class="text-muted" style="font-size:12px;">2 of 3 covered</span>
+                  </div>
+                  <div class="stack" style="gap:10px;">
+                    <div class="row" style="justify-content:space-between;padding:10px 12px;background:#fafaf9;border-radius:8px;">
+                      <div class="row" style="gap:10px;"><i class="ph-fill ph-puzzle-piece" style="color:var(--primary);font-size:20px;"></i><div><div class="fw-6" style="font-size:13px;">Tile Set</div><div class="text-muted" style="font-size:11px;">American Mahjong set</div></div></div>
+                      <div class="row" style="gap:8px;"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="24" height="24" class="avatar"><span class="pill pill-green">Sarah R.</span></div>
+                    </div>
+                    <div class="row" style="justify-content:space-between;padding:10px 12px;background:#fafaf9;border-radius:8px;">
+                      <div class="row" style="gap:10px;"><i class="ph-fill ph-wine" style="color:#f43f5e;font-size:20px;"></i><div><div class="fw-6" style="font-size:13px;">Drinks</div><div class="text-muted" style="font-size:11px;">Wine + soft drinks</div></div></div>
+                      <div class="row" style="gap:8px;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="24" height="24" class="avatar"><span class="pill pill-green">Lisa M.</span></div>
+                    </div>
+                    <div class="row" style="justify-content:space-between;padding:10px 12px;background:#fafaf9;border-radius:8px;border:1px dashed #d4d4cc;">
+                      <div class="row" style="gap:10px;"><i class="ph-fill ph-cookie" style="color:#d97706;font-size:20px;"></i><div><div class="fw-6" style="font-size:13px;">Snacks</div><div class="text-muted" style="font-size:11px;">Chips, nuts, cookies</div></div></div>
+                      <button class="btn btn-primary" style="padding:6px 14px;font-size:12px;"><i class="ph-bold ph-hand"></i> I'll bring this</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card card-pad">
+                  <div class="section-title" style="font-size:16px;margin-bottom:14px;">Location</div>
+                  <div style="height:220px;background:#e8f3ed;border-radius:10px;background-image:linear-gradient(45deg,#d1e9dc 25%,transparent 25%),linear-gradient(-45deg,#d1e9dc 25%,transparent 25%);background-size:40px 40px;position:relative;display:flex;align-items:center;justify-content:center;">
+                    <div class="map-pin" style="position:relative;"><i class="ph-fill ph-map-pin"></i></div>
+                  </div>
+                  <div class="row mt-2" style="justify-content:space-between;">
+                    <div>
+                      <div class="fw-6">Sarah's Home</div>
+                      <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">123 Main St, Portland OR 97201</div>
+                    </div>
+                    <button class="btn btn-secondary"><i class="ph ph-arrow-square-out"></i> Directions</button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="card card-pad mb-2">
+                  <div class="section-head" style="margin-bottom:14px;">
+                    <div class="section-title" style="font-size:16px;margin-bottom:0;">Players <span class="text-muted" style="font-weight:500;font-size:13px;">4 / 4</span></div>
+                  </div>
+                  <div class="stack" style="gap:10px;">
+                    <div class="row"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Sarah R. <i class="ph-fill ph-crown" style="font-size:11px;color:#d97706;"></i></div><div class="text-muted" style="font-size:11px;">Intermediate &middot; Host</div></div><span class="pill pill-green">Accepted</span></div>
+                    <div class="row"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Lisa M.</div><div class="text-muted" style="font-size:11px;">Advanced</div></div><span class="pill pill-green">Accepted</span></div>
+                    <div class="row"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Amy T.</div><div class="text-muted" style="font-size:11px;">Beginner</div></div><span class="pill pill-green">Accepted</span></div>
+                    <div class="row"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Rachel K.</div><div class="text-muted" style="font-size:11px;">Intermediate</div></div><span class="pill pill-amber">Invited</span></div>
+                  </div>
+                  <button class="btn btn-secondary btn-block mt-2" onclick="go('applicants')"><i class="ph ph-user-plus"></i> View applicants (3)</button>
+                </div>
+
+                <div class="card card-pad mb-2">
+                  <div class="section-head" style="margin-bottom:14px;">
+                    <div class="section-title" style="font-size:16px;margin-bottom:0;">Game Chat</div>
+                    <span class="pill pill-red">12 new</span>
+                  </div>
+                  <div class="stack" style="gap:12px;">
+                    <div class="row" style="align-items:flex-start;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><div><div style="font-size:12px;"><span class="fw-6">Lisa M.</span> &middot; <span class="text-muted">2h</span></div><div style="font-size:13px;font-family:'Inter',sans-serif;margin-top:2px;">I'll bring the drinks!</div></div></div>
+                    <div class="row" style="align-items:flex-start;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><div><div style="font-size:12px;"><span class="fw-6">Amy T.</span> &middot; <span class="text-muted">1h</span></div><div style="font-size:13px;font-family:'Inter',sans-serif;margin-top:2px;">Can't wait, see you all Sat!</div></div></div>
+                  </div>
+                  <button class="btn btn-secondary btn-block mt-2" onclick="go('chat')"><i class="ph ph-chat-circle"></i> View all messages</button>
+                </div>
+
+                <div class="card card-pad">
+                  <div class="stack" style="gap:10px;">
+                    <button class="btn btn-primary btn-block btn-lg" onclick="go('gameEdit')"><i class="ph ph-pencil-simple"></i> Edit game</button>
+                    <button class="btn btn-secondary btn-block"><i class="ph ph-user-plus"></i> Invite players</button>
+                    <button class="btn btn-secondary btn-block"><i class="ph ph-share-network"></i> Share game</button>
+                    <button class="btn btn-secondary btn-block" style="color:#dc2626;border-color:#fecaca;"><i class="ph ph-x-circle"></i> Cancel game</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GAME CREATE STEP 1 ============ -->
+      <div class="screen" data-screen="gameCreate1">
+        <div class="app-layout">
+          <main class="main" style="max-width:820px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('myGames')"><i class="ph ph-caret-left"></i> Back</span>
+              <span style="color:#cbd5e1;">/</span>
+              <span style="font-size:13px;font-weight:600;">New Game</span>
+            </div>
+            <div style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px;">Create a game</div>
+            <div class="text-muted mb-3" style="font-size:14px;font-family:'Inter',sans-serif;">Set up your next mahjong meetup in a few steps</div>
+
+            <div class="stepper">
+              <div class="step active"><div class="step-num">1</div><div class="step-label">When &amp; Where</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">2</div><div class="step-label">Players &amp; Type</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">3</div><div class="step-label">Extras</div></div>
+            </div>
+
+            <div class="card card-pad">
+              <div class="section-title" style="font-size:16px;">Game details</div>
+              <div class="field"><label>Game title</label><input class="input" type="text" value="Saturday Mahjong"></div>
+              <div class="grid-2">
+                <div class="field"><label>Date</label><input class="input" type="text" value="Saturday, April 19, 2026"></div>
+                <div class="field"><label>Duration</label><select class="input"><option>1 hour</option><option selected>2 hours</option><option>3 hours</option><option>All afternoon</option></select></div>
+                <div class="field"><label>Start time</label><input class="input" type="text" value="2:00 PM"></div>
+                <div class="field"><label>End time</label><input class="input" type="text" value="4:00 PM"></div>
+              </div>
+
+              <div class="divider"></div>
+              <div class="section-title" style="font-size:16px;">Location</div>
+              <div class="field"><label>Address</label>
+                <div style="position:relative;"><i class="ph ph-map-pin" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);"></i><input class="input" type="text" style="padding-left:36px;" value="123 Main St, Portland OR 97201"></div>
+              </div>
+              <div style="height:200px;background:#e8f3ed;border-radius:10px;background-image:linear-gradient(45deg,#d1e9dc 25%,transparent 25%),linear-gradient(-45deg,#d1e9dc 25%,transparent 25%);background-size:40px 40px;position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                <i class="ph-fill ph-map-pin" style="font-size:40px;color:var(--primary);"></i>
+              </div>
+              <label class="checkbox" style="margin-bottom:12px;"><input type="checkbox"> Keep address private until RSVP confirmed</label>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+              <button class="btn btn-secondary" onclick="go('myGames')">Cancel</button>
+              <button class="btn btn-primary" onclick="go('gameCreate2')">Next: Players <i class="ph-bold ph-arrow-right"></i></button>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GAME CREATE STEP 2 ============ -->
+      <div class="screen" data-screen="gameCreate2">
+        <div class="app-layout">
+          <main class="main" style="max-width:820px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('gameCreate1')"><i class="ph ph-caret-left"></i> Back</span>
+              <span style="color:#cbd5e1;">/</span>
+              <span style="font-size:13px;font-weight:600;">New Game</span>
+            </div>
+            <div style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px;">Players &amp; Type</div>
+            <div class="text-muted mb-3" style="font-size:14px;font-family:'Inter',sans-serif;">Who can join and what style of game</div>
+
+            <div class="stepper">
+              <div class="step done"><div class="step-num"><i class="ph-bold ph-check"></i></div><div class="step-label">When &amp; Where</div></div>
+              <div class="step-line"></div>
+              <div class="step active"><div class="step-num">2</div><div class="step-label">Players &amp; Type</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">3</div><div class="step-label">Extras</div></div>
+            </div>
+
+            <div class="card card-pad">
+              <div class="section-title" style="font-size:16px;">Game Type</div>
+              <div class="grid-3 mb-2">
+                <div class="card card-pad clickable" style="border:2px solid var(--primary);background:#f0fdf4;text-align:center;"><i class="ph-fill ph-globe-simple" style="font-size:26px;color:var(--primary);"></i><div class="fw-7 mt-1" style="font-size:14px;">Open Public</div><div class="text-muted" style="font-size:11px;font-family:'Inter',sans-serif;">Anyone can apply</div></div>
+                <div class="card card-pad clickable" style="text-align:center;"><i class="ph ph-users-three" style="font-size:26px;color:var(--muted);"></i><div class="fw-7 mt-1" style="font-size:14px;">Group only</div><div class="text-muted" style="font-size:11px;font-family:'Inter',sans-serif;">Members of a group</div></div>
+                <div class="card card-pad clickable" style="text-align:center;"><i class="ph ph-lock-key" style="font-size:26px;color:var(--muted);"></i><div class="fw-7 mt-1" style="font-size:14px;">Invite only</div><div class="text-muted" style="font-size:11px;font-family:'Inter',sans-serif;">Private, by invite</div></div>
+              </div>
+
+              <div class="divider"></div>
+              <div class="section-title" style="font-size:16px;">Skill Level</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+                <span class="chip">All levels</span>
+                <span class="chip">Beginner</span>
+                <span class="chip active">Intermediate</span>
+                <span class="chip">Advanced</span>
+              </div>
+
+              <div class="divider"></div>
+              <div class="section-title" style="font-size:16px;">Player Count</div>
+              <div class="grid-2">
+                <div class="field"><label>Max players</label><select class="input"><option>3</option><option selected>4</option><option>8 (two tables)</option></select></div>
+                <div class="field"><label>Min players to confirm</label><select class="input"><option>3</option><option selected>4</option></select></div>
+              </div>
+
+              <div class="divider"></div>
+              <div class="section-title" style="font-size:16px;">Invite players</div>
+              <div class="field">
+                <div style="position:relative;"><i class="ph ph-magnifying-glass" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);"></i><input class="input" type="text" placeholder="Search friends..." style="padding-left:36px;"></div>
+              </div>
+              <div class="stack" style="gap:8px;">
+                <div class="row" style="padding:8px 10px;background:#fafaf9;border-radius:8px;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="32" height="32" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Lisa M.</div><div class="text-muted" style="font-size:11px;">Advanced</div></div><span class="pill pill-green"><i class="ph-bold ph-check"></i> Invited</span></div>
+                <div class="row" style="padding:8px 10px;background:#fafaf9;border-radius:8px;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="32" height="32" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Amy T.</div><div class="text-muted" style="font-size:11px;">Beginner</div></div><span class="pill pill-green"><i class="ph-bold ph-check"></i> Invited</span></div>
+                <div class="row" style="padding:8px 10px;background:#fafaf9;border-radius:8px;"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="32" height="32" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Rachel K.</div><div class="text-muted" style="font-size:11px;">Intermediate</div></div><button class="btn btn-secondary" style="padding:4px 10px;font-size:12px;">Invite</button></div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:10px;margin-top:20px;">
+              <button class="btn btn-secondary" onclick="go('gameCreate1')"><i class="ph-bold ph-arrow-left"></i> Back</button>
+              <button class="btn btn-primary" onclick="go('gameCreate3')">Next: Extras <i class="ph-bold ph-arrow-right"></i></button>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GAME CREATE STEP 3 ============ -->
+      <div class="screen" data-screen="gameCreate3">
+        <div class="app-layout">
+          <main class="main" style="max-width:820px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('gameCreate2')"><i class="ph ph-caret-left"></i> Back</span>
+              <span style="color:#cbd5e1;">/</span>
+              <span style="font-size:13px;font-weight:600;">New Game</span>
+            </div>
+            <div style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px;">Final touches</div>
+            <div class="text-muted mb-3" style="font-size:14px;font-family:'Inter',sans-serif;">Add a description, photo and what to bring</div>
+
+            <div class="stepper">
+              <div class="step done"><div class="step-num"><i class="ph-bold ph-check"></i></div><div class="step-label">When &amp; Where</div></div>
+              <div class="step-line"></div>
+              <div class="step done"><div class="step-num"><i class="ph-bold ph-check"></i></div><div class="step-label">Players &amp; Type</div></div>
+              <div class="step-line"></div>
+              <div class="step active"><div class="step-num">3</div><div class="step-label">Extras</div></div>
+            </div>
+
+            <div class="card card-pad">
+              <div class="section-title" style="font-size:16px;">Cover photo</div>
+              <div style="height:160px;background:#fafaf9;border:2px dashed #d4d4cc;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin-bottom:20px;">
+                <i class="ph ph-image" style="font-size:36px;color:var(--muted);"></i>
+                <div style="font-size:13px;color:var(--muted);margin-top:6px;font-family:'Inter',sans-serif;">Click to upload or drag &amp; drop</div>
+                <div style="font-size:11px;color:var(--muted);margin-top:2px;font-family:'Inter',sans-serif;">PNG, JPG up to 5MB</div>
+              </div>
+
+              <div class="field"><label>Description</label><textarea class="input" rows="4">Come join us for a relaxed Saturday afternoon of American Mahjong. All tiles provided. We'll play 2-3 rounds with breaks for snacks. Intermediate level — comfortable with the basics.</textarea></div>
+
+              <div class="divider"></div>
+              <div class="section-title" style="font-size:16px;">What to bring</div>
+              <div class="stack" style="gap:8px;">
+                <div class="row" style="padding:10px;background:#fafaf9;border-radius:8px;"><i class="ph-fill ph-puzzle-piece" style="color:var(--primary);"></i><input class="input" style="flex:1;border:none;background:transparent;padding:4px 0;" value="Tile Set"><i class="ph ph-trash text-muted" style="cursor:pointer;"></i></div>
+                <div class="row" style="padding:10px;background:#fafaf9;border-radius:8px;"><i class="ph-fill ph-wine" style="color:#f43f5e;"></i><input class="input" style="flex:1;border:none;background:transparent;padding:4px 0;" value="Drinks"><i class="ph ph-trash text-muted" style="cursor:pointer;"></i></div>
+                <div class="row" style="padding:10px;background:#fafaf9;border-radius:8px;"><i class="ph-fill ph-cookie" style="color:#d97706;"></i><input class="input" style="flex:1;border:none;background:transparent;padding:4px 0;" value="Snacks"><i class="ph ph-trash text-muted" style="cursor:pointer;"></i></div>
+              </div>
+              <button class="btn btn-secondary btn-block mt-2"><i class="ph-bold ph-plus"></i> Add item</button>
+
+              <div class="divider"></div>
+              <div class="section-title" style="font-size:16px;">House rules</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span class="chip active"><i class="ph ph-paw-print"></i> Pet-friendly</span>
+                <span class="chip"><i class="ph ph-prohibit"></i> No smoking</span>
+                <span class="chip active"><i class="ph ph-baby"></i> Kid-friendly</span>
+                <span class="chip"><i class="ph ph-wheelchair"></i> Accessible</span>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:10px;margin-top:20px;">
+              <button class="btn btn-secondary" onclick="go('gameCreate2')"><i class="ph-bold ph-arrow-left"></i> Back</button>
+              <div style="display:flex;gap:10px;">
+                <button class="btn btn-secondary">Save as draft</button>
+                <button class="btn btn-primary" onclick="go('gameDetail')"><i class="ph-fill ph-rocket-launch"></i> Publish game</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GAME EDIT ============ -->
+      <div class="screen" data-screen="gameEdit">
+        <div class="app-layout">
+          <main class="main" style="max-width:820px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('gameDetail')"><i class="ph ph-caret-left"></i> Back to game</span>
+            </div>
+            <div style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px;">Edit game</div>
+            <div class="text-muted mb-3" style="font-size:14px;font-family:'Inter',sans-serif;">Saturday Mahjong &middot; Sat 4/19</div>
+
+            <div class="card card-pad">
+              <div class="field"><label>Game title</label><input class="input" type="text" value="Saturday Mahjong"></div>
+              <div class="grid-2">
+                <div class="field"><label>Date</label><input class="input" type="text" value="Saturday, April 19, 2026"></div>
+                <div class="field"><label>Start time</label><input class="input" type="text" value="2:00 PM"></div>
+                <div class="field"><label>Duration</label><select class="input"><option>1 hour</option><option selected>2 hours</option><option>3 hours</option></select></div>
+                <div class="field"><label>Max players</label><select class="input"><option>3</option><option selected>4</option><option>8</option></select></div>
+              </div>
+              <div class="field"><label>Location</label><input class="input" type="text" value="123 Main St, Portland OR"></div>
+              <div class="field"><label>Description</label><textarea class="input" rows="3">Come join us for a relaxed Saturday afternoon of American Mahjong.</textarea></div>
+              <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:12px;font-size:13px;color:#92400e;font-family:'Inter',sans-serif;margin-top:8px;"><i class="ph-fill ph-warning"></i> Changes will notify 4 confirmed players</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:10px;margin-top:20px;">
+              <button class="btn btn-secondary" style="color:#dc2626;border-color:#fecaca;"><i class="ph ph-x-circle"></i> Cancel this game</button>
+              <div style="display:flex;gap:10px;">
+                <button class="btn btn-secondary" onclick="go('gameDetail')">Discard changes</button>
+                <button class="btn btn-primary" onclick="go('gameDetail')">Save changes</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ APPLICANTS ============ -->
+      <div class="screen" data-screen="applicants">
+        <div class="app-layout">
+          <main class="main">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('gameDetail')"><i class="ph ph-caret-left"></i> Back to game</span>
+            </div>
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Applicants</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">Saturday Mahjong &middot; 3 pending, 1 open spot</div>
+              </div>
+              <div class="top-actions">
+                <button class="btn btn-secondary"><i class="ph ph-funnel"></i> Filter</button>
+              </div>
+            </div>
+
+            <table class="table">
+              <thead><tr><th>Player</th><th>Level</th><th>Games</th><th>Rating</th><th>Applied</th><th style="text-align:right;">Action</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><div class="row"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div><div class="fw-6">Rachel K.</div><div class="text-muted" style="font-size:12px;">Portland, OR</div></div></div></td>
+                  <td><span class="pill pill-blue">Intermediate</span></td>
+                  <td>18 played</td>
+                  <td><i class="ph-fill ph-star" style="color:#d97706;"></i> 4.8</td>
+                  <td class="text-muted">2h ago</td>
+                  <td style="text-align:right;"><button class="btn btn-secondary" style="padding:6px 10px;">Decline</button> <button class="btn btn-primary" style="padding:6px 10px;"><i class="ph-bold ph-check"></i> Accept</button></td>
+                </tr>
+                <tr>
+                  <td><div class="row"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div><div class="fw-6">Mark D.</div><div class="text-muted" style="font-size:12px;">Beaverton, OR</div></div></div></td>
+                  <td><span class="pill pill-green">Beginner</span></td>
+                  <td>3 played</td>
+                  <td><i class="ph-fill ph-star" style="color:#d97706;"></i> 5.0</td>
+                  <td class="text-muted">5h ago</td>
+                  <td style="text-align:right;"><button class="btn btn-secondary" style="padding:6px 10px;">Decline</button> <button class="btn btn-primary" style="padding:6px 10px;"><i class="ph-bold ph-check"></i> Accept</button></td>
+                </tr>
+                <tr>
+                  <td><div class="row"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div><div class="fw-6">Jenny W.</div><div class="text-muted" style="font-size:12px;">Portland, OR</div></div></div></td>
+                  <td><span class="pill pill-amber">Advanced</span></td>
+                  <td>47 played</td>
+                  <td><i class="ph-fill ph-star" style="color:#d97706;"></i> 4.9</td>
+                  <td class="text-muted">1d ago</td>
+                  <td style="text-align:right;"><button class="btn btn-secondary" style="padding:6px 10px;">Decline</button> <button class="btn btn-primary" style="padding:6px 10px;"><i class="ph-bold ph-check"></i> Accept</button></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="section-title mt-3" style="font-size:16px;">Confirmed players (4/4)</div>
+            <div class="stack">
+              <div class="list-row"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div class="row-main"><div class="row-title">Sarah R. <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;"></i></div><div class="row-sub">Host &middot; Intermediate</div></div><span class="pill pill-green">Accepted</span></div>
+              <div class="list-row"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div class="row-main"><div class="row-title">Lisa M.</div><div class="row-sub">Advanced &middot; 32 games</div></div><span class="pill pill-green">Accepted</span></div>
+              <div class="list-row"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar"><div class="row-main"><div class="row-title">Amy T.</div><div class="row-sub">Beginner &middot; 5 games</div></div><span class="pill pill-green">Accepted</span></div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GAME REVIEW ============ -->
+      <div class="screen" data-screen="gameReview">
+        <div class="app-layout">
+          <main class="main" style="max-width:720px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('myGames')"><i class="ph ph-caret-left"></i> Back</span>
+            </div>
+            <div style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px;">How was the game?</div>
+            <div class="text-muted mb-3" style="font-size:14px;font-family:'Inter',sans-serif;">Easter Weekend Game &middot; Apr 12</div>
+
+            <div class="card card-pad mb-2" style="text-align:center;">
+              <div class="text-muted mb-1" style="font-size:13px;">Rate your experience</div>
+              <div style="display:flex;justify-content:center;gap:6px;font-size:40px;color:#d97706;">
+                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph ph-star" style="color:#cbd5e1;"></i>
+              </div>
+              <div class="text-muted mt-1" style="font-size:12px;">4 out of 5 stars</div>
+            </div>
+
+            <div class="card card-pad mb-2">
+              <div class="section-title" style="font-size:15px;">What went well?</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span class="chip active"><i class="ph ph-house-line"></i> Great venue</span>
+                <span class="chip active"><i class="ph ph-smiley"></i> Friendly players</span>
+                <span class="chip"><i class="ph ph-clock"></i> On time</span>
+                <span class="chip active"><i class="ph ph-cookie"></i> Good snacks</span>
+                <span class="chip"><i class="ph ph-chat-circle"></i> Good communication</span>
+              </div>
+            </div>
+
+            <div class="card card-pad mb-2">
+              <div class="section-title" style="font-size:15px;">Review the host</div>
+              <div class="row mb-1"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="40" height="40" class="avatar"><div class="flex-1"><div class="fw-6">Sarah R.</div><div class="text-muted" style="font-size:12px;">Host</div></div><div style="font-size:18px;color:#d97706;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div></div>
+              <textarea class="input mt-1" rows="3" placeholder="Share your thoughts (optional)"></textarea>
+            </div>
+
+            <div class="card card-pad mb-2">
+              <div class="section-title" style="font-size:15px;">Who was the MVP?</div>
+              <div class="grid-3">
+                <div class="card card-pad clickable" style="text-align:center;border:2px solid var(--primary);background:#f0fdf4;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" width="48" height="48" class="avatar"><div class="fw-6 mt-1" style="font-size:13px;">Lisa M.</div></div>
+                <div class="card card-pad clickable" style="text-align:center;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face" width="48" height="48" class="avatar"><div class="fw-6 mt-1" style="font-size:13px;">Amy T.</div></div>
+                <div class="card card-pad clickable" style="text-align:center;"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" width="48" height="48" class="avatar"><div class="fw-6 mt-1" style="font-size:13px;">Rachel K.</div></div>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+              <button class="btn btn-secondary" onclick="go('myGames')">Skip</button>
+              <button class="btn btn-primary" onclick="go('myGames')"><i class="ph-bold ph-check"></i> Submit review</button>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ DISCOVER (MAP) ============ -->
+      <div class="screen" data-screen="discover">
+        <div class="app-layout">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Discover games</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">Find public mahjong games near you</div>
+              </div>
+              <div class="top-actions">
+                <div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search by city, venue..."></div>
+                <div style="display:flex;background:#fff;border:1px solid var(--border);border-radius:8px;padding:2px;">
+                  <button class="btn" style="background:var(--primary);color:#fff;padding:6px 12px;font-size:13px;"><i class="ph ph-map-pin"></i> Map</button>
+                  <button class="btn" onclick="go('discoverList')" style="background:transparent;color:var(--muted);padding:6px 12px;font-size:13px;"><i class="ph ph-list"></i> List</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="discover-layout">
+              <aside class="filter-panel">
+                <div class="filter-group">
+                  <div class="filter-group-title">Distance</div>
+                  <input type="range" min="1" max="50" value="10" style="width:100%;accent-color:var(--primary);">
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Within 10 miles</div>
+                </div>
+                <div class="filter-group">
+                  <div class="filter-group-title">Game Type</div>
+                  <label class="checkbox"><input type="checkbox" checked> Open Public</label>
+                  <label class="checkbox"><input type="checkbox" checked> Group games</label>
+                  <label class="checkbox"><input type="checkbox"> Invite only</label>
+                </div>
+                <div class="filter-group">
+                  <div class="filter-group-title">Skill Level</div>
+                  <label class="checkbox"><input type="checkbox"> All levels</label>
+                  <label class="checkbox"><input type="checkbox" checked> Beginner</label>
+                  <label class="checkbox"><input type="checkbox" checked> Intermediate</label>
+                  <label class="checkbox"><input type="checkbox"> Advanced</label>
+                </div>
+                <div class="filter-group">
+                  <div class="filter-group-title">When</div>
+                  <label class="checkbox"><input type="radio" name="when" checked> Anytime</label>
+                  <label class="checkbox"><input type="radio" name="when"> This week</label>
+                  <label class="checkbox"><input type="radio" name="when"> This weekend</label>
+                  <label class="checkbox"><input type="radio" name="when"> Next 30 days</label>
+                </div>
+                <button class="btn btn-primary btn-block">Apply filters</button>
+                <button class="btn btn-ghost btn-block mt-1" style="font-size:12px;">Reset filters</button>
+              </aside>
+
+              <div class="map-area">
+                <div class="map-pin" style="top:20%;left:30%;"><i class="ph-fill ph-map-pin"></i></div>
+                <div class="map-pin" style="top:45%;left:55%;"><i class="ph-fill ph-map-pin"></i></div>
+                <div class="map-pin" style="top:65%;left:25%;"><i class="ph-fill ph-map-pin"></i></div>
+                <div class="map-pin" style="top:35%;left:75%;"><i class="ph-fill ph-map-pin" style="color:#f97316;"></i></div>
+                <div class="map-pin" style="top:70%;left:70%;"><i class="ph-fill ph-map-pin"></i></div>
+                <div class="map-pin" style="top:25%;left:60%;"><i class="ph-fill ph-map-pin" style="color:#6366f1;"></i></div>
+                <div class="map-controls">
+                  <div class="map-ctl"><i class="ph ph-plus"></i></div>
+                  <div class="map-ctl"><i class="ph ph-minus"></i></div>
+                  <div class="map-ctl"><i class="ph ph-crosshair"></i></div>
+                </div>
+                <div class="map-legend">
+                  <div class="row" style="gap:6px;margin-bottom:4px;"><i class="ph-fill ph-map-pin" style="color:var(--primary);"></i><span style="font-size:12px;">4 open games</span></div>
+                  <div class="row" style="gap:6px;margin-bottom:4px;"><i class="ph-fill ph-map-pin" style="color:#f97316;"></i><span style="font-size:12px;">1 hosting by friend</span></div>
+                  <div class="row" style="gap:6px;"><i class="ph-fill ph-map-pin" style="color:#6366f1;"></i><span style="font-size:12px;">1 group event</span></div>
+                </div>
+
+                <div style="position:absolute;top:16px;left:16px;background:#fff;border-radius:12px;padding:16px;box-shadow:0 4px 16px rgba(0,0,0,.1);width:280px;">
+                  <div class="row mb-1"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="32" height="32" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Saturday Mahjong</div><div class="text-muted" style="font-size:11px;">by Sarah R.</div></div><span class="pill pill-amber">4/4</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-bottom:8px;">Sat Apr 19 &middot; 2:00 PM &middot; 1.2 mi</div>
+                  <button class="btn btn-primary btn-block" onclick="go('gameDetail')" style="font-size:13px;">View game</button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ DISCOVER (LIST) ============ -->
+      <div class="screen" data-screen="discoverList">
+        <div class="app-layout">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Discover games</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">18 games within 10 miles</div>
+              </div>
+              <div class="top-actions">
+                <div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search..."></div>
+                <div style="display:flex;background:#fff;border:1px solid var(--border);border-radius:8px;padding:2px;">
+                  <button class="btn" onclick="go('discover')" style="background:transparent;color:var(--muted);padding:6px 12px;font-size:13px;"><i class="ph ph-map-pin"></i> Map</button>
+                  <button class="btn" style="background:var(--primary);color:#fff;padding:6px 12px;font-size:13px;"><i class="ph ph-list"></i> List</button>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+              <span class="chip active">All</span>
+              <span class="chip">This weekend</span>
+              <span class="chip">Beginner-friendly</span>
+              <span class="chip">Public</span>
+              <span class="chip">Groups I'm in</span>
+              <span class="chip"><i class="ph ph-sliders"></i> More filters</span>
+            </div>
+
+            <div class="grid-2 mb-3">
+              <div class="game-card" onclick="go('gameDetail')">
+                <div class="game-hero"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" alt=""><div class="game-date">SAT 4/26</div><div class="game-players">2/4</div></div>
+                <div class="game-body">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Rachel's Open Game</div><span class="pill pill-amber">Needs 2</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Sat 1:00 PM &middot; Community Center &middot; 2.4 mi</div>
+                  <div class="row mt-1" style="justify-content:space-between;">
+                    <div class="row" style="gap:6px;"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="22" height="22" class="avatar"><span style="font-size:12px;">Rachel K.</span></div>
+                    <span class="pill pill-blue">Intermediate</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-card" onclick="go('gameDetail')">
+                <div class="game-hero" style="background:linear-gradient(135deg,#fcd34d,#fbbf24);"><div class="game-date">SUN 4/27</div><div class="game-players">3/4</div></div>
+                <div class="game-body">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Pearl District Mahjong</div><span class="pill pill-amber">Needs 1</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Sun 4:00 PM &middot; The Fields Park &middot; 3.1 mi</div>
+                  <div class="row mt-1" style="justify-content:space-between;">
+                    <div class="row" style="gap:6px;"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=40&h=40&fit=crop&crop=face" width="22" height="22" class="avatar"><span style="font-size:12px;">Mark D.</span></div>
+                    <span class="pill pill-green">Beginner</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-card" onclick="go('gameDetail')">
+                <div class="game-hero" style="background:linear-gradient(135deg,#c4b5fd,#8b5cf6);"><div class="game-date">TUE 4/29</div><div class="game-players">4/6</div></div>
+                <div class="game-body">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Tuesday Night Tiles</div><span class="pill pill-amber">Needs 2</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Tue 7:00 PM &middot; Stumptown Cafe &middot; 1.8 mi</div>
+                  <div class="row mt-1" style="justify-content:space-between;">
+                    <div class="row" style="gap:6px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face" width="22" height="22" class="avatar"><span style="font-size:12px;">Jenny W.</span></div>
+                    <span class="pill pill-amber">Advanced</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-card" onclick="go('gameDetail')">
+                <div class="game-hero" style="background:linear-gradient(135deg,#86efac,#10b981);"><div class="game-date">WED 4/30</div><div class="game-players">2/4</div></div>
+                <div class="game-body">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Beginner's Welcome</div><span class="pill pill-green">Open</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Wed 6:00 PM &middot; Library Community Rm &middot; 4.2 mi</div>
+                  <div class="row mt-1" style="justify-content:space-between;">
+                    <div class="row" style="gap:6px;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="22" height="22" class="avatar"><span style="font-size:12px;">Amy T.</span></div>
+                    <span class="pill pill-green">Beginner</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-card" onclick="go('gameDetail')">
+                <div class="game-hero" style="background:linear-gradient(135deg,#fda4af,#f43f5e);"><div class="game-date">FRI 5/02</div><div class="game-players">4/8</div></div>
+                <div class="game-body">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Friday Night Showdown</div><span class="pill pill-amber">Half full</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Fri 8:00 PM &middot; Mahjong Social Club &middot; 5.6 mi</div>
+                  <div class="row mt-1" style="justify-content:space-between;">
+                    <div class="row" style="gap:6px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face" width="22" height="22" class="avatar"><span style="font-size:12px;">Jenny W.</span></div>
+                    <span class="pill pill-amber">Advanced</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-card" onclick="go('gameDetail')">
+                <div class="game-hero" style="background:linear-gradient(135deg,#93c5fd,#3b82f6);"><div class="game-date">SAT 5/03</div><div class="game-players">3/4</div></div>
+                <div class="game-body">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Weekend Warriors</div><span class="pill pill-amber">Needs 1</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Sat 11:00 AM &middot; Alberta Arts Cafe &middot; 3.9 mi</div>
+                  <div class="row mt-1" style="justify-content:space-between;">
+                    <div class="row" style="gap:6px;"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=40&h=40&fit=crop&crop=face" width="22" height="22" class="avatar"><span style="font-size:12px;">Mark D.</span></div>
+                    <span class="pill pill-blue">Intermediate</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-block" style="max-width:200px;margin:0 auto;">Load more games</button>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ MY GROUPS ============ -->
+      <div class="screen" data-screen="groups">
+        <div class="app-layout">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Groups</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">Your mahjong communities</div>
+              </div>
+              <div class="top-actions">
+                <button class="btn btn-secondary" onclick="go('groupDiscover')"><i class="ph ph-compass"></i> Discover groups</button>
+                <button class="btn btn-primary" onclick="go('groupCreate')"><i class="ph-bold ph-plus"></i> New Group</button>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:20px;">
+              <span class="chip active">My groups <span style="background:rgba(255,255,255,.25);padding:1px 6px;border-radius:8px;margin-left:4px;">4</span></span>
+              <span class="chip">Pending invites <span style="background:#f3f4f6;padding:1px 6px;border-radius:8px;margin-left:4px;">1</span></span>
+              <span class="chip">Admin</span>
+            </div>
+
+            <div class="grid-2 mb-3">
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:100px;background:linear-gradient(135deg,#10b981,#059669);position:relative;">
+                  <div style="position:absolute;bottom:-24px;left:16px;width:56px;height:56px;border-radius:14px;background:#fff;border:3px solid #fff;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-users-three" style="font-size:28px;color:var(--primary);"></i></div>
+                </div>
+                <div style="padding:30px 16px 16px;">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Portland Mahjong Club</div><span class="pill pill-green">Admin</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">The best mahjong group in the Pacific NW</div>
+                  <div class="row mt-2" style="gap:14px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 24 members</span><span><i class="ph ph-calendar"></i> 3 upcoming</span></div>
+                </div>
+              </div>
+
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:100px;background:linear-gradient(135deg,#f43f5e,#f97316);position:relative;">
+                  <div style="position:absolute;bottom:-24px;left:16px;width:56px;height:56px;border-radius:14px;background:#fff;border:3px solid #fff;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-fire" style="font-size:28px;color:#f43f5e;"></i></div>
+                </div>
+                <div style="padding:30px 16px 16px;">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Sunday Regulars</div><span class="pill pill-gray">Member</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">A core crew that meets every Sunday</div>
+                  <div class="row mt-2" style="gap:14px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 8 members</span><span><i class="ph ph-calendar"></i> 1 upcoming</span></div>
+                </div>
+              </div>
+
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:100px;background:linear-gradient(135deg,#8b5cf6,#6366f1);position:relative;">
+                  <div style="position:absolute;bottom:-24px;left:16px;width:56px;height:56px;border-radius:14px;background:#fff;border:3px solid #fff;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-coffee" style="font-size:28px;color:#6366f1;"></i></div>
+                </div>
+                <div style="padding:30px 16px 16px;">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Pearl District Play</div><span class="pill pill-gray">Member</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Casual weeknight games at various cafes</div>
+                  <div class="row mt-2" style="gap:14px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 12 members</span><span><i class="ph ph-calendar"></i> Weekly</span></div>
+                </div>
+              </div>
+
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:100px;background:linear-gradient(135deg,#fbbf24,#d97706);position:relative;">
+                  <div style="position:absolute;bottom:-24px;left:16px;width:56px;height:56px;border-radius:14px;background:#fff;border:3px solid #fff;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-trophy" style="font-size:28px;color:#d97706;"></i></div>
+                </div>
+                <div style="padding:30px 16px 16px;">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">PDX Tournament Players</div><span class="pill pill-gray">Member</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Competitive play and monthly tournaments</div>
+                  <div class="row mt-2" style="gap:14px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 32 members</span><span><i class="ph ph-calendar"></i> Monthly</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title" style="font-size:16px;">Suggested for you</div>
+            <div class="stack">
+              <div class="list-row" onclick="go('groupDetail')">
+                <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#86efac,#10b981);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><i class="ph-fill ph-leaf" style="font-size:22px;"></i></div>
+                <div class="row-main"><div class="row-title">Eastside Beginners</div><div class="row-sub">A friendly space to learn &middot; 18 members &middot; 2.4 mi</div></div>
+                <button class="btn btn-primary" style="padding:6px 14px;font-size:13px;"><i class="ph-bold ph-plus"></i> Join</button>
+              </div>
+              <div class="list-row" onclick="go('groupDetail')">
+                <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#fda4af,#f43f5e);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><i class="ph-fill ph-heart" style="font-size:22px;"></i></div>
+                <div class="row-main"><div class="row-title">Portland Women's Mahjong</div><div class="row-sub">For women players in PDX &middot; 45 members &middot; 3.1 mi</div></div>
+                <button class="btn btn-primary" style="padding:6px 14px;font-size:13px;"><i class="ph-bold ph-plus"></i> Join</button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GROUP DETAIL ============ -->
+      <div class="screen" data-screen="groupDetail">
+        <div class="app-layout">
+          <main class="main">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('groups')"><i class="ph ph-caret-left"></i> Back to groups</span>
+            </div>
+
+            <div class="card mb-3" style="overflow:hidden;">
+              <div style="height:180px;background:linear-gradient(135deg,#10b981,#059669);position:relative;">
+                <div style="position:absolute;right:16px;top:16px;display:flex;gap:8px;"><button class="btn btn-secondary" style="background:rgba(255,255,255,.95);"><i class="ph ph-share-network"></i></button><button class="btn btn-secondary" style="background:rgba(255,255,255,.95);"><i class="ph ph-bell"></i> Notifications</button></div>
+              </div>
+              <div style="padding:20px 24px;position:relative;">
+                <div style="position:absolute;top:-36px;left:24px;width:72px;height:72px;border-radius:18px;background:#fff;border:4px solid #fff;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-users-three" style="font-size:36px;color:var(--primary);"></i></div>
+                <div style="margin-left:88px;">
+                  <div class="row" style="justify-content:space-between;align-items:flex-start;">
+                    <div>
+                      <div style="font-family:'DM Serif Display',serif;font-size:26px;">Portland Mahjong Club</div>
+                      <div class="text-muted" style="font-size:13px;font-family:'Inter',sans-serif;margin-top:2px;">The best mahjong group in the Pacific Northwest &middot; Founded 2023</div>
+                      <div class="row mt-1" style="gap:16px;font-size:13px;color:var(--muted);"><span><i class="ph ph-users"></i> 24 members</span><span><i class="ph ph-map-pin"></i> Portland, OR</span><span class="text-primary fw-6"><i class="ph-fill ph-check-circle"></i> Admin</span></div>
+                    </div>
+                    <button class="btn btn-primary"><i class="ph-bold ph-plus"></i> New Group Game</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-bar">
+              <div class="tab active">Overview</div>
+              <div class="tab">Games (3)</div>
+              <div class="tab">Members (24)</div>
+              <div class="tab">Discussion</div>
+              <div class="tab">Settings</div>
+            </div>
+
+            <div class="detail-grid">
+              <div>
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;">About</div>
+                  <div style="font-size:14px;color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;">Welcome to Portland Mahjong Club! We're a community of American Mahjong enthusiasts in the PDX area. We host 2-3 games per week at various locations across the city, from private homes to cafes and community centers. All skill levels welcome.</div>
+                  <div class="divider"></div>
+                  <div class="grid-2">
+                    <div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Founded</div><div class="fw-6">Mar 2023</div></div>
+                    <div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Games hosted</div><div class="fw-6">127</div></div>
+                    <div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Avg rating</div><div class="fw-6"><i class="ph-fill ph-star" style="color:#d97706;"></i> 4.8 / 5</div></div>
+                    <div><div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">Privacy</div><div class="fw-6">Public group</div></div>
+                  </div>
+                </div>
+
+                <div class="section-head"><div class="section-title" style="font-size:16px;margin:0;">Upcoming games</div><span class="see-all">See all &rarr;</span></div>
+                <div class="stack">
+                  <div class="list-row" onclick="go('gameDetail')">
+                    <div class="row-thumb"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" alt=""><div class="row-date">4/19</div></div>
+                    <div class="row-main"><div class="row-title">Saturday Mahjong</div><div class="row-sub">Sat 2:00 PM &middot; Sarah's Home</div></div>
+                    <div class="row-side"><span class="pill pill-green">Confirmed</span></div>
+                  </div>
+                  <div class="list-row" onclick="go('gameDetail')">
+                    <div class="row-thumb" style="background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;"><span style="color:#4338ca;font-size:10px;font-weight:700;">4/26</span></div>
+                    <div class="row-main"><div class="row-title">Rachel's Open Game</div><div class="row-sub">Sat 1:00 PM &middot; Community Center</div></div>
+                    <div class="row-side"><span class="pill pill-amber">Pending</span></div>
+                  </div>
+                  <div class="list-row" onclick="go('gameDetail')">
+                    <div class="row-thumb" style="background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;"><span style="color:#059669;font-size:10px;font-weight:700;">5/03</span></div>
+                    <div class="row-main"><div class="row-title">Sunday Session</div><div class="row-sub">Sun 3:00 PM &middot; Lisa's House</div></div>
+                    <div class="row-side"><span class="pill pill-green">Confirmed</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="card card-pad mb-2">
+                  <div class="section-head" style="margin-bottom:14px;"><div class="section-title" style="font-size:16px;margin:0;">Members</div><span class="see-all">See all &rarr;</span></div>
+                  <div class="stack" style="gap:10px;">
+                    <div class="row"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="34" height="34" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Sarah R. <i class="ph-fill ph-crown" style="font-size:11px;color:#d97706;"></i></div><div class="text-muted" style="font-size:11px;">Admin</div></div></div>
+                    <div class="row"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="34" height="34" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Lisa M.</div><div class="text-muted" style="font-size:11px;">Member &middot; Joined Mar 2024</div></div></div>
+                    <div class="row"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="34" height="34" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Amy T.</div><div class="text-muted" style="font-size:11px;">Member &middot; Joined Jun 2024</div></div></div>
+                    <div class="row"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="34" height="34" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Rachel K.</div><div class="text-muted" style="font-size:11px;">Member &middot; Joined Sep 2024</div></div></div>
+                    <div class="row"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" width="34" height="34" class="avatar"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Mark D.</div><div class="text-muted" style="font-size:11px;">Member &middot; Joined Jan 2025</div></div></div>
+                  </div>
+                </div>
+
+                <div class="card card-pad">
+                  <div class="section-title" style="font-size:16px;">Group chat</div>
+                  <div class="stack" style="gap:10px;">
+                    <div class="row" style="align-items:flex-start;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><div><div style="font-size:12px;"><span class="fw-6">Lisa M.</span> &middot; <span class="text-muted">4h</span></div><div style="font-size:13px;font-family:'Inter',sans-serif;">Anyone up for a game next Wed?</div></div></div>
+                    <div class="row" style="align-items:flex-start;"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><div><div style="font-size:12px;"><span class="fw-6">Rachel K.</span> &middot; <span class="text-muted">2h</span></div><div style="font-size:13px;font-family:'Inter',sans-serif;">I'm free Wed evening!</div></div></div>
+                  </div>
+                  <button class="btn btn-secondary btn-block mt-2" onclick="go('chat')">Open chat &rarr;</button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GROUP CREATE ============ -->
+      <div class="screen" data-screen="groupCreate">
+        <div class="app-layout">
+          <main class="main" style="max-width:720px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('groups')"><i class="ph ph-caret-left"></i> Back</span>
+            </div>
+            <div style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px;">Create a group</div>
+            <div class="text-muted mb-3" style="font-size:14px;font-family:'Inter',sans-serif;">Build a mahjong community for regulars</div>
+
+            <div class="card card-pad">
+              <div class="section-title" style="font-size:16px;">Cover &amp; icon</div>
+              <div style="height:130px;background:linear-gradient(135deg,#10b981,#059669);border-radius:10px;position:relative;margin-bottom:16px;">
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;"><i class="ph ph-camera" style="font-size:32px;"></i></div>
+                <div style="position:absolute;bottom:-20px;left:16px;width:52px;height:52px;border-radius:13px;background:#fff;border:3px solid #fff;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-fill ph-users-three" style="font-size:24px;color:var(--primary);"></i></div>
+              </div>
+              <div style="margin-top:28px;"></div>
+
+              <div class="field"><label>Group name</label><input class="input" type="text" placeholder="e.g. Portland Mahjong Club"></div>
+              <div class="field"><label>Description</label><textarea class="input" rows="3" placeholder="Tell people what this group is about..."></textarea></div>
+              <div class="field"><label>Location</label><input class="input" type="text" placeholder="City, neighborhood..."></div>
+
+              <div class="divider"></div>
+              <div class="section-title" style="font-size:16px;">Privacy</div>
+              <div class="stack" style="gap:8px;">
+                <label class="checkbox" style="padding:12px;border:2px solid var(--primary);background:#f0fdf4;border-radius:10px;"><input type="radio" name="privacy" checked> <div><div class="fw-6">Public group</div><div class="text-muted" style="font-size:12px;">Anyone can find and join</div></div></label>
+                <label class="checkbox" style="padding:12px;border:1px solid var(--border);border-radius:10px;"><input type="radio" name="privacy"> <div><div class="fw-6">Private group</div><div class="text-muted" style="font-size:12px;">Members need approval to join</div></div></label>
+                <label class="checkbox" style="padding:12px;border:1px solid var(--border);border-radius:10px;"><input type="radio" name="privacy"> <div><div class="fw-6">Hidden group</div><div class="text-muted" style="font-size:12px;">Only invited members can see it</div></div></label>
+              </div>
+
+              <div class="divider"></div>
+              <div class="section-title" style="font-size:16px;">Interests</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span class="chip active">American Mahjong</span>
+                <span class="chip">Chinese Mahjong</span>
+                <span class="chip">Japanese Riichi</span>
+                <span class="chip active">Casual</span>
+                <span class="chip">Tournament</span>
+                <span class="chip active">Social</span>
+                <span class="chip">Teaching</span>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+              <button class="btn btn-secondary" onclick="go('groups')">Cancel</button>
+              <button class="btn btn-primary" onclick="go('groupDetail')"><i class="ph-fill ph-rocket-launch"></i> Create group</button>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ GROUP DISCOVER ============ -->
+      <div class="screen" data-screen="groupDiscover">
+        <div class="app-layout">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Discover groups</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">Find your mahjong community</div>
+              </div>
+              <div class="top-actions">
+                <div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search groups..."></div>
+                <button class="btn btn-primary" onclick="go('groupCreate')"><i class="ph-bold ph-plus"></i> New Group</button>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+              <span class="chip active">All</span>
+              <span class="chip">Near me</span>
+              <span class="chip">Beginner-friendly</span>
+              <span class="chip">Tournaments</span>
+              <span class="chip">Women only</span>
+              <span class="chip">New</span>
+            </div>
+
+            <div class="grid-3 mb-3">
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:80px;background:linear-gradient(135deg,#86efac,#10b981);"></div>
+                <div class="card-pad">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Eastside Beginners</div><span class="pill pill-green">Open</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">A friendly space to learn the game</div>
+                  <div class="row mt-2" style="gap:12px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 18</span><span><i class="ph ph-map-pin"></i> 2.4 mi</span></div>
+                  <button class="btn btn-primary btn-block mt-2" style="font-size:13px;"><i class="ph-bold ph-plus"></i> Join group</button>
+                </div>
+              </div>
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:80px;background:linear-gradient(135deg,#fda4af,#f43f5e);"></div>
+                <div class="card-pad">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">PDX Women's Mahjong</div><span class="pill pill-amber">Private</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">For women players in the PDX area</div>
+                  <div class="row mt-2" style="gap:12px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 45</span><span><i class="ph ph-map-pin"></i> 3.1 mi</span></div>
+                  <button class="btn btn-secondary btn-block mt-2" style="font-size:13px;">Request to join</button>
+                </div>
+              </div>
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:80px;background:linear-gradient(135deg,#fbbf24,#d97706);"></div>
+                <div class="card-pad">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Oregon Tournament Circuit</div><span class="pill pill-green">Open</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Competitive play across the state</div>
+                  <div class="row mt-2" style="gap:12px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 112</span><span><i class="ph ph-map-pin"></i> Statewide</span></div>
+                  <button class="btn btn-primary btn-block mt-2" style="font-size:13px;"><i class="ph-bold ph-plus"></i> Join group</button>
+                </div>
+              </div>
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:80px;background:linear-gradient(135deg,#c4b5fd,#8b5cf6);"></div>
+                <div class="card-pad">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Cafe Players PDX</div><span class="pill pill-green">Open</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Weeknight games at local cafes</div>
+                  <div class="row mt-2" style="gap:12px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 27</span><span><i class="ph ph-map-pin"></i> 1.8 mi</span></div>
+                  <button class="btn btn-primary btn-block mt-2" style="font-size:13px;"><i class="ph-bold ph-plus"></i> Join group</button>
+                </div>
+              </div>
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:80px;background:linear-gradient(135deg,#93c5fd,#3b82f6);"></div>
+                <div class="card-pad">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Seniors Mahjong Society</div><span class="pill pill-green">Open</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">55+ players, weekly games</div>
+                  <div class="row mt-2" style="gap:12px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 38</span><span><i class="ph ph-map-pin"></i> 4.2 mi</span></div>
+                  <button class="btn btn-primary btn-block mt-2" style="font-size:13px;"><i class="ph-bold ph-plus"></i> Join group</button>
+                </div>
+              </div>
+              <div class="card clickable" onclick="go('groupDetail')">
+                <div style="height:80px;background:linear-gradient(135deg,#fca5a5,#ef4444);"></div>
+                <div class="card-pad">
+                  <div class="row" style="justify-content:space-between;"><div class="fw-7">Friday Night Tiles</div><span class="pill pill-green">Open</span></div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-top:4px;">Weekly Friday social games</div>
+                  <div class="row mt-2" style="gap:12px;font-size:12px;color:var(--muted);"><span><i class="ph ph-users"></i> 22</span><span><i class="ph ph-map-pin"></i> 2.9 mi</span></div>
+                  <button class="btn btn-primary btn-block mt-2" style="font-size:13px;"><i class="ph-bold ph-plus"></i> Join group</button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ INBOX ============ -->
+      <div class="screen" data-screen="inbox">
+        <div class="app-layout">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Inbox</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">12 conversations &middot; 3 unread</div>
+              </div>
+              <div class="top-actions">
+                <button class="btn btn-secondary"><i class="ph ph-check-circle"></i> Mark all read</button>
+                <button class="btn btn-primary"><i class="ph-bold ph-plus"></i> New message</button>
+              </div>
+            </div>
+
+            <div class="inbox-layout">
+              <div class="inbox-list">
+                <div class="inbox-search">
+                  <div class="search-box"><i class="ph ph-magnifying-glass"></i><input type="text" placeholder="Search inbox..."></div>
+                  <div style="display:flex;gap:6px;margin-top:10px;">
+                    <span class="chip active" style="padding:4px 10px;font-size:12px;">All</span>
+                    <span class="chip" style="padding:4px 10px;font-size:12px;">Unread</span>
+                    <span class="chip" style="padding:4px 10px;font-size:12px;">Games</span>
+                    <span class="chip" style="padding:4px 10px;font-size:12px;">Groups</span>
+                  </div>
+                </div>
+                <div class="thread-item unread active" onclick="go('chat')">
+                  <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" alt="">
+                  <div class="thread-content"><div class="thread-name"><span>Saturday Mahjong</span><span class="thread-time">2h</span></div><div class="thread-preview"><strong style="color:var(--text);">Lisa M.:</strong> I'll bring the drinks!</div><div class="row mt-1" style="gap:4px;"><span class="pill pill-green" style="font-size:10px;padding:1px 6px;">Game</span><span class="pill pill-red" style="font-size:10px;padding:1px 6px;">12</span></div></div>
+                </div>
+                <div class="thread-item unread">
+                  <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face" alt="">
+                  <div class="thread-content"><div class="thread-name"><span>Amy T.</span><span class="thread-time">4h</span></div><div class="thread-preview">Can't wait for Tuesday! Should I bring tiles?</div></div>
+                </div>
+                <div class="thread-item unread">
+                  <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><i class="ph-fill ph-users-three"></i></div>
+                  <div class="thread-content"><div class="thread-name"><span>Portland Mahjong Club</span><span class="thread-time">6h</span></div><div class="thread-preview"><strong style="color:var(--text);">Rachel K.:</strong> Anyone up for Wed evening?</div><span class="pill pill-blue" style="font-size:10px;padding:1px 6px;margin-top:2px;">Group</span></div>
+                </div>
+                <div class="thread-item">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="">
+                  <div class="thread-content"><div class="thread-name"><span>Lisa M.</span><span class="thread-time">Yesterday</span></div><div class="thread-preview">Thanks for hosting last week!</div></div>
+                </div>
+                <div class="thread-item">
+                  <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="">
+                  <div class="thread-content"><div class="thread-name"><span>Rachel K.</span><span class="thread-time">2d</span></div><div class="thread-preview">Would love to join your Saturday group</div></div>
+                </div>
+                <div class="thread-item">
+                  <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#f43f5e,#f97316);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><i class="ph-fill ph-fire"></i></div>
+                  <div class="thread-content"><div class="thread-name"><span>Sunday Regulars</span><span class="thread-time">3d</span></div><div class="thread-preview"><strong style="color:var(--text);">Mark D.:</strong> Great game this week!</div></div>
+                </div>
+                <div class="thread-item">
+                  <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop&crop=face" alt="">
+                  <div class="thread-content"><div class="thread-name"><span>Mark D.</span><span class="thread-time">1w</span></div><div class="thread-preview">Saw you're hosting — can a beginner join?</div></div>
+                </div>
+              </div>
+
+              <div class="inbox-main">
+                <div class="inbox-main-head">
+                  <div class="row">
+                    <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=80" width="36" height="36" style="border-radius:8px;object-fit:cover;">
+                    <div>
+                      <div class="fw-7">Saturday Mahjong</div>
+                      <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">4 members &middot; Sat Apr 19 &middot; 2:00 PM</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;gap:8px;">
+                    <button class="btn btn-secondary" style="padding:6px 10px;"><i class="ph ph-info"></i></button>
+                    <button class="btn btn-secondary" style="padding:6px 10px;"><i class="ph ph-dots-three"></i></button>
+                  </div>
+                </div>
+                <div class="inbox-messages">
+                  <div style="text-align:center;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin:8px 0;">Yesterday</div>
+                  <div class="msg"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">Hey everyone! Looking forward to Saturday. The address is 123 Main St.</div><div class="msg-meta">Sarah R. &middot; 10:14 AM</div></div></div>
+                  <div class="msg"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">I'll bring the drinks!</div><div class="msg-meta">Lisa M. &middot; 10:32 AM</div></div></div>
+                  <div class="msg"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">Can't wait, see you all Sat! Should I bring anything?</div><div class="msg-meta">Amy T. &middot; 11:02 AM</div></div></div>
+                  <div style="text-align:center;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin:8px 0;">Today</div>
+                  <div class="msg me"><div><div class="msg-body">Just snacks if you like! Tile sets and drinks are covered 🎉</div><div class="msg-meta">You &middot; 9:41 AM</div></div></div>
+                  <div class="msg"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">Perfect, I'll bring cookies!</div><div class="msg-meta">Rachel K. &middot; 10:05 AM</div></div></div>
+                </div>
+                <div class="msg-composer">
+                  <i class="ph ph-plus-circle" style="font-size:22px;color:var(--muted);cursor:pointer;"></i>
+                  <input type="text" placeholder="Type a message...">
+                  <i class="ph ph-smiley" style="font-size:22px;color:var(--muted);cursor:pointer;"></i>
+                  <button class="btn btn-primary" style="border-radius:99px;padding:10px 14px;"><i class="ph-bold ph-paper-plane-tilt"></i></button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ CHAT ============ -->
+      <div class="screen" data-screen="chat">
+        <div class="app-layout">
+          <main class="main" style="max-width:900px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+              <span class="text-muted" style="font-size:13px;cursor:pointer;" onclick="go('inbox')"><i class="ph ph-caret-left"></i> Back to inbox</span>
+            </div>
+
+            <div class="card" style="overflow:hidden;">
+              <div class="inbox-main-head">
+                <div class="row">
+                  <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=80" width="40" height="40" style="border-radius:10px;object-fit:cover;">
+                  <div>
+                    <div class="fw-7">Saturday Mahjong</div>
+                    <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;">4 members &middot; <span class="text-primary"><i class="ph-fill ph-circle" style="font-size:8px;"></i> Lisa &amp; Amy online</span></div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:8px;">
+                  <button class="btn btn-secondary" onclick="go('gameDetail')"><i class="ph ph-info"></i> Game details</button>
+                  <button class="btn btn-secondary" style="padding:6px 10px;"><i class="ph ph-bell"></i></button>
+                  <button class="btn btn-secondary" style="padding:6px 10px;"><i class="ph ph-dots-three"></i></button>
+                </div>
+              </div>
+              <div class="inbox-messages" style="height:500px;">
+                <div style="text-align:center;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin:8px 0;">Monday, April 14</div>
+                <div class="msg"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">Hey everyone! Creating this chat for Saturday's game. Confirmed 2:00 PM start.</div><div class="msg-meta">Sarah R. &middot; 10:14 AM</div></div></div>
+                <div class="msg"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">Sounds great! 🎉</div><div class="msg-meta">Lisa M. &middot; 10:32 AM</div></div></div>
+                <div class="msg me"><div><div class="msg-body">Address is 123 Main St, Portland. Plenty of parking on the street.</div><div class="msg-meta">You &middot; 10:45 AM</div></div></div>
+
+                <div style="text-align:center;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin:8px 0;">Tuesday, April 15</div>
+                <div class="msg"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">Can't wait, see you all Sat! Should I bring anything?</div><div class="msg-meta">Amy T. &middot; 11:02 AM</div></div></div>
+                <div class="msg me"><div><div class="msg-body">Just snacks if you like! Tile sets and drinks are covered.</div><div class="msg-meta">You &middot; 11:15 AM</div></div></div>
+                <div class="msg"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">Perfect, I'll bring cookies!</div><div class="msg-meta">Rachel K. &middot; 11:20 AM</div></div></div>
+
+                <div style="text-align:center;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;margin:8px 0;">Today</div>
+                <div class="msg"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" alt=""><div><div class="msg-body">I'll bring the drinks — red wine + sparkling water OK?</div><div class="msg-meta">Lisa M. &middot; 9:02 AM</div></div></div>
+                <div class="msg me"><div><div class="msg-body">Perfect! Can't wait to see everyone 🎴</div><div class="msg-meta">You &middot; 9:41 AM</div></div></div>
+
+                <div style="text-align:center;color:var(--muted);font-size:11px;font-family:'Inter',sans-serif;margin:6px 0;"><i class="ph ph-circle-notch"></i> Lisa M. is typing...</div>
+              </div>
+              <div class="msg-composer">
+                <i class="ph ph-paperclip" style="font-size:22px;color:var(--muted);cursor:pointer;"></i>
+                <i class="ph ph-image" style="font-size:22px;color:var(--muted);cursor:pointer;"></i>
+                <input type="text" placeholder="Type a message..." value="See you all Saturday!">
+                <i class="ph ph-smiley" style="font-size:22px;color:var(--muted);cursor:pointer;"></i>
+                <button class="btn btn-primary" style="border-radius:99px;padding:10px 14px;"><i class="ph-bold ph-paper-plane-tilt"></i></button>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ NOTIFICATIONS ============ -->
+      <div class="screen" data-screen="notifications">
+        <div class="app-layout">
+          <main class="main" style="max-width:820px;">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Notifications</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">You have 5 new notifications</div>
+              </div>
+              <div class="top-actions">
+                <button class="btn btn-secondary"><i class="ph ph-check-circle"></i> Mark all read</button>
+                <button class="btn btn-secondary"><i class="ph ph-gear"></i></button>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:20px;">
+              <span class="chip active">All <span style="background:rgba(255,255,255,.25);padding:1px 6px;border-radius:8px;margin-left:4px;">18</span></span>
+              <span class="chip">Unread <span style="background:#f3f4f6;padding:1px 6px;border-radius:8px;margin-left:4px;">5</span></span>
+              <span class="chip">Games</span>
+              <span class="chip">Invites</span>
+              <span class="chip">Groups</span>
+            </div>
+
+            <div class="section-title" style="font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Today</div>
+            <div class="stack mb-3">
+              <div class="notif-row unread">
+                <div class="notif-icon"><i class="ph-fill ph-envelope-open"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Amy sent you a game invite</div>
+                  <div class="notif-desc">Amy's Tuesday Game &middot; Tue, Apr 22 at 7:00 PM</div>
+                  <div class="notif-time">2 hours ago</div>
+                </div>
+                <div style="display:flex;gap:6px;flex-shrink:0;">
+                  <button class="btn btn-primary" style="padding:6px 12px;font-size:12px;">Accept</button>
+                  <button class="btn btn-secondary" style="padding:6px 12px;font-size:12px;">Decline</button>
+                </div>
+              </div>
+              <div class="notif-row unread">
+                <div class="notif-icon amber"><i class="ph-fill ph-chat-circle"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title"><strong>Lisa M.</strong> replied in Saturday Mahjong</div>
+                  <div class="notif-desc">"I'll bring the drinks!"</div>
+                  <div class="notif-time">4 hours ago</div>
+                </div>
+              </div>
+              <div class="notif-row unread">
+                <div class="notif-icon blue"><i class="ph-fill ph-user-circle-plus"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title"><strong>Rachel K.</strong> applied to your game</div>
+                  <div class="notif-desc">Saturday Mahjong &middot; Sat Apr 19</div>
+                  <div class="notif-time">5 hours ago</div>
+                </div>
+                <button class="btn btn-primary" style="padding:6px 12px;font-size:12px;flex-shrink:0;" onclick="go('applicants')">Review</button>
+              </div>
+            </div>
+
+            <div class="section-title" style="font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Yesterday</div>
+            <div class="stack mb-3">
+              <div class="notif-row unread">
+                <div class="notif-icon"><i class="ph-fill ph-check-circle"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title"><strong>Lisa M.</strong> accepted your game invite</div>
+                  <div class="notif-desc">Saturday Mahjong &middot; Sat Apr 19</div>
+                  <div class="notif-time">Yesterday, 3:14 PM</div>
+                </div>
+              </div>
+              <div class="notif-row unread">
+                <div class="notif-icon amber"><i class="ph-fill ph-star"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">You earned the <strong>Host Badge</strong></div>
+                  <div class="notif-desc">For hosting 10+ successful games. Great work!</div>
+                  <div class="notif-time">Yesterday, 10:00 AM</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-title" style="font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Earlier this week</div>
+            <div class="stack">
+              <div class="notif-row">
+                <div class="notif-icon blue"><i class="ph-fill ph-users-three"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title"><strong>Portland Mahjong Club</strong> has a new game</div>
+                  <div class="notif-desc">Sunday Session on May 3 &middot; 4 spots available</div>
+                  <div class="notif-time">Monday, 2:15 PM</div>
+                </div>
+              </div>
+              <div class="notif-row">
+                <div class="notif-icon amber"><i class="ph-fill ph-calendar-check"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title">Game reminder</div>
+                  <div class="notif-desc">Easter Weekend Game is in 2 days</div>
+                  <div class="notif-time">Sunday, 9:00 AM</div>
+                </div>
+              </div>
+              <div class="notif-row">
+                <div class="notif-icon"><i class="ph-fill ph-star"></i></div>
+                <div class="notif-content">
+                  <div class="notif-title"><strong>Mark D.</strong> reviewed your game</div>
+                  <div class="notif-desc">"Great host and lovely atmosphere!" &middot; 5 stars</div>
+                  <div class="notif-time">Saturday, 8:30 PM</div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ SETTINGS ============ -->
+      <div class="screen" data-screen="settings">
+        <div class="app-layout">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Settings</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">Manage your profile and preferences</div>
+              </div>
+            </div>
+
+            <div class="tab-bar">
+              <div class="tab active"><i class="ph ph-user"></i> Profile</div>
+              <div class="tab"><i class="ph ph-bell"></i> Notifications</div>
+              <div class="tab"><i class="ph ph-map-pin"></i> Locations</div>
+              <div class="tab"><i class="ph ph-shield-check"></i> Security</div>
+              <div class="tab"><i class="ph ph-credit-card"></i> Billing</div>
+            </div>
+
+            <div class="detail-grid">
+              <div>
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;">Profile photo</div>
+                  <div class="row">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=160&h=160&fit=crop&crop=face" width="88" height="88" class="avatar">
+                    <div class="stack" style="gap:6px;">
+                      <button class="btn btn-primary" style="padding:8px 14px;font-size:13px;"><i class="ph ph-camera"></i> Change photo</button>
+                      <button class="btn btn-secondary" style="padding:8px 14px;font-size:13px;color:#dc2626;border-color:#fecaca;"><i class="ph ph-trash"></i> Remove</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;">Personal info</div>
+                  <div class="grid-2">
+                    <div class="field"><label>First name</label><input class="input" value="Sarah"></div>
+                    <div class="field"><label>Last name</label><input class="input" value="Reynolds"></div>
+                    <div class="field"><label>Email</label><input class="input" value="sarah@example.com"></div>
+                    <div class="field"><label>Phone</label><input class="input" value="+1 (555) 123-4567"></div>
+                    <div class="field"><label>City</label><input class="input" value="Portland, OR"></div>
+                    <div class="field"><label>Birthday</label><input class="input" value="April 12, 1987"></div>
+                  </div>
+                  <div class="field"><label>Bio</label><textarea class="input" rows="3">Mahjong enthusiast since 2019. Host of the Portland Mahjong Club. Always happy to teach beginners!</textarea></div>
+                </div>
+
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;">Mahjong profile</div>
+                  <div class="grid-2">
+                    <div class="field"><label>Skill level</label><select class="input"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option></select></div>
+                    <div class="field"><label>Years playing</label><input class="input" value="6"></div>
+                    <div class="field"><label>Primary style</label><select class="input"><option selected>American Mahjong</option><option>Chinese Mahjong</option><option>Japanese Riichi</option></select></div>
+                    <div class="field"><label>Games played</label><input class="input" value="24" disabled></div>
+                  </div>
+                  <div class="field"><label>Preferred game types</label>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                      <span class="chip active">Social</span>
+                      <span class="chip active">Casual</span>
+                      <span class="chip">Tournament</span>
+                      <span class="chip active">Teaching</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                  <button class="btn btn-secondary">Discard</button>
+                  <button class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+
+              <div>
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;">Profile stats</div>
+                  <div class="stack" style="gap:12px;">
+                    <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-calendar-check"></i></div><div class="flex-1"><div class="fw-6">24</div><div class="text-muted" style="font-size:12px;">Games played</div></div></div>
+                    <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#fef3c7;color:#d97706;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-crown"></i></div><div class="flex-1"><div class="fw-6">18</div><div class="text-muted" style="font-size:12px;">Games hosted</div></div></div>
+                    <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#dbeafe;color:#2563eb;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-users-three"></i></div><div class="flex-1"><div class="fw-6">4</div><div class="text-muted" style="font-size:12px;">Groups</div></div></div>
+                    <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#fee2e2;color:#dc2626;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-star"></i></div><div class="flex-1"><div class="fw-6">4.9</div><div class="text-muted" style="font-size:12px;">Avg rating</div></div></div>
+                  </div>
+                </div>
+
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;">Badges</div>
+                  <div class="grid-3">
+                    <div style="text-align:center;"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#d97706);display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto;"><i class="ph-fill ph-crown" style="font-size:22px;"></i></div><div style="font-size:11px;margin-top:4px;font-weight:600;">Top Host</div></div>
+                    <div style="text-align:center;"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto;"><i class="ph-fill ph-star" style="font-size:22px;"></i></div><div style="font-size:11px;margin-top:4px;font-weight:600;">5-Star</div></div>
+                    <div style="text-align:center;"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#6366f1);display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto;"><i class="ph-fill ph-heart" style="font-size:22px;"></i></div><div style="font-size:11px;margin-top:4px;font-weight:600;">Welcoming</div></div>
+                    <div style="text-align:center;opacity:.35;"><div style="width:48px;height:48px;border-radius:50%;background:#e5e5e0;display:flex;align-items:center;justify-content:center;color:var(--muted);margin:0 auto;"><i class="ph-fill ph-trophy" style="font-size:22px;"></i></div><div style="font-size:11px;margin-top:4px;font-weight:600;">Champion</div></div>
+                    <div style="text-align:center;opacity:.35;"><div style="width:48px;height:48px;border-radius:50%;background:#e5e5e0;display:flex;align-items:center;justify-content:center;color:var(--muted);margin:0 auto;"><i class="ph-fill ph-fire" style="font-size:22px;"></i></div><div style="font-size:11px;margin-top:4px;font-weight:600;">Streak</div></div>
+                    <div style="text-align:center;opacity:.35;"><div style="width:48px;height:48px;border-radius:50%;background:#e5e5e0;display:flex;align-items:center;justify-content:center;color:var(--muted);margin:0 auto;"><i class="ph-fill ph-student" style="font-size:22px;"></i></div><div style="font-size:11px;margin-top:4px;font-weight:600;">Mentor</div></div>
+                  </div>
+                </div>
+
+                <div class="card card-pad" style="border-color:#fecaca;background:#fef2f2;">
+                  <div class="fw-7 mb-1" style="color:#dc2626;">Danger zone</div>
+                  <div class="text-muted" style="font-size:12px;font-family:'Inter',sans-serif;margin-bottom:10px;">Irreversible account actions</div>
+                  <button class="btn btn-secondary btn-block" style="color:#dc2626;border-color:#fecaca;margin-bottom:8px;">Deactivate account</button>
+                  <button class="btn btn-secondary btn-block" style="background:#dc2626;color:#fff;border:none;">Delete account</button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ COMPLETE PROFILE ============ -->
+      <div class="screen" data-screen="completeProfile">
+        <div class="app-layout">
+          <main class="main" style="max-width:720px;">
+            <div style="font-family:'DM Serif Display',serif;font-size:32px;margin-bottom:6px;">Welcome to BamBuddies!</div>
+            <div class="text-muted mb-3" style="font-size:15px;font-family:'Inter',sans-serif;">Let's set up your profile — takes less than 2 minutes</div>
+
+            <div class="stepper">
+              <div class="step done"><div class="step-num"><i class="ph-bold ph-check"></i></div><div class="step-label">Account</div></div>
+              <div class="step-line"></div>
+              <div class="step active"><div class="step-num">2</div><div class="step-label">Profile</div></div>
+              <div class="step-line"></div>
+              <div class="step"><div class="step-num">3</div><div class="step-label">Interests</div></div>
+            </div>
+
+            <div class="card card-pad mb-2">
+              <div class="section-title" style="font-size:16px;">Add a profile photo</div>
+              <div class="text-muted mb-2" style="font-size:13px;font-family:'Inter',sans-serif;">Help other players recognize you</div>
+              <div style="display:flex;justify-content:center;">
+                <div style="width:120px;height:120px;border-radius:50%;background:#fafaf9;border:2px dashed #d4d4cc;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;">
+                  <i class="ph ph-camera" style="font-size:32px;color:var(--muted);"></i>
+                  <div style="font-size:11px;color:var(--muted);margin-top:4px;">Upload</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card-pad mb-2">
+              <div class="section-title" style="font-size:16px;">About you</div>
+              <div class="field"><label>Display name</label><input class="input" placeholder="Sarah R."></div>
+              <div class="field"><label>City</label>
+                <div style="position:relative;"><i class="ph ph-map-pin" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);"></i><input class="input" style="padding-left:36px;" placeholder="Portland, OR"></div>
+              </div>
+              <div class="field"><label>Short bio (optional)</label><textarea class="input" rows="3" placeholder="Tell other players a bit about yourself..."></textarea></div>
+            </div>
+
+            <div class="card card-pad mb-3">
+              <div class="section-title" style="font-size:16px;">Your mahjong level</div>
+              <div class="grid-3">
+                <div class="card card-pad clickable" style="text-align:center;"><i class="ph ph-student" style="font-size:26px;color:var(--muted);"></i><div class="fw-7 mt-1" style="font-size:14px;">Beginner</div><div class="text-muted" style="font-size:11px;font-family:'Inter',sans-serif;">Learning the basics</div></div>
+                <div class="card card-pad clickable" style="border:2px solid var(--primary);background:#f0fdf4;text-align:center;"><i class="ph-fill ph-chart-line-up" style="font-size:26px;color:var(--primary);"></i><div class="fw-7 mt-1" style="font-size:14px;">Intermediate</div><div class="text-muted" style="font-size:11px;font-family:'Inter',sans-serif;">Know the rules well</div></div>
+                <div class="card card-pad clickable" style="text-align:center;"><i class="ph ph-trophy" style="font-size:26px;color:var(--muted);"></i><div class="fw-7 mt-1" style="font-size:14px;">Advanced</div><div class="text-muted" style="font-size:11px;font-family:'Inter',sans-serif;">Competitive player</div></div>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;gap:10px;">
+              <button class="btn btn-ghost" onclick="go('dashboard')">Skip for now</button>
+              <button class="btn btn-primary" onclick="go('dashboard')">Continue <i class="ph-bold ph-arrow-right"></i></button>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ============ ADMIN DASHBOARD ============ -->
+      <div class="screen" data-screen="admin">
+        <div class="app-layout">
+          <main class="main">
+            <div class="top-header">
+              <div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;">Admin Dashboard</div>
+                <div style="color:var(--muted);font-size:14px;font-family:'Inter',sans-serif;margin-top:2px;">Platform overview &middot; Last 30 days</div>
+              </div>
+              <div class="top-actions">
+                <button class="btn btn-secondary"><i class="ph ph-download-simple"></i> Export</button>
+                <button class="btn btn-primary"><i class="ph ph-broadcast"></i> Send announcement</button>
+              </div>
+            </div>
+
+            <div class="admin-stat-row">
+              <div class="stat"><div class="stat-label">Active users</div><div class="stat-val">1,247</div><div class="stat-delta">+18% vs last month</div></div>
+              <div class="stat"><div class="stat-label">Games created</div><div class="stat-val">342</div><div class="stat-delta">+24%</div></div>
+              <div class="stat"><div class="stat-label">Groups</div><div class="stat-val">68</div><div class="stat-delta">+6</div></div>
+              <div class="stat"><div class="stat-label">Avg rating</div><div class="stat-val">4.8</div><div class="stat-delta down">-0.1</div></div>
+            </div>
+
+            <div class="detail-grid">
+              <div>
+                <div class="card card-pad mb-2">
+                  <div class="section-head"><div class="section-title" style="font-size:16px;margin:0;">Recent signups</div><span class="see-all">View all &rarr;</span></div>
+                  <table class="table" style="border:none;">
+                    <thead><tr><th>User</th><th>Joined</th><th>Status</th></tr></thead>
+                    <tbody>
+                      <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Rachel K.</span></div></td><td class="text-muted">2h ago</td><td><span class="pill pill-green">Verified</span></td></tr>
+                      <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Mark D.</span></div></td><td class="text-muted">5h ago</td><td><span class="pill pill-green">Verified</span></td></tr>
+                      <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Jenny W.</span></div></td><td class="text-muted">1d ago</td><td><span class="pill pill-amber">Pending</span></td></tr>
+                      <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Amy T.</span></div></td><td class="text-muted">2d ago</td><td><span class="pill pill-green">Verified</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="card card-pad">
+                  <div class="section-title" style="font-size:16px;">Growth this month</div>
+                  <div style="height:200px;display:flex;align-items:flex-end;gap:6px;padding:10px 0;">
+                    <div style="flex:1;background:linear-gradient(180deg,var(--primary-soft),var(--primary));border-radius:4px 4px 0 0;height:30%;"></div>
+                    <div style="flex:1;background:linear-gradient(180deg,var(--primary-soft),var(--primary));border-radius:4px 4px 0 0;height:45%;"></div>
+                    <div style="flex:1;background:linear-gradient(180deg,var(--primary-soft),var(--primary));border-radius:4px 4px 0 0;height:55%;"></div>
+                    <div style="flex:1;background:linear-gradient(180deg,var(--primary-soft),var(--primary));border-radius:4px 4px 0 0;height:40%;"></div>
+                    <div style="flex:1;background:linear-gradient(180deg,var(--primary-soft),var(--primary));border-radius:4px 4px 0 0;height:65%;"></div>
+                    <div style="flex:1;background:linear-gradient(180deg,var(--primary-soft),var(--primary));border-radius:4px 4px 0 0;height:72%;"></div>
+                    <div style="flex:1;background:linear-gradient(180deg,var(--primary-soft),var(--primary));border-radius:4px 4px 0 0;height:80%;"></div>
+                    <div style="flex:1;background:linear-gradient(180deg,var(--primary-soft),var(--primary));border-radius:4px 4px 0 0;height:88%;"></div>
+                  </div>
+                  <div class="row" style="justify-content:space-between;font-size:11px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:6px;">
+                    <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span><span>Week 5</span><span>Week 6</span><span>Week 7</span><span>Week 8</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;">Reports to review</div>
+                  <div class="stack" style="gap:10px;">
+                    <div class="row" style="padding:10px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;"><i class="ph-fill ph-flag" style="color:#dc2626;font-size:20px;"></i><div class="flex-1"><div class="fw-6" style="font-size:13px;">Inappropriate profile</div><div class="text-muted" style="font-size:11px;">Reported by 3 users</div></div><button class="btn btn-primary" style="padding:4px 10px;font-size:11px;">Review</button></div>
+                    <div class="row" style="padding:10px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;"><i class="ph-fill ph-warning" style="color:#d97706;font-size:20px;"></i><div class="flex-1"><div class="fw-6" style="font-size:13px;">No-show report</div><div class="text-muted" style="font-size:11px;">Reported by host</div></div><button class="btn btn-secondary" style="padding:4px 10px;font-size:11px;">Review</button></div>
+                    <div class="row" style="padding:10px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;"><i class="ph-fill ph-warning" style="color:#d97706;font-size:20px;"></i><div class="flex-1"><div class="fw-6" style="font-size:13px;">Spam content</div><div class="text-muted" style="font-size:11px;">Auto-flagged</div></div><button class="btn btn-secondary" style="padding:4px 10px;font-size:11px;">Review</button></div>
+                  </div>
+                </div>
+
+                <div class="card card-pad mb-2">
+                  <div class="section-title" style="font-size:16px;">Top cities</div>
+                  <div class="stack" style="gap:10px;">
+                    <div class="row"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Portland, OR</div><div style="height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;margin-top:4px;"><div style="height:100%;width:82%;background:var(--primary);"></div></div></div><span class="fw-6" style="font-size:13px;">324</span></div>
+                    <div class="row"><div class="flex-1"><div class="fw-6" style="font-size:13px;">Seattle, WA</div><div style="height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;margin-top:4px;"><div style="height:100%;width:65%;background:var(--primary);"></div></div></div><span class="fw-6" style="font-size:13px;">258</span></div>
+                    <div class="row"><div class="flex-1"><div class="fw-6" style="font-size:13px;">San Francisco</div><div style="height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;margin-top:4px;"><div style="height:100%;width:52%;background:var(--primary);"></div></div></div><span class="fw-6" style="font-size:13px;">204</span></div>
+                    <div class="row"><div class="flex-1"><div class="fw-6" style="font-size:13px;">New York, NY</div><div style="height:6px;background:#f3f4f6;border-radius:3px;overflow:hidden;margin-top:4px;"><div style="height:100%;width:38%;background:var(--primary);"></div></div></div><span class="fw-6" style="font-size:13px;">148</span></div>
+                  </div>
+                </div>
+
+                <div class="card card-pad">
+                  <div class="section-title" style="font-size:16px;">Quick actions</div>
+                  <div class="stack" style="gap:8px;">
+                    <button class="btn btn-secondary btn-block"><i class="ph ph-users"></i> Manage users</button>
+                    <button class="btn btn-secondary btn-block"><i class="ph ph-calendar"></i> All games</button>
+                    <button class="btn btn-secondary btn-block"><i class="ph ph-flag"></i> Content moderation</button>
+                    <button class="btn btn-secondary btn-block"><i class="ph ph-chart-bar"></i> Analytics</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      </div><!-- /screens -->
+    </div>
+  </div>
+</div>
+
+<script>
+function setViewport(mode){
+  const f=document.getElementById('frame');
+  const v=document.getElementById('viewport');
+  f.classList.remove('desktop','tablet','mobile');
+  f.classList.add(mode);
+  v.classList.remove('tablet-mode','mobile-mode');
+  if(mode==='tablet') v.classList.add('tablet-mode');
+  if(mode==='mobile') v.classList.add('mobile-mode');
+  document.querySelectorAll('.vp-btn').forEach(b=>b.classList.toggle('active',b.dataset.vp===mode));
+}
+const urls={
+  login:'bambuddies.com/login',register:'bambuddies.com/register',forgot:'bambuddies.com/forgot-password',
+  reset:'bambuddies.com/reset-password',verify:'bambuddies.com/verify-phone',
+  dashboard:'bambuddies.com/dashboard',myGames:'bambuddies.com/games',gameDetail:'bambuddies.com/games/saturday-mahjong',
+  gameCreate1:'bambuddies.com/games/new',gameCreate2:'bambuddies.com/games/new?step=2',gameCreate3:'bambuddies.com/games/new?step=3',
+  gameEdit:'bambuddies.com/games/saturday-mahjong/edit',applicants:'bambuddies.com/games/saturday-mahjong/applicants',
+  gameReview:'bambuddies.com/games/saturday-mahjong/review',
+  discover:'bambuddies.com/discover',discoverList:'bambuddies.com/discover?view=list',
+  groups:'bambuddies.com/groups',groupDetail:'bambuddies.com/groups/portland-mahjong',
+  groupCreate:'bambuddies.com/groups/new',groupDiscover:'bambuddies.com/groups/discover',
+  inbox:'bambuddies.com/inbox',chat:'bambuddies.com/inbox/saturday-mahjong',
+  notifications:'bambuddies.com/notifications',settings:'bambuddies.com/settings',
+  completeProfile:'bambuddies.com/onboarding/profile',admin:'bambuddies.com/admin'
+};
+function go(screen){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.querySelector(`[data-screen="${screen}"]`);
+  if(el){el.classList.add('active');document.getElementById('addr-text').textContent=urls[screen]||'bambuddies.com';}
+  const main=el&&el.querySelector('.main');if(main)main.scrollTop=0;
+  // Update sidebar active state to match current screen
+  document.querySelectorAll('.sidebar .nav-item, .mobile-tabbar .mt-item').forEach(n=>n.classList.remove('active'));
+  const navMap={dashboard:0,myGames:1,discover:2,groups:3,inbox:4,notifications:5,settings:6};
+  if(el){
+    const sidebar=el.querySelector('.sidebar');
+    if(sidebar){
+      let idx=navMap[screen];
+      if(screen==='gameDetail'||screen==='gameCreate1'||screen==='gameCreate2'||screen==='gameCreate3'||screen==='gameEdit'||screen==='applicants'||screen==='gameReview')idx=1;
+      if(screen==='groupDetail'||screen==='groupCreate'||screen==='groupDiscover')idx=3;
+      if(screen==='discoverList')idx=2;
+      if(screen==='chat')idx=4;
+      if(screen==='completeProfile')idx=6;
+      const items=sidebar.querySelectorAll('.nav-item');
+      if(idx!==undefined&&items[idx])items[idx].classList.add('active');
+    }
+    const tab=el.querySelector('.mobile-tabbar');
+    if(tab){
+      const mtMap={dashboard:0,myGames:1,discover:2,groups:3,settings:4};
+      let midx=mtMap[screen];
+      if(midx===undefined){
+        if(screen==='gameDetail'||screen.startsWith('gameCreate')||screen==='gameEdit'||screen==='applicants'||screen==='gameReview')midx=1;
+        else if(screen==='groupDetail'||screen==='groupCreate'||screen==='groupDiscover')midx=3;
+        else if(screen==='discoverList')midx=2;
+        else if(screen==='settings'||screen==='completeProfile')midx=4;
+      }
+      const items=tab.querySelectorAll('.mt-item');
+      if(midx!==undefined&&items[midx])items[midx].classList.add('active');
+    }
+  }
+}
+// Shared sidebar HTML — injected into each screen for consistency
+const SIDEBAR_HTML=`
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark"><i class="ph-fill ph-diamond"></i></div>
+    <div class="sidebar-logo-text">BamBuddies</div>
+  </div>
+  <div class="nav-item" onclick="go('dashboard')"><i class="ph ph-house"></i><span class="nav-label">Home</span></div>
+  <div class="nav-item" onclick="go('myGames')"><i class="ph ph-calendar-check"></i><span class="nav-label">My Games</span><span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="go('discover')"><i class="ph ph-compass"></i><span class="nav-label">Discover</span></div>
+  <div class="nav-item" onclick="go('groups')"><i class="ph ph-users-three"></i><span class="nav-label">Groups</span></div>
+  <div class="nav-item" onclick="go('inbox')"><i class="ph ph-chat-circle-dots"></i><span class="nav-label">Inbox</span><span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="go('notifications')"><i class="ph ph-bell"></i><span class="nav-label">Notifications</span></div>
+  <div class="nav-item" onclick="go('settings')"><i class="ph ph-gear"></i><span class="nav-label">Settings</span></div>
+  <div class="sidebar-footer">
+    <div class="sidebar-user" onclick="go('settings')">
+      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" alt="">
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name">Sarah R.</div>
+        <div class="sidebar-user-role">Intermediate</div>
+      </div>
+      <i class="ph ph-dots-three-vertical" style="color:var(--muted);"></i>
+    </div>
+  </div>
+</aside>`;
+const MOBILE_TABBAR_HTML=`
+<nav class="mobile-tabbar">
+  <div class="mt-item" onclick="go('dashboard')"><i class="ph ph-house"></i><span>Home</span></div>
+  <div class="mt-item" onclick="go('myGames')"><i class="ph ph-calendar-check"></i><span>Games</span></div>
+  <div class="mt-item" onclick="go('discover')"><i class="ph ph-compass"></i><span>Discover</span></div>
+  <div class="mt-item" onclick="go('groups')"><i class="ph ph-users-three"></i><span>Groups</span></div>
+  <div class="mt-item" onclick="go('settings')"><i class="ph ph-user"></i><span>Profile</span></div>
+</nav>`;
+// Inject sidebar/tabbar into any .app-layout that doesn't already have them
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.app-layout').forEach(layout=>{
+    if(!layout.querySelector('.sidebar')) layout.insertAdjacentHTML('afterbegin',SIDEBAR_HTML);
+    if(!layout.querySelector('.mobile-tabbar')) layout.insertAdjacentHTML('beforeend',MOBILE_TABBAR_HTML);
+  });
+  go('dashboard');
+});
+</script>
+
+</body>
+</html>
