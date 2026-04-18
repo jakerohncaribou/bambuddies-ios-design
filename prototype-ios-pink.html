@@ -2533,7 +2533,8 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             <div style="display:flex;align-items:center;gap:10px;"><i class="ph ph-chat-text" style="font-size:18px;color:#c93b8b;"></i><div><div style="color:#000;font-size:13px;font-weight:600;">SMS</div><div style="color:#888;font-size:11px;margin-top:1px;">Urgent updates only</div></div></div>
             <div style="width:44px;height:24px;border-radius:12px;background:#e8e4e0;position:relative;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;box-shadow:0 1px 3px rgba(0,0,0,.15);"></div></div>
           </div>
-          <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-sliders-horizontal" style="font-size:18px;color:#c93b8b;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Per-Game Alerts</div><div style="color:#888;font-size:11px;margin-top:1px;">Mute specific games or groups</div></div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+          <div style="padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-sliders-horizontal" style="font-size:18px;color:#c93b8b;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">Per-Game Alerts</div><div style="color:#888;font-size:11px;margin-top:1px;">Mute specific games or groups</div></div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;"><i class="ph ph-faders" style="font-size:18px;color:#c93b8b;"></i><div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:600;">More Notification Settings</div><div style="color:#888;font-size:11px;margin-top:1px;">Fine-tune per notification type</div></div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
         </div>
 
         <!-- Saved Locations -->
@@ -2636,22 +2637,52 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
     </div><!-- /dashboardEmpty -->
     <!-- ==================== MODAL OVERLAY ==================== -->
-    <div class="screen" data-screen="modalFirstGame" style="padding:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;">
-      <div style="width:100%;background:#faf8f6;border-radius:24px 24px 0 0;padding:20px;">
-        <div style="width:40px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 16px;"></div>
-        <div style="text-align:center;margin-bottom:20px;">
-          <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#c93b8b,#ec4fa3);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;"><i class="ph-fill ph-hand-waving" style="font-size:32px;color:#fff;"></i></div>
-          <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#000;">Welcome, Sarah!</div>
-          <div style="color:#888;font-size:14px;margin-top:4px;">Amy invited you to a game</div>
-        </div>
-        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:16px;">
-          <div style="display:flex;gap:10px;align-items:center;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;" alt=""><div><div style="color:#000;font-size:14px;font-weight:700;">Amy's Tuesday Game</div><div style="color:#888;font-size:12px;">Tue, Apr 22 · 7:00 PM</div></div></div>
-        </div>
-        <div style="display:flex;gap:8px;">
-          <div onclick="go('dashboard')" style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">Not now</div>
-          <div onclick="go('gameDetail')" style="flex:2;background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;">Accept Invite</div>
+    <div class="screen" data-screen="modalFirstGame" style="padding:0;position:relative;overflow:hidden;">
+
+      <!-- Faux dashboard behind modal (looks like the app) -->
+      <div style="position:absolute;inset:0;background:#fdf8f0;overflow:hidden;">
+        <div class="v9-bg-tiles" style="position:absolute;inset:0;"></div>
+        <div style="position:relative;z-index:1;opacity:.5;pointer-events:none;">
+          <!-- Mini dashboard mockup -->
+          <div style="display:flex;align-items:center;padding:14px 20px 10px;gap:12px;">
+            <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#fbcfe8,#ec4899);flex-shrink:0;box-shadow:0 0 0 3px #c93b8b;"></div>
+            <div style="font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:#c93b8b;line-height:1;flex:1;margin-top:4px;">Sarah</div>
+            <div style="width:38px;height:38px;border-radius:50%;background:#fce7f3;"></div>
+            <div style="width:38px;height:38px;border-radius:50%;background:#fce7f3;"></div>
+          </div>
+          <div style="padding:6px 20px 18px;font-size:26px;font-weight:800;color:#1a1a1a;letter-spacing:-.5px;line-height:1.15;">May the winds be with you.</div>
+          <div style="display:flex;gap:10px;padding:0 16px 20px;">
+            <div style="flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff0d0,#f0d9a0);border-radius:22px;box-shadow:0 8px 0 #b89556;"></div>
+            <div style="flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fce2dc,#ebc4bb);border-radius:22px;box-shadow:0 8px 0 #a6857a;"></div>
+            <div style="flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff0d0,#f0d9a0);border-radius:22px;box-shadow:0 8px 0 #b89556;"></div>
+            <div style="flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff0d0,#f0d9a0);border-radius:22px;box-shadow:0 8px 0 #b89556;"></div>
+          </div>
+          <div style="margin:0 16px 16px;height:88px;background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-radius:20px;"></div>
+          <div style="margin:0 16px 16px;height:120px;background:#fff;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.06);"></div>
         </div>
       </div>
+
+      <!-- Dimming overlay -->
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);"></div>
+
+      <!-- Modal (center) -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;z-index:2;">
+        <div style="background:#faf8f6;border-radius:24px;padding:24px 20px 22px;max-width:340px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+          <div style="text-align:center;margin-bottom:18px;">
+            <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#c93b8b,#ec4fa3);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 8px 20px rgba(201,59,139,.3);"><i class="ph-fill ph-hand-waving" style="font-size:32px;color:#fff;"></i></div>
+            <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#000;line-height:1.15;">Welcome, Sarah!</div>
+            <div style="color:#888;font-size:14px;margin-top:4px;">Amy invited you to a game</div>
+          </div>
+          <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:16px;">
+            <div style="display:flex;gap:10px;align-items:center;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:44px;height:44px;border-radius:50%;box-shadow:0 0 0 2px #c93b8b;" alt=""><div style="flex:1;"><div style="color:#9d2467;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Game Invite</div><div style="color:#000;font-size:14px;font-weight:700;margin-top:1px;">Amy's Tuesday Game</div><div style="color:#888;font-size:11px;margin-top:2px;">Tue, Apr 22 &middot; 7:00 PM &middot; 3 of 4</div></div></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <div onclick="go('dashboard')" style="flex:1;background:transparent;border:1.5px solid #e8e4e0;color:#888;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;">Not now</div>
+            <div onclick="go('gameDetail')" style="flex:2;background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(201,59,139,.3);">Accept Invite</div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ==================== TAB BAR ==================== -->
