@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Sprint 3: Moderation & Permissions</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{--primary:#c93b8b;--primary-dark:#9d2467;--primary-light:#ec4fa3;--primary-tint:#fce7f3;--primary-tint2:#fdf2f8;--cream:#fdf8f0;--text:#1a1a1a;--muted:#6b7280;--border:#e8e4e0;}
+body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;color:#fff;padding:50px 20px;}
+.hdr{text-align:center;margin-bottom:30px;}
+.hdr h1{font-family:'DM Serif Display',serif;font-size:40px;letter-spacing:-.8px;margin-bottom:4px;}
+.hdr h1 span{color:var(--primary);}
+.hdr p{color:#aaa;font-size:14px;}
+.section{margin-bottom:60px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid #222;max-width:1600px;margin:0 auto 20px;}
+.section-hdr h2{font-family:'DM Serif Display',serif;font-size:28px;}
+.section-hdr .chip{background:rgba(201,59,139,.15);color:var(--primary);font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;border:1px solid rgba(201,59,139,.3);}
+.section-desc{color:#999;font-size:14px;margin-bottom:20px;max-width:1600px;margin:0 auto 20px;}
+.flow{display:flex;gap:24px;overflow-x:auto;padding:20px 0 30px;}
+.frame-wrap{display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+.frame-label{color:#aaa;font-size:12px;font-weight:600;text-align:center;max-width:393px;line-height:1.3;}
+.frame-label b{color:#fff;}
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:0 0 20px 20px;z-index:100;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:14px 28px 0;display:flex;justify-content:space-between;align-items:center;z-index:50;font-size:15px;font-weight:600;color:var(--text);}
+.inner{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow-y:auto;overflow-x:hidden;}
+.scr{padding:54px 0 0;position:relative;z-index:1;}
+.bg-tiles{position:absolute;inset:0;opacity:.06;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.4'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");}
+.hdr-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;}
+.hdr-bar .title{font-size:16px;font-weight:700;color:var(--text);}
+.hdr-bar i{font-size:22px;color:var(--text);cursor:pointer;}
+.content{padding:16px;}
+.sec-title-uppercase{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;margin-left:4px;}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px;}
+.row{padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.row:last-child{border-bottom:none;}
+.row-body{flex:1;min-width:0;}
+.row-title{color:var(--text);font-size:13px;font-weight:600;}
+.row-sub{color:var(--muted);font-size:11px;margin-top:1px;}
+.btn-primary{background:var(--primary);color:#fff;border:none;padding:14px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-secondary{background:#fff;color:var(--text);border:1.5px solid var(--border);padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;}
+.btn-danger{background:#dc2626;color:#fff;border:none;padding:14px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;}
+.btn-link{background:transparent;border:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;width:100%;padding:10px;text-decoration:underline;font-family:'Outfit',sans-serif;}
+.input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;background:#fff;font-family:'Inter',sans-serif;}
+.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:40;display:flex;align-items:flex-end;padding:0 0 40px;}
+.modal-bg.center{align-items:center;padding:24px;}
+.modal{width:100%;background:#fff;border-radius:24px 24px 0 0;padding:24px 20px 28px;max-height:85%;overflow-y:auto;}
+.modal.center{border-radius:20px;max-width:380px;margin:0 auto;}
+.modal-handle{width:42px;height:4px;border-radius:99px;background:#d5d2cc;margin:0 auto 18px;}
+.modal-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);margin-bottom:6px;text-align:center;}
+.modal-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Sprint 3: <span>Moderation & Permissions</span></h1>
+  <p>MOD1-3 (Apple requires) · PR1-5 (permission primers)</p>
+</div>
+
+<!-- ============ MOD1: REPORT CONTENT ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-flag" style="font-size:24px;color:var(--primary);"></i>
+    <h2>MOD1: Report User / Message / Content</h2>
+    <span class="chip">P0 · Apple Required</span>
+  </div>
+  <div class="section-desc">Report flow accessible from any user profile, message, or group. Required by App Store Guideline 1.2.</div>
+
+  <div class="flow">
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div style="text-align:center;margin-bottom:20px;"><img src="https://i.pravatar.cc/150?img=33" style="width:60px;height:60px;border-radius:50%;box-shadow:0 0 0 3px #dc2626;"><div style="font-size:14px;font-weight:700;margin-top:8px;">Report Mike K.</div></div>
+              <div style="font-size:13px;color:var(--muted);margin-bottom:18px;text-align:center;line-height:1.5;">Help us understand what's happening. We review every report.</div>
+              <div class="sec-title-uppercase">Reason</div>
+              <div class="card">
+                <div class="row"><div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">Harassment or hate speech</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+                <div class="row"><div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">Spam or scams</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+                <div class="row"><div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">Inappropriate content</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+                <div class="row"><div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">Impersonation</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+                <div class="row"><div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">Threats or violence</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+                <div class="row"><div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">Something else</div><i class="ph ph-caret-right" style="font-size:14px;color:#ccc;"></i></div>
+              </div>
+              <div style="background:var(--primary-tint2);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:11px;color:var(--primary-dark);line-height:1.5;"><i class="ph-fill ph-info" style="margin-right:4px;"></i>Emergencies? Call 911 (US) or local emergency services.</div>
+              <button class="btn-link">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>Step 1.</b> Report reasons sheet</div>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div class="modal-title" style="text-align:left;">Tell us more</div>
+              <div class="modal-sub" style="text-align:left;margin-bottom:14px;">Harassment or hate speech · Mike K.</div>
+              <div class="sec-title-uppercase">Additional details (optional)</div>
+              <textarea class="input" placeholder="Describe what happened..." rows="5" style="resize:none;margin-bottom:14px;"></textarea>
+              <div class="sec-title-uppercase">Attach evidence (optional)</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-image" style="color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Attach screenshot</div><div class="row-sub">Help us see what you saw</div></div></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-chat-text" style="color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Include recent message</div><div class="row-sub">2 messages selected</div></div><div style="width:20px;height:20px;border-radius:6px;background:var(--primary);display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:12px;color:#fff;"></i></div></div>
+              </div>
+              <div class="sec-title-uppercase">Actions</div>
+              <div class="card">
+                <div class="row"><div style="width:20px;height:20px;border-radius:4px;border:2px solid var(--primary);background:var(--primary);display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:10px;color:#fff;"></i></div><div class="row-body"><div class="row-title">Block Mike K.</div><div class="row-sub">They won't see you or be able to message you</div></div></div>
+              </div>
+              <button class="btn-danger">Submit Report</button>
+              <button class="btn-link">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>Step 2.</b> Details + evidence + auto-block toggle</div>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:60px;height:60px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><i class="ph-fill ph-shield-check" style="font-size:30px;color:var(--primary);"></i></div>
+              <div class="modal-title">Report submitted</div>
+              <div class="modal-sub">Thanks for helping keep BamBuddies safe. We'll review and take action within 24 hours.</div>
+              <div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:left;margin-bottom:14px;font-size:12px;color:var(--text);"><div style="font-weight:700;margin-bottom:4px;">✓ Mike K. has been blocked</div><div style="color:var(--muted);line-height:1.5;">You won't see each other's profiles, games, or messages.</div></div>
+              <button class="btn-primary">Done</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>Step 3.</b> Confirmation — MOD3 response</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ MOD2: BLOCK USER ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-prohibit" style="font-size:24px;color:var(--primary);"></i>
+    <h2>MOD2: Block User (Direct)</h2>
+    <span class="chip">P0 · Apple Required</span>
+  </div>
+  <div class="section-desc">Standalone block flow (without reporting). Also shown: Blocked Users list + Unblock option.</div>
+
+  <div class="flow">
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <img src="https://i.pravatar.cc/150?img=33" style="width:64px;height:64px;border-radius:50%;box-shadow:0 0 0 3px #dc2626;margin:0 auto 14px;display:block;">
+              <div class="modal-title">Block Mike K.?</div>
+              <div class="modal-sub">When you block someone:</div>
+              <div style="text-align:left;font-size:13px;color:var(--text);background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;line-height:1.8;">
+                <div>✗ They can't see your profile or games</div>
+                <div>✗ They can't message you</div>
+                <div>✗ You won't see their profile or games</div>
+                <div>✗ You'll be removed from shared games</div>
+              </div>
+              <button class="btn-danger">Block Mike K.</button>
+              <button class="btn-link">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Direct block — shows consequences clearly</div>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Blocked Users</div><div style="width:24px;"></div></div>
+            <div class="content">
+              <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;">People you've blocked. They can't contact you or see your profile.</div>
+              <div class="card">
+                <div class="row"><img src="https://i.pravatar.cc/150?img=33" style="width:40px;height:40px;border-radius:50%;"><div class="row-body"><div class="row-title">Mike K.</div><div class="row-sub">Blocked April 18, 2026</div></div><button style="padding:6px 12px;border-radius:8px;background:#fff;color:var(--primary);border:1px solid var(--primary-tint);font-size:11px;font-weight:700;cursor:pointer;">Unblock</button></div>
+                <div class="row"><img src="https://i.pravatar.cc/150?img=52" style="width:40px;height:40px;border-radius:50%;"><div class="row-body"><div class="row-title">Tom R.</div><div class="row-sub">Blocked March 15, 2026</div></div><button style="padding:6px 12px;border-radius:8px;background:#fff;color:var(--primary);border:1px solid var(--primary-tint);font-size:11px;font-weight:700;cursor:pointer;">Unblock</button></div>
+              </div>
+              <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:12px;padding:12px 14px;font-size:12px;color:#854d0e;line-height:1.5;"><i class="ph-fill ph-info" style="margin-right:4px;"></i>Unblocking someone lets them see your profile again, but you won't be automatically added back to each other's games.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Blocked Users list — Unblock option</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ PR1-5: PERMISSION PRIMERS ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-shield-check" style="font-size:24px;color:var(--primary);"></i>
+    <h2>PR1–PR5: Permission Primers</h2>
+    <span class="chip">P0 · UX</span>
+  </div>
+  <div class="section-desc">Context-setting screens shown BEFORE iOS system permission prompts. Increases grant rate.</div>
+
+  <div class="flow">
+
+    <!-- PR1: Notifications -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div style="width:88px;height:88px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 0 8px var(--primary-tint2);"><i class="ph-fill ph-bell-ringing" style="font-size:44px;color:var(--primary);"></i></div>
+              <div class="modal-title">Stay in the loop</div>
+              <div class="modal-sub">Get notified when you're invited to games, when your games are confirmed, and when it's time to play.</div>
+              <div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-envelope-simple" style="color:var(--primary);font-size:16px;"></i></div><div style="font-size:12px;color:var(--text);"><b>Game invites</b> — never miss one</div></div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-check-circle" style="color:var(--primary);font-size:16px;"></i></div><div style="font-size:12px;color:var(--text);"><b>Game confirmed</b> — you're in!</div></div>
+                <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-clock" style="color:var(--primary);font-size:16px;"></i></div><div style="font-size:12px;color:var(--text);"><b>Reminders</b> — 24h before game</div></div>
+              </div>
+              <button class="btn-primary"><i class="ph-bold ph-bell"></i> Enable Notifications</button>
+              <button class="btn-link">Maybe later</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>PR1.</b> Notifications primer — shown before iOS prompt</div>
+    </div>
+
+    <!-- PR2: Location -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div style="width:88px;height:88px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 0 8px var(--primary-tint2);"><i class="ph-fill ph-map-pin" style="font-size:44px;color:var(--primary);"></i></div>
+              <div class="modal-title">Find games near you</div>
+              <div class="modal-sub">We'll use your location to show nearby games, calculate distance, and suggest groups in your area.</div>
+              <div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;font-size:12px;color:var(--text);line-height:1.6;">
+                <div>🔒 Your exact location is <b>never shared</b> with other users</div>
+                <div>📍 Only approximate location shows on your profile</div>
+                <div>🔕 You can turn this off anytime in Settings</div>
+              </div>
+              <button class="btn-primary"><i class="ph-bold ph-map-pin"></i> Share My Location</button>
+              <button class="btn-link">Not now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>PR2.</b> Location primer — privacy reassurance</div>
+    </div>
+
+    <!-- PR3: Contacts -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div style="width:88px;height:88px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 0 8px var(--primary-tint2);"><i class="ph-fill ph-address-book" style="font-size:44px;color:var(--primary);"></i></div>
+              <div class="modal-title">Find friends who play</div>
+              <div class="modal-sub">We'll check your contacts to see who's already on BamBuddies. Your contacts are never shared with other users.</div>
+              <div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;font-size:12px;color:var(--text);line-height:1.6;">
+                <div>✓ Matched contacts only — nothing is uploaded</div>
+                <div>✓ You choose who to invite</div>
+                <div>✓ Disable anytime in Settings</div>
+              </div>
+              <button class="btn-primary"><i class="ph-bold ph-address-book"></i> Allow Contacts Access</button>
+              <button class="btn-link">Skip for now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>PR3.</b> Contacts primer — for Invite Players</div>
+    </div>
+
+    <!-- PR4: Calendar -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div style="width:88px;height:88px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 0 8px var(--primary-tint2);"><i class="ph-fill ph-calendar-plus" style="font-size:44px;color:var(--primary);"></i></div>
+              <div class="modal-title">Add games to your calendar</div>
+              <div class="modal-sub">Automatically sync your BamBuddies games to your phone's calendar so you never forget.</div>
+              <div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;">
+                <div class="sec-title-uppercase">Calendar</div>
+                <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f5f3ee;"><div style="width:14px;height:14px;border-radius:4px;background:#4285F4;"></div><div style="font-size:13px;color:var(--text);flex:1;">Personal · alex@gmail.com</div><div style="width:18px;height:18px;border-radius:4px;background:var(--primary);display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:11px;color:#fff;"></i></div></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:8px 0;"><div style="width:14px;height:14px;border-radius:4px;background:#dc2626;"></div><div style="font-size:13px;color:var(--text);flex:1;">Work · alex@company.com</div><div style="width:18px;height:18px;border-radius:4px;border:2px solid #e8e4e0;"></div></div>
+              </div>
+              <button class="btn-primary"><i class="ph-bold ph-calendar-plus"></i> Connect Calendar</button>
+              <button class="btn-link">Not right now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>PR4.</b> Calendar primer with calendar picker</div>
+    </div>
+
+    <!-- PR5: Photos -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div style="width:88px;height:88px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 0 8px var(--primary-tint2);"><i class="ph-fill ph-image-square" style="font-size:44px;color:var(--primary);"></i></div>
+              <div class="modal-title">Add photos to your games</div>
+              <div class="modal-sub">Pick photos from your library to add to game covers, reviews, or chat messages.</div>
+              <div style="background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;font-size:12px;color:var(--text);line-height:1.6;">
+                <div>✓ Only photos you select are accessed</div>
+                <div>✓ iOS keeps your library private</div>
+                <div>✓ Selected Photos mode available</div>
+              </div>
+              <button class="btn-primary"><i class="ph-bold ph-image"></i> Allow Photo Access</button>
+              <button class="btn-link">Maybe later</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>PR5.</b> Photos primer — reassures privacy</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
