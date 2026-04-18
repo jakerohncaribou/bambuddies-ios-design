@@ -869,20 +869,20 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="color:#c93b8b;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs &middot; My Home</div>
       </div>
 
-      <!-- Game Type Selector -->
+      <!-- Game Type Selector (order: Invite Only, Group, Open) -->
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">Game Type</div>
       <div style="display:flex;gap:8px;margin-bottom:6px;">
-        <div id="gtOpen" onclick="setGameType('open')" style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#c93b8b;border:2px solid #c93b8b;cursor:pointer;">
-          <i class="ph ph-globe-hemisphere-west" style="font-size:22px;color:#fff;"></i>
-          <div style="color:#fff;font-size:12px;font-weight:700;margin-top:2px;">Open</div>
+        <div id="gtInvite" onclick="setGameType('invite')" style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#c93b8b;border:2px solid #c93b8b;cursor:pointer;">
+          <i class="ph ph-lock-simple" style="font-size:22px;color:#fff;"></i>
+          <div style="color:#fff;font-size:12px;font-weight:700;margin-top:2px;">Invite Only</div>
         </div>
         <div id="gtGroup" onclick="setGameType('group')" style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
           <i class="ph ph-users-three" style="font-size:22px;color:#888;"></i>
           <div style="color:#000;font-size:12px;font-weight:600;margin-top:2px;">Group</div>
         </div>
-        <div id="gtInvite" onclick="setGameType('invite')" style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
-          <i class="ph ph-lock-simple" style="font-size:22px;color:#888;"></i>
-          <div style="color:#000;font-size:12px;font-weight:600;margin-top:2px;">Invite Only</div>
+        <div id="gtOpen" onclick="setGameType('open')" style="flex:1;text-align:center;padding:12px 8px;border-radius:14px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
+          <i class="ph ph-globe-hemisphere-west" style="font-size:22px;color:#888;"></i>
+          <div style="color:#000;font-size:12px;font-weight:600;margin-top:2px;">Open</div>
         </div>
       </div>
       <div id="gtHint" style="color:#888;font-size:11px;margin-bottom:16px;">Players in your area can Discover your game and apply to join.</div>
@@ -910,21 +910,33 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="color:#000;font-size:15px;font-weight:800;font-family:'Outfit',sans-serif;">Invite Players</div>
           <span class="pill" style="background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 7px;">RECOMMENDED</span>
         </div>
-        <div id="invitePlayersHint" style="color:#666;font-size:11px;margin-bottom:12px;line-height:1.4;">Games with invited players fill <b>3× faster</b>. Add your crew below.</div>
+        <div id="invitePlayersHint" style="color:#666;font-size:11px;margin-bottom:12px;line-height:1.4;">Add friends who've played with you before or who you've favorited.</div>
 
         <!-- Invite method tabs -->
-        <div id="inviteTabs" style="display:flex;gap:4px;background:#f5f3ee;border-radius:10px;padding:3px;margin-bottom:12px;">
-          <button id="tabManual" onclick="setInviteTab('manual')" class="ip-tab active" style="flex:1;background:#fff;color:#c93b8b;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.05);">Manual</button>
-          <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
-          <button id="tabGroup" onclick="setInviteTab('group')" class="ip-tab" style="flex:1;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:none;">Group</button>
+        <div id="inviteTabs" style="display:flex;gap:4px;background:#f5f3ee;border-radius:10px;padding:3px;margin-bottom:12px;overflow-x:auto;">
+          <button id="tabManual" onclick="setInviteTab('manual')" class="ip-tab active" style="flex:1;min-width:72px;background:#fff;color:#c93b8b;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.05);">Manual</button>
+          <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
+          <button id="tabContacts" onclick="setInviteTab('contacts')" class="ip-tab" style="flex:1;min-width:90px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Contacts</button>
+          <button id="tabGroup" onclick="setInviteTab('group')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:none;">Group</button>
         </div>
 
-        <!-- Manual panel (default) -->
+        <!-- Manual panel (default) - 3 independent fields -->
         <div id="panelManual" class="ip-panel">
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
-            <i class="ph ph-user-plus" style="font-size:17px;color:#c93b8b;"></i>
-            <input type="text" placeholder="Name, email, or phone" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
-            <button style="background:#c93b8b;color:#fff;border:none;padding:5px 10px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Add</button>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
+              <i class="ph ph-user" style="font-size:15px;color:#c93b8b;width:16px;"></i>
+              <input type="text" placeholder="Name" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
+            </div>
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
+              <i class="ph ph-envelope" style="font-size:15px;color:#c93b8b;width:16px;"></i>
+              <input type="email" placeholder="Email" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
+            </div>
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
+              <i class="ph ph-phone" style="font-size:15px;color:#c93b8b;width:16px;"></i>
+              <span style="color:#666;font-size:13px;font-weight:500;font-family:'Outfit',sans-serif;">🇺🇸 +1</span>
+              <input type="tel" placeholder="(555) 123-4567" oninput="formatPhone(this)" maxlength="14" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
+            </div>
+            <button style="background:#c93b8b;color:#fff;border:none;padding:10px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:2px;">+ Add Player</button>
           </div>
           <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:6px;">Invited (2)</div>
           <div style="display:flex;gap:6px;flex-wrap:wrap;">
@@ -966,6 +978,34 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;">
             <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Jessica W.</div><div style="color:#888;font-size:10px;">3 games together</div></div>
+            <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
+          </div>
+        </div>
+
+        <!-- Import Contacts panel -->
+        <div id="panelContacts" class="ip-panel" style="display:none;">
+          <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+            <i class="ph-fill ph-address-book" style="font-size:18px;color:#c93b8b;"></i>
+            <div style="flex:1;font-size:11px;color:#9d2467;line-height:1.4;">Match your contacts with existing players.</div>
+          </div>
+          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <i class="ph ph-magnifying-glass" style="font-size:14px;color:#aaa;"></i>
+            <span style="color:#aaa;font-size:12px;">Search contacts...</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div style="color:#000;font-size:11px;font-weight:700;">1 selected &middot; 247 contacts</div><div style="color:#c93b8b;font-size:11px;font-weight:700;cursor:pointer;">On BamBuddies</div></div>
+          <div style="background:#fce7f3;border:1.5px solid #c93b8b;border-radius:10px;padding:7px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <img src="https://i.pravatar.cc/80?img=16" style="width:28px;height:28px;border-radius:50%;" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Maria G. <span style="background:#dcfce7;color:#15803d;font-size:8px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;letter-spacing:.3px;">ON BAMBUDDIES</span></div><div style="color:#888;font-size:10px;">+1 (415) 555-0107</div></div>
+            <div style="width:18px;height:18px;border-radius:50%;background:#c93b8b;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:10px;color:#fff;"></i></div>
+          </div>
+          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:11px;font-weight:700;">JB</div>
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Jordan B.</div><div style="color:#888;font-size:10px;">+1 (212) 555-0142 &middot; Not on BamBuddies</div></div>
+            <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
+          </div>
+          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;color:#6d28d9;font-size:11px;font-weight:700;">KM</div>
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Kim M.</div><div style="color:#888;font-size:10px;">+1 (503) 555-0118 &middot; Not on BamBuddies</div></div>
             <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
           </div>
         </div>
@@ -1124,65 +1164,48 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
         <!-- Expanded controls -->
         <div style="border-top:1px solid #e8e4e0;padding-top:12px;">
-          <!-- Frequency -->
+          <!-- Frequency (matches product: Weekly / Bi-weekly / Monthly) -->
           <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:6px;">Frequency</div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px;">
-            <div style="text-align:center;padding:7px 4px;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Daily</div>
-            <div style="text-align:center;padding:7px 4px;border-radius:9px;background:#c93b8b;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">Weekly</div>
-            <div style="text-align:center;padding:7px 4px;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Bi-weekly</div>
-            <div style="text-align:center;padding:7px 4px;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:500;cursor:pointer;">Monthly</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;">
+            <div style="text-align:center;padding:8px 4px;border-radius:9px;background:#c93b8b;color:#fff;font-size:12px;font-weight:700;cursor:pointer;">Weekly</div>
+            <div style="text-align:center;padding:8px 4px;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;cursor:pointer;">Bi-weekly</div>
+            <div style="text-align:center;padding:8px 4px;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:12px;font-weight:500;cursor:pointer;">Monthly</div>
           </div>
 
-          <!-- Day -->
-          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:6px;">On which day(s)</div>
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px;">
-            <div style="text-align:center;padding:7px 0;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:600;cursor:pointer;">S</div>
-            <div style="text-align:center;padding:7px 0;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:600;cursor:pointer;">M</div>
-            <div style="text-align:center;padding:7px 0;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:600;cursor:pointer;">T</div>
-            <div style="text-align:center;padding:7px 0;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:600;cursor:pointer;">W</div>
-            <div style="text-align:center;padding:7px 0;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:600;cursor:pointer;">T</div>
-            <div style="text-align:center;padding:7px 0;border-radius:9px;background:#fff;border:1px solid #e8e4e0;color:#000;font-size:11px;font-weight:600;cursor:pointer;">F</div>
-            <div style="text-align:center;padding:7px 0;border-radius:9px;background:#c93b8b;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">S</div>
-          </div>
-
-          <!-- Ends -->
-          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:6px;">Ends</div>
-          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
-              <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #d1d5db;flex-shrink:0;"></div>
-              <div style="color:#000;font-size:12px;font-weight:500;">Never</div>
+          <!-- Generated games preview (removable) -->
+          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:6px;">Upcoming games in this series</div>
+          <div style="color:#888;font-size:11px;margin-bottom:10px;">Tap × to remove a game from the series</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;">
+              <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#9d2467;flex-shrink:0;"><div style="font-size:8px;font-weight:700;letter-spacing:.5px;">APR</div><div style="font-size:13px;font-weight:800;line-height:1;">19</div></div>
+              <div style="flex:1;"><div style="color:#444;font-size:12px;font-weight:600;">Saturday Mahjong</div><div style="color:#888;font-size:10px;">Sat 2:00 PM &middot; This week</div></div>
+              <div style="color:#9ca3af;font-size:10px;font-weight:600;">Base</div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:#fce7f3;border:1.5px solid #c93b8b;cursor:pointer;">
-              <div style="width:16px;height:16px;border-radius:50%;background:#c93b8b;border:3px solid #fff;box-shadow:0 0 0 1.5px #c93b8b;flex-shrink:0;"></div>
-              <div style="color:#000;font-size:12px;font-weight:700;flex:1;">After</div>
-              <div style="display:flex;align-items:center;gap:6px;">
-                <div style="width:22px;height:22px;border-radius:6px;background:#fff;border:1px solid #e8e4e0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;">−</div>
-                <div style="color:#000;font-size:13px;font-weight:800;min-width:14px;text-align:center;">8</div>
-                <div style="width:22px;height:22px;border-radius:6px;background:#fff;border:1px solid #e8e4e0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;">+</div>
-                <div style="color:#666;font-size:11px;font-weight:600;">games</div>
-              </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;">
+              <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#6b7280;flex-shrink:0;"><div style="font-size:8px;font-weight:700;letter-spacing:.5px;">APR</div><div style="font-size:13px;font-weight:800;line-height:1;">26</div></div>
+              <div style="flex:1;"><div style="color:#444;font-size:12px;font-weight:600;">Saturday Mahjong</div><div style="color:#888;font-size:10px;">Sat 2:00 PM</div></div>
+              <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'Outfit',sans-serif;"><i class="ph-bold ph-x" style="font-size:11px;"></i></button>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;background:#fff;border:1px solid #e8e4e0;cursor:pointer;">
-              <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid #d1d5db;flex-shrink:0;"></div>
-              <div style="color:#000;font-size:12px;font-weight:500;flex:1;">On date</div>
-              <div style="color:#aaa;font-size:11px;">Select date</div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;">
+              <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#6b7280;flex-shrink:0;"><div style="font-size:8px;font-weight:700;letter-spacing:.5px;">MAY</div><div style="font-size:13px;font-weight:800;line-height:1;">03</div></div>
+              <div style="flex:1;"><div style="color:#444;font-size:12px;font-weight:600;">Saturday Mahjong</div><div style="color:#888;font-size:10px;">Sat 2:00 PM</div></div>
+              <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:11px;"></i></button>
             </div>
-          </div>
-
-          <!-- Preview -->
-          <div style="background:linear-gradient(135deg,#f9fafb,#f3f4f6);border:1px dashed #d1d5db;border-radius:10px;padding:10px;">
-            <div style="color:#6b7280;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Upcoming 8 games &middot; every Saturday</div>
-            <div style="display:flex;flex-wrap:wrap;gap:4px;">
-              <span style="background:#fce7f3;color:#c93b8b;font-size:10px;font-weight:700;padding:3px 7px;border-radius:99px;">Apr 19</span>
-              <span style="background:#f5f3ee;color:#666;font-size:10px;font-weight:600;padding:3px 7px;border-radius:99px;">Apr 26</span>
-              <span style="background:#f5f3ee;color:#666;font-size:10px;font-weight:600;padding:3px 7px;border-radius:99px;">May 3</span>
-              <span style="background:#f5f3ee;color:#666;font-size:10px;font-weight:600;padding:3px 7px;border-radius:99px;">May 10</span>
-              <span style="background:#f5f3ee;color:#666;font-size:10px;font-weight:600;padding:3px 7px;border-radius:99px;">May 17</span>
-              <span style="background:#f5f3ee;color:#666;font-size:10px;font-weight:600;padding:3px 7px;border-radius:99px;">May 24</span>
-              <span style="background:#f5f3ee;color:#666;font-size:10px;font-weight:600;padding:3px 7px;border-radius:99px;">May 31</span>
-              <span style="background:#f5f3ee;color:#666;font-size:10px;font-weight:600;padding:3px 7px;border-radius:99px;">Jun 7</span>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;">
+              <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#6b7280;flex-shrink:0;"><div style="font-size:8px;font-weight:700;letter-spacing:.5px;">MAY</div><div style="font-size:13px;font-weight:800;line-height:1;">10</div></div>
+              <div style="flex:1;"><div style="color:#444;font-size:12px;font-weight:600;">Saturday Mahjong</div><div style="color:#888;font-size:10px;">Sat 2:00 PM</div></div>
+              <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:11px;"></i></button>
             </div>
-            <div style="color:#888;font-size:10px;margin-top:8px;">Last game: <span style="font-weight:700;color:#1a1a1a;">June 7</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;">
+              <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#6b7280;flex-shrink:0;"><div style="font-size:8px;font-weight:700;letter-spacing:.5px;">MAY</div><div style="font-size:13px;font-weight:800;line-height:1;">17</div></div>
+              <div style="flex:1;"><div style="color:#444;font-size:12px;font-weight:600;">Saturday Mahjong</div><div style="color:#888;font-size:10px;">Sat 2:00 PM</div></div>
+              <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:11px;"></i></button>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;background:#f5f3ee;border:1px solid #e8e4e0;">
+              <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#6b7280;flex-shrink:0;"><div style="font-size:8px;font-weight:700;letter-spacing:.5px;">MAY</div><div style="font-size:13px;font-weight:800;line-height:1;">24</div></div>
+              <div style="flex:1;"><div style="color:#444;font-size:12px;font-weight:600;">Saturday Mahjong</div><div style="color:#888;font-size:10px;">Sat 2:00 PM</div></div>
+              <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:11px;"></i></button>
+            </div>
           </div>
         </div>
       </div>
@@ -1996,7 +2019,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&h=200&fit=crop&crop=face" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,.1);" alt="Jessica W.">
         <div style="font-family:'DM Serif Display',serif;font-size:24px;color:#000;margin-top:10px;line-height:1;">Jessica W.</div>
         <div style="color:#888;font-size:13px;margin-top:4px;">Member since Jan 2024 &middot; Portland area</div>
-        <div style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;background:#d1fae5;color:#065f46;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:700;"><i class="ph-fill ph-check-circle" style="font-size:12px;"></i> Verified player</div>
       </div>
 
       <!-- Privacy banner -->
@@ -2014,7 +2036,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           </div>
           <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px;text-align:center;">
             <div style="color:#000;font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;line-height:1;">96%</div>
-            <div style="color:#888;font-size:10px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.5px;">Attended</div>
+            <div style="color:#888;font-size:10px;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.5px;">Rating</div>
           </div>
           <div style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:12px;text-align:center;">
             <div style="color:#c93b8b;font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;line-height:1;">Adv</div>
@@ -2052,15 +2074,15 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="color:#000;font-size:14px;font-weight:700;margin-bottom:10px;">Recent games</div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
             <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check" style="font-size:14px;color:#c93b8b;"></i></div>
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Westside Wednesday</div><div style="color:#888;font-size:11px;">Apr 10 &middot; Attended</div></div>
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Westside Wednesday</div><div style="color:#888;font-size:11px;">Apr 10 &middot; Completed</div></div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
             <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check" style="font-size:14px;color:#c93b8b;"></i></div>
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Pearl District Play</div><div style="color:#888;font-size:11px;">Apr 3 &middot; Attended</div></div>
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Pearl District Play</div><div style="color:#888;font-size:11px;">Apr 3 &middot; Completed</div></div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check" style="font-size:14px;color:#c93b8b;"></i></div>
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Sunday Regulars</div><div style="color:#888;font-size:11px;">Mar 30 &middot; Attended</div></div>
+            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:600;">Sunday Regulars</div><div style="color:#888;font-size:11px;">Mar 30 &middot; Completed</div></div>
           </div>
         </div>
 
@@ -2432,7 +2454,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="display:flex;gap:16px;justify-content:center;margin-top:12px;">
           <div style="text-align:center;"><div style="color:#000;font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;">24</div><div style="color:#888;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Games</div></div>
           <div style="text-align:center;"><div style="color:#000;font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;">3</div><div style="color:#888;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Groups</div></div>
-          <div style="text-align:center;"><div style="color:#000;font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;">97%</div><div style="color:#888;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Attended</div></div>
+          <div style="text-align:center;"><div style="color:#000;font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;">4.9</div><div style="color:#888;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Rating</div></div>
         </div>
       </div>
 
@@ -2952,8 +2974,16 @@ function setGameType(type){
   }
 }
 
+function formatPhone(el){
+  var v = el.value.replace(/\D/g,'');
+  if(v.length>10) v = v.substring(0,10);
+  if(v.length>=7) el.value = '('+v.substring(0,3)+') '+v.substring(3,6)+'-'+v.substring(6);
+  else if(v.length>=4) el.value = '('+v.substring(0,3)+') '+v.substring(3);
+  else if(v.length>0) el.value = '('+v;
+}
+
 function setInviteTab(tab){
-  ['Manual','Favorites','Group'].forEach(name=>{
+  ['Manual','Favorites','Contacts','Group'].forEach(name=>{
     const btn = document.getElementById('tab'+name);
     const panel = document.getElementById('panel'+name);
     if(btn){
