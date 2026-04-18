@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Sprint 5: Subscription & Billing</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{--primary:#c93b8b;--primary-dark:#9d2467;--primary-light:#ec4fa3;--primary-tint:#fce7f3;--primary-tint2:#fdf2f8;--cream:#fdf8f0;--text:#1a1a1a;--muted:#6b7280;--border:#e8e4e0;}
+body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;color:#fff;padding:50px 20px;}
+.hdr{text-align:center;margin-bottom:30px;}
+.hdr h1{font-family:'DM Serif Display',serif;font-size:40px;letter-spacing:-.8px;margin-bottom:4px;}
+.hdr h1 span{color:var(--primary);}
+.hdr p{color:#aaa;font-size:14px;}
+.section{margin-bottom:60px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid #222;max-width:1600px;margin:0 auto 20px;}
+.section-hdr h2{font-family:'DM Serif Display',serif;font-size:28px;}
+.section-hdr .chip{background:rgba(201,59,139,.15);color:var(--primary);font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;border:1px solid rgba(201,59,139,.3);}
+.section-desc{color:#999;font-size:14px;margin-bottom:20px;max-width:1600px;margin:0 auto 20px;}
+.flow{display:flex;gap:24px;overflow-x:auto;padding:20px 0 30px;}
+.frame-wrap{display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+.frame-label{color:#aaa;font-size:12px;font-weight:600;text-align:center;max-width:393px;line-height:1.3;}
+.frame-label b{color:#fff;}
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:0 0 20px 20px;z-index:100;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:14px 28px 0;display:flex;justify-content:space-between;align-items:center;z-index:50;font-size:15px;font-weight:600;color:var(--text);}
+.inner{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow-y:auto;overflow-x:hidden;}
+.scr{padding:54px 0 0;position:relative;z-index:1;}
+.bg-tiles{position:absolute;inset:0;opacity:.06;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.4'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");}
+.hdr-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;}
+.hdr-bar .title{font-size:16px;font-weight:700;color:var(--text);}
+.hdr-bar i{font-size:22px;color:var(--text);cursor:pointer;}
+.content{padding:0 16px 40px;}
+.sec-title-uppercase{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;margin-left:4px;}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px;}
+.row{padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;}
+.row:last-child{border-bottom:none;}
+.row-body{flex:1;min-width:0;}
+.row-title{color:var(--text);font-size:13px;font-weight:600;}
+.row-sub{color:var(--muted);font-size:11px;margin-top:1px;}
+.btn-primary{background:var(--primary);color:#fff;border:none;padding:14px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-secondary{background:#fff;color:var(--text);border:1.5px solid var(--border);padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;}
+.btn-danger{background:#fff;color:#dc2626;border:1.5px solid #fecaca;padding:14px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;}
+.btn-link{background:transparent;border:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;width:100%;padding:10px;text-decoration:underline;font-family:'Outfit',sans-serif;}
+.input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;background:#fff;font-family:'Inter',sans-serif;}
+.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:40;display:flex;align-items:center;padding:24px;}
+.modal{width:100%;background:#fff;border-radius:20px;padding:24px 20px 28px;max-width:380px;margin:0 auto;}
+.modal-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);text-align:center;margin-bottom:6px;}
+.modal-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.5;}
+
+/* Tier card */
+.tier-card{background:#fff;border:2px solid var(--border);border-radius:20px;padding:22px;margin-bottom:12px;position:relative;}
+.tier-card.active{border-color:var(--primary);background:linear-gradient(180deg,var(--primary-tint2),#fff);}
+.tier-badge{position:absolute;top:-10px;right:16px;background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;}
+.tier-name{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;}
+.tier-price{font-family:'DM Serif Display',serif;font-size:40px;line-height:1;color:var(--text);margin-bottom:4px;}
+.tier-price sub{font-size:13px;font-weight:500;color:var(--muted);font-family:'Outfit';}
+.tier-desc{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.tier-feat{font-size:13px;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.tier-feat i{color:#15803d;font-size:15px;}
+.tier-feat.no{color:var(--muted);}
+.tier-feat.no i{color:#ccc;}
+
+/* Apple IAP sheet */
+.apple-sheet{background:#fff;border-radius:16px 16px 0 0;padding:18px 16px 24px;box-shadow:0 -10px 40px rgba(0,0,0,.2);}
+.apple-handle{width:36px;height:5px;border-radius:99px;background:#d5d2cc;margin:0 auto 14px;}
+.apple-chip{background:#000;color:#fff;padding:4px 12px;border-radius:8px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:5px;margin-bottom:10px;}
+.apple-chip i{font-size:14px;}
+.apple-confirm-btn{background:linear-gradient(180deg,#007AFF,#0051CC);color:#fff;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;border:none;width:100%;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Sprint 5: <span>Subscription & Billing</span></h1>
+  <p>B1-B7: Tier picker, checkout (iOS IAP + web Stripe), management, cancel flow. Monetization go-live dep.</p>
+</div>
+
+<!-- ============ B1: SUBSCRIPTION TIER PICKER ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-crown" style="font-size:24px;color:var(--primary);"></i>
+    <h2>B1: Subscription Tier Picker</h2>
+    <span class="chip">P0 · Go-Live Dep</span>
+  </div>
+  <div class="section-desc">Show Free vs Ad-Free tier. Main conversion surface — triggered by ad close button or Settings → Upgrade.</div>
+
+  <div class="flow">
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-x"></i><div class="title">Upgrade</div><div style="width:24px;"></div></div>
+            <div class="content">
+              <div style="text-align:center;padding:20px 0 30px;">
+                <div style="width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 10px 30px rgba(201,59,139,.3);"><i class="ph-fill ph-sparkle" style="font-size:36px;color:#fff;"></i></div>
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--text);line-height:1.1;">Go ad-free<br><span style="font-family:'Caveat',cursive;color:var(--primary);font-size:32px;">Sarah</span></div>
+                <div style="font-size:13px;color:var(--muted);margin-top:6px;">Support BamBuddies + enjoy a cleaner experience.</div>
+              </div>
+
+              <div class="tier-card">
+                <div class="tier-name">Current</div>
+                <div class="tier-price">$0<sub>/mo</sub></div>
+                <div class="tier-desc">Free forever — small ads in app</div>
+                <div class="tier-feat"><i class="ph-fill ph-check-circle"></i>Unlimited games & groups</div>
+                <div class="tier-feat"><i class="ph-fill ph-check-circle"></i>Chat & discovery</div>
+                <div class="tier-feat no"><i class="ph-fill ph-x-circle"></i>Small ads between sections</div>
+              </div>
+
+              <div class="tier-card active">
+                <div class="tier-badge">Recommended</div>
+                <div class="tier-name" style="color:var(--primary);">Ad-Free</div>
+                <div class="tier-price">$4.99<sub>/month</sub></div>
+                <div class="tier-desc">Everything in Free + no ads anywhere</div>
+                <div class="tier-feat"><i class="ph-fill ph-check-circle"></i>Everything in Free</div>
+                <div class="tier-feat"><i class="ph-fill ph-check-circle"></i><b style="color:var(--text);">No ads anywhere</b></div>
+                <div class="tier-feat"><i class="ph-fill ph-check-circle"></i>Priority support</div>
+                <div class="tier-feat"><i class="ph-fill ph-check-circle"></i>Early access to new features</div>
+                <div class="tier-feat"><i class="ph-fill ph-check-circle"></i>Support indie development</div>
+              </div>
+
+              <div style="display:flex;gap:8px;background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:10px 14px;font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.5;"><i class="ph-fill ph-shield-check" style="color:var(--primary);font-size:14px;"></i>Cancel anytime · 30-day money-back</div>
+
+              <button class="btn-primary"><i class="ph-bold ph-sparkle"></i> Continue — $4.99/month</button>
+              <button class="btn-link">See yearly option (save 20%)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>B1.</b> Tier picker with Current vs Ad-Free</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ B2: CHECKOUT (iOS IAP vs Web Stripe) ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-credit-card" style="font-size:24px;color:var(--primary);"></i>
+    <h2>B2: Checkout — iOS (Apple IAP) vs Web (Stripe)</h2>
+    <span class="chip">P0 · Platform Different</span>
+  </div>
+  <div class="section-desc">⚠️ Apple requires In-App Purchase for digital subscriptions on iOS. Stripe only works on web.</div>
+
+  <div class="flow">
+
+    <!-- iOS: Apple IAP sheet -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:200px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg" style="align-items:flex-end;padding:0;">
+            <div class="apple-sheet" style="width:100%;max-width:none;">
+              <div class="apple-handle"></div>
+              <div class="apple-chip"><i class="ph-fill ph-apple-logo"></i>App Store</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                <div style="width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:26px;">B</div>
+                <div style="flex:1;">
+                  <div style="font-size:15px;font-weight:700;color:var(--text);">BamBuddies Ad-Free</div>
+                  <div style="font-size:12px;color:var(--muted);">Monthly subscription</div>
+                  <div style="font-size:11px;color:var(--muted);margin-top:2px;">1 Month · Auto-renews</div>
+                </div>
+                <div style="text-align:right;"><div style="font-size:17px;font-weight:700;color:var(--text);">$4.99</div><div style="font-size:11px;color:var(--muted);">per month</div></div>
+              </div>
+
+              <div style="background:#f5f5f5;border-radius:12px;padding:12px 14px;margin-bottom:12px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--text);"><span><i class="ph-fill ph-user" style="color:#8e8e93;margin-right:6px;"></i>Account</span><span style="color:var(--muted);">alex@icloud.com</span></div>
+              </div>
+
+              <div style="font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:16px;">Your subscription auto-renews monthly unless cancelled at least 24 hours before the end of the current period. Manage in App Store settings.</div>
+
+              <div style="background:linear-gradient(180deg,#1a1a1a,#000);color:#fff;padding:14px;border-radius:12px;margin-bottom:10px;text-align:center;"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-bottom:2px;">Double-click to Confirm with</div><div style="font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-face-mask"></i>Face ID</div></div>
+              <button style="background:transparent;border:none;color:#007AFF;font-size:15px;font-weight:500;width:100%;padding:10px;cursor:pointer;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>iOS.</b> Apple IAP sheet · Face ID confirm</div>
+    </div>
+
+    <!-- iOS: Processing -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:700px;padding:0 40px;text-align:center;">
+              <div style="width:72px;height:72px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin-bottom:20px;animation:spin 1.5s linear infinite;"><i class="ph-bold ph-circle-notch" style="font-size:36px;color:var(--primary);"></i></div>
+              <div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--text);">Activating Ad-Free…</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:8px;">Connecting to App Store</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Processing / activating</div>
+    </div>
+
+    <!-- Success -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div style="text-align:center;padding:80px 32px 20px;">
+              <div style="width:100px;height:100px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><i class="ph-fill ph-check-circle" style="font-size:60px;color:#15803d;"></i></div>
+              <div style="font-family:'DM Serif Display',serif;font-size:30px;color:var(--text);line-height:1.1;">Welcome to<br><span style="font-family:'Caveat',cursive;color:var(--primary);font-size:34px;">Ad-Free</span></div>
+              <div style="font-size:14px;color:var(--muted);margin-top:10px;line-height:1.5;margin-bottom:24px;">Ads are now gone. Enjoy the clean experience.<br>Your subscription renews May 18, 2026.</div>
+
+              <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;text-align:left;margin-bottom:20px;">
+                <div class="sec-title-uppercase">Receipt</div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text);margin-bottom:6px;"><span>BamBuddies Ad-Free</span><span style="font-weight:700;">$4.99</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);"><span>Billed to Apple ID</span><span>alex@icloud.com</span></div>
+              </div>
+
+              <button class="btn-primary">Back to Dashboard</button>
+              <button class="btn-link">Manage subscription</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>B7.</b> Ad removal confirmation / success</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ B3-B5: BILLING MANAGEMENT ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-receipt" style="font-size:24px;color:var(--primary);"></i>
+    <h2>B3-B5: Subscription Management</h2>
+    <span class="chip">P1 · Settings</span>
+  </div>
+  <div class="section-desc">Settings → Subscription. View status, manage, see billing history, cancel.</div>
+
+  <div class="flow">
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Subscription</div><div style="width:24px;"></div></div>
+            <div class="content">
+
+              <div style="background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:18px;padding:22px;margin-bottom:20px;color:#fff;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+                  <div><div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.85;">Current Plan</div><div style="font-family:'DM Serif Display',serif;font-size:28px;margin-top:2px;">Ad-Free</div></div>
+                  <div style="background:rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px;">ACTIVE</div>
+                </div>
+                <div style="font-size:13px;opacity:.9;margin-bottom:4px;">$4.99 · renews May 18, 2026</div>
+                <div style="font-size:12px;opacity:.75;"><i class="ph-fill ph-apple-logo"></i> Billed via Apple ID</div>
+              </div>
+
+              <div class="sec-title-uppercase">Actions</div>
+              <div class="card">
+                <div class="row" style="cursor:pointer;"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-apple-logo" style="color:var(--primary);font-size:18px;"></i></div><div class="row-body"><div class="row-title">Manage in App Store</div><div class="row-sub">Change plan or update payment</div></div><i class="ph ph-arrow-square-out" style="color:#ccc;font-size:16px;"></i></div>
+                <div class="row" style="cursor:pointer;"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-receipt" style="color:var(--primary);font-size:18px;"></i></div><div class="row-body"><div class="row-title">Billing History</div><div class="row-sub">View past payments</div></div><i class="ph ph-caret-right" style="color:#ccc;font-size:14px;"></i></div>
+              </div>
+
+              <div class="sec-title-uppercase">Benefits</div>
+              <div class="card">
+                <div class="row" style="cursor:default;"><i class="ph-fill ph-sparkle" style="font-size:18px;color:var(--primary);width:20px;"></i><div class="row-body"><div class="row-title">Ad-free experience</div><div class="row-sub">Active</div></div></div>
+                <div class="row" style="cursor:default;"><i class="ph-fill ph-lightning" style="font-size:18px;color:var(--primary);width:20px;"></i><div class="row-body"><div class="row-title">Priority support</div><div class="row-sub">Average reply: 4 hours</div></div></div>
+                <div class="row" style="cursor:default;"><i class="ph-fill ph-rocket" style="font-size:18px;color:var(--primary);width:20px;"></i><div class="row-body"><div class="row-title">Early access</div><div class="row-sub">New features 2 weeks early</div></div></div>
+              </div>
+
+              <button class="btn-danger" style="margin-top:20px;">Cancel Subscription</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>B3.</b> Subscription settings with status card</div>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Billing History</div><i class="ph ph-download-simple"></i></div>
+            <div class="content">
+              <div class="sec-title-uppercase">April 2026</div>
+              <div class="card">
+                <div class="row" style="cursor:pointer;"><div style="width:36px;height:36px;border-radius:10px;background:#dcfce7;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check-circle" style="color:#15803d;font-size:18px;"></i></div><div class="row-body"><div class="row-title">Ad-Free Monthly</div><div class="row-sub">Apr 18, 2026 · Succeeded</div></div><div style="text-align:right;font-size:13px;font-weight:700;color:var(--text);">$4.99<div style="font-size:10px;color:var(--muted);font-weight:500;">View →</div></div></div>
+              </div>
+
+              <div class="sec-title-uppercase">March 2026</div>
+              <div class="card">
+                <div class="row" style="cursor:pointer;"><div style="width:36px;height:36px;border-radius:10px;background:#dcfce7;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check-circle" style="color:#15803d;font-size:18px;"></i></div><div class="row-body"><div class="row-title">Ad-Free Monthly</div><div class="row-sub">Mar 18, 2026 · Succeeded</div></div><div style="text-align:right;font-size:13px;font-weight:700;color:var(--text);">$4.99<div style="font-size:10px;color:var(--muted);font-weight:500;">View →</div></div></div>
+              </div>
+
+              <div class="sec-title-uppercase">February 2026</div>
+              <div class="card">
+                <div class="row" style="cursor:pointer;"><div style="width:36px;height:36px;border-radius:10px;background:#dcfce7;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-check-circle" style="color:#15803d;font-size:18px;"></i></div><div class="row-body"><div class="row-title">Ad-Free Monthly</div><div class="row-sub">Feb 18, 2026 · Succeeded</div></div><div style="text-align:right;font-size:13px;font-weight:700;color:var(--text);">$4.99</div></div>
+              </div>
+
+              <div class="card" style="background:#fef3c7;border-color:#fde68a;">
+                <div class="row" style="cursor:pointer;border-bottom:none;"><div style="width:36px;height:36px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-warning-circle" style="color:#b45309;font-size:18px;"></i></div><div class="row-body"><div class="row-title">Payment failed</div><div class="row-sub">Jan 18, 2026 · Retried successfully</div></div><div style="text-align:right;font-size:13px;font-weight:700;color:var(--text);">$4.99</div></div>
+              </div>
+
+              <button class="btn-secondary" style="margin-top:14px;"><i class="ph-bold ph-download-simple" style="margin-right:4px;"></i> Export all as CSV</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>B4.</b> Billing history — per-transaction cards + export</div>
+    </div>
+
+    <!-- Cancel flow -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Cancel Subscription</div><div style="width:24px;"></div></div>
+            <div class="content">
+              <div style="text-align:center;padding:20px 0;"><div style="width:72px;height:72px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><i class="ph-fill ph-hand-waving" style="font-size:36px;color:#b45309;"></i></div><div style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--text);">Sorry to see you go!</div><div style="font-size:13px;color:var(--muted);margin-top:4px;">Before you cancel…</div></div>
+
+              <div class="card" style="background:var(--primary-tint2);border-color:#fbcfe8;">
+                <div style="padding:16px;"><div style="font-size:12px;font-weight:700;color:var(--primary-dark);letter-spacing:.5px;margin-bottom:8px;">YOU'LL LOSE</div><div style="font-size:13px;color:var(--text);line-height:1.8;">✗ Ad-free experience (ads return)<br>✗ Priority support<br>✗ Early access to new features</div></div>
+              </div>
+
+              <div class="sec-title-uppercase">Why are you cancelling?</div>
+              <div class="card">
+                <div class="row" style="cursor:pointer;"><div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--border);"></div><div class="row-body"><div class="row-title">Too expensive</div></div></div>
+                <div class="row" style="cursor:pointer;"><div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--border);"></div><div class="row-body"><div class="row-title">Not using it enough</div></div></div>
+                <div class="row" style="cursor:pointer;"><div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--primary);background:var(--primary);display:flex;align-items:center;justify-content:center;"><div style="width:8px;height:8px;border-radius:50%;background:#fff;"></div></div><div class="row-body"><div class="row-title">Ads don't bother me</div></div></div>
+                <div class="row" style="cursor:pointer;"><div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--border);"></div><div class="row-body"><div class="row-title">Technical issues</div></div></div>
+                <div class="row" style="cursor:pointer;"><div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--border);"></div><div class="row-body"><div class="row-title">Other</div></div></div>
+              </div>
+
+              <div style="font-size:11px;color:var(--muted);text-align:center;margin:12px 0 14px;line-height:1.5;">You'll keep Ad-Free until <b>May 18, 2026</b> — then go back to Free.</div>
+
+              <button class="btn-primary" style="margin-bottom:10px;"><i class="ph-fill ph-sparkle"></i> Keep Ad-Free</button>
+              <button class="btn-danger">Continue to Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>B4.</b> Cancel flow with reason survey + save offer</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
