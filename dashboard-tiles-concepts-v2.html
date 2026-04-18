@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Mahjong Tile Concepts V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{--primary:#c93b8b;--primary-dark:#9d2467;--primary-light:#ec4fa3;--primary-tint:#fce7f3;--primary-tint2:#fdf2f8;--cream:#fdf8f0;--text:#1a1a1a;--text-mute:#6b7280;}
+body{background:#0a0a0a;font-family:'Outfit',sans-serif;padding:40px 20px;color:#fff;}
+.hdr{text-align:center;margin-bottom:30px;}
+.hdr h1{font-family:'DM Serif Display',serif;font-size:42px;letter-spacing:-.8px;margin-bottom:4px;}
+.hdr h1 span{color:var(--primary);}
+.hdr p{color:#888;font-size:14px;max-width:700px;margin:6px auto 0;line-height:1.5;}
+.row{display:flex;gap:28px;overflow-x:auto;padding:20px 0 40px;scroll-snap-type:x mandatory;}
+.row::-webkit-scrollbar{height:8px;}
+.row::-webkit-scrollbar-thumb{background:#333;border-radius:4px;}
+.wrap{display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0;scroll-snap-align:start;}
+.tag{background:rgba(201,59,139,.12);color:var(--primary);font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;letter-spacing:.8px;text-transform:uppercase;border:1px solid rgba(201,59,139,.3);}
+.tag-title{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.3px;color:#fff;}
+.tag-desc{color:#999;font-size:12px;max-width:393px;text-align:center;line-height:1.4;}
+
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:20px;z-index:100;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:50;font-size:15px;font-weight:600;color:var(--text);}
+.inner{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow:hidden;}
+.bg-tiles{position:absolute;inset:0;opacity:.08;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.3'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;z-index:1;padding-bottom:100px;}
+
+/* Shared top/greeting */
+.topbar{display:flex;align-items:center;padding:14px 20px 10px;gap:12px;}
+.topbar-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 3px var(--primary),0 2px 8px rgba(0,0,0,.08);}
+.topbar-avatar img{width:100%;height:100%;object-fit:cover;}
+.topbar-name{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:var(--primary);line-height:1;flex:1;margin-top:4px;}
+.topbar-icons{display:flex;gap:8px;}
+.topbar-ic{width:38px;height:38px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;}
+.topbar-ic i{font-size:17px;color:var(--primary-dark);}
+.greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.15;}
+.sponsor-placeholder{margin:0 16px 16px;height:88px;background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #fbcfe8;border-radius:20px;display:flex;align-items:center;gap:10px;padding:14px;opacity:.8;}
+.sponsor-placeholder::before{content:'';width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#8b4513,#a0522d);flex-shrink:0;}
+.sponsor-placeholder::after{content:'SPONSORED';display:flex;flex-direction:column;font-size:10px;font-weight:700;color:var(--primary-dark);letter-spacing:1px;}
+.nxt-placeholder{margin:0 16px 16px;height:120px;border-radius:22px;overflow:hidden;display:flex;border:1px solid #fbcfe8;}
+.nxt-placeholder-l{width:140px;background:linear-gradient(145deg,#fce7f3,#fbcfe8,#f9a8d4);display:flex;flex-direction:column;justify-content:center;align-items:center;color:var(--primary-dark);}
+.nxt-placeholder-l::before{content:'APR';font-size:11px;font-weight:700;letter-spacing:1.5px;}
+.nxt-placeholder-l::after{content:'19';font-family:'DM Serif Display',serif;font-size:48px;line-height:1;}
+.nxt-placeholder-r{flex:1;background:#fff;display:flex;align-items:center;padding:14px;font-size:13px;color:var(--text-mute);font-style:italic;font-family:'DM Serif Display',serif;}
+.nxt-placeholder-r::before{content:'Your Next Game · 2:00 PM';}
+
+/* =============================================================
+   AUTHENTIC MAHJONG TILE BASE
+   Real tile proportions (taller than wide), ivory face, black outline, bevel
+   ============================================================= */
+
+/* === CONCEPT A: Authentic Ivory with Modern Icon === */
+.cA-actions{display:flex;gap:12px;padding:0 16px 24px;justify-content:center;}
+.cA-act{flex:1;max-width:84px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;position:relative;}
+.cA-tile{width:100%;aspect-ratio:0.72;background:linear-gradient(175deg,#fffef5 0%,#fdf5e0 45%,#f5e9c8 100%);border-radius:10px 10px 8px 8px;position:relative;box-shadow:inset 0 -6px 0 rgba(0,0,0,.08),inset 0 2px 0 rgba(255,255,255,.9),0 6px 0 #d4c29a,0 10px 16px rgba(0,0,0,.18);border:1.5px solid #2a2a2a;display:flex;align-items:center;justify-content:center;padding:6px;}
+.cA-tile::before{content:'';position:absolute;inset:4px;border-radius:6px;border:1px solid rgba(0,0,0,.06);pointer-events:none;}
+.cA-tile-ic{width:44px;height:44px;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;}
+.cA-tile-ic i{font-size:32px;color:var(--primary);}
+.cA-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text);line-height:1.15;text-align:center;letter-spacing:-.1px;}
+.cA-badge{position:absolute;top:-4px;right:0;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--cream);z-index:3;}
+
+/* === CONCEPT B: Wind & Dragon Tiles === */
+.cB-actions{display:flex;gap:12px;padding:0 16px 24px;justify-content:center;}
+.cB-act{flex:1;max-width:84px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;position:relative;}
+.cB-tile{width:100%;aspect-ratio:0.72;background:linear-gradient(175deg,#fffef5 0%,#fdf5e0 45%,#f5e9c8 100%);border-radius:10px 10px 8px 8px;position:relative;box-shadow:inset 0 -6px 0 rgba(0,0,0,.08),inset 0 2px 0 rgba(255,255,255,.9),0 6px 0 #d4c29a,0 10px 16px rgba(0,0,0,.18);border:1.5px solid #2a2a2a;display:flex;align-items:center;justify-content:center;}
+.cB-tile::before{content:'';position:absolute;inset:4px;border-radius:6px;border:1px solid rgba(0,0,0,.06);}
+.cB-char{font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:44px;font-weight:600;line-height:1;position:relative;z-index:1;}
+.cB-act:nth-child(1) .cB-char{color:#0b7a3e;}
+.cB-act:nth-child(2) .cB-char{color:#0f4c81;}
+.cB-act:nth-child(3) .cB-char{color:#d4a017;}
+.cB-act:nth-child(4) .cB-char{color:#c1272d;}
+.cB-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text);line-height:1.15;text-align:center;}
+.cB-badge{position:absolute;top:-4px;right:0;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--cream);z-index:3;}
+
+/* === CONCEPT C: Traditional Suit Tiles (Bam / Dot / Crak / Dragon) === */
+.cC-actions{display:flex;gap:12px;padding:0 16px 24px;justify-content:center;}
+.cC-act{flex:1;max-width:84px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;position:relative;}
+.cC-tile{width:100%;aspect-ratio:0.72;background:linear-gradient(175deg,#fffef5 0%,#fdf5e0 45%,#f5e9c8 100%);border-radius:10px 10px 8px 8px;position:relative;box-shadow:inset 0 -6px 0 rgba(0,0,0,.08),inset 0 2px 0 rgba(255,255,255,.9),0 6px 0 #d4c29a,0 10px 16px rgba(0,0,0,.18);border:1.5px solid #2a2a2a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 6px;gap:4px;}
+.cC-tile::before{content:'';position:absolute;inset:4px;border-radius:6px;border:1px solid rgba(0,0,0,.06);pointer-events:none;}
+.cC-bam{width:8px;height:22px;border-radius:4px 4px 2px 2px;background:linear-gradient(180deg,#16a34a 0%,#166534 100%);box-shadow:inset 1px 0 0 rgba(255,255,255,.3);position:relative;}
+.cC-bam::before{content:'';position:absolute;top:3px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#fde047;}
+.cC-dot{width:14px;height:14px;border-radius:50%;border:2.5px solid #0f4c81;position:relative;background:linear-gradient(180deg,#fff 0%,#f5e9c8 100%);}
+.cC-dot::before{content:'';position:absolute;inset:2px;border-radius:50%;background:radial-gradient(circle,#c1272d 30%,#fff 31%);}
+.cC-crak-top{font-family:'Ma Shan Zheng',serif;font-size:18px;color:#c1272d;line-height:1;font-weight:600;}
+.cC-crak-bot{font-family:'Ma Shan Zheng',serif;font-size:18px;color:#1a1a1a;line-height:1;font-weight:600;}
+.cC-dragon{font-family:'Ma Shan Zheng',serif;font-size:44px;color:#c1272d;line-height:1;font-weight:600;}
+.cC-suit-row{display:flex;gap:4px;justify-content:center;}
+.cC-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text);line-height:1.15;text-align:center;}
+.cC-badge{position:absolute;top:-4px;right:0;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--cream);z-index:3;}
+
+/* === CONCEPT D: Isometric Stacked Tiles === */
+.cD-actions{display:flex;gap:10px;padding:0 16px 30px;justify-content:center;perspective:600px;}
+.cD-act{flex:1;max-width:80px;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;position:relative;}
+.cD-tile-3d{width:100%;aspect-ratio:0.72;position:relative;transform:rotateX(10deg);transform-style:preserve-3d;}
+.cD-tile-face{position:absolute;inset:0;background:linear-gradient(175deg,#fffef5 0%,#fdf5e0 45%,#f5e9c8 100%);border-radius:10px;border:1.5px solid #2a2a2a;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08),inset 0 2px 0 rgba(255,255,255,.9);}
+.cD-tile-bot{position:absolute;bottom:-10px;left:2px;right:2px;height:10px;background:linear-gradient(180deg,#d4c29a 0%,#a89172 100%);border-radius:0 0 8px 8px;border:1.5px solid #2a2a2a;border-top:none;z-index:-1;}
+.cD-tile-back{position:absolute;top:2px;bottom:6px;right:-3px;width:4px;background:#a89172;border:1.5px solid #2a2a2a;border-left:none;border-radius:0 4px 4px 0;z-index:-2;}
+.cD-tile-face i{font-size:30px;color:var(--primary);}
+.cD-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text);line-height:1.15;text-align:center;}
+.cD-badge{position:absolute;top:-4px;right:0;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--cream);z-index:3;}
+
+/* === CONCEPT E: Green-Felt Back Tiles === */
+.cE-actions{display:flex;gap:10px;padding:0 16px 24px;justify-content:center;}
+.cE-act{flex:1;max-width:84px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;position:relative;}
+.cE-tile{width:100%;aspect-ratio:0.72;position:relative;border-radius:10px;overflow:hidden;box-shadow:0 6px 0 #0a4d2e,0 10px 16px rgba(0,0,0,.25);border:1.5px solid #2a2a2a;}
+.cE-tile-face{position:absolute;top:0;left:0;right:0;bottom:12%;background:linear-gradient(175deg,#fffef5 0%,#fdf5e0 50%,#f5e9c8 100%);display:flex;align-items:center;justify-content:center;border-bottom:1px solid #2a2a2a;}
+.cE-tile-felt{position:absolute;left:0;right:0;bottom:0;height:12%;background:linear-gradient(180deg,#146b3a 0%,#0a4d2e 100%);box-shadow:inset 0 2px 3px rgba(0,0,0,.3);}
+.cE-tile-face i{font-size:34px;color:var(--primary);}
+.cE-char{font-family:'Ma Shan Zheng',serif;font-size:38px;font-weight:600;}
+.cE-act:nth-child(1) .cE-char{color:#0b7a3e;}
+.cE-act:nth-child(2) .cE-char{color:#0f4c81;}
+.cE-act:nth-child(3) .cE-char{color:#d4a017;}
+.cE-act:nth-child(4) .cE-char{color:#c1272d;}
+.cE-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text);line-height:1.15;text-align:center;}
+.cE-badge{position:absolute;top:-4px;right:0;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--cream);z-index:3;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Dashboard · <span>Real Mahjong Tile Concepts</span></h1>
+  <p>All 5 concepts treat the action buttons as authentic mahjong tiles — real proportions (3:4), ivory faces, beveled edges, subtle drop shadows. Each explores a different interpretation of "tile." Everything else on the dashboard is the same.</p>
+</div>
+
+<div class="row">
+
+  <!-- CONCEPT A -->
+  <div class="wrap">
+    <div class="tag">Concept A</div>
+    <div class="tag-title">Ivory Tile + Modern Icon</div>
+    <div class="tag-desc">Real tile shape (3:4) with ivory/bone face, black outline, beveled edge. Pink primary icon sits inside where the character would be. Familiar action meets authentic tile.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="cA-actions">
+            <div class="cA-act"><div class="cA-tile"><div class="cA-tile-ic"><i class="ph-fill ph-play"></i></div></div><div class="cA-lbl">Start<br>Game</div></div>
+            <div class="cA-act"><div class="cA-tile"><div class="cA-tile-ic"><i class="ph-fill ph-map-trifold"></i></div></div><div class="cA-lbl">Find<br>Games</div></div>
+            <div class="cA-act"><div class="cA-tile"><div class="cA-tile-ic"><i class="ph-fill ph-users-three"></i></div></div><div class="cA-lbl">Start<br>Group</div></div>
+            <div class="cA-act"><div class="cA-badge">3</div><div class="cA-tile"><div class="cA-tile-ic"><i class="ph-fill ph-chat-circle-dots"></i></div></div><div class="cA-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT B -->
+  <div class="wrap">
+    <div class="tag">Concept B</div>
+    <div class="tag-title">Wind &amp; Dragon Characters</div>
+    <div class="tag-desc">Authentic Chinese mahjong characters — 東 (East · starts the round), 南 (South · journey), 西 (West · gather), 中 (Red Dragon · important). Most culturally authentic.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="cB-actions">
+            <div class="cB-act"><div class="cB-tile"><span class="cB-char">東</span></div><div class="cB-lbl">Start<br>Game</div></div>
+            <div class="cB-act"><div class="cB-tile"><span class="cB-char">南</span></div><div class="cB-lbl">Find<br>Games</div></div>
+            <div class="cB-act"><div class="cB-tile"><span class="cB-char">西</span></div><div class="cB-lbl">Start<br>Group</div></div>
+            <div class="cB-act"><div class="cB-badge">3</div><div class="cB-tile"><span class="cB-char">中</span></div><div class="cB-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT C -->
+  <div class="wrap">
+    <div class="tag">Concept C</div>
+    <div class="tag-title">Four Suits</div>
+    <div class="tag-desc">Classic mahjong suits — a bamboo, a dot, a character (crak), a red dragon. Most varied visual interest while still 100% authentic tile imagery.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="cC-actions">
+            <div class="cC-act">
+              <div class="cC-tile"><div class="cC-bam"></div></div>
+              <div class="cC-lbl">Start<br>Game</div>
+            </div>
+            <div class="cC-act">
+              <div class="cC-tile"><div class="cC-dot"></div></div>
+              <div class="cC-lbl">Find<br>Games</div>
+            </div>
+            <div class="cC-act">
+              <div class="cC-tile"><div class="cC-crak-top">三</div><div class="cC-crak-bot">萬</div></div>
+              <div class="cC-lbl">Start<br>Group</div>
+            </div>
+            <div class="cC-act">
+              <div class="cC-badge">3</div>
+              <div class="cC-tile"><span class="cC-dragon">中</span></div>
+              <div class="cC-lbl">Messages</div>
+            </div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT D -->
+  <div class="wrap">
+    <div class="tag">Concept D</div>
+    <div class="tag-title">3D Isometric Tiles</div>
+    <div class="tag-desc">Tiles tilted with visible depth — you can see the side and bottom edge, making them feel physical. Like they're sitting on a rack.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="cD-actions">
+            <div class="cD-act"><div class="cD-tile-3d"><div class="cD-tile-back"></div><div class="cD-tile-bot"></div><div class="cD-tile-face"><i class="ph-fill ph-play"></i></div></div><div class="cD-lbl">Start<br>Game</div></div>
+            <div class="cD-act"><div class="cD-tile-3d"><div class="cD-tile-back"></div><div class="cD-tile-bot"></div><div class="cD-tile-face"><i class="ph-fill ph-map-trifold"></i></div></div><div class="cD-lbl">Find<br>Games</div></div>
+            <div class="cD-act"><div class="cD-tile-3d"><div class="cD-tile-back"></div><div class="cD-tile-bot"></div><div class="cD-tile-face"><i class="ph-fill ph-users-three"></i></div></div><div class="cD-lbl">Start<br>Group</div></div>
+            <div class="cD-act"><div class="cD-badge">3</div><div class="cD-tile-3d"><div class="cD-tile-back"></div><div class="cD-tile-bot"></div><div class="cD-tile-face"><i class="ph-fill ph-chat-circle-dots"></i></div></div><div class="cD-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT E -->
+  <div class="wrap">
+    <div class="tag">Concept E</div>
+    <div class="tag-title">Ivory Face · Green Felt Base</div>
+    <div class="tag-desc">The classic real-world mahjong tile — ivory/bone face up top, green felt back showing at the bottom edge. Most photorealistic.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="cE-actions">
+            <div class="cE-act"><div class="cE-tile"><div class="cE-tile-face"><span class="cE-char">東</span></div><div class="cE-tile-felt"></div></div><div class="cE-lbl">Start<br>Game</div></div>
+            <div class="cE-act"><div class="cE-tile"><div class="cE-tile-face"><span class="cE-char">南</span></div><div class="cE-tile-felt"></div></div><div class="cE-lbl">Find<br>Games</div></div>
+            <div class="cE-act"><div class="cE-tile"><div class="cE-tile-face"><span class="cE-char">西</span></div><div class="cE-tile-felt"></div></div><div class="cE-lbl">Start<br>Group</div></div>
+            <div class="cE-act"><div class="cE-badge">3</div><div class="cE-tile"><div class="cE-tile-face"><span class="cE-char">中</span></div><div class="cE-tile-felt"></div></div><div class="cE-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;color:#555;font-size:13px;margin-top:20px;">Scroll right to see all 5 concepts. Only the tiles change; everything else is identical.</div>
+
+</body>
+</html>
