@@ -29,17 +29,18 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
 .sbar .r{font-size:11px;display:flex;gap:4px;align-items:center;}
 
 /* Main frame */
-.phone{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.phone{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow:hidden;}
 .phone::-webkit-scrollbar{display:none;}
 
 /* Subtle mahjong tile pattern bg */
 .bg-tiles{position:absolute;inset:0;opacity:.08;pointer-events:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.3'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");z-index:0;}
 
-.scr{position:relative;padding-top:54px;z-index:1;}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:88px;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:1;padding-bottom:20px;}
+.scr::-webkit-scrollbar{display:none;}
 
 /* ============ TOP BAR ============ */
 .topbar{display:flex;align-items:center;padding:14px 20px 10px;gap:12px;}
-.topbar-avatar{width:44px;height:44px;border-radius:50%;position:relative;overflow:hidden;background:linear-gradient(135deg,#fbcfe8,#ec4899);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.topbar-avatar{width:44px;height:44px;border-radius:50%;position:relative;overflow:hidden;background:linear-gradient(135deg,#fbcfe8,#ec4899);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0;box-shadow:0 0 0 3px var(--primary),0 2px 8px rgba(0,0,0,.08);}
 .topbar-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .topbar-name{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:var(--primary);line-height:1;flex:1;margin-top:4px;}
 .topbar-icons{display:flex;gap:8px;align-items:center;}
@@ -106,10 +107,11 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
 
 /* ============ ATTENTION CARDS ============ */
 .att{margin:0 16px 10px;background:#fff;border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid #f3e8ff4d;}
-.att-av{width:48px;height:48px;border-radius:50%;position:relative;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#fcd34d,#f59e0b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;border:2px solid var(--primary-tint);}
+.att-av{width:48px;height:48px;border-radius:50%;position:relative;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#fcd34d,#f59e0b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 0 0 3px var(--primary);margin:3px;}
 .att-av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .att-body{flex:1;min-width:0;}
-.att-name{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;display:flex;align-items:center;gap:4px;}
+.att-kicker{font-size:10px;font-weight:700;color:var(--primary-dark);letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;}
+.att-name{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:4px;letter-spacing:-.2px;}
 .att-wind{font-size:13px;opacity:.7;}
 .att-meta{font-size:11px;color:var(--text-mute);}
 .att-cta{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex-shrink:0;}
@@ -195,7 +197,7 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
               <path d="M21 18L32 24L21 30Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
             </svg>
           </div>
-          <div class="act-label">Start<br>Game</div>
+          <div class="act-label">New<br>Game</div>
         </div>
 
         <div class="act" title="Find Games">
@@ -223,7 +225,7 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
               <path d="M25 22c1.5 1.5 4 1.5 5.5 0" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
             </svg>
           </div>
-          <div class="act-label">Start<br>Group</div>
+          <div class="act-label">New<br>Group</div>
         </div>
 
         <div class="act" title="Messages">
@@ -299,7 +301,8 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
       <div class="att">
         <div class="att-av"><img src="https://i.pravatar.cc/150?img=5" alt=""></div>
         <div class="att-body">
-          <div class="att-name">Mia invited you <span class="att-wind">🀀</span></div>
+          <div class="att-kicker">Game Invite</div>
+          <div class="att-name">Rebecca's Home</div>
           <div class="att-meta">Tue Apr 22 · 6:30 PM · 3 of 4</div>
         </div>
         <div class="att-cta">
@@ -311,12 +314,13 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
       <div class="att">
         <div class="att-av" style="background:linear-gradient(135deg,#60a5fa,#3b82f6);"><img src="https://i.pravatar.cc/150?img=9" alt=""></div>
         <div class="att-body">
-          <div class="att-name">Lisa's game is full — confirm?</div>
-          <div class="att-meta">Thu Apr 24 · 3:00 PM · 4 of 4</div>
+          <div class="att-kicker">Group Invite</div>
+          <div class="att-name">Stovall Ladies</div>
+          <div class="att-meta">12 members · Thursdays</div>
         </div>
         <div class="att-cta">
-          <div class="att-btn">Confirm</div>
-          <div class="att-txt">Skip</div>
+          <div class="att-btn">Accept</div>
+          <div class="att-txt">Decline</div>
         </div>
       </div>
 
