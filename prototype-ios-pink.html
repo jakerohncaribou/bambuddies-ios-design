@@ -129,6 +129,90 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 .scroll-x::-webkit-scrollbar { display:none; }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
 .screen::-webkit-scrollbar { display:none; }
+
+/* =========================================================== */
+/* V9 DASHBOARD STYLES (scoped to page 7 dashboard screen)    */
+/* =========================================================== */
+.screen[data-screen="dashboard"]{padding:0 !important;background:var(--v9-cream,#fdf8f0);}
+.screen[data-screen="dashboard"] .v9-bg-tiles{position:absolute;inset:0;opacity:.08;pointer-events:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.3'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");z-index:0;}
+.screen[data-screen="dashboard"] .v9-content{position:relative;z-index:1;padding-bottom:10px;}
+.v9-topbar{display:flex;align-items:center;padding:14px 20px 10px;gap:12px;}
+.v9-topbar-avatar{width:44px;height:44px;border-radius:50%;position:relative;overflow:hidden;background:linear-gradient(135deg,#fbcfe8,#ec4899);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0;box-shadow:0 0 0 3px #c93b8b,0 2px 8px rgba(0,0,0,.08);}
+.v9-topbar-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.v9-topbar-name{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:#c93b8b;line-height:1;flex:1;margin-top:4px;}
+.v9-topbar-icons{display:flex;gap:8px;align-items:center;}
+.v9-topbar-ic{width:38px;height:38px;border-radius:50%;background:#fce7f3;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;}
+.v9-topbar-ic svg{width:17px;height:17px;stroke:#9d2467;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.v9-topbar-ic .v9-dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:#c93b8b;border:1.5px solid #fdf8f0;}
+.v9-greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:#1a1a1a;letter-spacing:-.5px;line-height:1.15;}
+.v9-actions{display:flex;gap:10px;padding:0 16px 20px;}
+.v9-act{flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff0d0 0%,#f0d9a0 100%);border-radius:22px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10px 4px 10px;cursor:pointer;box-shadow:0 8px 0 #b89556,0 12px 18px rgba(0,0,0,.12);}
+.v9-act:nth-child(2){background:linear-gradient(180deg,#fce2dc 0%,#ebc4bb 100%);box-shadow:0 8px 0 #a6857a,0 12px 18px rgba(0,0,0,.12);}
+.v9-act:active{transform:translateY(4px);}
+.v9-act-ic{width:28px;height:28px;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.v9-act-ic svg{width:100%;height:100%;}
+.v9-act-lbl{font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;color:#1a1a1a;text-align:center;line-height:1.1;margin-bottom:2px;}
+.v9-act-badge{position:absolute;top:-5px;right:-5px;min-width:22px;height:22px;border-radius:99px;background:#c93b8b;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2.5px solid #fff0d0;box-shadow:0 2px 4px rgba(201,59,139,.3);z-index:2;}
+.v9-sponsor{margin:0 16px 18px;background:linear-gradient(135deg,#fdf2f8 0%,#fce7f3 100%);border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;border:1px solid #fbcfe8;}
+.v9-sponsor-img{width:80px;height:80px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#8b4513;}
+.v9-sponsor-img img{width:100%;height:100%;object-fit:cover;}
+.v9-sponsor-body{flex:1;min-width:0;}
+.v9-sponsor-tag{font-size:9px;font-weight:700;color:#9d2467;letter-spacing:1.5px;margin-bottom:2px;}
+.v9-sponsor-ttl{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;margin-bottom:2px;line-height:1.2;}
+.v9-sponsor-sub{font-size:11px;color:#6b7280;margin-bottom:8px;}
+.v9-sponsor-btn{display:inline-flex;align-items:center;gap:4px;background:#c93b8b;color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:99px;cursor:pointer;}
+.v9-nxt{margin:0 16px 20px;border-radius:22px;overflow:hidden;display:flex;box-shadow:0 6px 20px rgba(0,0,0,.06);border:1px solid rgba(251,207,232,.5);cursor:pointer;}
+.v9-nxt-left{width:140px;background:linear-gradient(145deg,#fce7f3 0%,#fbcfe8 50%,#f9a8d4 100%);padding:16px 14px;display:flex;flex-direction:column;justify-content:space-between;color:#9d2467;flex-shrink:0;}
+.v9-nxt-l-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;opacity:.85;}
+.v9-nxt-l-date{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;line-height:1;margin-bottom:2px;}
+.v9-nxt-l-bar{height:4px;background:rgba(157,36,103,.2);border-radius:99px;overflow:hidden;margin-bottom:6px;}
+.v9-nxt-l-fill{height:100%;width:65%;background:#9d2467;border-radius:99px;}
+.v9-nxt-l-cd{font-size:10px;font-weight:700;letter-spacing:.3px;}
+.v9-nxt-right{flex:1;background:#fff;padding:16px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;}
+.v9-nxt-r-ttl{font-family:'DM Serif Display',serif;font-style:italic;font-size:17px;font-weight:400;color:#1a1a1a;margin-bottom:10px;letter-spacing:-.2px;}
+.v9-nxt-r-time{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:2px;letter-spacing:-.3px;}
+.v9-nxt-r-loc{font-size:11px;color:#6b7280;margin-bottom:12px;display:flex;align-items:center;gap:4px;}
+.v9-nxt-r-loc svg{width:11px;height:11px;stroke:#9ca3af;fill:none;stroke-width:2;}
+.v9-nxt-r-bot{display:flex;align-items:center;gap:8px;}
+.v9-nxt-dots{display:flex;}
+.v9-nxt-dot{width:24px;height:24px;border-radius:50%;margin-right:-7px;border:2px solid #fff;overflow:hidden;position:relative;background:linear-gradient(135deg,#fbcfe8,#ec4899);}
+.v9-nxt-dot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.v9-nxt-r-status{font-size:12px;font-weight:700;color:#c93b8b;margin-left:8px;letter-spacing:-.2px;}
+.v9-sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 10px;}
+.v9-sec-hdr-left{display:flex;align-items:center;gap:8px;}
+.v9-sec-title{font-family:'Caveat',cursive;font-size:26px;font-weight:700;color:#1a1a1a;letter-spacing:-.5px;line-height:1;}
+.v9-sec-count{background:#c93b8b;color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;}
+.v9-sec-hdr-right{display:flex;align-items:center;gap:10px;}
+.v9-cal-ic{width:28px;height:28px;border-radius:8px;background:#fce7f3;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.v9-cal-ic svg{width:14px;height:14px;stroke:#9d2467;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.v9-see-all{font-family:'Caveat',cursive;font-size:18px;font-weight:600;color:#c93b8b;cursor:pointer;}
+.v9-att{margin:0 16px 10px;background:#fff;border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid #f3e8ff4d;}
+.v9-att-av{width:48px;height:48px;border-radius:50%;position:relative;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 3px #c93b8b;margin:3px;}
+.v9-att-av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.v9-att-body{flex:1;min-width:0;}
+.v9-att-kicker{font-size:10px;font-weight:700;color:#9d2467;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;}
+.v9-att-name{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:3px;letter-spacing:-.2px;}
+.v9-att-meta{font-size:11px;color:#6b7280;}
+.v9-att-cta{display:flex;flex-direction:column;gap:4px;flex-shrink:0;}
+.v9-att-btn{padding:8px 18px;border-radius:99px;background:#c93b8b;color:#fff;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(201,59,139,.25);border:none;}
+.v9-att-txt{text-align:center;font-size:11px;font-weight:500;color:#9ca3af;text-decoration:underline;cursor:pointer;padding:2px;background:transparent;border:none;}
+.v9-game-card{margin:0 16px 8px;background:#fff;border-radius:16px;padding:12px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 6px rgba(0,0,0,.04);cursor:pointer;}
+.v9-game-thumb{width:48px;height:48px;border-radius:12px;position:relative;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.v9-game-thumb.v9-sage{background:linear-gradient(135deg,#d1fae5,#a7f3d0);}
+.v9-game-thumb.v9-lavender{background:linear-gradient(135deg,#ede9fe,#ddd6fe);}
+.v9-game-thumb.v9-peach{background:linear-gradient(135deg,#ffedd5,#fed7aa);}
+.v9-game-day{text-align:center;position:relative;z-index:1;}
+.v9-game-day-num{font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;line-height:1;color:#1a1a1a;}
+.v9-game-day-mon{font-size:9px;font-weight:700;color:#6b7280;letter-spacing:.5px;text-transform:uppercase;}
+.v9-game-body{flex:1;min-width:0;}
+.v9-game-ttl{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:1px;}
+.v9-game-meta{font-size:11px;color:#6b7280;}
+.v9-game-right{text-align:right;flex-shrink:0;}
+.v9-game-players{font-size:11px;font-weight:700;color:#1a1a1a;margin-bottom:2px;}
+.v9-game-status{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;text-transform:uppercase;letter-spacing:.3px;}
+.v9-game-status.v9-committed{background:#dcfce7;color:#15803d;}
+.v9-game-status.v9-pending{background:#fef3c7;color:#b45309;}
+/* End V9 scoped styles */
 </style>
 </head>
 <body>
@@ -171,159 +255,144 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     </div>
 
     <!-- ==================== 1. DASHBOARD ==================== -->
-    <div class="screen has-tab active" data-screen="dashboard" style="padding:16px 16px 0;">
+    <div class="screen has-tab active" data-screen="dashboard">
 
-      <!-- Top Bar: Avatar + Greeting + Actions -->
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:14px;">
-        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;cursor:pointer;" onclick="go('profileSettings')">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face" width="44" height="44" class="avatar" alt="Sarah" style="flex-shrink:0;">
-          <div style="color:#1a1a1a;font-size:13px;font-weight:500;line-height:1.3;font-family:'Inter',sans-serif;">East, South, West, North... let's go, <span style="font-family:'Caveat',cursive;font-weight:700;color:#c93b8b;font-size:22px;vertical-align:-2px;">Sarah</span>!</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;padding-top:10px;">
-          <div style="position:relative;cursor:pointer;" onclick="go('inbox')">
-            <i class="ph ph-chat-circle-dots" style="font-size:22px;color:#1a1a1a;"></i>
-            <div style="position:absolute;top:-5px;right:-8px;background:#f43f5e;color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</div>
-          </div>
-          <div style="position:relative;cursor:pointer;" onclick="go('notifications')">
-            <i class="ph ph-bell" style="font-size:22px;color:#1a1a1a;"></i>
-            <div style="position:absolute;top:0;right:0;width:8px;height:8px;background:#f43f5e;border-radius:50%;border:2px solid #faf8f6;"></div>
-          </div>
-        </div>
-      </div>
+      <div class="v9-bg-tiles"></div>
+      <div class="v9-content">
 
-      <!-- Ad Banner -->
-      <div style="background:linear-gradient(135deg,#f5f0ec,#efe6de);border-radius:14px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;">
-        <div style="flex:1;">
-          <div style="color:#8a7355;font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:4px;">SPONSORED</div>
-          <div style="color:#5a4030;font-size:18px;font-family:'DM Serif Display',serif;line-height:1.2;">Master the Winds</div>
-          <div style="color:#ec4fa3;font-size:13px;font-weight:500;margin-top:4px;cursor:pointer;">Learn Strategy Tips &rarr;</div>
+        <!-- TOP BAR -->
+        <div class="v9-topbar">
+          <div class="v9-topbar-avatar" onclick="go('profileSettings')"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=160&h=160&fit=crop&crop=face" alt=""></div>
+          <div class="v9-topbar-name" onclick="go('profileSettings')">Sarah</div>
+          <div class="v9-topbar-icons">
+            <div class="v9-topbar-ic" title="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+            <div class="v9-topbar-ic" title="Messages" onclick="go('inbox')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="v9-dot"></span></div>
+            <div class="v9-topbar-ic" title="Notifications" onclick="go('notifications')"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="v9-dot"></span></div>
+          </div>
         </div>
-        <div style="display:flex;gap:4px;transform:rotate(-5deg);opacity:.6;"><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-diamond" style="font-size:14px;color:#c93b8b;"></i></div><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-circle" style="font-size:14px;color:#f43f5e;"></i></div><div style="width:28px;height:36px;border-radius:6px;background:#fff;border:1px solid #e0ddd6;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.06);"><i class="ph-fill ph-wind" style="font-size:14px;color:#3b82f6;"></i></div></div>
-      </div>
 
-      <!-- Next Game Card (compact, Next Game badge right-aligned) -->
-      <div class="card" style="background:#fff;border:1px solid #e8e4e0;margin-bottom:16px;cursor:pointer;overflow:hidden;" onclick="go('gameDetail')">
-        <div style="position:relative;height:84px;overflow:hidden;">
-          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600" style="width:100%;height:100%;object-fit:cover;" alt="Mahjong">
-          <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.55));"></div>
-          <div style="position:absolute;top:8px;left:8px;background:#fff;border-radius:7px;padding:3px 7px;font-size:10px;font-weight:700;color:#000;">SAT 4/19</div>
-          <div style="position:absolute;top:8px;right:8px;background:rgba(255,255,255,.95);color:#c93b8b;border-radius:99px;padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:#c93b8b;animation:pulse 2s infinite;"></span>NEXT GAME</div>
-          <div style="position:absolute;bottom:8px;left:10px;right:10px;color:#fff;">
-            <div style="font-size:16px;font-weight:800;font-family:'Outfit',sans-serif;letter-spacing:-.3px;line-height:1.1;">2:00 &ndash; 4:00 PM</div>
-            <div style="font-size:12px;font-weight:500;opacity:.9;margin-top:2px;">Saturday Mahjong</div>
+        <!-- GREETING -->
+        <div class="v9-greeting">May the winds be with you.</div>
+
+        <!-- ACTION TILES (not final per Jake) -->
+        <div class="v9-actions">
+          <div class="v9-act" onclick="go('creation1')">
+            <div class="v9-act-ic"><svg viewBox="0 0 48 48"><path d="M14 10 L38 24 L14 38 Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+            <div class="v9-act-lbl">Start<br>Game</div>
+          </div>
+          <div class="v9-act" onclick="go('discover')">
+            <div class="v9-act-ic"><svg viewBox="0 0 48 48"><path d="M7 13 L18 9 L30 14 L41 10 L41 37 L30 41 L18 36 L7 40 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/><line x1="18" y1="9" x2="18" y2="36" stroke="#5a8dce" stroke-width="1.5" stroke-dasharray="2 2"/><line x1="30" y1="14" x2="30" y2="41" stroke="#5a8dce" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M24 18 C21 18 19 20 19 23 C19 27 24 32 24 32 C24 32 29 27 29 23 C29 20 27 18 24 18 Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/><path d="M22 23 C22 21.5 23 21.5 24 22.5 C25 21.5 26 21.5 26 23 C26 25 24 26.5 24 26.5 C24 26.5 22 25 22 23 Z" fill="#fff"/></svg></div>
+            <div class="v9-act-lbl">Find<br>Games</div>
+          </div>
+          <div class="v9-act" onclick="go('groupCreation')">
+            <div class="v9-act-ic"><svg viewBox="0 0 48 48"><rect x="6" y="14" width="22" height="26" rx="5" fill="#bbead3" stroke="#1a1a1a" stroke-width="2.2"/><rect x="20" y="8" width="22" height="26" rx="5" fill="#fbcfe8" stroke="#1a1a1a" stroke-width="2.2"/><circle cx="27" cy="18" r="1.4" fill="#1a1a1a"/><circle cx="35" cy="18" r="1.4" fill="#1a1a1a"/><path d="M27 24 Q31 27 35 24" stroke="#1a1a1a" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+            <div class="v9-act-lbl">Start<br>Group</div>
+          </div>
+          <div class="v9-act" onclick="go('inbox')">
+            <div class="v9-act-badge">3</div>
+            <div class="v9-act-ic"><svg viewBox="0 0 48 48"><path d="M8 14 C8 10 11 8 15 8 L33 8 C37 8 40 10 40 14 L40 28 C40 32 37 34 33 34 L22 34 L14 40 L16 34 L15 34 C11 34 8 32 8 28 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/><circle cx="17" cy="21" r="2.4" fill="#c93b8b"/><circle cx="24" cy="21" r="2.4" fill="#a78bfa"/><circle cx="31" cy="21" r="2.4" fill="#fcd34d"/></svg></div>
+            <div class="v9-act-lbl">Messages</div>
           </div>
         </div>
-        <div style="padding:10px 14px 12px;">
-          <div style="color:#666;font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:4px;">
-            <i class="ph ph-map-pin" style="font-size:13px;color:#aaa;"></i>
-            <span>Sarah's Home, Portland</span>
+
+        <!-- SPONSORED -->
+        <div class="v9-sponsor">
+          <div class="v9-sponsor-img"><img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=160&h=160&fit=crop" alt=""></div>
+          <div class="v9-sponsor-body">
+            <div class="v9-sponsor-tag">SPONSORED</div>
+            <div class="v9-sponsor-ttl">New Mahjong Sets — 20% Off</div>
+            <div class="v9-sponsor-sub">Free shipping this week only</div>
+            <div class="v9-sponsor-btn">Shop the Set</div>
           </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
-            <div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1;">
-              <div style="display:flex;">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="border:2px solid #fff;">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="border:2px solid #fff;margin-left:-6px;">
-                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="border:2px solid #fff;margin-left:-6px;">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="24" height="24" class="avatar" style="border:2px solid #fff;margin-left:-6px;">
-              </div>
-              <span style="color:#666;font-size:12px;font-weight:500;">4/4 players</span>
+        </div>
+
+        <!-- YOUR NEXT GAME (2-COL) -->
+        <div class="v9-nxt" onclick="go('gameDetail')">
+          <div class="v9-nxt-left">
+            <div><div class="v9-nxt-l-label">This Saturday</div><div class="v9-nxt-l-date">Apr 19</div></div>
+            <div><div class="v9-nxt-l-bar"><div class="v9-nxt-l-fill"></div></div><div class="v9-nxt-l-cd">2 days to go</div></div>
+          </div>
+          <div class="v9-nxt-right">
+            <div>
+              <div class="v9-nxt-r-ttl">Your Next Game</div>
+              <div class="v9-nxt-r-time">2:00 PM &middot; 2 hrs</div>
+              <div class="v9-nxt-r-loc"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg> 123 Main St &middot; Brooklyn</div>
             </div>
-            <div class="pill" style="background:#fce7f3;color:#c93b8b;font-size:10px;font-weight:700;letter-spacing:.5px;">COMMITTED</div>
+            <div class="v9-nxt-r-bot">
+              <div class="v9-nxt-dots">
+                <div class="v9-nxt-dot"><img src="https://i.pravatar.cc/80?img=47" alt=""></div>
+                <div class="v9-nxt-dot"><img src="https://i.pravatar.cc/80?img=5" alt=""></div>
+                <div class="v9-nxt-dot"><img src="https://i.pravatar.cc/80?img=16" alt=""></div>
+                <div class="v9-nxt-dot"><img src="https://i.pravatar.cc/80?img=32" alt=""></div>
+              </div>
+              <div class="v9-nxt-r-status">All 4 in</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Needs Your Attention -->
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:26px;color:#1a1a1a;line-height:1;">Needs Your Attention</div>
-        <div style="background:#c93b8b;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 6px;display:flex;align-items:center;justify-content:center;">2</div>
-      </div>
+        <!-- NEEDS YOUR ATTENTION -->
+        <div class="v9-sec-hdr">
+          <div class="v9-sec-hdr-left">
+            <div class="v9-sec-title">Needs Your Attention</div>
+            <div class="v9-sec-count">2</div>
+          </div>
+          <div class="v9-sec-hdr-right"><div class="v9-see-all" onclick="go('myGames')">See all</div></div>
+        </div>
 
-      <!-- Invite 1 (v9 pattern: ring avatar + kicker + title + pill Accept + Decline link) -->
-      <div style="background:#fff;border-radius:18px;padding:14px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;gap:12px;align-items:center;">
-        <div style="width:48px;height:48px;border-radius:50%;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 3px #c93b8b;margin:3px;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;" alt=""></div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:10px;font-weight:700;color:#9d2467;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;">Game Invite</div>
-          <div style="font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;margin-bottom:3px;">Amy's Home</div>
-          <div style="font-size:11px;color:#6b7280;">Tue Apr 22 &middot; 7:00 PM &middot; 3 of 4</div>
+        <div class="v9-att">
+          <div class="v9-att-av"><img src="https://i.pravatar.cc/150?img=5" alt=""></div>
+          <div class="v9-att-body">
+            <div class="v9-att-kicker">Game Invite</div>
+            <div class="v9-att-name">Rebecca's Home</div>
+            <div class="v9-att-meta">Tue Apr 22 &middot; 6:30 PM &middot; 3 of 4</div>
+          </div>
+          <div class="v9-att-cta">
+            <button class="v9-att-btn">Accept</button>
+            <button class="v9-att-txt">Decline</button>
+          </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
-          <div style="padding:8px 18px;border-radius:99px;background:#c93b8b;color:#fff;font-size:12px;font-weight:700;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(201,59,139,.25);">Accept</div>
-          <div style="text-align:center;font-size:11px;color:#9ca3af;text-decoration:underline;cursor:pointer;">Decline</div>
-        </div>
-      </div>
 
-      <!-- Invite 2 (v9 pattern) -->
-      <div style="background:#fff;border-radius:18px;padding:14px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;gap:12px;align-items:center;">
-        <div style="width:48px;height:48px;border-radius:50%;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 3px #c93b8b;margin:3px;"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;" alt=""></div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:10px;font-weight:700;color:#9d2467;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;">Group Invite</div>
-          <div style="font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;margin-bottom:3px;">Stovall Ladies</div>
-          <div style="font-size:11px;color:#6b7280;">12 members &middot; Thursdays</div>
+        <div class="v9-att">
+          <div class="v9-att-av"><img src="https://i.pravatar.cc/150?img=9" alt=""></div>
+          <div class="v9-att-body">
+            <div class="v9-att-kicker">Group Invite</div>
+            <div class="v9-att-name">Stovall Ladies</div>
+            <div class="v9-att-meta">12 members &middot; Thursdays</div>
+          </div>
+          <div class="v9-att-cta">
+            <button class="v9-att-btn">Accept</button>
+            <button class="v9-att-txt">Decline</button>
+          </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
-          <div style="padding:8px 18px;border-radius:99px;background:#c93b8b;color:#fff;font-size:12px;font-weight:700;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(201,59,139,.25);">Accept</div>
-          <div style="text-align:center;font-size:11px;color:#9ca3af;text-decoration:underline;cursor:pointer;">Decline</div>
-        </div>
-      </div>
 
-      <!-- Coming Up -->
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:26px;color:#1a1a1a;line-height:1;">Your Games</div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:28px;height:28px;border-radius:8px;background:#fce7f3;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-calendar-plus" style="font-size:14px;color:#9d2467;"></i></div>
-          <div style="font-family:'Caveat',cursive;font-size:18px;font-weight:600;color:#c93b8b;cursor:pointer;" onclick="event.stopPropagation();go('myGames')">See all</div>
+        <!-- YOUR GAMES -->
+        <div class="v9-sec-hdr" style="margin-top:16px;">
+          <div class="v9-sec-hdr-left"><div class="v9-sec-title">Your Games</div></div>
+          <div class="v9-sec-hdr-right">
+            <div class="v9-cal-ic" title="Sync to calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div>
+            <div class="v9-see-all" onclick="go('myGames')">See all</div>
+          </div>
         </div>
-      </div>
 
-      <!-- Coming Up Row 1 -->
-      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
-        <div style="width:48px;height:48px;border-radius:10px;overflow:hidden;flex-shrink:0;position:relative;">
-          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:100%;height:100%;object-fit:cover;" alt="">
-          <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.65);color:#fff;font-size:8px;font-weight:700;text-align:center;padding:1px;">4/22</div>
+        <div class="v9-game-card" onclick="go('gameDetail')">
+          <div class="v9-game-thumb v9-sage"><div class="v9-game-day"><div class="v9-game-day-num">26</div><div class="v9-game-day-mon">Apr</div></div></div>
+          <div class="v9-game-body"><div class="v9-game-ttl">Sunday Brunch Mahjong</div><div class="v9-game-meta">11:00 AM &middot; Central Park</div></div>
+          <div class="v9-game-right"><div class="v9-game-players">3 of 4</div><div class="v9-game-status v9-pending">Pending</div></div>
         </div>
-        <div style="flex:1;min-width:0;">
-          <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Amy's Tuesday Game</div>
-          <div style="color:#888;font-size:12px;">7:00 PM &middot; Amy's Place</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-          <div style="color:#888;font-size:11px;">3/4 players</div>
-          <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;font-weight:700;letter-spacing:.3px;">PENDING</div>
-        </div>
-      </div>
 
-      <!-- Coming Up Row 2 (modern gradient for no-image game) -->
-      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:8px;cursor:pointer;" onclick="go('gameDetail')">
-        <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#ec4fa3,#ec4899);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.3),transparent 60%);"></div>
-          <div style="color:#fff;font-size:9px;font-weight:800;position:relative;">4/26</div>
+        <div class="v9-game-card" onclick="go('gameDetail')">
+          <div class="v9-game-thumb v9-lavender"><div class="v9-game-day"><div class="v9-game-day-num">03</div><div class="v9-game-day-mon">May</div></div></div>
+          <div class="v9-game-body"><div class="v9-game-ttl">Monthly Meetup</div><div class="v9-game-meta">6:00 PM &middot; Jack's Place</div></div>
+          <div class="v9-game-right"><div class="v9-game-players">4 of 4</div><div class="v9-game-status v9-committed">Committed</div></div>
         </div>
-        <div style="flex:1;min-width:0;">
-          <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Rachel's Open Game</div>
-          <div style="color:#888;font-size:12px;">1:00 PM &middot; Community Center</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-          <div style="color:#888;font-size:11px;">2/4 players</div>
-          <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;font-weight:700;letter-spacing:.3px;">PENDING</div>
-        </div>
-      </div>
 
-      <!-- Coming Up Row 3 (modern gradient) -->
-      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border:1px solid #e8e4e0;border-radius:14px;margin-bottom:16px;cursor:pointer;" onclick="go('gameDetail')">
-        <div style="width:48px;height:48px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.3),transparent 60%);"></div>
-          <div style="color:#fff;font-size:9px;font-weight:800;position:relative;">5/03</div>
+        <div class="v9-game-card" onclick="go('gameDetail')">
+          <div class="v9-game-thumb v9-peach"><div class="v9-game-day"><div class="v9-game-day-num">10</div><div class="v9-game-day-mon">May</div></div></div>
+          <div class="v9-game-body"><div class="v9-game-ttl">Mother's Day Match</div><div class="v9-game-meta">2:00 PM &middot; Westside Club</div></div>
+          <div class="v9-game-right"><div class="v9-game-players">2 of 4</div><div class="v9-game-status v9-pending">Pending</div></div>
         </div>
-        <div style="flex:1;min-width:0;">
-          <div style="color:#000;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Sunday Afternoon Session</div>
-          <div style="color:#888;font-size:12px;">3:00 PM &middot; Lisa's House</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-          <div style="color:#888;font-size:11px;">4/4 players</div>
-          <div class="pill" style="background:#fce7f3;color:#c93b8b;font-size:10px;font-weight:700;letter-spacing:.3px;">COMMITTED</div>
-        </div>
-      </div>
 
+      </div>
     </div><!-- /dashboard -->
 
     <!-- ==================== 2. GAME DETAIL ==================== -->
