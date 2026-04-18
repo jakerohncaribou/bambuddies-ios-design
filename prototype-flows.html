@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Sprint 1 Flows (Deeplinks + Apple Sign-In + Modals)</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --primary:#c93b8b; --primary-dark:#9d2467; --primary-light:#ec4fa3;
+  --primary-tint:#fce7f3; --primary-tint2:#fdf2f8;
+  --cream:#fdf8f0; --text:#1a1a1a; --muted:#6b7280; --border:#e8e4e0;
+}
+body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;color:#fff;padding:50px 20px;}
+.hdr{text-align:center;margin-bottom:30px;}
+.hdr h1{font-family:'DM Serif Display',serif;font-size:40px;letter-spacing:-.8px;margin-bottom:4px;}
+.hdr h1 span{color:var(--primary);}
+.hdr p{color:#aaa;font-size:14px;}
+
+.section{margin-bottom:60px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid #222;max-width:1600px;margin-left:auto;margin-right:auto;}
+.section-hdr h2{font-family:'DM Serif Display',serif;font-size:28px;}
+.section-hdr .chip{background:rgba(201,59,139,.15);color:var(--primary);font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;border:1px solid rgba(201,59,139,.3);}
+.section-desc{color:#999;font-size:14px;margin-bottom:20px;max-width:1600px;margin-left:auto;margin-right:auto;}
+
+.flow{display:flex;gap:24px;overflow-x:auto;padding:20px 0 30px;max-width:100%;}
+.flow::-webkit-scrollbar{height:8px;}
+.flow::-webkit-scrollbar-thumb{background:#333;border-radius:4px;}
+.frame-wrap{display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+.frame-label{color:#aaa;font-size:12px;font-weight:600;text-align:center;max-width:393px;line-height:1.3;}
+.frame-label b{color:#fff;font-weight:700;}
+.frame-arrow{color:#555;font-size:32px;align-self:center;margin-top:100px;}
+
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.4);flex-shrink:0;}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:0 0 20px 20px;z-index:100;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:14px 28px 0;display:flex;justify-content:space-between;align-items:center;z-index:50;font-size:15px;font-weight:600;color:var(--text);}
+.inner{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow-y:auto;overflow-x:hidden;}
+.inner::-webkit-scrollbar{display:none;}
+.scr{padding:54px 0 0;position:relative;z-index:1;min-height:100%;}
+.bg-tiles{position:absolute;inset:0;opacity:.06;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.4'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");}
+
+/* Modal overlay */
+.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:40;display:flex;align-items:flex-end;padding:0 0 40px;}
+.modal-bg.center{align-items:center;padding:24px;}
+.modal{width:100%;background:#fff;border-radius:24px 24px 0 0;padding:24px 20px 28px;max-height:85%;overflow-y:auto;}
+.modal.center{border-radius:20px;max-width:380px;margin:0 auto;}
+.modal-handle{width:42px;height:4px;border-radius:99px;background:#d5d2cc;margin:0 auto 18px;}
+.modal-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--text);margin-bottom:6px;text-align:center;}
+.modal-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:20px;line-height:1.5;}
+.modal-card{background:var(--cream);border-radius:16px;padding:16px;margin-bottom:16px;border:1px solid var(--border);}
+.btn-primary{background:var(--primary);color:#fff;border:none;padding:14px 20px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-primary-danger{background:#dc2626;}
+.btn-secondary{background:#fff;color:var(--text);border:1.5px solid var(--border);padding:14px 20px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;}
+.btn-link{background:transparent;border:none;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;width:100%;padding:10px;text-decoration:underline;font-family:'Outfit',sans-serif;}
+
+/* Auth screen styles */
+.auth-scr{padding:40px 28px 20px;}
+.auth-logo{display:flex;justify-content:center;margin-bottom:28px;}
+.auth-logo-mark{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#c93b8b,#ec4fa3);display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:800;box-shadow:0 6px 20px rgba(201,59,139,.25);}
+.auth-title{font-family:'DM Serif Display',serif;font-size:30px;color:var(--text);text-align:center;margin-bottom:6px;letter-spacing:-.5px;}
+.auth-sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:28px;}
+.auth-inv-banner{background:var(--primary-tint);border:1px solid #fbcfe8;border-radius:14px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.auth-inv-banner img{width:36px;height:36px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--primary);}
+.auth-inv-banner-text{flex:1;font-size:12px;color:var(--primary-dark);line-height:1.3;}
+.auth-inv-banner-text b{font-weight:700;}
+.field{margin-bottom:12px;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;}
+.input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;background:#fff;font-family:'Inter',sans-serif;}
+.input:focus{outline:none;border-color:var(--primary);}
+.sso-divider{display:flex;align-items:center;gap:10px;margin:18px 0;}
+.sso-divider::before,.sso-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.sso-divider span{color:var(--muted);font-size:11px;font-weight:600;}
+.sso-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;background:#fff;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-bottom:8px;font-family:'Outfit',sans-serif;}
+.sso-btn.apple{background:#000;color:#fff;border-color:#000;}
+.sso-btn.google{color:var(--text);}
+.sso-btn svg{width:18px;height:18px;}
+
+/* Loading state */
+.load-dots{display:inline-flex;gap:4px;}
+.load-dots span{width:8px;height:8px;background:var(--primary);border-radius:50%;animation:bounce 1.4s infinite ease-in-out;}
+.load-dots span:nth-child(2){animation-delay:.2s;}
+.load-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:scale(0);}40%{transform:scale(1);}}
+
+/* Invite accept modal specifics */
+.inv-avatar-big{width:72px;height:72px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px var(--primary);display:block;margin:0 auto 14px;}
+.inv-game-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px;color:var(--text);}
+.inv-game-row i{font-size:16px;color:var(--primary);width:18px;}
+.inv-game-row b{font-weight:700;}
+.inv-game-row .meta{color:var(--muted);font-size:12px;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Sprint 1: <span>Auth Flows & Modals</span></h1>
+  <p>Deeplink flows (D1-D7), Apple Sign-In (A1), Session handling (A4), Confirmation modals (M1-M10)</p>
+</div>
+
+<!-- ============ D1: GAME INVITE DEEPLINK → NEW USER ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-link" style="font-size:24px;color:var(--primary);"></i>
+    <h2>D1: Game Invite → New User Flow</h2>
+    <span class="chip">P0 · Deeplink</span>
+  </div>
+  <div class="section-desc" style="padding:0 20px;">User clicks Share link from friend's text → lands on Register → after signup, sees Accept modal with game details → chooses Accept or Decline.</div>
+
+  <div class="flow">
+
+    <!-- Step 1: External link tap -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:#fff;">
+          <!-- iMessage bubble UI mock -->
+          <div style="padding:80px 16px 16px;background:#f0f0f5;min-height:100%;">
+            <div style="text-align:center;color:#8e8e93;font-size:12px;margin-bottom:20px;">iMessage · Today 2:14 PM</div>
+            <div style="display:flex;justify-content:flex-start;margin-bottom:10px;">
+              <div style="background:#e9e9eb;border-radius:18px;padding:10px 14px;max-width:70%;font-size:15px;color:#1a1a1a;">
+                Hey! Come play Saturday with us?
+              </div>
+            </div>
+            <div style="display:flex;justify-content:flex-start;">
+              <div style="background:#fff;border:1px solid #e5e5ea;border-radius:16px;padding:0;max-width:85%;overflow:hidden;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+                <div style="height:120px;background-image:url('https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=600');background-size:cover;position:relative;">
+                  <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.5));"></div>
+                  <div style="position:absolute;bottom:8px;left:12px;color:#fff;font-size:11px;font-weight:700;">SAT 4/19 · 2:00 PM</div>
+                </div>
+                <div style="padding:10px 14px 12px;">
+                  <div style="font-size:13px;font-weight:700;color:#1a1a1a;">Saturday Mahjong at Sarah's</div>
+                  <div style="font-size:11px;color:#8e8e93;margin-top:2px;">bambuddies.com/share/xG7k2p</div>
+                </div>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:60px;">
+              <div style="display:inline-flex;align-items:center;gap:6px;background:var(--primary);color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;font-weight:700;box-shadow:0 6px 18px rgba(201,59,139,.4);"><i class="ph-bold ph-cursor-click"></i> User taps link</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>1.</b> Friend sends share link via iMessage</div>
+    </div>
+
+    <div class="frame-arrow">→</div>
+
+    <!-- Step 2: Register with invite banner -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="auth-scr">
+              <div class="auth-logo"><div class="auth-logo-mark">B</div></div>
+              <div class="auth-title">Join to accept invite</div>
+              <div class="auth-sub">Create your BamBuddies account</div>
+
+              <div class="auth-inv-banner">
+                <img src="https://i.pravatar.cc/150?img=47" alt="">
+                <div class="auth-inv-banner-text"><b>Sarah</b> invited you to Saturday Mahjong<br>Sat 4/19 · 2:00 PM · Brooklyn</div>
+              </div>
+
+              <div class="field"><label>Name</label><input class="input" value="Alex Rivera" readonly></div>
+              <div class="field"><label>Email</label><input class="input" value="alex@example.com" readonly></div>
+              <div class="field"><label>Password</label><input class="input" type="password" value="••••••••" readonly></div>
+
+              <button class="btn-primary"><i class="ph-bold ph-user-plus"></i> Create Account & Accept</button>
+
+              <div class="sso-divider"><span>OR</span></div>
+              <button class="sso-btn apple"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M15.6 10.7c0-2.5 2-3.7 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9s-1.9-.9-3.2-.9c-1.6 0-3.1 1-4 2.5-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.5 1.2 0 1.7-.8 3.1-.8s1.8.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.4 1.3-2.7 1.3-2.8-.1 0-2.5-1-2.3-4z M13.1 3.8c.7-.8 1.1-1.9 1-3-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.9-1.4z"/></svg>Continue with Apple</button>
+              <button class="sso-btn google"><svg viewBox="0 0 20 20"><path d="M19.6 10.2c0-.6-.1-1.2-.2-1.8h-9.2v3.5h5.3c-.2 1.2-.9 2.3-1.9 3l3 2.4c1.8-1.6 2.9-4 2.9-7.1z" fill="#4285F4"/><path d="M10.2 19.5c2.6 0 4.8-.9 6.4-2.3l-3-2.4c-.9.6-2 .9-3.3.9-2.5 0-4.7-1.7-5.4-4h-3v2.5c1.6 3.2 4.9 5.3 8.3 5.3z" fill="#34A853"/><path d="M4.7 11.7c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9v-2.5h-3c-.6 1.3-1 2.8-1 4.4s.4 3.1 1 4.4l3-2.5z" fill="#FBBC05"/><path d="M10.2 3.9c1.4 0 2.7.5 3.7 1.4l2.7-2.7c-1.6-1.5-3.8-2.4-6.4-2.4-3.4 0-6.7 2.1-8.3 5.3l3 2.5c.7-2.3 2.9-4.1 5.3-4.1z" fill="#EA4335"/></svg>Continue with Google</button>
+
+              <div style="text-align:center;margin-top:16px;"><span style="font-size:13px;color:var(--muted);">Already have an account? <a style="color:var(--primary);font-weight:700;">Sign in</a></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>2.</b> Register screen with invite banner up top + Apple Sign-In ✅</div>
+    </div>
+
+    <div class="frame-arrow">→</div>
+
+    <!-- Step 3: Accept First Game Modal -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <!-- Dashboard behind modal -->
+          <div class="scr" style="opacity:.35;">
+            <div style="padding:16px;">
+              <div style="height:40px;background:#fff;border-radius:12px;margin-bottom:10px;"></div>
+              <div style="height:160px;background:#fff;border-radius:16px;margin-bottom:10px;"></div>
+              <div style="height:80px;background:#fff;border-radius:14px;"></div>
+            </div>
+          </div>
+          <!-- Modal: Accept First Game -->
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <img src="https://i.pravatar.cc/150?img=47" alt="" class="inv-avatar-big">
+              <div style="text-align:center;font-size:10px;font-weight:700;color:var(--primary-dark);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:3px;">Game Invite</div>
+              <div class="modal-title" style="margin-bottom:14px;">Saturday Mahjong</div>
+              <div class="modal-sub">Sarah invited you to play. You can accept now and edit anytime.</div>
+
+              <div class="modal-card">
+                <div class="inv-game-row"><i class="ph ph-calendar-blank"></i><b>Sat, April 19</b> <span class="meta">· 2:00 PM ET · 2 hrs</span></div>
+                <div class="inv-game-row"><i class="ph ph-map-pin"></i><b>Sarah's Home</b> <span class="meta">· Brooklyn</span></div>
+                <div class="inv-game-row"><i class="ph ph-users"></i><b>3 / 4 players</b> <span class="meta">· Needs 1 more</span></div>
+                <div class="inv-game-row"><i class="ph ph-chat-circle"></i><i class="ph-fill ph-quote" style="font-size:10px;margin-right:4px;"></i><span style="font-style:italic;font-size:12px;color:var(--muted);">"Casual Saturday game — beginners welcome!"</span></div>
+              </div>
+
+              <div style="margin-bottom:12px;">
+                <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;letter-spacing:.5px;">I'LL BRING (OPTIONAL)</div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <div style="padding:6px 12px;background:#fff;border:1.5px solid var(--border);border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;">🍪 Snacks</div>
+                  <div style="padding:6px 12px;background:var(--primary-tint);border:1.5px solid var(--primary);color:var(--primary-dark);border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;">🍷 Wine</div>
+                  <div style="padding:6px 12px;background:#fff;border:1.5px solid var(--border);border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;">🀄 Tile Set</div>
+                </div>
+              </div>
+
+              <button class="btn-primary"><i class="ph-bold ph-check"></i> Accept Invite</button>
+              <button class="btn-link">Decline</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>3.</b> Post-signup <b>AcceptFirstGameModal</b> — tap Accept or Decline</div>
+    </div>
+
+    <div class="frame-arrow">→</div>
+
+    <!-- Step 4: Confirmation / Welcome -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div style="padding:60px 24px 20px;text-align:center;">
+              <div style="width:88px;height:88px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 0 0 8px var(--primary-tint2);"><i class="ph-fill ph-check-circle" style="font-size:56px;color:var(--primary);"></i></div>
+              <div style="font-family:'DM Serif Display',serif;font-size:30px;color:var(--text);letter-spacing:-.5px;line-height:1.1;margin-bottom:8px;">You're in!</div>
+              <div style="font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5;">Welcome to BamBuddies,<br><span style="font-family:'Caveat',cursive;color:var(--primary);font-size:28px;font-weight:700;">Alex</span></div>
+
+              <div class="modal-card" style="margin-bottom:20px;text-align:left;">
+                <div style="font-size:11px;font-weight:700;color:var(--primary-dark);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Your first game</div>
+                <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;">Saturday Mahjong</div>
+                <div class="inv-game-row"><i class="ph ph-calendar-blank"></i>Sat, Apr 19 · 2:00 PM</div>
+                <div class="inv-game-row"><i class="ph ph-map-pin"></i>Sarah's Home · Brooklyn</div>
+              </div>
+
+              <button class="btn-primary" style="margin-bottom:10px;"><i class="ph-bold ph-sparkle"></i> Take a Tour</button>
+              <button class="btn-secondary">Go to Dashboard</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>4.</b> Success screen — welcome + tour offer</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ D2: GROUP INVITE DEEPLINK → NEW USER ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-users-three" style="font-size:24px;color:var(--primary);"></i>
+    <h2>D2: Group Invite → New User Flow</h2>
+    <span class="chip">P0 · Deeplink</span>
+  </div>
+  <div class="section-desc" style="padding:0 20px;">Same pattern as D1 but for groups. After signup, prompts to join group + auto-invites to upcoming group games.</div>
+
+  <div class="flow">
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.35;">
+            <div style="padding:16px;"><div style="height:40px;background:#fff;border-radius:12px;margin-bottom:10px;"></div><div style="height:160px;background:#fff;border-radius:16px;margin-bottom:10px;"></div></div>
+          </div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#c93b8b,#ec4fa3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 0 0 4px var(--primary-tint);"><i class="ph-fill ph-users-three" style="font-size:36px;color:#fff;"></i></div>
+              <div style="text-align:center;font-size:10px;font-weight:700;color:var(--primary-dark);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:3px;">Group Invite</div>
+              <div class="modal-title" style="margin-bottom:14px;">Stovall Ladies</div>
+              <div class="modal-sub">You've been invited to join a private mahjong group.</div>
+
+              <div class="modal-card">
+                <div class="inv-game-row"><i class="ph ph-users"></i><b>12 members</b></div>
+                <div class="inv-game-row"><i class="ph ph-calendar-blank"></i><b>Meets Thursdays</b> <span class="meta">· 7:00 PM</span></div>
+                <div class="inv-game-row"><i class="ph ph-map-pin"></i><b>Brooklyn, NY</b></div>
+                <div class="inv-game-row"><i class="ph ph-trophy"></i><b>Intermediate level</b></div>
+              </div>
+
+              <div style="background:var(--primary-tint2);border-radius:12px;padding:12px 14px;margin-bottom:14px;border:1px solid #fbcfe8;">
+                <div style="font-size:12px;color:var(--primary-dark);font-weight:600;display:flex;align-items:center;gap:6px;"><i class="ph-fill ph-info"></i>You'll be auto-invited to 3 upcoming group games</div>
+              </div>
+
+              <button class="btn-primary"><i class="ph-bold ph-check"></i> Join Stovall Ladies</button>
+              <button class="btn-link">Not right now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Post-registration <b>JoinGroupModal</b> — member count + next meet + auto-invite preview</div>
+    </div>
+
+    <div class="frame-arrow">→</div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div style="padding:60px 24px 20px;text-align:center;">
+              <div style="width:88px;height:88px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><i class="ph-fill ph-users-four" style="font-size:50px;color:var(--primary);"></i></div>
+              <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--text);margin-bottom:8px;">Welcome to the group!</div>
+              <div style="font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5;">You're now a member of<br><b style="color:var(--text);">Stovall Ladies</b></div>
+
+              <div class="modal-card" style="text-align:left;margin-bottom:16px;">
+                <div style="font-size:11px;font-weight:700;color:var(--primary-dark);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">You've been added to 3 games</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fbcfe8,#f9a8d4);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--primary-dark);">APR<br>24</div><div style="flex:1;"><b>Thursday Night Mahjong</b><div style="font-size:11px;color:var(--muted);">7:00 PM · Maria's Place</div></div></div>
+                  <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fbcfe8,#f9a8d4);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--primary-dark);">MAY<br>01</div><div style="flex:1;"><b>Thursday Night Mahjong</b><div style="font-size:11px;color:var(--muted);">7:00 PM · Maria's Place</div></div></div>
+                  <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fbcfe8,#f9a8d4);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--primary-dark);">MAY<br>08</div><div style="flex:1;"><b>Thursday Night Mahjong</b><div style="font-size:11px;color:var(--muted);">7:00 PM · Maria's Place</div></div></div>
+                </div>
+              </div>
+
+              <button class="btn-primary">View My Games</button>
+              <button class="btn-link">Explore group chat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Confirmation shows auto-invited upcoming games</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ D3: GAME INVITE DEEPLINK → EXISTING USER (LOGGED OUT) ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-sign-in" style="font-size:24px;color:var(--primary);"></i>
+    <h2>D3: Game Invite → Existing User (Logged Out)</h2>
+    <span class="chip">P0 · Deeplink</span>
+  </div>
+  <div class="section-desc" style="padding:0 20px;">Existing user clicks deeplink but isn't logged in. Shows Login with invite banner preserved. After login → Accept modal.</div>
+
+  <div class="flow">
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="auth-scr">
+              <div class="auth-logo"><div class="auth-logo-mark">B</div></div>
+              <div class="auth-title">Welcome back</div>
+              <div class="auth-sub">Sign in to accept your invite</div>
+
+              <div class="auth-inv-banner">
+                <img src="https://i.pravatar.cc/150?img=47" alt="">
+                <div class="auth-inv-banner-text"><b>Sarah</b> invited you to Saturday Mahjong<br>Sat 4/19 · 2:00 PM · Brooklyn</div>
+              </div>
+
+              <div class="field"><label>Email</label><input class="input" value="alex@example.com"></div>
+              <div class="field"><label>Password</label><input class="input" type="password" value="••••••••"></div>
+              <div style="text-align:right;margin-bottom:16px;"><a style="color:var(--primary);font-size:12px;font-weight:600;cursor:pointer;">Forgot password?</a></div>
+
+              <button class="btn-primary"><i class="ph-bold ph-sign-in"></i> Sign In & View Invite</button>
+
+              <div class="sso-divider"><span>OR</span></div>
+              <button class="sso-btn apple"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M15.6 10.7c0-2.5 2-3.7 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9s-1.9-.9-3.2-.9c-1.6 0-3.1 1-4 2.5-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.5 1.2 0 1.7-.8 3.1-.8s1.8.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.4 1.3-2.7 1.3-2.8z"/></svg>Continue with Apple</button>
+              <button class="sso-btn google"><svg viewBox="0 0 20 20"><path d="M19.6 10.2c0-.6-.1-1.2-.2-1.8h-9.2v3.5h5.3c-.2 1.2-.9 2.3-1.9 3l3 2.4c1.8-1.6 2.9-4 2.9-7.1z" fill="#4285F4"/><path d="M10.2 19.5c2.6 0 4.8-.9 6.4-2.3l-3-2.4c-.9.6-2 .9-3.3.9-2.5 0-4.7-1.7-5.4-4h-3v2.5c1.6 3.2 4.9 5.3 8.3 5.3z" fill="#34A853"/><path d="M4.7 11.7c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9v-2.5h-3c-.6 1.3-1 2.8-1 4.4s.4 3.1 1 4.4l3-2.5z" fill="#FBBC05"/><path d="M10.2 3.9c1.4 0 2.7.5 3.7 1.4l2.7-2.7c-1.6-1.5-3.8-2.4-6.4-2.4-3.4 0-6.7 2.1-8.3 5.3l3 2.5c.7-2.3 2.9-4.1 5.3-4.1z" fill="#EA4335"/></svg>Continue with Google</button>
+
+              <div style="text-align:center;margin-top:16px;"><span style="font-size:13px;color:var(--muted);">New to BamBuddies? <a style="color:var(--primary);font-weight:700;">Sign up</a></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Login with preserved invite banner + Apple Sign-In ✅</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ A4: SESSION EXPIRED ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-clock-countdown" style="font-size:24px;color:var(--primary);"></i>
+    <h2>A4: Session Expired Modal</h2>
+    <span class="chip">P0 · Auth</span>
+  </div>
+  <div class="section-desc" style="padding:0 20px;">Shown when access + refresh token both fail. User must re-authenticate without losing context.</div>
+
+  <div class="flow">
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:50px;background:#fff;border-radius:12px;margin-bottom:10px;"></div><div style="height:180px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:60px;height:60px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><i class="ph-fill ph-clock-countdown" style="font-size:32px;color:#b45309;"></i></div>
+              <div class="modal-title" style="font-size:22px;">Session Expired</div>
+              <div class="modal-sub">For your security, please sign in again to continue.</div>
+              <button class="btn-primary">Sign In Again</button>
+              <button class="btn-link">Switch account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Centered modal — session expired prompt</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ D7: SSO CALLBACK ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-spinner-gap" style="font-size:24px;color:var(--primary);"></i>
+    <h2>D7: SSO Callback Processing</h2>
+    <span class="chip">P0 · Auth</span>
+  </div>
+  <div class="section-desc" style="padding:0 20px;">Brief "Signing you in..." screen shown during OAuth callback processing at /auth/callback.</div>
+
+  <div class="flow">
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px;min-height:100vh;text-align:center;">
+            <div class="auth-logo-mark" style="margin-bottom:24px;">B</div>
+            <div style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:10px;">Signing you in…</div>
+            <div class="load-dots" style="margin-bottom:20px;"><span></span><span></span><span></span></div>
+            <div style="font-size:12px;color:var(--muted);">This will just take a moment</div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Loading state during OAuth exchange</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODALS M1-M10: CONFIRMATIONS ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-chat-circle-dots" style="font-size:24px;color:var(--primary);"></i>
+    <h2>M1–M10: Confirmation Modals</h2>
+    <span class="chip">P0 · Modals</span>
+  </div>
+  <div class="section-desc" style="padding:0 20px;">All 10 critical confirmation modals using consistent pink v9 pattern.</div>
+
+  <div class="flow">
+
+    <!-- M1: Cancel Game -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:56px;height:56px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ph-fill ph-x-circle" style="font-size:30px;color:#dc2626;"></i></div>
+              <div class="modal-title" style="font-size:22px;">Cancel this game?</div>
+              <div class="modal-sub">All 3 players will be notified. This action can't be undone.</div>
+              <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:16px;"><textarea placeholder="Reason (optional)" style="width:100%;border:none;outline:none;font-size:13px;font-family:'Inter';resize:none;color:var(--text);" rows="2"></textarea></div>
+              <button class="btn-primary btn-primary-danger">Cancel Game</button>
+              <button class="btn-link">Keep game</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M1.</b> Cancel Game — with optional reason</div>
+    </div>
+
+    <!-- M2: Leave Game -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:56px;height:56px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ph-fill ph-sign-out" style="font-size:30px;color:#b45309;"></i></div>
+              <div class="modal-title" style="font-size:22px;">Leave Saturday Mahjong?</div>
+              <div class="modal-sub">Sarah and the other players will be notified. Your spot may open up for someone else.</div>
+              <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:16px;"><textarea placeholder="Let the organizer know why (optional)" style="width:100%;border:none;outline:none;font-size:13px;font-family:'Inter';resize:none;color:var(--text);" rows="2"></textarea></div>
+              <button class="btn-primary btn-primary-danger">Leave Game</button>
+              <button class="btn-link">Stay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M2.</b> Leave Game — optional reason</div>
+    </div>
+
+    <!-- M3: Decline Invite -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:56px;height:56px;border-radius:50%;background:#fce7f3;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ph-fill ph-hand-waving" style="font-size:30px;color:var(--primary);"></i></div>
+              <div class="modal-title" style="font-size:22px;">Decline this invite?</div>
+              <div class="modal-sub">Sarah will be notified. You can still join later if a spot opens.</div>
+              <button class="btn-primary">Decline</button>
+              <button class="btn-link">Keep the invite</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M3.</b> Decline Invite</div>
+    </div>
+
+    <!-- M4: Delete Group -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:56px;height:56px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ph-fill ph-trash" style="font-size:28px;color:#dc2626;"></i></div>
+              <div class="modal-title" style="font-size:22px;">Delete Stovall Ladies?</div>
+              <div class="modal-sub">All 12 members will be removed. 3 upcoming games will be cancelled. Type the group name to confirm.</div>
+              <input class="input" placeholder="Type: Stovall Ladies" style="margin-bottom:16px;">
+              <button class="btn-primary btn-primary-danger" style="opacity:.5;">Delete Group</button>
+              <button class="btn-link">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M4.</b> Delete Group — type name to confirm</div>
+    </div>
+
+    <!-- M5: Leave Group -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:56px;height:56px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ph-fill ph-sign-out" style="font-size:28px;color:#b45309;"></i></div>
+              <div class="modal-title" style="font-size:22px;">Leave Stovall Ladies?</div>
+              <div class="modal-sub">You'll stop receiving group messages and game invites.</div>
+              <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;"><input type="checkbox" checked><span style="font-size:13px;color:var(--text);">Also remove me from 3 upcoming games</span></div>
+              <button class="btn-primary btn-primary-danger">Leave Group</button>
+              <button class="btn-link">Stay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M5.</b> Leave Group — checkbox for upcoming games</div>
+    </div>
+
+    <!-- M6: Remove Player -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <img src="https://i.pravatar.cc/150?img=5" style="width:60px;height:60px;border-radius:50%;box-shadow:0 0 0 3px var(--primary);margin:0 auto 14px;display:block;">
+              <div class="modal-title" style="font-size:22px;">Remove Amy from game?</div>
+              <div class="modal-sub">Amy will be notified. Their spot will be open for other players.</div>
+              <button class="btn-primary btn-primary-danger">Remove Player</button>
+              <button class="btn-link">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M6.</b> Remove Player from game</div>
+    </div>
+
+    <!-- M7: Remove Member -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <img src="https://i.pravatar.cc/150?img=9" style="width:60px;height:60px;border-radius:50%;box-shadow:0 0 0 3px var(--primary);margin:0 auto 14px;display:block;">
+              <div class="modal-title" style="font-size:22px;">Remove Lisa from Stovall Ladies?</div>
+              <div class="modal-sub">Lisa will be notified and removed from 3 upcoming group games.</div>
+              <button class="btn-primary btn-primary-danger">Remove Member</button>
+              <button class="btn-link">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M7.</b> Remove Member from group</div>
+    </div>
+
+    <!-- M8: Logout -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:56px;height:56px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ph-fill ph-sign-out" style="font-size:28px;color:var(--primary);"></i></div>
+              <div class="modal-title" style="font-size:22px;">Sign out?</div>
+              <div class="modal-sub">You'll need to sign in again to use BamBuddies.</div>
+              <button class="btn-primary">Sign Out</button>
+              <button class="btn-link">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M8.</b> Logout / Sign Out</div>
+    </div>
+
+    <!-- M9: Unsaved Changes -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg center">
+            <div class="modal center">
+              <div style="width:56px;height:56px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="ph-fill ph-warning" style="font-size:28px;color:#b45309;"></i></div>
+              <div class="modal-title" style="font-size:22px;">Discard changes?</div>
+              <div class="modal-sub">You have unsaved changes. Leaving now will discard them.</div>
+              <button class="btn-primary" style="background:#fff;color:var(--primary);border:1.5px solid var(--primary);">Keep Editing</button>
+              <button class="btn-link" style="color:#dc2626;">Discard Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M9.</b> Unsaved Changes prompt</div>
+    </div>
+
+    <!-- M10: Transfer Organizer -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div class="modal-handle"></div>
+              <div class="modal-title">Transfer organizer role</div>
+              <div class="modal-sub">Choose the new organizer. They'll get edit access and become the primary contact.</div>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--cream);border-radius:14px;cursor:pointer;border:1.5px solid var(--primary);"><img src="https://i.pravatar.cc/150?img=9" style="width:40px;height:40px;border-radius:50%;box-shadow:0 0 0 2px var(--primary);"><div style="flex:1;"><div style="font-size:14px;font-weight:700;">Lisa M.</div><div style="font-size:11px;color:var(--muted);">Advanced · Joined Mar 2024</div></div><i class="ph-fill ph-check-circle" style="font-size:22px;color:var(--primary);"></i></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border-radius:14px;cursor:pointer;border:1.5px solid var(--border);"><img src="https://i.pravatar.cc/150?img=5" style="width:40px;height:40px;border-radius:50%;"><div style="flex:1;"><div style="font-size:14px;font-weight:700;">Amy T.</div><div style="font-size:11px;color:var(--muted);">Beginner · Joined Apr 2024</div></div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border-radius:14px;cursor:pointer;border:1.5px solid var(--border);"><img src="https://i.pravatar.cc/150?img=16" style="width:40px;height:40px;border-radius:50%;"><div style="flex:1;"><div style="font-size:14px;font-weight:700;">Rachel K.</div><div style="font-size:11px;color:var(--muted);">Intermediate · Joined Feb 2024</div></div></div>
+              </div>
+              <button class="btn-primary">Transfer to Lisa</button>
+              <button class="btn-link">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>M10.</b> Transfer Organizer — pick recipient</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
