@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Dashboard v8</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --primary:#c93b8b;
+  --primary-dark:#9d2467;
+  --primary-light:#ec4fa3;
+  --primary-tint:#fce7f3;
+  --primary-tint2:#fdf2f8;
+  --cream:#fdf8f0;
+  --cream-dark:#f5ece0;
+  --text:#1a1a1a;
+  --text-mute:#6b7280;
+  --text-soft:#9ca3af;
+}
+body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding:30px 20px;display:flex;flex-direction:column;align-items:center;gap:20px;}
+.page-ttl{color:#fff;font-family:'DM Serif Display',serif;font-size:24px;}
+.page-sub{color:#666;font-size:13px;margin-bottom:10px;}
+
+.phone-frame{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:20px;z-index:100;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:600;color:#1a1a1a;z-index:10;}
+.sbar .r{font-size:11px;display:flex;gap:4px;align-items:center;}
+
+/* Main frame */
+.phone{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.phone::-webkit-scrollbar{display:none;}
+
+/* Subtle mahjong tile pattern bg */
+.bg-tiles{position:absolute;inset:0;opacity:.08;pointer-events:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.3'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");z-index:0;}
+
+.scr{position:relative;padding-top:54px;z-index:1;}
+
+/* ============ TOP BAR ============ */
+.topbar{display:flex;align-items:center;padding:14px 20px 10px;gap:12px;}
+.topbar-avatar{width:44px;height:44px;border-radius:50%;position:relative;overflow:hidden;background:linear-gradient(135deg,#fbcfe8,#ec4899);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.topbar-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.topbar-name{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:var(--primary);line-height:1;flex:1;margin-top:4px;}
+.topbar-icons{display:flex;gap:8px;align-items:center;}
+.topbar-ic{width:38px;height:38px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;}
+.topbar-ic svg{width:17px;height:17px;stroke:var(--primary-dark);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.topbar-ic .dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--primary);border:1.5px solid var(--cream);}
+
+/* ============ GREETING ============ */
+.greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.15;}
+
+/* ============ ACTION ROW ============ */
+.actions{display:flex;gap:10px;padding:0 16px 20px;}
+.act{flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fffaf0 0%,#f8ead5 100%);border-radius:22px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:10px 4px 12px;cursor:pointer;box-shadow:0 4px 0 #e8d5b8,0 6px 14px rgba(0,0,0,.06);transition:transform .1s ease,box-shadow .1s ease;}
+.act:active{transform:translateY(2px);box-shadow:0 2px 0 #e8d5b8,0 3px 6px rgba(0,0,0,.05);}
+.act-icon-wrap{width:48px;height:48px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;margin-top:2px;}
+.act-icon-wrap svg{width:100%;height:100%;}
+.act-label{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--text);text-align:center;line-height:1.1;}
+.act-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--cream);box-shadow:0 2px 4px rgba(201,59,139,.3);}
+
+/* ============ SPONSORED ============ */
+.sponsor{margin:0 16px 18px;background:linear-gradient(135deg,#fdf2f8 0%,#fce7f3 100%);border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;position:relative;overflow:hidden;border:1px solid #fbcfe8;}
+.sponsor-img{width:80px;height:80px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#8b4513;}
+.sponsor-img img{width:100%;height:100%;object-fit:cover;}
+.sponsor-body{flex:1;min-width:0;}
+.sponsor-tag{font-size:9px;font-weight:700;color:var(--primary-dark);letter-spacing:1.5px;margin-bottom:2px;}
+.sponsor-ttl{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px;margin-bottom:2px;line-height:1.2;}
+.sponsor-sub{font-size:11px;color:var(--text-mute);margin-bottom:8px;}
+.sponsor-btn{display:inline-flex;align-items:center;gap:4px;background:var(--primary);color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:99px;cursor:pointer;}
+
+/* ============ NEXT GAME (2-COL) ============ */
+.nxt{margin:0 16px 20px;border-radius:22px;overflow:hidden;display:flex;box-shadow:0 6px 20px rgba(0,0,0,.06);border:1px solid rgba(251,207,232,.5);}
+.nxt-left{width:140px;background:linear-gradient(145deg,#fce7f3 0%,#fbcfe8 50%,#f9a8d4 100%);padding:16px 14px;display:flex;flex-direction:column;justify-content:space-between;color:var(--primary-dark);flex-shrink:0;}
+.nxt-l-top{}
+.nxt-l-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;opacity:.85;}
+.nxt-l-date{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;line-height:1;margin-bottom:2px;}
+.nxt-l-month{font-size:11px;font-weight:600;opacity:.7;letter-spacing:.5px;}
+.nxt-l-bottom{}
+.nxt-l-bar{height:4px;background:rgba(157,36,103,.2);border-radius:99px;overflow:hidden;margin-bottom:6px;}
+.nxt-l-fill{height:100%;width:65%;background:var(--primary-dark);border-radius:99px;}
+.nxt-l-cd{font-size:10px;font-weight:700;letter-spacing:.3px;}
+.nxt-right{flex:1;background:#fff;padding:16px 16px 14px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;}
+.nxt-r-ttl{font-family:'DM Serif Display',serif;font-style:italic;font-size:17px;font-weight:400;color:var(--text);margin-bottom:10px;letter-spacing:-.2px;}
+.nxt-r-time{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:2px;letter-spacing:-.3px;}
+.nxt-r-loc{font-size:11px;color:var(--text-mute);margin-bottom:12px;display:flex;align-items:center;gap:4px;}
+.nxt-r-loc svg{width:11px;height:11px;stroke:var(--text-soft);fill:none;stroke-width:2;}
+.nxt-r-bot{display:flex;align-items:center;gap:8px;}
+.nxt-dots{display:flex;}
+.nxt-dot{width:22px;height:22px;border-radius:50%;margin-right:-6px;border:2px solid #fff;}
+.nxt-dot:nth-child(1){background:#c93b8b;}
+.nxt-dot:nth-child(2){background:#9d2467;}
+.nxt-dot:nth-child(3){background:#a78bfa;}
+.nxt-dot:nth-child(4){background:#fbcfe8;}
+.nxt-r-status{font-size:12px;font-weight:700;color:var(--primary);margin-left:8px;letter-spacing:-.2px;}
+
+/* ============ SECTION HDR ============ */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 10px;}
+.sec-hdr-left{display:flex;align-items:center;gap:8px;}
+.sec-title{font-family:'Caveat',cursive;font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.5px;line-height:1;}
+.sec-count{background:var(--primary);color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;}
+.sec-hdr-right{display:flex;align-items:center;gap:10px;}
+.cal-ic{width:28px;height:28px;border-radius:8px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.cal-ic svg{width:14px;height:14px;stroke:var(--primary-dark);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.see-all{font-family:'Caveat',cursive;font-size:18px;font-weight:600;color:var(--primary);}
+
+/* ============ ATTENTION CARDS ============ */
+.att{margin:0 16px 10px;background:#fff;border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid #f3e8ff4d;}
+.att-av{width:48px;height:48px;border-radius:50%;position:relative;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#fcd34d,#f59e0b);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;border:2px solid var(--primary-tint);}
+.att-av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.att-body{flex:1;min-width:0;}
+.att-name{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;display:flex;align-items:center;gap:4px;}
+.att-wind{font-size:13px;opacity:.7;}
+.att-meta{font-size:11px;color:var(--text-mute);}
+.att-cta{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex-shrink:0;}
+.att-btn{padding:8px 18px;border-radius:99px;background:var(--primary);color:#fff;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(201,59,139,.25);}
+.att-txt{text-align:center;font-size:11px;font-weight:500;color:var(--text-soft);text-decoration:underline;cursor:pointer;padding:2px;}
+
+/* ============ YOUR GAMES ============ */
+.game-card{margin:0 16px 8px;background:#fff;border-radius:16px;padding:12px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 6px rgba(0,0,0,.04);}
+.game-thumb{width:48px;height:48px;border-radius:12px;position:relative;flex-shrink:0;overflow:hidden;}
+.game-thumb-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.game-thumb.sage .game-thumb-bg{background:linear-gradient(135deg,#d1fae5,#a7f3d0);}
+.game-thumb.lavender .game-thumb-bg{background:linear-gradient(135deg,#ede9fe,#ddd6fe);}
+.game-thumb.peach .game-thumb-bg{background:linear-gradient(135deg,#ffedd5,#fed7aa);}
+.game-day{position:relative;z-index:1;text-align:center;}
+.game-day-num{font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;line-height:1;color:var(--text);}
+.game-day-mon{font-size:9px;font-weight:700;color:var(--text-mute);letter-spacing:.5px;text-transform:uppercase;}
+.game-body{flex:1;min-width:0;}
+.game-ttl{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:1px;}
+.game-meta{font-size:11px;color:var(--text-mute);}
+.game-right{text-align:right;flex-shrink:0;}
+.game-players{font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.game-status{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;text-transform:uppercase;letter-spacing:.3px;}
+.game-status.committed{background:#dcfce7;color:#15803d;}
+.game-status.pending{background:#fef3c7;color:#b45309;}
+
+/* ============ TAB BAR ============ */
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:88px;background:rgba(253,248,240,.95);backdrop-filter:blur(14px);border-top:1px solid rgba(0,0,0,.05);display:flex;align-items:flex-start;padding:10px 0 0;z-index:50;}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:2px 0;cursor:pointer;}
+.tab svg{width:22px;height:22px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke:var(--text-soft);}
+.tab.active svg{stroke:var(--primary);fill:var(--primary-tint);}
+.tab-lbl{font-size:9px;font-weight:700;color:var(--text-soft);letter-spacing:.5px;}
+.tab.active .tab-lbl{color:var(--primary);}
+.tab-new{flex:1;display:flex;flex-direction:column;align-items:center;cursor:pointer;position:relative;}
+.tab-new-btn{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary-light),var(--primary-dark));display:flex;align-items:center;justify-content:center;margin-top:-18px;box-shadow:0 4px 12px rgba(201,59,139,.4);position:relative;overflow:hidden;}
+.tab-new-btn::before{content:'';position:absolute;inset:6px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.3),transparent);}
+.tab-new-btn svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:3;position:relative;z-index:1;}
+.tab-new-lbl{font-size:9px;font-weight:700;color:var(--primary);letter-spacing:.5px;margin-top:4px;}
+
+/* hide scrollbar */
+.scr{padding-bottom:110px;}
+</style>
+</head>
+<body>
+
+<div class="page-ttl">Dashboard v8</div>
+<div class="page-sub">Two-column date card + refined action tiles (no points row)</div>
+
+<div class="phone-frame">
+  <div class="notch"></div>
+  <div class="sbar"><span>9:41</span><span class="r">●●●● ▮</span></div>
+
+  <div class="phone">
+    <div class="bg-tiles"></div>
+
+    <div class="scr">
+
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <div class="topbar-avatar">S<img src="https://i.pravatar.cc/150?img=47" alt=""></div>
+        <div class="topbar-name">Sarah</div>
+        <div class="topbar-icons">
+          <div class="topbar-ic" title="Search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <div class="topbar-ic" title="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GREETING -->
+      <div class="greeting">May the winds be with you.</div>
+
+      <!-- ACTION ROW (refined cream tiles) -->
+      <div class="actions">
+        <div class="act" title="Start Game">
+          <div class="act-icon-wrap">
+            <!-- Start Game: play tile -->
+            <svg viewBox="0 0 48 48">
+              <rect x="8" y="6" width="32" height="38" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+              <rect x="11" y="9" width="26" height="32" rx="4" fill="#fef3e8" stroke="#1a1a1a" stroke-width="1" opacity=".4"/>
+              <path d="M21 18L32 24L21 30Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="act-label">Start<br>Game</div>
+        </div>
+
+        <div class="act" title="Find Games">
+          <div class="act-icon-wrap">
+            <!-- Map with heart pin -->
+            <svg viewBox="0 0 48 48">
+              <path d="M8 12 L18 10 L30 14 L40 10 L40 38 L30 42 L18 38 L8 42 Z" fill="#fef3e8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+              <line x1="18" y1="10" x2="18" y2="38" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2" opacity=".6"/>
+              <line x1="30" y1="14" x2="30" y2="42" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2" opacity=".6"/>
+              <path d="M24 17c-2 0-3.5 1.5-3.5 3.5 0 3 3.5 6 3.5 6s3.5-3 3.5-6c0-2-1.5-3.5-3.5-3.5z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="1.8"/>
+              <circle cx="24" cy="21" r="1.2" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="act-label">Find<br>Games</div>
+        </div>
+
+        <div class="act" title="Start Group">
+          <div class="act-icon-wrap">
+            <!-- Two chat tiles -->
+            <svg viewBox="0 0 48 48">
+              <rect x="7" y="14" width="22" height="22" rx="4" fill="#a7f3d0" stroke="#1a1a1a" stroke-width="2"/>
+              <rect x="19" y="9" width="22" height="22" rx="4" fill="#fbcfe8" stroke="#1a1a1a" stroke-width="2"/>
+              <circle cx="26" cy="17" r="1.2" fill="#1a1a1a"/>
+              <circle cx="34" cy="17" r="1.2" fill="#1a1a1a"/>
+              <path d="M25 22c1.5 1.5 4 1.5 5.5 0" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="act-label">Start<br>Group</div>
+        </div>
+
+        <div class="act" title="Messages">
+          <div class="act-badge">3</div>
+          <div class="act-icon-wrap">
+            <!-- Speech bubble with dots -->
+            <svg viewBox="0 0 48 48">
+              <path d="M8 12 h32 a4 4 0 0 1 4 4 v18 a4 4 0 0 1 -4 4 h-18 l-8 6 v-6 h-6 a4 4 0 0 1 -4 -4 v-18 a4 4 0 0 1 4 -4 z" fill="#fff" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="17" cy="25" r="2.5" fill="#c93b8b"/>
+              <circle cx="25" cy="25" r="2.5" fill="#a78bfa"/>
+              <circle cx="33" cy="25" r="2.5" fill="#fcd34d"/>
+            </svg>
+          </div>
+          <div class="act-label">Messages</div>
+        </div>
+      </div>
+
+      <!-- SPONSORED -->
+      <div class="sponsor">
+        <div class="sponsor-img">
+          <img src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=160&h=160&fit=crop" alt="">
+        </div>
+        <div class="sponsor-body">
+          <div class="sponsor-tag">SPONSORED</div>
+          <div class="sponsor-ttl">New Mahjong Sets — 20% Off</div>
+          <div class="sponsor-sub">Free shipping this week only</div>
+          <div class="sponsor-btn">Shop the Set</div>
+        </div>
+      </div>
+
+      <!-- YOUR NEXT GAME (2-COL) -->
+      <div class="nxt">
+        <div class="nxt-left">
+          <div class="nxt-l-top">
+            <div class="nxt-l-label">This Saturday</div>
+            <div class="nxt-l-date">Apr 19</div>
+          </div>
+          <div class="nxt-l-bottom">
+            <div class="nxt-l-bar"><div class="nxt-l-fill"></div></div>
+            <div class="nxt-l-cd">2 days to go</div>
+          </div>
+        </div>
+        <div class="nxt-right">
+          <div>
+            <div class="nxt-r-ttl">Your Next Game</div>
+            <div class="nxt-r-time">2:00 PM · 2 hrs</div>
+            <div class="nxt-r-loc">
+              <svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              123 Main St · Brooklyn
+            </div>
+          </div>
+          <div class="nxt-r-bot">
+            <div class="nxt-dots">
+              <div class="nxt-dot"></div>
+              <div class="nxt-dot"></div>
+              <div class="nxt-dot"></div>
+              <div class="nxt-dot"></div>
+            </div>
+            <div class="nxt-r-status">All 4 in</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEEDS YOUR ATTENTION -->
+      <div class="sec-hdr">
+        <div class="sec-hdr-left">
+          <div class="sec-title">Needs Your Attention</div>
+          <div class="sec-count">2</div>
+        </div>
+        <div class="sec-hdr-right"><div class="see-all">See all</div></div>
+      </div>
+
+      <div class="att">
+        <div class="att-av"><img src="https://i.pravatar.cc/150?img=5" alt=""></div>
+        <div class="att-body">
+          <div class="att-name">Mia invited you <span class="att-wind">🀀</span></div>
+          <div class="att-meta">Tue Apr 22 · 6:30 PM · 3 of 4</div>
+        </div>
+        <div class="att-cta">
+          <div class="att-btn">Accept</div>
+          <div class="att-txt">Decline</div>
+        </div>
+      </div>
+
+      <div class="att">
+        <div class="att-av" style="background:linear-gradient(135deg,#60a5fa,#3b82f6);"><img src="https://i.pravatar.cc/150?img=9" alt=""></div>
+        <div class="att-body">
+          <div class="att-name">Lisa's game is full — confirm?</div>
+          <div class="att-meta">Thu Apr 24 · 3:00 PM · 4 of 4</div>
+        </div>
+        <div class="att-cta">
+          <div class="att-btn">Confirm</div>
+          <div class="att-txt">Skip</div>
+        </div>
+      </div>
+
+      <!-- YOUR GAMES -->
+      <div class="sec-hdr" style="margin-top:16px;">
+        <div class="sec-hdr-left"><div class="sec-title">Your Games</div></div>
+        <div class="sec-hdr-right">
+          <div class="cal-ic" title="Sync to calendar">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+          </div>
+          <div class="see-all">See all</div>
+        </div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-thumb sage">
+          <div class="game-thumb-bg"></div>
+          <div class="game-day" style="position:relative;z-index:2;"><div class="game-day-num">26</div><div class="game-day-mon">Apr</div></div>
+        </div>
+        <div class="game-body">
+          <div class="game-ttl">Sunday Brunch Mahjong</div>
+          <div class="game-meta">11:00 AM · Central Park</div>
+        </div>
+        <div class="game-right">
+          <div class="game-players">3 of 4</div>
+          <div class="game-status pending">Pending</div>
+        </div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-thumb lavender">
+          <div class="game-thumb-bg"></div>
+          <div class="game-day" style="position:relative;z-index:2;"><div class="game-day-num">03</div><div class="game-day-mon">May</div></div>
+        </div>
+        <div class="game-body">
+          <div class="game-ttl">Monthly Meetup</div>
+          <div class="game-meta">6:00 PM · Jack's Place</div>
+        </div>
+        <div class="game-right">
+          <div class="game-players">4 of 4</div>
+          <div class="game-status committed">Committed</div>
+        </div>
+      </div>
+
+      <div class="game-card">
+        <div class="game-thumb peach">
+          <div class="game-thumb-bg"></div>
+          <div class="game-day" style="position:relative;z-index:2;"><div class="game-day-num">10</div><div class="game-day-mon">May</div></div>
+        </div>
+        <div class="game-body">
+          <div class="game-ttl">Mother's Day Match</div>
+          <div class="game-meta">2:00 PM · Westside Club</div>
+        </div>
+        <div class="game-right">
+          <div class="game-players">2 of 4</div>
+          <div class="game-status pending">Pending</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB BAR -->
+    <div class="tabbar">
+      <div class="tab active">
+        <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v9a2 2 0 0 1-2 2h-4v-7h-6v7H5a2 2 0 0 1-2-2z"/></svg>
+        <div class="tab-lbl">HOME</div>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>
+        <div class="tab-lbl">DISCOVER</div>
+      </div>
+      <div class="tab-new">
+        <div class="tab-new-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </div>
+        <div class="tab-new-lbl">NEW</div>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+        <div class="tab-lbl">GAMES</div>
+      </div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div class="tab-lbl">GROUPS</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
