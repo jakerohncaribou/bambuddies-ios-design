@@ -148,12 +148,14 @@ body{background:#1a1a1a;font-family:'Outfit',sans-serif;min-height:100vh;padding
 .card.clickable:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06);border-color:#d4d4cc;}
 .avatar{border-radius:50%;object-fit:cover;}
 .pill{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:3px 10px;font-size:11px;font-weight:600;font-family:'Outfit',sans-serif;}
-.pill-green{background:var(--primary-bg);color:var(--primary);}
-.pill-amber{background:#fef3c7;color:#d97706;}
-.pill-red{background:#fee2e2;color:#dc2626;}
-.pill-blue{background:#dbeafe;color:#2563eb;}
-.pill-gray{background:#f3f4f6;color:#6b7280;}
-.section-title{font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+/* Status pills — LOCKED colors, never change with theme */
+.pill-green{background:#dcfce7;color:#15803d;text-transform:uppercase;letter-spacing:.3px;font-weight:700;}
+.pill-amber{background:#fef3c7;color:#b45309;text-transform:uppercase;letter-spacing:.3px;font-weight:700;}
+.pill-red{background:#fee2e2;color:#991b1b;text-transform:uppercase;letter-spacing:.3px;font-weight:700;}
+.pill-blue{background:#dbeafe;color:#1e40af;text-transform:uppercase;letter-spacing:.3px;font-weight:700;}
+.pill-gray{background:#f3f4f6;color:#6b7280;text-transform:uppercase;letter-spacing:.3px;font-weight:700;}
+.pill-yellow{background:#fef9c3;color:#854d0e;text-transform:uppercase;letter-spacing:.3px;font-weight:700;}
+.section-title{font-family:'Caveat',cursive;font-size:26px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:10px;line-height:1;}
 .section-title .count{background:#f43f5e;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .see-all{color:var(--primary);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;}
@@ -609,13 +611,13 @@ select.input{cursor:pointer;}
                 <div class="row-thumb" style="background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;"><span style="color:#4338ca;font-size:10px;font-weight:700;">4/26</span></div>
                 <div class="row-main"><div class="row-title">Rachel's Open Game</div><div class="row-sub">Sat 1:00 PM &middot; Community Center &middot; Open Public</div></div>
                 <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
-                <div class="row-side"><span class="mini">2/4</span><span class="pill pill-amber">Pending</span></div>
+                <div class="row-side"><span class="mini">2/4</span><span class="pill pill-amber">PENDING</span></div>
               </div>
               <div class="list-row" onclick="go('gameDetail')">
                 <div class="row-thumb" style="background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;"><span style="color:#c93b8b;font-size:10px;font-weight:700;">5/03</span></div>
                 <div class="row-main"><div class="row-title">Sunday Afternoon Session <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;"></i></div><div class="row-sub">Sun 3:00 PM &middot; Lisa's House &middot; Advanced</div></div>
                 <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
-                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">Confirmed</span></div>
+                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">COMMITTED</span></div>
               </div>
             </div>
 
@@ -735,7 +737,7 @@ select.input{cursor:pointer;}
                 <div class="row-thumb"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" alt=""><div class="row-date">4/19</div></div>
                 <div class="row-main"><div class="row-title">Saturday Mahjong <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;"></i></div><div class="row-sub">Sat 2:00 PM &middot; Sarah's Home &middot; Intermediate</div></div>
                 <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
-                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">Confirmed</span></div>
+                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">COMMITTED</span></div>
               </div>
               <div class="list-row" onclick="go('gameDetail')">
                 <div class="row-thumb"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" alt=""><div class="row-date">4/22</div></div>
@@ -747,13 +749,13 @@ select.input{cursor:pointer;}
                 <div class="row-thumb" style="background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;"><span style="color:#4338ca;font-size:10px;font-weight:700;">4/26</span></div>
                 <div class="row-main"><div class="row-title">Rachel's Open Game</div><div class="row-sub">Sat 1:00 PM &middot; Community Center &middot; Open Public</div></div>
                 <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
-                <div class="row-side"><span class="mini">2/4</span><span class="pill pill-amber">Pending</span></div>
+                <div class="row-side"><span class="mini">2/4</span><span class="pill pill-amber">PENDING</span></div>
               </div>
               <div class="list-row" onclick="go('gameDetail')">
                 <div class="row-thumb" style="background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;"><span style="color:#c93b8b;font-size:10px;font-weight:700;">5/03</span></div>
                 <div class="row-main"><div class="row-title">Sunday Afternoon <i class="ph-fill ph-crown" style="font-size:12px;color:#d97706;"></i></div><div class="row-sub">Sun 3:00 PM &middot; Lisa's House &middot; Advanced</div></div>
                 <div class="avatars-stack"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="26" height="26" class="avatar"></div>
-                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">Confirmed</span></div>
+                <div class="row-side"><span class="mini">4/4</span><span class="pill pill-green">COMMITTED</span></div>
               </div>
             </div>
 
@@ -762,12 +764,12 @@ select.input{cursor:pointer;}
               <div class="list-row" style="opacity:.8;" onclick="go('gameReview')">
                 <div class="row-thumb" style="background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;align-items:center;justify-content:center;"><span style="color:#6b7280;font-size:10px;font-weight:700;">4/12</span></div>
                 <div class="row-main"><div class="row-title">Easter Weekend Game</div><div class="row-sub">Sat Apr 12 &middot; Sarah's Home</div></div>
-                <div class="row-side"><span class="pill pill-gray">Completed</span><span class="text-primary" style="font-size:11px;font-weight:600;cursor:pointer;">Leave review &rarr;</span></div>
+                <div class="row-side"><span class="pill pill-gray">COMPLETED</span><span class="text-primary" style="font-size:11px;font-weight:600;cursor:pointer;">Leave review &rarr;</span></div>
               </div>
               <div class="list-row" style="opacity:.8;">
                 <div class="row-thumb" style="background:linear-gradient(135deg,#f5f3ee,#e8e4e0);display:flex;align-items:center;justify-content:center;"><span style="color:#6b7280;font-size:10px;font-weight:700;">4/05</span></div>
                 <div class="row-main"><div class="row-title">Lisa's Weekly</div><div class="row-sub">Sat Apr 5 &middot; Lisa's House</div></div>
-                <div class="row-side"><span class="pill pill-gray">Completed</span><span class="text-muted" style="font-size:11px;"><i class="ph-fill ph-star" style="color:#d97706;"></i> Reviewed</span></div>
+                <div class="row-side"><span class="pill pill-gray">COMPLETED</span><span class="text-muted" style="font-size:11px;"><i class="ph-fill ph-star" style="color:#d97706;"></i> Reviewed</span></div>
               </div>
             </div>
           </main>
@@ -1537,17 +1539,17 @@ select.input{cursor:pointer;}
                   <div class="list-row" onclick="go('gameDetail')">
                     <div class="row-thumb"><img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" alt=""><div class="row-date">4/19</div></div>
                     <div class="row-main"><div class="row-title">Saturday Mahjong</div><div class="row-sub">Sat 2:00 PM &middot; Sarah's Home</div></div>
-                    <div class="row-side"><span class="pill pill-green">Confirmed</span></div>
+                    <div class="row-side"><span class="pill pill-green">COMMITTED</span></div>
                   </div>
                   <div class="list-row" onclick="go('gameDetail')">
                     <div class="row-thumb" style="background:linear-gradient(135deg,#d8cef0,#c5b8e8);display:flex;align-items:center;justify-content:center;"><span style="color:#4338ca;font-size:10px;font-weight:700;">4/26</span></div>
                     <div class="row-main"><div class="row-title">Rachel's Open Game</div><div class="row-sub">Sat 1:00 PM &middot; Community Center</div></div>
-                    <div class="row-side"><span class="pill pill-amber">Pending</span></div>
+                    <div class="row-side"><span class="pill pill-amber">PENDING</span></div>
                   </div>
                   <div class="list-row" onclick="go('gameDetail')">
                     <div class="row-thumb" style="background:linear-gradient(135deg,#c5e0d3,#a8d5c2);display:flex;align-items:center;justify-content:center;"><span style="color:#c93b8b;font-size:10px;font-weight:700;">5/03</span></div>
                     <div class="row-main"><div class="row-title">Sunday Session</div><div class="row-sub">Sun 3:00 PM &middot; Lisa's House</div></div>
-                    <div class="row-side"><span class="pill pill-green">Confirmed</span></div>
+                    <div class="row-side"><span class="pill pill-green">COMMITTED</span></div>
                   </div>
                 </div>
               </div>
@@ -2180,7 +2182,7 @@ select.input{cursor:pointer;}
                     <tbody>
                       <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Rachel K.</span></div></td><td class="text-muted">2h ago</td><td><span class="pill pill-green">Verified</span></td></tr>
                       <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Mark D.</span></div></td><td class="text-muted">5h ago</td><td><span class="pill pill-green">Verified</span></td></tr>
-                      <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Jenny W.</span></div></td><td class="text-muted">1d ago</td><td><span class="pill pill-amber">Pending</span></td></tr>
+                      <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Jenny W.</span></div></td><td class="text-muted">1d ago</td><td><span class="pill pill-amber">PENDING</span></td></tr>
                       <tr><td><div class="row"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=40&h=40&fit=crop&crop=face" width="28" height="28" class="avatar"><span class="fw-6">Amy T.</span></div></td><td class="text-muted">2d ago</td><td><span class="pill pill-green">Verified</span></td></tr>
                     </tbody>
                   </table>

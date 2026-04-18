@@ -118,7 +118,13 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 /* Utility */
 .card { border-radius:16px; overflow:hidden; }
 .avatar { border-radius:50%; object-fit:cover; }
-.pill { border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; display:inline-flex; align-items:center; }
+.pill { border-radius:20px; padding:3px 10px; font-size:10px; font-weight:700; display:inline-flex; align-items:center; text-transform:uppercase; letter-spacing:.3px; }
+/* Status pills — LOCKED colors, don't change with theme */
+.pill-committed{background:#dcfce7;color:#15803d;}
+.pill-pending{background:#fef3c7;color:#b45309;}
+.pill-completed{background:#dbeafe;color:#1e40af;}
+.pill-cancelled{background:#fee2e2;color:#991b1b;}
+.pill-started{background:#fef9c3;color:#854d0e;}
 .scroll-x { display:flex; gap:10px; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
 .scroll-x::-webkit-scrollbar { display:none; }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
@@ -229,40 +235,45 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <!-- Needs Your Attention -->
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-        <div style="color:#000;font-size:17px;font-weight:700;font-family:'Outfit',sans-serif;">Needs Your Attention</div>
-        <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
+        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:26px;color:#1a1a1a;line-height:1;">Needs Your Attention</div>
+        <div style="background:#c93b8b;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 6px;display:flex;align-items:center;justify-content:center;">2</div>
       </div>
 
-      <!-- Invite 1 (compact, inline Accept + Decline link) -->
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:10px 12px;margin-bottom:8px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="" style="flex-shrink:0;">
-          <div style="flex:1;min-width:0;">
-            <div style="color:#000;font-size:13px;font-weight:700;line-height:1.2;">Amy's Tuesday Game</div>
-            <div style="color:#888;font-size:11px;margin-top:2px;">Tue, Apr 22 &middot; 7:00 PM &middot; Invite Only</div>
-          </div>
-          <button style="background:#c93b8b;color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;flex-shrink:0;">Accept</button>
+      <!-- Invite 1 (v9 pattern: ring avatar + kicker + title + pill Accept + Decline link) -->
+      <div style="background:#fff;border-radius:18px;padding:14px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;gap:12px;align-items:center;">
+        <div style="width:48px;height:48px;border-radius:50%;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 3px #c93b8b;margin:3px;"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;" alt=""></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:10px;font-weight:700;color:#9d2467;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;">Game Invite</div>
+          <div style="font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;margin-bottom:3px;">Amy's Home</div>
+          <div style="font-size:11px;color:#6b7280;">Tue Apr 22 &middot; 7:00 PM &middot; 3 of 4</div>
         </div>
-        <div style="text-align:right;margin-top:4px;margin-right:2px;"><span style="color:#9ca3af;font-size:11px;font-weight:500;cursor:pointer;text-decoration:underline;text-decoration-color:#d1d5db;">Decline</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+          <div style="padding:8px 18px;border-radius:99px;background:#c93b8b;color:#fff;font-size:12px;font-weight:700;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(201,59,139,.25);">Accept</div>
+          <div style="text-align:center;font-size:11px;color:#9ca3af;text-decoration:underline;cursor:pointer;">Decline</div>
+        </div>
       </div>
 
-      <!-- Invite 2 (compact) -->
-      <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:10px 12px;margin-bottom:16px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="" style="flex-shrink:0;">
-          <div style="flex:1;min-width:0;">
-            <div style="color:#000;font-size:13px;font-weight:700;line-height:1.2;">Rachel's Open Game</div>
-            <div style="color:#888;font-size:11px;margin-top:2px;">Sat, Apr 26 &middot; 1:00 PM &middot; Open</div>
-          </div>
-          <button style="background:#c93b8b;color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;flex-shrink:0;">Accept</button>
+      <!-- Invite 2 (v9 pattern) -->
+      <div style="background:#fff;border-radius:18px;padding:14px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;gap:12px;align-items:center;">
+        <div style="width:48px;height:48px;border-radius:50%;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 3px #c93b8b;margin:3px;"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;" alt=""></div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:10px;font-weight:700;color:#9d2467;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;">Group Invite</div>
+          <div style="font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;margin-bottom:3px;">Stovall Ladies</div>
+          <div style="font-size:11px;color:#6b7280;">12 members &middot; Thursdays</div>
         </div>
-        <div style="text-align:right;margin-top:4px;margin-right:2px;"><span style="color:#9ca3af;font-size:11px;font-weight:500;cursor:pointer;text-decoration:underline;text-decoration-color:#d1d5db;">Decline</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+          <div style="padding:8px 18px;border-radius:99px;background:#c93b8b;color:#fff;font-size:12px;font-weight:700;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(201,59,139,.25);">Accept</div>
+          <div style="text-align:center;font-size:11px;color:#9ca3af;text-decoration:underline;cursor:pointer;">Decline</div>
+        </div>
       </div>
 
       <!-- Coming Up -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <div style="color:#000;font-size:17px;font-weight:700;font-family:'Outfit',sans-serif;">Coming Up</div>
-        <div style="color:#c93b8b;font-size:13px;font-weight:600;cursor:pointer;" onclick="event.stopPropagation();go('myGames')">See All &rarr;</div>
+        <div style="font-family:'Caveat',cursive;font-weight:700;font-size:26px;color:#1a1a1a;line-height:1;">Your Games</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:28px;height:28px;border-radius:8px;background:#fce7f3;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-calendar-plus" style="font-size:14px;color:#9d2467;"></i></div>
+          <div style="font-family:'Caveat',cursive;font-size:18px;font-weight:600;color:#c93b8b;cursor:pointer;" onclick="event.stopPropagation();go('myGames')">See all</div>
+        </div>
       </div>
 
       <!-- Coming Up Row 1 -->
@@ -523,7 +534,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     <div class="screen has-tab" data-screen="myGames" id="myGamesScreen" style="padding:16px;">
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div style="color:#000;font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;">My Games</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#1a1a1a;">My Games</div>
         <i class="ph ph-magnifying-glass" style="font-size:22px;color:#1a1a1a;"></i>
       </div>
 
@@ -535,43 +546,45 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="background:#fff;color:#666;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid #e8e4e0;">Cancelled</div>
       </div>
 
-      <!-- ===== NEEDS YOUR ATTENTION ===== -->
+      <!-- ===== NEEDS YOUR ATTENTION (v9 pattern) ===== -->
       <div style="margin-bottom:14px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
-          <div style="color:#000;font-size:16px;font-weight:700;font-family:'Outfit',sans-serif;">Needs Your Attention</div>
-          <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;padding:0 5px;display:flex;align-items:center;justify-content:center;">2</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="font-family:'Caveat',cursive;font-weight:700;font-size:24px;color:#1a1a1a;line-height:1;">Needs Your Attention</div>
+          <div style="background:#c93b8b;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;padding:0 6px;display:flex;align-items:center;justify-content:center;">2</div>
         </div>
 
-        <!-- Invite 1 (compact) -->
-        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:10px 12px;margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="">
-            <div style="flex:1;min-width:0;">
-              <div style="color:#000;font-size:13px;font-weight:700;line-height:1.2;">Amy's Tuesday Game</div>
-              <div style="color:#888;font-size:11px;margin-top:2px;">Tue, Apr 22 &middot; 6:30 PM &middot; Amy T.</div>
-            </div>
-            <button style="background:#c93b8b;color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;flex-shrink:0;">Accept</button>
+        <!-- Invite 1 -->
+        <div style="background:#fff;border-radius:18px;padding:14px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;gap:12px;align-items:center;">
+          <div style="width:48px;height:48px;border-radius:50%;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 3px #c93b8b;margin:3px;"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;" alt=""></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:10px;font-weight:700;color:#9d2467;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;">Game Invite</div>
+            <div style="font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;margin-bottom:3px;">Amy's Tuesday Game</div>
+            <div style="font-size:11px;color:#6b7280;">Tue Apr 22 &middot; 6:30 PM &middot; 3 of 4</div>
           </div>
-          <div style="text-align:right;margin-top:4px;margin-right:2px;"><span style="color:#9ca3af;font-size:11px;font-weight:500;cursor:pointer;text-decoration:underline;text-decoration-color:#d1d5db;">Decline</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+            <div style="padding:8px 18px;border-radius:99px;background:#c93b8b;color:#fff;font-size:12px;font-weight:700;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(201,59,139,.25);">Accept</div>
+            <div style="text-align:center;font-size:11px;color:#9ca3af;text-decoration:underline;cursor:pointer;">Decline</div>
+          </div>
         </div>
 
-        <!-- Invite 2 (compact) -->
-        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:10px 12px;margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;" alt="">
-            <div style="flex:1;min-width:0;">
-              <div style="color:#000;font-size:13px;font-weight:700;line-height:1.2;">Rachel's Open Game</div>
-              <div style="color:#888;font-size:11px;margin-top:2px;">Thu, Apr 24 &middot; 3:00 PM &middot; Open</div>
-            </div>
-            <button style="background:#c93b8b;color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;flex-shrink:0;">Accept</button>
+        <!-- Invite 2 -->
+        <div style="background:#fff;border-radius:18px;padding:14px;margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,.04);display:flex;gap:12px;align-items:center;">
+          <div style="width:48px;height:48px;border-radius:50%;flex-shrink:0;overflow:hidden;box-shadow:0 0 0 3px #c93b8b;margin:3px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" style="width:100%;height:100%;object-fit:cover;" alt=""></div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:10px;font-weight:700;color:#9d2467;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;">Game Invite</div>
+            <div style="font-size:14px;font-weight:700;color:#1a1a1a;letter-spacing:-.2px;margin-bottom:3px;">Rachel's Open Game</div>
+            <div style="font-size:11px;color:#6b7280;">Thu Apr 24 &middot; 3:00 PM &middot; Open</div>
           </div>
-          <div style="text-align:right;margin-top:4px;margin-right:2px;"><span style="color:#9ca3af;font-size:11px;font-weight:500;cursor:pointer;text-decoration:underline;text-decoration-color:#d1d5db;">Decline</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+            <div style="padding:8px 18px;border-radius:99px;background:#c93b8b;color:#fff;font-size:12px;font-weight:700;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(201,59,139,.25);">Accept</div>
+            <div style="text-align:center;font-size:11px;color:#9ca3af;text-decoration:underline;cursor:pointer;">Decline</div>
+          </div>
         </div>
       </div>
 
       <!-- Divider -->
       <div style="height:1px;background:#e8e4e0;margin-bottom:14px;"></div>
-      <div style="color:#000;font-size:16px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">My Games</div>
+      <div style="font-family:'Caveat',cursive;font-weight:700;font-size:24px;color:#1a1a1a;margin-bottom:10px;line-height:1;">My Games</div>
 
       <!-- PAST (scroll up to see) -->
 
@@ -2506,7 +2519,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
 
       <!-- Empty: Next Game -->
-      <div style="color:#000;font-size:16px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">Upcoming</div>
+      <div style="font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:#1a1a1a;margin-bottom:10px;line-height:1;">Upcoming</div>
       <div style="background:#fff;border:2px dashed #e8e4e0;border-radius:16px;padding:28px 20px;text-align:center;margin-bottom:18px;">
         <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;"><i class="ph ph-calendar-blank" style="font-size:28px;color:#c93b8b;"></i></div>
         <div style="color:#000;font-size:15px;font-weight:700;margin-bottom:4px;">No upcoming games yet</div>
