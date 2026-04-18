@@ -918,6 +918,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
           <button id="tabContacts" onclick="setInviteTab('contacts')" class="ip-tab" style="flex:1;min-width:90px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Contacts</button>
           <button id="tabGroup" onclick="setInviteTab('group')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:none;">Group</button>
+          <button id="tabLink" onclick="setInviteTab('link')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Link</button>
         </div>
 
         <!-- Manual panel (default) - 3 independent fields -->
@@ -1008,6 +1009,26 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Kim M.</div><div style="color:#888;font-size:10px;">+1 (503) 555-0118 &middot; Not on BamBuddies</div></div>
             <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
           </div>
+        </div>
+
+        <!-- Invite Link panel -->
+        <div id="panelLink" class="ip-panel" style="display:none;">
+          <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;">
+            <i class="ph-fill ph-link" style="font-size:20px;color:#c93b8b;"></i>
+            <div style="flex:1;font-size:11px;color:#9d2467;line-height:1.4;">Share this link to invite anyone. They'll see the game details and can request to join.</div>
+          </div>
+          <div style="background:#fff;border:1.5px solid #e8e4e0;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <i class="ph ph-link-simple" style="font-size:14px;color:#9d2467;flex-shrink:0;"></i>
+            <div style="flex:1;color:#1a1a1a;font-size:12px;font-family:'Inter',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">bambuddies.com/share/xG7k2p</div>
+            <button style="background:#c93b8b;color:#fff;border:none;padding:5px 10px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;"><i class="ph-bold ph-copy" style="font-size:11px;margin-right:3px;"></i>Copy</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;">
+            <div style="background:#22c55e;color:#fff;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><i class="ph-fill ph-whatsapp-logo" style="font-size:16px;"></i><span style="font-size:9px;font-weight:700;">WhatsApp</span></div>
+            <div style="background:#007aff;color:#fff;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><i class="ph-fill ph-chat-circle" style="font-size:16px;"></i><span style="font-size:9px;font-weight:700;">Messages</span></div>
+            <div style="background:#dc2626;color:#fff;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><i class="ph-fill ph-envelope" style="font-size:16px;"></i><span style="font-size:9px;font-weight:700;">Email</span></div>
+            <div style="background:#f5f3ee;color:#6b7280;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><i class="ph-fill ph-dots-three" style="font-size:16px;"></i><span style="font-size:9px;font-weight:700;">More</span></div>
+          </div>
+          <div style="font-size:10px;color:#888;text-align:center;">Link expires in 7 days &middot; <span style="color:#c93b8b;font-weight:600;cursor:pointer;">Change</span></div>
         </div>
 
         <!-- Group members panel (only for group type) -->
@@ -1370,7 +1391,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <!-- Members Header + Add button -->
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
           <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;">Members <span style="color:#9ca3af;font-weight:500;">&middot; 4</span></div>
-          <div onclick="go('groupInviteMembers')" style="background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;padding:6px 12px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:'Outfit',sans-serif;"><i class="ph-bold ph-user-plus" style="font-size:13px;"></i> Invite</div>
         </div>
 
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:14px;margin-bottom:16px;">
@@ -1395,11 +1415,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             <div class="pill" style="background:#f5f3ee;color:#6b7280;font-size:10px;border:1px solid #e8e4e0;font-weight:600;">Member</div>
           </div>
 
-          <!-- Add member CTA row -->
-          <div onclick="go('groupInviteMembers')" style="margin-top:4px;padding:10px 0;border-top:1px dashed #e8e4e0;display:flex;align-items:center;gap:10px;cursor:pointer;">
-            <div style="width:36px;height:36px;border-radius:50%;background:#fce7f3;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-plus" style="font-size:18px;color:#c93b8b;"></i></div>
-            <div style="color:#c93b8b;font-size:14px;font-weight:700;">Invite Members</div>
-          </div>
         </div>
 
         <!-- Upcoming Games -->
