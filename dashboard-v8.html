@@ -51,14 +51,14 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
 /* ============ GREETING ============ */
 .greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.15;}
 
-/* ============ ACTION ROW ============ */
-.actions{display:flex;gap:10px;padding:0 16px 20px;}
-.act{flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fffaf0 0%,#f8ead5 100%);border-radius:22px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:10px 4px 12px;cursor:pointer;box-shadow:0 4px 0 #e8d5b8,0 6px 14px rgba(0,0,0,.06);transition:transform .1s ease,box-shadow .1s ease;}
-.act:active{transform:translateY(2px);box-shadow:0 2px 0 #e8d5b8,0 3px 6px rgba(0,0,0,.05);}
-.act-icon-wrap{width:48px;height:48px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;margin-top:2px;}
-.act-icon-wrap svg{width:100%;height:100%;}
-.act-label{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:var(--text);text-align:center;line-height:1.1;}
-.act-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--cream);box-shadow:0 2px 4px rgba(201,59,139,.3);}
+/* ============ ACTION ROW (v7 restored) ============ */
+.actions-bg{margin:0 16px 18px;border-radius:22px;padding:14px 10px;background:linear-gradient(135deg,#fce7f3,#fbcfe8 50%,#f9a8d4);}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.act{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
+.act-bubble{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.10),inset 0 0 0 2px #1a1a1a;position:relative;transition:transform .15s;}
+.act-bubble:active{transform:scale(.95);}
+.act-badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
+.act-lbl{font-size:11px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.1;}
 
 /* ============ SPONSORED ============ */
 .sponsor{margin:0 16px 18px;background:linear-gradient(135deg,#fdf2f8 0%,#fce7f3 100%);border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;position:relative;overflow:hidden;border:1px solid #fbcfe8;}
@@ -183,60 +183,52 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
       <!-- GREETING -->
       <div class="greeting">May the winds be with you.</div>
 
-      <!-- ACTION ROW (refined cream tiles) -->
-      <div class="actions">
-        <div class="act" title="Start Game">
-          <div class="act-icon-wrap">
-            <!-- Start Game: play tile -->
-            <svg viewBox="0 0 48 48">
-              <rect x="8" y="6" width="32" height="38" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
-              <rect x="11" y="9" width="26" height="32" rx="4" fill="#fef3e8" stroke="#1a1a1a" stroke-width="1" opacity=".4"/>
-              <path d="M21 18L32 24L21 30Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="act-label">New<br>Game</div>
-        </div>
+      <!-- Icon symbols (v7 restored) -->
+      <svg width="0" height="0" style="position:absolute;">
+        <defs>
+          <symbol id="ic-game" viewBox="0 0 48 48">
+            <rect x="10" y="8" width="28" height="34" rx="5" fill="#fff" stroke="#1a1a1a" stroke-width="2.5"/>
+            <line x1="16" y1="14" x2="32" y2="14" stroke="#c93b8b" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="18" x2="28" y2="18" stroke="#c93b8b" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="18" cy="28" r="1.5" fill="#1a1a1a"/>
+            <circle cx="30" cy="28" r="1.5" fill="#1a1a1a"/>
+            <path d="M18 34 Q24 38 30 34" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="14" cy="32" r="1.2" fill="#fbcfe8"/>
+            <circle cx="34" cy="32" r="1.2" fill="#fbcfe8"/>
+          </symbol>
+          <symbol id="ic-find" viewBox="0 0 48 48">
+            <path d="M7 12 L18 8 L30 13 L41 9 L41 37 L30 41 L18 36 L7 40 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+            <line x1="18" y1="8" x2="18" y2="36" stroke="#1a1a1a" stroke-width="1.8" stroke-dasharray="1.5 2"/>
+            <line x1="30" y1="13" x2="30" y2="41" stroke="#1a1a1a" stroke-width="1.8" stroke-dasharray="1.5 2"/>
+            <path d="M24 17 C21 17 19 19 19 22 C19 26 24 31 24 31 C24 31 29 26 29 22 C29 19 27 17 24 17 Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M22 22 C22 20 24 20 24 22 C24 20 26 20 26 22 C26 24 24 26 24 26 C24 26 22 24 22 22 Z" fill="#fff"/>
+          </symbol>
+          <symbol id="ic-group" viewBox="0 0 48 48">
+            <rect x="8" y="14" width="22" height="28" rx="4" fill="#d1fae5" stroke="#1a1a1a" stroke-width="2.5"/>
+            <circle cx="15" cy="25" r="1.3" fill="#1a1a1a"/>
+            <circle cx="23" cy="25" r="1.3" fill="#1a1a1a"/>
+            <path d="M15 32 Q19 35 23 32" stroke="#1a1a1a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <rect x="20" y="6" width="22" height="28" rx="4" fill="#fbcfe8" stroke="#1a1a1a" stroke-width="2.5"/>
+            <circle cx="27" cy="17" r="1.3" fill="#1a1a1a"/>
+            <circle cx="35" cy="17" r="1.3" fill="#1a1a1a"/>
+            <path d="M27 24 Q31 27 35 24" stroke="#1a1a1a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          </symbol>
+          <symbol id="ic-msg" viewBox="0 0 48 48">
+            <path d="M8 14 C8 10 11 8 15 8 L33 8 C37 8 40 10 40 14 L40 28 C40 32 37 34 33 34 L22 34 L14 40 L16 34 L15 34 C11 34 8 32 8 28 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="17" cy="21" r="2.3" fill="#c93b8b"/>
+            <circle cx="24" cy="21" r="2.3" fill="#a78bfa"/>
+            <circle cx="31" cy="21" r="2.3" fill="#fcd34d"/>
+          </symbol>
+        </defs>
+      </svg>
 
-        <div class="act" title="Find Games">
-          <div class="act-icon-wrap">
-            <!-- Map with heart pin -->
-            <svg viewBox="0 0 48 48">
-              <path d="M8 12 L18 10 L30 14 L40 10 L40 38 L30 42 L18 38 L8 42 Z" fill="#fef3e8" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
-              <line x1="18" y1="10" x2="18" y2="38" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2" opacity=".6"/>
-              <line x1="30" y1="14" x2="30" y2="42" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="2 2" opacity=".6"/>
-              <path d="M24 17c-2 0-3.5 1.5-3.5 3.5 0 3 3.5 6 3.5 6s3.5-3 3.5-6c0-2-1.5-3.5-3.5-3.5z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="1.8"/>
-              <circle cx="24" cy="21" r="1.2" fill="#fff"/>
-            </svg>
-          </div>
-          <div class="act-label">Find<br>Games</div>
-        </div>
-
-        <div class="act" title="Start Group">
-          <div class="act-icon-wrap">
-            <!-- Two chat tiles -->
-            <svg viewBox="0 0 48 48">
-              <rect x="7" y="14" width="22" height="22" rx="4" fill="#a7f3d0" stroke="#1a1a1a" stroke-width="2"/>
-              <rect x="19" y="9" width="22" height="22" rx="4" fill="#fbcfe8" stroke="#1a1a1a" stroke-width="2"/>
-              <circle cx="26" cy="17" r="1.2" fill="#1a1a1a"/>
-              <circle cx="34" cy="17" r="1.2" fill="#1a1a1a"/>
-              <path d="M25 22c1.5 1.5 4 1.5 5.5 0" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="act-label">New<br>Group</div>
-        </div>
-
-        <div class="act" title="Messages">
-          <div class="act-badge">3</div>
-          <div class="act-icon-wrap">
-            <!-- Speech bubble with dots -->
-            <svg viewBox="0 0 48 48">
-              <path d="M8 12 h32 a4 4 0 0 1 4 4 v18 a4 4 0 0 1 -4 4 h-18 l-8 6 v-6 h-6 a4 4 0 0 1 -4 -4 v-18 a4 4 0 0 1 4 -4 z" fill="#fff" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
-              <circle cx="17" cy="25" r="2.5" fill="#c93b8b"/>
-              <circle cx="25" cy="25" r="2.5" fill="#a78bfa"/>
-              <circle cx="33" cy="25" r="2.5" fill="#fcd34d"/>
-            </svg>
-          </div>
-          <div class="act-label">Messages</div>
+      <!-- ACTION ROW (v7 bubble style) -->
+      <div class="actions-bg">
+        <div class="actions">
+          <div class="act"><div class="act-bubble"><svg width="34" height="34"><use href="#ic-game"/></svg></div><div class="act-lbl">New<br>Game</div></div>
+          <div class="act"><div class="act-bubble"><svg width="34" height="34"><use href="#ic-find"/></svg></div><div class="act-lbl">Find<br>Games</div></div>
+          <div class="act"><div class="act-bubble"><svg width="34" height="34"><use href="#ic-group"/></svg></div><div class="act-lbl">New<br>Group</div></div>
+          <div class="act"><div class="act-bubble"><svg width="34" height="34"><use href="#ic-msg"/></svg><span class="act-badge">3</span></div><div class="act-lbl">Messages</div></div>
         </div>
       </div>
 
