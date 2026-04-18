@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Public Marketing Site (Sprint 4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--primary:#c93b8b;--primary-dark:#9d2467;--primary-light:#ec4fa3;--primary-tint:#fce7f3;--primary-tint2:#fdf2f8;--cream:#fdf8f0;--text:#1a1a1a;--muted:#6b7280;--border:#ece8e0;}
+body{background:#0a0a0a;font-family:'Outfit',sans-serif;min-height:100vh;padding:40px 0;color:#fff;}
+.page-head{text-align:center;margin-bottom:30px;padding:0 20px;}
+.page-head h1{font-family:'DM Serif Display',serif;font-size:40px;color:#fff;letter-spacing:-.8px;}
+.page-head h1 span{color:var(--primary);}
+.page-head p{color:#888;font-size:14px;margin-top:6px;}
+.pager{display:flex;justify-content:center;gap:8px;margin:18px 0;flex-wrap:wrap;padding:0 20px;}
+.page-btn{background:#2a2a2a;color:#bbb;border:1px solid #3a3a3a;padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;}
+.page-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+.frame-wrap{display:flex;justify-content:center;padding:20px;}
+.browser{background:#2a2a2a;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden;border:1px solid #3a3a3a;width:1200px;max-width:100%;}
+.chrome{background:#2a2a2a;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #1a1a1a;}
+.dots{display:flex;gap:6px;}
+.dot{width:11px;height:11px;border-radius:50%;}
+.dot.r{background:#ff5f56;} .dot.y{background:#ffbd2e;} .dot.g{background:#27c93f;}
+.addr{flex:1;background:#1a1a1a;color:#8a8a8a;border-radius:6px;padding:6px 12px;font-size:12px;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:6px;}
+.addr i{color:#4ade80;}
+
+.site{background:var(--cream);color:var(--text);font-family:'Outfit',sans-serif;min-height:720px;position:relative;}
+.site::before{content:'';position:absolute;inset:0;opacity:.04;pointer-events:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.5'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 48px;position:relative;z-index:2;background:rgba(253,248,240,.9);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.05);}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;}
+.logo-text{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-link{font-size:14px;color:var(--text);font-weight:500;cursor:pointer;text-decoration:none;}
+.nav-link:hover{color:var(--primary);}
+.nav-cta{display:flex;gap:10px;align-items:center;}
+.btn-sm{padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;}
+.btn-sm.secondary{background:transparent;color:var(--text);}
+.btn-sm.primary{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(201,59,139,.25);}
+
+.content{padding:60px 48px;position:relative;z-index:1;}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:80px 48px;position:relative;z-index:1;}
+.hero-copy h1{font-family:'DM Serif Display',serif;font-size:60px;line-height:1;letter-spacing:-2px;color:var(--text);margin-bottom:20px;}
+.hero-copy h1 .script{font-family:'Caveat',cursive;color:var(--primary);font-weight:700;font-size:68px;}
+.hero-copy p{font-size:18px;color:var(--muted);line-height:1.6;margin-bottom:30px;max-width:500px;}
+.hero-cta{display:flex;gap:12px;}
+.btn-lg{padding:14px 24px;border-radius:99px;font-size:15px;font-weight:700;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;font-family:inherit;}
+.btn-lg.primary{background:var(--primary);color:#fff;box-shadow:0 8px 24px rgba(201,59,139,.3);}
+.btn-lg.secondary{background:#fff;color:var(--text);border:1.5px solid var(--border);}
+.hero-visual{position:relative;}
+.hero-visual img{width:100%;max-width:480px;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.15);}
+
+.section-title{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.1;letter-spacing:-1px;color:var(--text);text-align:center;margin-bottom:14px;}
+.section-title .script{font-family:'Caveat',cursive;color:var(--primary);font-weight:700;}
+.section-sub{text-align:center;font-size:16px;color:var(--muted);margin-bottom:48px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5;}
+
+/* Feature grid */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.feature{background:#fff;border-radius:20px;padding:28px;border:1px solid var(--border);}
+.feature-icon{width:48px;height:48px;border-radius:14px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.feature-icon i{font-size:24px;color:var(--primary);}
+.feature h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;}
+.feature p{font-size:14px;color:var(--muted);line-height:1.5;}
+
+/* Pricing cards */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto;}
+.price-card{background:#fff;border:2px solid var(--border);border-radius:24px;padding:32px;position:relative;}
+.price-card.featured{border-color:var(--primary);background:linear-gradient(180deg,var(--primary-tint2),#fff 50%);}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;}
+.price-tier{font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.price-val{font-family:'DM Serif Display',serif;font-size:56px;line-height:1;color:var(--text);margin-bottom:6px;}
+.price-val sub{font-size:15px;font-weight:500;color:var(--muted);font-family:'Outfit';}
+.price-desc{font-size:14px;color:var(--muted);margin-bottom:24px;}
+.price-feat{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:14px;color:var(--text);}
+.price-feat i{color:#15803d;font-size:18px;margin-top:1px;}
+.price-feat.no{color:var(--muted);}
+.price-feat.no i{color:#ccc;}
+
+/* FAQ */
+.faq-list{max-width:720px;margin:0 auto;}
+.faq-item{background:#fff;border-radius:14px;padding:20px 24px;margin-bottom:12px;border:1px solid var(--border);cursor:pointer;}
+.faq-q{font-size:16px;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;}
+.faq-q i{color:var(--primary);font-size:20px;}
+.faq-a{font-size:14px;color:var(--muted);line-height:1.6;margin-top:12px;padding-top:12px;border-top:1px solid #f5f3ee;}
+
+/* Footer */
+.footer{background:#1a1a1a;color:#999;padding:48px 48px 30px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:32px;max-width:1200px;margin-left:auto;margin-right:auto;}
+.footer-col h4{color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.footer-col a{display:block;color:#999;font-size:13px;margin-bottom:8px;text-decoration:none;cursor:pointer;}
+.footer-col a:hover{color:var(--primary);}
+.footer-brand{max-width:280px;}
+.footer-brand p{font-size:13px;line-height:1.6;margin-top:12px;color:#999;}
+.footer-bottom{max-width:1200px;margin:0 auto;padding-top:24px;border-top:1px solid #333;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#666;}
+.socials{display:flex;gap:10px;}
+.social{width:32px;height:32px;border-radius:8px;background:#2a2a2a;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.social i{color:#999;font-size:16px;}
+
+/* Waitlist specific */
+.waitlist-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:720px;text-align:center;padding:60px 40px;}
+.waitlist-badge{background:var(--primary-tint);color:var(--primary-dark);padding:6px 16px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:24px;display:inline-flex;align-items:center;gap:6px;}
+.waitlist-h1{font-family:'DM Serif Display',serif;font-size:72px;line-height:1;letter-spacing:-2px;color:var(--text);margin-bottom:20px;max-width:900px;}
+.waitlist-h1 .script{font-family:'Caveat',cursive;color:var(--primary);font-weight:700;font-size:80px;}
+.waitlist-sub{font-size:20px;color:var(--muted);max-width:580px;line-height:1.5;margin-bottom:40px;}
+.waitlist-form{display:flex;gap:10px;background:#fff;border-radius:99px;padding:6px;box-shadow:0 20px 60px rgba(0,0,0,.12);max-width:520px;width:100%;border:1px solid var(--border);}
+.waitlist-form input{flex:1;border:none;outline:none;padding:14px 20px;font-size:15px;font-family:'Inter',sans-serif;background:transparent;}
+.waitlist-form button{background:var(--primary);color:#fff;border:none;padding:14px 28px;border-radius:99px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+.waitlist-count{margin-top:24px;color:var(--muted);font-size:13px;display:flex;align-items:center;gap:8px;}
+.waitlist-avatars{display:flex;}
+.waitlist-avatars img{width:28px;height:28px;border-radius:50%;border:2px solid var(--cream);margin-left:-8px;}
+.waitlist-avatars img:first-child{margin-left:0;}
+
+/* Download badges */
+.download-badges{display:flex;gap:16px;justify-content:center;margin-top:14px;}
+.store-badge{background:#000;color:#fff;padding:10px 20px;border-radius:12px;display:flex;align-items:center;gap:10px;cursor:pointer;font-family:inherit;}
+.store-badge i{font-size:24px;}
+.store-badge div{text-align:left;line-height:1.1;}
+.store-badge small{font-size:10px;opacity:.8;}
+.store-badge b{font-size:16px;font-weight:700;}
+.store-badge.disabled{opacity:.6;cursor:default;}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>Sprint 4: <span>Public Website</span></h1>
+  <p>Pre-launch waitlist + full marketing site — 10 pages (desktop view shown; responsive mobile variants would follow)</p>
+</div>
+
+<div class="pager">
+  <button class="page-btn active" onclick="showPage('waitlist')">W1 · Waitlist</button>
+  <button class="page-btn" onclick="showPage('home')">W2 · Homepage</button>
+  <button class="page-btn" onclick="showPage('features')">W3 · Features</button>
+  <button class="page-btn" onclick="showPage('about')">W4 · About</button>
+  <button class="page-btn" onclick="showPage('pricing')">W5 · Pricing</button>
+  <button class="page-btn" onclick="showPage('faq')">W6 · FAQ</button>
+  <button class="page-btn" onclick="showPage('contact')">W7 · Contact</button>
+  <button class="page-btn" onclick="showPage('download')">W10 · Download</button>
+</div>
+
+<!-- ============ W1: WAITLIST PAGE ============ -->
+<div class="frame-wrap" id="page-waitlist">
+  <div class="browser">
+    <div class="chrome"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="addr"><i class="ph-fill ph-lock"></i> bambuddies.com</div></div>
+    <div class="site">
+      <div class="nav">
+        <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BamBuddies</div></div>
+        <div class="nav-cta">
+          <a class="nav-link">Already have access? <b style="color:var(--primary);">Sign in</b></a>
+        </div>
+      </div>
+
+      <div class="waitlist-hero">
+        <div class="waitlist-badge"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary);animation:pulse 2s infinite;"></span> Good things are coming</div>
+        <div class="waitlist-h1">The social home for your<br><span class="script">mahjong</span> games</div>
+        <div class="waitlist-sub">Organize games, find players, build a community. Launching soon in select cities — join the waitlist for early access.</div>
+
+        <div class="waitlist-form">
+          <input type="email" placeholder="your@email.com">
+          <button>Join Waitlist →</button>
+        </div>
+
+        <div class="waitlist-count">
+          <div class="waitlist-avatars">
+            <img src="https://i.pravatar.cc/80?img=47"><img src="https://i.pravatar.cc/80?img=9"><img src="https://i.pravatar.cc/80?img=5"><img src="https://i.pravatar.cc/80?img=16"><img src="https://i.pravatar.cc/80?img=32">
+          </div>
+          <div>Join 2,847 players already on the list</div>
+        </div>
+
+        <div style="display:flex;gap:32px;margin-top:60px;font-size:13px;color:var(--muted);">
+          <div style="text-align:center;"><i class="ph-fill ph-calendar-check" style="font-size:24px;color:var(--primary);"></i><div style="font-weight:700;color:var(--text);margin-top:6px;">Organize Games</div><div style="margin-top:2px;">Invite players, pick a date</div></div>
+          <div style="text-align:center;"><i class="ph-fill ph-map-pin" style="font-size:24px;color:var(--primary);"></i><div style="font-weight:700;color:var(--text);margin-top:6px;">Find Local Games</div><div style="margin-top:2px;">Open play near you</div></div>
+          <div style="text-align:center;"><i class="ph-fill ph-users-three" style="font-size:24px;color:var(--primary);"></i><div style="font-weight:700;color:var(--text);margin-top:6px;">Build Groups</div><div style="margin-top:2px;">Your regular crew</div></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="footer-bottom">
+          <div>© 2026 BamBuddies · A Caribou Games product</div>
+          <div><a style="color:#999;text-decoration:none;margin-right:14px;">Terms</a><a style="color:#999;text-decoration:none;">Privacy</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ W2: HOMEPAGE ============ -->
+<div class="frame-wrap" id="page-home" style="display:none;">
+  <div class="browser">
+    <div class="chrome"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="addr"><i class="ph-fill ph-lock"></i> bambuddies.com</div></div>
+    <div class="site">
+      <div class="nav">
+        <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BamBuddies</div></div>
+        <div class="nav-links">
+          <a class="nav-link">Features</a>
+          <a class="nav-link">Pricing</a>
+          <a class="nav-link">About</a>
+          <a class="nav-link">FAQ</a>
+        </div>
+        <div class="nav-cta">
+          <button class="btn-sm secondary">Sign in</button>
+          <button class="btn-sm primary">Get the App</button>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-copy">
+          <h1>Your mahjong <span class="script">crew</span>,<br>just a tap away</h1>
+          <p>Organize games, find local players, and build your mahjong community. The easiest way to get 4 to the table.</p>
+          <div class="hero-cta">
+            <button class="btn-lg primary"><i class="ph-bold ph-apple-logo"></i> Download for iOS</button>
+            <button class="btn-lg secondary">See how it works</button>
+          </div>
+          <div style="margin-top:24px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;"><i class="ph-fill ph-star" style="color:#d97706;"></i><i class="ph-fill ph-star" style="color:#d97706;"></i><i class="ph-fill ph-star" style="color:#d97706;"></i><i class="ph-fill ph-star" style="color:#d97706;"></i><i class="ph-fill ph-star" style="color:#d97706;"></i> 4.9 from 1,200+ players</div>
+        </div>
+        <div class="hero-visual">
+          <div style="background:linear-gradient(135deg,var(--primary-tint),var(--primary-tint2));border-radius:32px;padding:40px;text-align:center;box-shadow:0 30px 80px rgba(201,59,139,.15);">
+            <div style="width:280px;height:560px;background:#000;border-radius:40px;margin:0 auto;border:3px solid #222;overflow:hidden;position:relative;">
+              <div style="position:absolute;inset:3px;background:var(--cream);border-radius:37px;display:flex;flex-direction:column;"><div style="padding:30px 20px 20px;font-family:'Caveat',cursive;color:var(--primary);font-size:28px;font-weight:700;">Sarah</div><div style="flex:1;padding:0 20px;"><div style="background:#fff;border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);"><div style="font-size:10px;font-weight:700;color:var(--primary-dark);letter-spacing:1px;text-transform:uppercase;">Game Invite</div><div style="font-size:14px;font-weight:700;margin-top:2px;">Saturday Mahjong</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">Sat Apr 19 · 2pm · 3/4 players</div></div><div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.06);"><div style="font-size:12px;font-weight:700;">Your Next Game</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">Sat 2:00 PM · Brooklyn</div></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content" style="background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <div class="section-title">Everything you need to <span class="script">play more</span></div>
+        <div class="section-sub">From invites to reviews, BamBuddies handles all the organizing so you can focus on the game.</div>
+        <div class="feature-grid">
+          <div class="feature"><div class="feature-icon"><i class="ph-fill ph-calendar-plus"></i></div><h3>Schedule in seconds</h3><p>Pick a date, invite players, done. We handle reminders, confirmations, and group messaging.</p></div>
+          <div class="feature"><div class="feature-icon"><i class="ph-fill ph-map-pin"></i></div><h3>Find local games</h3><p>Open games near you. Filter by skill level, game type, and distance.</p></div>
+          <div class="feature"><div class="feature-icon"><i class="ph-fill ph-users-three"></i></div><h3>Build your group</h3><p>Set up regular groups. Auto-invite members to new games. No more text threads.</p></div>
+          <div class="feature"><div class="feature-icon"><i class="ph-fill ph-chat-circle-dots"></i></div><h3>Group chat built-in</h3><p>Coordinate food, directions, and game details without leaving the app.</p></div>
+          <div class="feature"><div class="feature-icon"><i class="ph-fill ph-trophy"></i></div><h3>Track your progress</h3><p>Game history, ratings, and reviews. See who you play with most.</p></div>
+          <div class="feature"><div class="feature-icon"><i class="ph-fill ph-arrows-clockwise"></i></div><h3>Recurring games</h3><p>Weekly Thursday night? Set it once. Games generate automatically.</p></div>
+        </div>
+      </div>
+
+      <div class="content" style="text-align:center;padding-top:80px;padding-bottom:80px;">
+        <div class="section-title">Ready to find your <span class="script">table?</span></div>
+        <div class="section-sub">Join 2,800+ players organizing their mahjong games the easy way.</div>
+        <div style="display:flex;gap:12px;justify-content:center;">
+          <button class="btn-lg primary"><i class="ph-bold ph-apple-logo"></i> Download on iOS</button>
+          <button class="btn-lg secondary">Try the web app</button>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="footer-grid">
+          <div class="footer-col footer-brand">
+            <div style="display:flex;align-items:center;gap:10px;"><div class="logo-mark" style="width:28px;height:28px;font-size:14px;">B</div><div style="font-family:'DM Serif Display',serif;font-size:18px;color:#fff;">BamBuddies</div></div>
+            <p>The social home for your mahjong games. Organize, find, play.</p>
+            <div class="socials" style="margin-top:16px;"><div class="social"><i class="ph-fill ph-instagram-logo"></i></div><div class="social"><i class="ph-fill ph-facebook-logo"></i></div><div class="social"><i class="ph-fill ph-twitter-logo"></i></div></div>
+          </div>
+          <div class="footer-col"><h4>Product</h4><a>Features</a><a>Pricing</a><a>Download</a><a>Changelog</a></div>
+          <div class="footer-col"><h4>Company</h4><a>About</a><a>Blog</a><a>Contact</a><a>Careers</a></div>
+          <div class="footer-col"><h4>Legal</h4><a>Terms</a><a>Privacy</a><a>Cookies</a><a>Accessibility</a></div>
+        </div>
+        <div class="footer-bottom"><div>© 2026 BamBuddies · A Caribou Games product</div><div>Made with ♥ in Atlanta</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ W3: FEATURES ============ -->
+<div class="frame-wrap" id="page-features" style="display:none;">
+  <div class="browser">
+    <div class="chrome"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="addr"><i class="ph-fill ph-lock"></i> bambuddies.com/features</div></div>
+    <div class="site">
+      <div class="nav">
+        <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BamBuddies</div></div>
+        <div class="nav-links"><a class="nav-link" style="color:var(--primary);">Features</a><a class="nav-link">Pricing</a><a class="nav-link">About</a><a class="nav-link">FAQ</a></div>
+        <div class="nav-cta"><button class="btn-sm secondary">Sign in</button><button class="btn-sm primary">Get the App</button></div>
+      </div>
+      <div class="content">
+        <div style="text-align:center;max-width:680px;margin:0 auto 60px;"><div class="section-title" style="margin-bottom:20px;">Features that make organizing <span class="script">effortless</span></div><div class="section-sub">Every feature designed around one goal: get to the table faster.</div></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1000px;margin:0 auto 60px;align-items:center;">
+          <div><div class="feature-icon" style="width:60px;height:60px;margin-bottom:20px;"><i class="ph-fill ph-calendar-plus" style="font-size:30px;"></i></div><h3 style="font-family:'DM Serif Display',serif;font-size:32px;margin-bottom:12px;color:var(--text);">Schedule in seconds</h3><p style="font-size:16px;color:var(--muted);line-height:1.6;">Pick a date, add location, invite players. We handle reminders, RSVPs, and confirmations automatically.</p><div style="margin-top:20px;"><div style="font-size:14px;color:var(--text);margin-bottom:6px;"><i class="ph-fill ph-check-circle" style="color:var(--primary);margin-right:6px;"></i>15-minute time slots</div><div style="font-size:14px;color:var(--text);margin-bottom:6px;"><i class="ph-fill ph-check-circle" style="color:var(--primary);margin-right:6px;"></i>Auto-confirm at min players</div><div style="font-size:14px;color:var(--text);"><i class="ph-fill ph-check-circle" style="color:var(--primary);margin-right:6px;"></i>Recurring games support</div></div></div>
+          <div style="background:linear-gradient(135deg,var(--primary-tint),var(--primary-tint2));border-radius:20px;padding:40px;text-align:center;"><div style="font-family:'DM Serif Display',serif;font-size:48px;color:var(--primary);">30s</div><div style="font-size:14px;color:var(--muted);margin-top:6px;">Average time to schedule a game</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1000px;margin:0 auto 60px;align-items:center;">
+          <div style="order:2;"><div class="feature-icon" style="width:60px;height:60px;margin-bottom:20px;"><i class="ph-fill ph-map-pin" style="font-size:30px;"></i></div><h3 style="font-family:'DM Serif Display',serif;font-size:32px;margin-bottom:12px;color:var(--text);">Find local games</h3><p style="font-size:16px;color:var(--muted);line-height:1.6;">Map view + filters help you find open games nearby. Filter by skill level, game type, and distance.</p></div>
+          <div style="order:1;background:#fff;border-radius:20px;padding:0;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.08);height:240px;display:flex;align-items:center;justify-content:center;"><div style="font-size:80px;">🗺</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1000px;margin:0 auto 60px;align-items:center;">
+          <div><div class="feature-icon" style="width:60px;height:60px;margin-bottom:20px;"><i class="ph-fill ph-users-three" style="font-size:30px;"></i></div><h3 style="font-family:'DM Serif Display',serif;font-size:32px;margin-bottom:12px;color:var(--text);">Build your group</h3><p style="font-size:16px;color:var(--muted);line-height:1.6;">Create groups for your regular crew. Members get auto-invited to new games. Group chat keeps everyone connected.</p></div>
+          <div style="background:linear-gradient(135deg,#fff,var(--primary-tint2));border-radius:20px;padding:30px;box-shadow:0 10px 40px rgba(0,0,0,.08);"><div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;">Stovall Ladies</div><div style="display:flex;margin-bottom:14px;"><img src="https://i.pravatar.cc/80?img=47" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;"><img src="https://i.pravatar.cc/80?img=9" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;margin-left:-8px;"><img src="https://i.pravatar.cc/80?img=5" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;margin-left:-8px;"><img src="https://i.pravatar.cc/80?img=16" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;margin-left:-8px;"><img src="https://i.pravatar.cc/80?img=32" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;margin-left:-8px;"><div style="width:32px;height:32px;border-radius:50%;background:var(--primary-tint);color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid #fff;margin-left:-8px;">+7</div></div><div style="font-size:12px;color:var(--muted);">12 members · Thursdays · Brooklyn</div></div>
+        </div>
+      </div>
+      <div class="footer"><div class="footer-bottom"><div>© 2026 BamBuddies</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ W4: ABOUT ============ -->
+<div class="frame-wrap" id="page-about" style="display:none;">
+  <div class="browser">
+    <div class="chrome"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="addr"><i class="ph-fill ph-lock"></i> bambuddies.com/about</div></div>
+    <div class="site">
+      <div class="nav">
+        <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BamBuddies</div></div>
+        <div class="nav-links"><a class="nav-link">Features</a><a class="nav-link">Pricing</a><a class="nav-link" style="color:var(--primary);">About</a><a class="nav-link">FAQ</a></div>
+        <div class="nav-cta"><button class="btn-sm secondary">Sign in</button><button class="btn-sm primary">Get the App</button></div>
+      </div>
+      <div class="content" style="max-width:760px;margin:0 auto;">
+        <div class="section-title" style="text-align:left;margin-bottom:20px;">We believe the best games happen with <span class="script">friends</span></div>
+        <div style="font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:40px;">BamBuddies started because getting four players together for mahjong shouldn't require six group texts and a spreadsheet. We built the social organizing app we wished existed.</div>
+
+        <div style="background:#fff;border-radius:20px;padding:32px;border:1px solid var(--border);margin-bottom:30px;">
+          <div class="feature-icon" style="margin-bottom:16px;"><i class="ph-fill ph-target"></i></div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:10px;color:var(--text);">Our mission</h3>
+          <p style="font-size:15px;color:var(--muted);line-height:1.6;">Make organizing social games effortless so more people can play together more often. Start with mahjong, expand to all the games you love.</p>
+        </div>
+
+        <div style="background:#fff;border-radius:20px;padding:32px;border:1px solid var(--border);margin-bottom:30px;">
+          <div class="feature-icon" style="margin-bottom:16px;"><i class="ph-fill ph-heart"></i></div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:10px;color:var(--text);">Why mahjong?</h3>
+          <p style="font-size:15px;color:var(--muted);line-height:1.6;">Mahjong brings generations together. It's social, strategic, and deeply connected to culture. The community deserves better tools.</p>
+        </div>
+
+        <div style="background:var(--primary-tint2);border-radius:20px;padding:32px;margin-bottom:40px;">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:14px;color:var(--text);">Built by Caribou Games</h3>
+          <p style="font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:16px;">BamBuddies is the first app from Caribou Games, a company building social tools for traditional games. Coming soon to other communities (bridge, poker, mahjong variants worldwide).</p>
+          <a style="color:var(--primary);font-weight:700;font-size:14px;cursor:pointer;">Learn more about Caribou Games →</a>
+        </div>
+      </div>
+      <div class="footer"><div class="footer-bottom"><div>© 2026 BamBuddies</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ W5: PRICING ============ -->
+<div class="frame-wrap" id="page-pricing" style="display:none;">
+  <div class="browser">
+    <div class="chrome"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="addr"><i class="ph-fill ph-lock"></i> bambuddies.com/pricing</div></div>
+    <div class="site">
+      <div class="nav">
+        <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BamBuddies</div></div>
+        <div class="nav-links"><a class="nav-link">Features</a><a class="nav-link" style="color:var(--primary);">Pricing</a><a class="nav-link">About</a><a class="nav-link">FAQ</a></div>
+        <div class="nav-cta"><button class="btn-sm secondary">Sign in</button><button class="btn-sm primary">Get the App</button></div>
+      </div>
+      <div class="content">
+        <div class="section-title">Simple <span class="script">pricing</span></div>
+        <div class="section-sub">Free forever. Upgrade to remove ads if you want a cleaner experience.</div>
+
+        <div class="pricing-grid">
+          <div class="price-card">
+            <div class="price-tier">Free</div>
+            <div class="price-val">$0</div>
+            <div class="price-desc">Everything you need to organize and play.</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Unlimited games</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Unlimited groups</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Chat & messaging</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Recurring games</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Discover open games</div>
+            <div class="price-feat no"><i class="ph ph-x-circle"></i>Small ads in app</div>
+            <div style="margin-top:24px;"><button class="btn-lg secondary" style="width:100%;">Get Started Free</button></div>
+          </div>
+          <div class="price-card featured">
+            <div class="price-badge">Most popular</div>
+            <div class="price-tier" style="color:var(--primary);">Ad-Free</div>
+            <div class="price-val">$4.99<sub>/month</sub></div>
+            <div class="price-desc">Support the app and enjoy a cleaner experience.</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Everything in Free</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i><b>No ads anywhere</b></div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Priority support</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Early access to new features</div>
+            <div class="price-feat"><i class="ph-bold ph-check-circle"></i>Support indie development</div>
+            <div style="margin-top:24px;"><button class="btn-lg primary" style="width:100%;">Go Ad-Free</button></div>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:40px;color:var(--muted);font-size:13px;">Cancel anytime. 30-day money-back guarantee.</div>
+      </div>
+      <div class="footer"><div class="footer-bottom"><div>© 2026 BamBuddies</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ W6: FAQ ============ -->
+<div class="frame-wrap" id="page-faq" style="display:none;">
+  <div class="browser">
+    <div class="chrome"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="addr"><i class="ph-fill ph-lock"></i> bambuddies.com/faq</div></div>
+    <div class="site">
+      <div class="nav">
+        <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BamBuddies</div></div>
+        <div class="nav-links"><a class="nav-link">Features</a><a class="nav-link">Pricing</a><a class="nav-link">About</a><a class="nav-link" style="color:var(--primary);">FAQ</a></div>
+        <div class="nav-cta"><button class="btn-sm secondary">Sign in</button><button class="btn-sm primary">Get the App</button></div>
+      </div>
+      <div class="content">
+        <div class="section-title">Frequently asked <span class="script">questions</span></div>
+        <div class="section-sub">Still have questions? <a style="color:var(--primary);font-weight:700;">Contact us</a>.</div>
+
+        <div class="faq-list">
+          <div class="faq-item"><div class="faq-q">Is BamBuddies free to use?<i class="ph ph-caret-down"></i></div><div class="faq-a">Yes! The Free tier includes unlimited games, groups, chat, and discovery. We show small ads to keep it sustainable. The Ad-Free tier ($4.99/month) removes ads.</div></div>
+          <div class="faq-item"><div class="faq-q">What games does BamBuddies support?<i class="ph ph-caret-right"></i></div></div>
+          <div class="faq-item"><div class="faq-q">Do I need to know other players to use it?<i class="ph ph-caret-right"></i></div></div>
+          <div class="faq-item"><div class="faq-q">Is my data private?<i class="ph ph-caret-right"></i></div></div>
+          <div class="faq-item"><div class="faq-q">Is there an Android app?<i class="ph ph-caret-right"></i></div></div>
+          <div class="faq-item"><div class="faq-q">Can I cancel my subscription anytime?<i class="ph ph-caret-right"></i></div></div>
+          <div class="faq-item"><div class="faq-q">How do I delete my account?<i class="ph ph-caret-right"></i></div></div>
+        </div>
+      </div>
+      <div class="footer"><div class="footer-bottom"><div>© 2026 BamBuddies</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ W7: CONTACT ============ -->
+<div class="frame-wrap" id="page-contact" style="display:none;">
+  <div class="browser">
+    <div class="chrome"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="addr"><i class="ph-fill ph-lock"></i> bambuddies.com/contact</div></div>
+    <div class="site">
+      <div class="nav">
+        <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BamBuddies</div></div>
+        <div class="nav-links"><a class="nav-link">Features</a><a class="nav-link">Pricing</a><a class="nav-link">About</a><a class="nav-link">FAQ</a></div>
+        <div class="nav-cta"><button class="btn-sm secondary">Sign in</button><button class="btn-sm primary">Get the App</button></div>
+      </div>
+      <div class="content" style="max-width:600px;margin:0 auto;">
+        <div class="section-title" style="text-align:left;">Get in <span class="script">touch</span></div>
+        <div style="font-size:16px;color:var(--muted);margin-bottom:30px;line-height:1.6;">Have a question, feedback, or just want to say hi? We'd love to hear from you.</div>
+
+        <div style="background:#fff;border-radius:20px;padding:30px;border:1px solid var(--border);">
+          <div style="margin-bottom:14px;"><label style="font-size:12px;font-weight:600;color:var(--text);">Name</label><input style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;margin-top:4px;" placeholder="Your name"></div>
+          <div style="margin-bottom:14px;"><label style="font-size:12px;font-weight:600;color:var(--text);">Email</label><input style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;margin-top:4px;" placeholder="you@example.com"></div>
+          <div style="margin-bottom:14px;"><label style="font-size:12px;font-weight:600;color:var(--text);">Subject</label><select style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;margin-top:4px;background:#fff;"><option>General inquiry</option><option>Bug report</option><option>Feature request</option><option>Billing question</option><option>Privacy / data request</option></select></div>
+          <div style="margin-bottom:20px;"><label style="font-size:12px;font-weight:600;color:var(--text);">Message</label><textarea rows="6" style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;margin-top:4px;resize:none;" placeholder="How can we help?"></textarea></div>
+          <button class="btn-lg primary" style="width:100%;">Send Message</button>
+        </div>
+
+        <div style="margin-top:30px;display:flex;gap:16px;">
+          <div style="flex:1;background:var(--primary-tint2);padding:20px;border-radius:14px;"><i class="ph-fill ph-envelope" style="font-size:20px;color:var(--primary);"></i><div style="font-size:13px;font-weight:700;color:var(--text);margin-top:8px;">Email</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">hello@bambuddies.com</div></div>
+          <div style="flex:1;background:var(--primary-tint2);padding:20px;border-radius:14px;"><i class="ph-fill ph-question" style="font-size:20px;color:var(--primary);"></i><div style="font-size:13px;font-weight:700;color:var(--text);margin-top:8px;">Help center</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Browse FAQs and guides</div></div>
+        </div>
+      </div>
+      <div class="footer"><div class="footer-bottom"><div>© 2026 BamBuddies</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ W10: DOWNLOAD ============ -->
+<div class="frame-wrap" id="page-download" style="display:none;">
+  <div class="browser">
+    <div class="chrome"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="addr"><i class="ph-fill ph-lock"></i> bambuddies.com/download</div></div>
+    <div class="site">
+      <div class="nav">
+        <div class="logo"><div class="logo-mark">B</div><div class="logo-text">BamBuddies</div></div>
+        <div class="nav-links"><a class="nav-link">Features</a><a class="nav-link">Pricing</a><a class="nav-link">About</a><a class="nav-link">FAQ</a></div>
+        <div class="nav-cta"><button class="btn-sm secondary">Sign in</button></div>
+      </div>
+
+      <div class="content" style="text-align:center;padding:80px 48px;">
+        <div class="section-title">Get the <span class="script">BamBuddies</span> app</div>
+        <div class="section-sub">Available on iOS. Android coming soon.</div>
+
+        <div class="download-badges">
+          <div class="store-badge"><i class="ph-fill ph-apple-logo"></i><div><small>Download on the</small><b>App Store</b></div></div>
+          <div class="store-badge disabled"><i class="ph-fill ph-android-logo"></i><div><small>Coming to</small><b>Google Play</b></div></div>
+        </div>
+
+        <div style="margin-top:60px;max-width:800px;margin-left:auto;margin-right:auto;">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+            <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px;"><i class="ph-fill ph-device-mobile" style="font-size:28px;color:var(--primary);"></i><div style="font-weight:700;margin-top:8px;">iOS 15+</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Requires iOS 15.0 or later</div></div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px;"><i class="ph-fill ph-download" style="font-size:28px;color:var(--primary);"></i><div style="font-weight:700;margin-top:8px;">42 MB</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Free to download</div></div>
+            <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px;"><i class="ph-fill ph-globe" style="font-size:28px;color:var(--primary);"></i><div style="font-weight:700;margin-top:8px;">Web app too</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Use at bambuddies.com</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><div class="footer-bottom"><div>© 2026 BamBuddies</div></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id){
+  ['waitlist','home','features','about','pricing','faq','contact','download'].forEach(p=>{
+    document.getElementById('page-'+p).style.display = p===id ? 'flex' : 'none';
+  });
+  document.querySelectorAll('.page-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
