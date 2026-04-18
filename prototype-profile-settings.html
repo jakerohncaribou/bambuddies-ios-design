@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBuddies — Sprint 2: Profile, Settings, Empty/Error States</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --primary:#c93b8b; --primary-dark:#9d2467; --primary-light:#ec4fa3;
+  --primary-tint:#fce7f3; --primary-tint2:#fdf2f8;
+  --cream:#fdf8f0; --text:#1a1a1a; --muted:#6b7280; --border:#e8e4e0;
+}
+body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;color:#fff;padding:50px 20px;}
+.hdr{text-align:center;margin-bottom:30px;}
+.hdr h1{font-family:'DM Serif Display',serif;font-size:40px;letter-spacing:-.8px;margin-bottom:4px;}
+.hdr h1 span{color:var(--primary);}
+.hdr p{color:#aaa;font-size:14px;}
+.section{margin-bottom:60px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid #222;max-width:1600px;margin-left:auto;margin-right:auto;}
+.section-hdr h2{font-family:'DM Serif Display',serif;font-size:28px;}
+.section-hdr .chip{background:rgba(201,59,139,.15);color:var(--primary);font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;border:1px solid rgba(201,59,139,.3);}
+.section-desc{color:#999;font-size:14px;margin-bottom:20px;max-width:1600px;margin-left:auto;margin-right:auto;}
+.flow{display:flex;gap:24px;overflow-x:auto;padding:20px 0 30px;}
+.frame-wrap{display:flex;flex-direction:column;gap:10px;flex-shrink:0;}
+.frame-label{color:#aaa;font-size:12px;font-weight:600;text-align:center;max-width:393px;line-height:1.3;}
+.frame-label b{color:#fff;}
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:0 0 20px 20px;z-index:100;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:14px 28px 0;display:flex;justify-content:space-between;align-items:center;z-index:50;font-size:15px;font-weight:600;color:var(--text);}
+.inner{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow-y:auto;overflow-x:hidden;}
+.scr{padding:54px 0 0;position:relative;z-index:1;}
+.bg-tiles{position:absolute;inset:0;opacity:.06;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.4'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");}
+.hdr-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;margin-bottom:8px;}
+.hdr-bar .title{font-size:16px;font-weight:700;color:var(--text);}
+.hdr-bar i{font-size:22px;color:var(--text);cursor:pointer;}
+.content{padding:0 16px 40px;}
+.sec-title{font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:var(--text);line-height:1;margin-bottom:12px;}
+.sec-title-uppercase{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;margin-left:4px;}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.row{padding:12px 14px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.row:last-child{border-bottom:none;}
+.row i.pic{font-size:18px;color:var(--primary);width:20px;text-align:center;}
+.row-body{flex:1;min-width:0;}
+.row-title{color:var(--text);font-size:13px;font-weight:600;}
+.row-sub{color:var(--muted);font-size:11px;margin-top:1px;}
+.row .caret{font-size:14px;color:#ccc;}
+.btn-primary{background:var(--primary);color:#fff;border:none;padding:14px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-secondary{background:#fff;color:var(--text);border:1.5px solid var(--border);padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;}
+.btn-danger{background:#fff;color:#dc2626;border:1.5px solid #fecaca;padding:14px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;}
+.pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+.pill-committed{background:#dcfce7;color:#15803d;}
+.pill-locked{background:#f5f3ee;color:#888;}
+.input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;background:#fff;font-family:'Inter',sans-serif;}
+.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:40;display:flex;align-items:center;padding:24px;}
+.modal{width:100%;background:#fff;border-radius:20px;padding:24px 20px 28px;max-width:380px;margin:0 auto;}
+.modal-title{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text);text-align:center;margin-bottom:6px;}
+.modal-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:18px;line-height:1.5;}
+/* Empty state illustration */
+.empty{text-align:center;padding:80px 24px 40px;}
+.empty-icon{width:120px;height:120px;border-radius:50%;background:var(--primary-tint2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:3px dashed var(--primary);}
+.empty-icon i{font-size:56px;color:var(--primary);}
+.empty-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);line-height:1.15;margin-bottom:8px;}
+.empty-sub{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:24px;max-width:300px;margin-left:auto;margin-right:auto;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Sprint 2: <span>Profile, Settings, Empty & Error States</span></h1>
+  <p>P1 (Public Profile) · P2 (Delete Account) · S1-S4 (Settings) · E1-E8 (Empty & Error)</p>
+</div>
+
+<!-- ============ P1: PUBLIC USER PROFILE ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-user" style="font-size:24px;color:var(--primary);"></i>
+    <h2>P1: Public User Profile</h2>
+    <span class="chip">P0</span>
+  </div>
+  <div class="section-desc">Shown when tapping another user's avatar. Public info only — name, level, games, public reviews.</div>
+
+  <div class="flow">
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <!-- Hero cover -->
+            <div style="position:relative;padding:16px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><i class="ph ph-arrow-left" style="font-size:22px;color:var(--text);cursor:pointer;"></i><div style="display:flex;gap:10px;"><i class="ph ph-envelope-simple" style="font-size:22px;color:var(--text);"></i><i class="ph ph-dots-three" style="font-size:22px;color:var(--text);"></i></div></div>
+              <div style="text-align:center;">
+                <img src="https://i.pravatar.cc/300?img=9" style="width:112px;height:112px;border-radius:50%;box-shadow:0 0 0 4px var(--primary);margin-bottom:14px;">
+                <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--text);letter-spacing:-.3px;">Lisa Martinez</div>
+                <div style="font-size:12px;color:var(--muted);margin-top:2px;">@lisa_m · Joined Apr 2024</div>
+                <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap;">
+                  <span class="pill" style="background:var(--primary-tint);color:var(--primary-dark);"><i class="ph-fill ph-trophy" style="font-size:11px;margin-right:3px;"></i>Advanced</span>
+                  <span class="pill pill-committed"><i class="ph-fill ph-seal-check" style="font-size:11px;margin-right:3px;"></i>Verified</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:18px;">
+                <button class="btn-primary" style="flex:1;"><i class="ph-bold ph-envelope-simple"></i> Message</button>
+                <button class="btn-secondary" style="flex:1;"><i class="ph ph-user-plus" style="margin-right:4px;"></i> Follow</button>
+              </div>
+            </div>
+
+            <div class="content">
+              <!-- Stats row -->
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+                <div style="text-align:center;padding:14px 8px;background:#fff;border-radius:14px;border:1px solid var(--border);"><div style="font-family:'Outfit';font-size:24px;font-weight:800;color:var(--text);">47</div><div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Games</div></div>
+                <div style="text-align:center;padding:14px 8px;background:#fff;border-radius:14px;border:1px solid var(--border);"><div style="font-family:'Outfit';font-size:24px;font-weight:800;color:var(--text);">4.9</div><div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Rating</div></div>
+                <div style="text-align:center;padding:14px 8px;background:#fff;border-radius:14px;border:1px solid var(--border);"><div style="font-family:'Outfit';font-size:24px;font-weight:800;color:var(--text);">5</div><div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Groups</div></div>
+              </div>
+
+              <div class="sec-title">About</div>
+              <div class="card"><div style="padding:14px;font-size:13px;color:var(--text);line-height:1.5;">Love playing American Mahjong. Been playing since 2018. Happy to teach beginners!</div></div>
+
+              <div class="sec-title">Shared Games</div>
+              <div class="card">
+                <div class="row"><div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#fbcfe8,#f9a8d4);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--primary-dark);">APR 19</div><div class="row-body"><div class="row-title">Saturday Mahjong</div><div class="row-sub">Sarah's Home · 4/4 players</div></div><span class="pill pill-committed">COMMITTED</span></div>
+                <div class="row"><div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#ddd6fe,#c4b5fd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#6d28d9;">MAR 22</div><div class="row-body"><div class="row-title">Thursday Practice</div><div class="row-sub">Community Center · Completed</div></div><span class="pill" style="background:#dbeafe;color:#1e40af;">COMPLETED</span></div>
+              </div>
+
+              <div class="sec-title">Recent Reviews</div>
+              <div class="card">
+                <div style="padding:14px;border-bottom:1px solid #f5f3ee;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><img src="https://i.pravatar.cc/80?img=47" style="width:28px;height:28px;border-radius:50%;"><div style="font-size:13px;font-weight:700;color:var(--text);">Sarah R.</div><span style="margin-left:auto;font-size:12px;color:#d97706;">★★★★★</span></div><div style="font-size:12px;color:var(--muted);line-height:1.5;">"Great player and so welcoming to newcomers. Made the game really fun!"</div></div>
+                <div style="padding:14px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><img src="https://i.pravatar.cc/80?img=5" style="width:28px;height:28px;border-radius:50%;"><div style="font-size:13px;font-weight:700;color:var(--text);">Amy T.</div><span style="margin-left:auto;font-size:12px;color:#d97706;">★★★★★</span></div><div style="font-size:12px;color:var(--muted);line-height:1.5;">"Taught me a lot. Super patient teacher!"</div></div>
+              </div>
+
+              <div style="text-align:center;margin-top:20px;"><button style="background:transparent;border:none;color:#dc2626;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;"><i class="ph ph-flag" style="margin-right:4px;"></i>Report this profile</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Full public profile: cover + stats + about + shared games + reviews + Report link</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P2: DELETE ACCOUNT FLOW ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-user-minus" style="font-size:24px;color:var(--primary);"></i>
+    <h2>P2: Delete Account Flow</h2>
+    <span class="chip">P0 · Apple Required</span>
+  </div>
+  <div class="section-desc">Multi-step deletion required by Apple Guideline 5.1.1(v). Warning → type email → final confirmation → success.</div>
+
+  <div class="flow">
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Delete Account</div><div style="width:24px;"></div></div>
+            <div class="content">
+              <div style="width:88px;height:88px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin:30px auto 20px;"><i class="ph-fill ph-warning-octagon" style="font-size:50px;color:#dc2626;"></i></div>
+              <div style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);text-align:center;margin-bottom:10px;">Delete your account?</div>
+              <div style="font-size:14px;color:var(--muted);text-align:center;line-height:1.5;margin-bottom:24px;">This permanently deletes your BamBuddies account and cannot be undone.</div>
+
+              <div class="card" style="margin-bottom:20px;">
+                <div style="padding:14px;">
+                  <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:.5px;">YOU WILL LOSE</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--text);">
+                    <div style="display:flex;align-items:flex-start;gap:8px;"><i class="ph ph-x-circle" style="font-size:16px;color:#dc2626;margin-top:2px;"></i><span>24 games history & 47 player reviews</span></div>
+                    <div style="display:flex;align-items:flex-start;gap:8px;"><i class="ph ph-x-circle" style="font-size:16px;color:#dc2626;margin-top:2px;"></i><span>3 group memberships</span></div>
+                    <div style="display:flex;align-items:flex-start;gap:8px;"><i class="ph ph-x-circle" style="font-size:16px;color:#dc2626;margin-top:2px;"></i><span>All messages & saved locations</span></div>
+                    <div style="display:flex;align-items:flex-start;gap:8px;"><i class="ph ph-x-circle" style="font-size:16px;color:#dc2626;margin-top:2px;"></i><span>Active subscription (no refund)</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:12px;padding:12px 14px;margin-bottom:20px;"><div style="font-size:12px;color:#854d0e;line-height:1.5;"><i class="ph-fill ph-lightbulb" style="margin-right:4px;"></i><b>Consider deactivating</b> — keep your data, disable account temporarily.</div></div>
+
+              <button class="btn-secondary" style="margin-bottom:10px;">Deactivate Instead</button>
+              <button class="btn-danger">Continue to Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>Step 1.</b> Warning with data list + deactivate alternative</div>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Confirm Deletion</div><div style="width:24px;"></div></div>
+            <div class="content">
+              <div style="margin-top:30px;margin-bottom:20px;">
+                <div class="sec-title-uppercase">Confirm your identity</div>
+                <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;">Type your email address to confirm. This cannot be reversed.</div>
+                <div class="sec-title-uppercase">Your email</div>
+                <input class="input" value="alex@example.com" readonly style="background:#f5f3ee;color:var(--muted);margin-bottom:16px;">
+                <div class="sec-title-uppercase">Type to confirm</div>
+                <input class="input" placeholder="Type: alex@example.com" style="margin-bottom:16px;">
+                <div class="sec-title-uppercase">Reason (optional)</div>
+                <div class="card" style="margin-bottom:16px;">
+                  <div class="row"><input type="radio" name="r"><div class="row-body"><div class="row-title">No longer playing mahjong</div></div></div>
+                  <div class="row"><input type="radio" name="r"><div class="row-body"><div class="row-title">Moving to another app</div></div></div>
+                  <div class="row"><input type="radio" name="r"><div class="row-body"><div class="row-title">Privacy concerns</div></div></div>
+                  <div class="row"><input type="radio" name="r" checked><div class="row-body"><div class="row-title">Other</div></div></div>
+                </div>
+                <textarea class="input" placeholder="Tell us more (optional)" rows="3" style="resize:none;margin-bottom:20px;"></textarea>
+              </div>
+              <button class="btn-danger">Delete My Account Forever</button>
+              <button class="btn-secondary" style="margin-top:10px;">Go Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>Step 2.</b> Type email to confirm + optional reason</div>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar" style="color:#fff;"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner" style="background:var(--cream);">
+          <div class="bg-tiles"></div>
+          <div class="scr" style="opacity:.3;"><div style="padding:16px;"><div style="height:140px;background:#fff;border-radius:16px;"></div></div></div>
+          <div class="modal-bg">
+            <div class="modal">
+              <div style="width:56px;height:56px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;"><i class="ph-fill ph-trash" style="font-size:30px;color:#dc2626;"></i></div>
+              <div class="modal-title">Last chance</div>
+              <div class="modal-sub">Your account and all data will be permanently deleted. This cannot be undone.</div>
+              <button class="btn-danger">Yes, Delete Forever</button>
+              <button class="btn-secondary" style="margin-top:10px;">No, Keep My Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>Step 3.</b> Final confirmation modal</div>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="content" style="padding-top:80px;text-align:center;">
+              <div style="width:88px;height:88px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;"><i class="ph-fill ph-check-circle" style="font-size:50px;color:#6b7280;"></i></div>
+              <div style="font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:10px;">Account deleted</div>
+              <div style="font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6;">We've permanently deleted your BamBuddies account. We're sorry to see you go.<br><br>A confirmation email has been sent to alex@example.com.</div>
+              <div class="card" style="text-align:left;"><div style="padding:14px;"><div style="font-size:11px;font-weight:700;color:var(--text);letter-spacing:.5px;margin-bottom:6px;">DATA RETENTION</div><div style="font-size:12px;color:var(--muted);line-height:1.5;">Some data (fraud logs, financial records) is retained for up to 30 days per our Privacy Policy. After that, it's permanently erased.</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>Step 4.</b> Success screen with data retention notice</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ S1: SAVED LOCATIONS MANAGEMENT ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-map-pin" style="font-size:24px;color:var(--primary);"></i>
+    <h2>S1: Saved Locations Management</h2>
+    <span class="chip">P0 · Settings</span>
+  </div>
+  <div class="section-desc">CRUD for saved locations used in Game Creation ("My Home", "Mom's House", etc.).</div>
+
+  <div class="flow">
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Saved Locations</div><i class="ph-bold ph-plus"></i></div>
+            <div class="content">
+              <div class="sec-title-uppercase">Your Locations</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-house" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">My Home <span class="pill" style="background:var(--primary-tint);color:var(--primary-dark);margin-left:4px;">DEFAULT</span></div><div class="row-sub">456 Oak Ave, Unit 3B · Brooklyn, NY</div></div><i class="ph ph-caret-right caret"></i></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-buildings" style="font-size:18px;color:#888;"></i></div><div class="row-body"><div class="row-title">Mom's House</div><div class="row-sub">789 Elm St · Manhattan, NY</div></div><i class="ph ph-caret-right caret"></i></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-tree-palm" style="font-size:18px;color:#888;"></i></div><div class="row-body"><div class="row-title">Beach House</div><div class="row-sub">123 Shore Dr · Montauk, NY</div></div><i class="ph ph-caret-right caret"></i></div>
+              </div>
+              <button class="btn-secondary" style="color:var(--primary);border-color:var(--primary-tint);background:var(--primary-tint2);"><i class="ph-bold ph-plus" style="margin-right:4px;"></i> Add Location</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">List view with default badge + Add</div>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-x"></i><div class="title">Edit Location</div><button style="color:var(--primary);background:none;border:none;font-size:14px;font-weight:700;cursor:pointer;">Save</button></div>
+            <div class="content">
+              <div class="sec-title-uppercase">Label</div>
+              <input class="input" value="Mom's House" style="margin-bottom:14px;">
+
+              <div class="sec-title-uppercase">Icon</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+                <div style="width:44px;height:44px;border-radius:12px;background:#f5f3ee;border:2px solid var(--primary);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-fill ph-buildings" style="font-size:22px;color:var(--primary);"></i></div>
+                <div style="width:44px;height:44px;border-radius:12px;background:#fff;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-fill ph-house" style="font-size:22px;color:#888;"></i></div>
+                <div style="width:44px;height:44px;border-radius:12px;background:#fff;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-fill ph-tree-palm" style="font-size:22px;color:#888;"></i></div>
+                <div style="width:44px;height:44px;border-radius:12px;background:#fff;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-fill ph-briefcase" style="font-size:22px;color:#888;"></i></div>
+                <div style="width:44px;height:44px;border-radius:12px;background:#fff;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-fill ph-map-pin" style="font-size:22px;color:#888;"></i></div>
+              </div>
+
+              <div class="sec-title-uppercase">Address</div>
+              <input class="input" value="789 Elm St, Manhattan, NY" style="margin-bottom:14px;">
+
+              <div class="sec-title-uppercase">Privacy</div>
+              <div class="card">
+                <div class="row"><div style="width:30px;height:30px;border-radius:8px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-eye-slash" style="font-size:14px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Hide exact address</div><div class="row-sub">Show approximate location only</div></div><div style="width:44px;height:24px;border-radius:12px;background:var(--primary);position:relative;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div>
+              </div>
+
+              <button class="btn-danger" style="margin-top:14px;"><i class="ph ph-trash" style="margin-right:4px;"></i> Delete Location</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Edit: label, icon picker, address, privacy, delete</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ S2: CONNECTED ACCOUNTS ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-link" style="font-size:24px;color:var(--primary);"></i>
+    <h2>S2: Connected Accounts</h2>
+    <span class="chip">P0 · Settings</span>
+  </div>
+  <div class="section-desc">View linked SSO providers. Link / unlink. Show which account is used for sign-in.</div>
+
+  <div class="flow">
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Connected Accounts</div><div style="width:24px;"></div></div>
+            <div class="content">
+              <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5;">Use any of these accounts to sign in to BamBuddies. You can add or remove them anytime.</div>
+
+              <div class="sec-title-uppercase">Connected</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#000;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 20 20" fill="#fff"><path d="M15.6 10.7c0-2.5 2-3.7 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9s-1.9-.9-3.2-.9c-1.6 0-3.1 1-4 2.5-1.7 3-.4 7.4 1.2 9.8z"/></svg></div><div class="row-body"><div class="row-title">Apple <span class="pill pill-committed" style="margin-left:4px;">PRIMARY</span></div><div class="row-sub">alex@privaterelay.appleid.com</div></div><i class="ph ph-caret-right caret"></i></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M19.6 10.2c0-.6-.1-1.2-.2-1.8h-9.2v3.5h5.3c-.2 1.2-.9 2.3-1.9 3l3 2.4c1.8-1.6 2.9-4 2.9-7.1z" fill="#4285F4"/><path d="M10.2 19.5c2.6 0 4.8-.9 6.4-2.3l-3-2.4c-.9.6-2 .9-3.3.9-2.5 0-4.7-1.7-5.4-4h-3v2.5c1.6 3.2 4.9 5.3 8.3 5.3z" fill="#34A853"/><path d="M4.7 11.7c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9v-2.5h-3c-.6 1.3-1 2.8-1 4.4s.4 3.1 1 4.4l3-2.5z" fill="#FBBC05"/><path d="M10.2 3.9c1.4 0 2.7.5 3.7 1.4l2.7-2.7c-1.6-1.5-3.8-2.4-6.4-2.4-3.4 0-6.7 2.1-8.3 5.3l3 2.5c.7-2.3 2.9-4.1 5.3-4.1z" fill="#EA4335"/></svg></div><div class="row-body"><div class="row-title">Google</div><div class="row-sub">alex@gmail.com</div></div><button style="padding:6px 12px;border-radius:8px;background:#fff;color:#dc2626;border:1px solid #fecaca;font-size:11px;font-weight:700;cursor:pointer;">Unlink</button></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#f5f3ee;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-envelope" style="font-size:18px;color:#888;"></i></div><div class="row-body"><div class="row-title">Email + Password</div><div class="row-sub">alex@example.com</div></div><button style="padding:6px 12px;border-radius:8px;background:#fff;color:var(--primary);border:1px solid var(--primary-tint);font-size:11px;font-weight:700;cursor:pointer;">Change</button></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-phone" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Phone <span class="pill pill-committed" style="margin-left:4px;">VERIFIED</span></div><div class="row-sub">+1 (555) 123-4567</div></div><i class="ph ph-caret-right caret"></i></div>
+              </div>
+
+              <div class="sec-title-uppercase">Available</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#1877f2;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 20 20" fill="#fff"><path d="M20 10c0-5.5-4.5-10-10-10S0 4.5 0 10c0 5 3.7 9.1 8.4 9.9v-7h-2.5V10h2.5V7.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.7-1.6 1.5V10h2.8l-.4 2.9h-2.3v7C16.3 19.1 20 15 20 10z"/></svg></div><div class="row-body"><div class="row-title">Facebook</div><div class="row-sub">Not connected</div></div><button style="padding:6px 12px;border-radius:8px;background:var(--primary);color:#fff;border:none;font-size:11px;font-weight:700;cursor:pointer;">Connect</button></div>
+              </div>
+
+              <div style="background:var(--primary-tint2);border:1px solid #fbcfe8;border-radius:12px;padding:12px 14px;font-size:12px;color:var(--primary-dark);line-height:1.5;"><i class="ph-fill ph-info" style="margin-right:4px;"></i>You need at least one sign-in method. You can't remove your last connected account.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Connected + Available accounts, Primary badge, Unlink / Change</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ S3: GRANULAR NOTIFICATIONS ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-bell-ringing" style="font-size:24px;color:var(--primary);"></i>
+    <h2>S3: Granular Notification Preferences</h2>
+    <span class="chip">P0 · Settings</span>
+  </div>
+  <div class="section-desc">Per-type notification preferences (email / push / SMS toggles), quiet hours config.</div>
+
+  <div class="flow">
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Notifications</div><div style="width:24px;"></div></div>
+            <div class="content">
+
+              <div class="sec-title-uppercase">Channel Headers</div>
+              <div style="display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;align-items:center;padding:0 14px 8px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">
+                <div></div><div style="text-align:center;"><i class="ph ph-bell" style="font-size:14px;color:var(--primary);"></i><div>Push</div></div><div style="text-align:center;"><i class="ph ph-envelope" style="font-size:14px;color:var(--primary);"></i><div>Email</div></div><div style="text-align:center;"><i class="ph ph-chat-text" style="font-size:14px;color:var(--primary);"></i><div>SMS</div></div>
+              </div>
+
+              <div class="sec-title-uppercase">Games</div>
+              <div class="card">
+                <div style="padding:10px 14px;border-bottom:1px solid #f5f3ee;display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;align-items:center;"><div style="font-size:13px;color:var(--text);font-weight:600;">New game invite</div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div></div>
+                <div style="padding:10px 14px;border-bottom:1px solid #f5f3ee;display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;align-items:center;"><div style="font-size:13px;color:var(--text);font-weight:600;">Game confirmed</div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div></div>
+                <div style="padding:10px 14px;border-bottom:1px solid #f5f3ee;display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;align-items:center;"><div style="font-size:13px;color:var(--text);font-weight:600;">Game reminder (24h)</div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div></div>
+                <div style="padding:10px 14px;border-bottom:1px solid #f5f3ee;display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;align-items:center;"><div style="font-size:13px;color:var(--text);font-weight:600;">Applicant received (organizer)</div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div></div>
+                <div style="padding:10px 14px;display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;align-items:center;"><div style="font-size:13px;color:var(--text);font-weight:600;">Player cancelled</div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div></div>
+              </div>
+
+              <div class="sec-title-uppercase">Messages</div>
+              <div class="card">
+                <div style="padding:10px 14px;border-bottom:1px solid #f5f3ee;display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;align-items:center;"><div style="font-size:13px;color:var(--text);font-weight:600;">New message</div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div></div>
+                <div style="padding:10px 14px;display:grid;grid-template-columns:1fr 44px 44px 44px;gap:4px;align-items:center;"><div style="font-size:13px;color:var(--text);font-weight:600;">Mentions only</div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:var(--primary);position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div><div style="display:flex;justify-content:center;"><div style="width:34px;height:20px;border-radius:12px;background:#e8e4e0;position:relative;"><div style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;"></div></div></div></div>
+              </div>
+
+              <div class="sec-title-uppercase">Quiet Hours</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-moon" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Do not disturb</div><div class="row-sub">10:00 PM – 8:00 AM</div></div><div style="width:44px;height:24px;border-radius:12px;background:var(--primary);position:relative;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-clock" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Hours</div><div class="row-sub">Start and end time</div></div><i class="ph ph-caret-right caret"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Grid of per-type toggles (Push / Email / SMS) + Quiet Hours</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ S4: PRIVACY SETTINGS ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-lock" style="font-size:24px;color:var(--primary);"></i>
+    <h2>S4: Privacy Settings</h2>
+    <span class="chip">P0 · Settings</span>
+  </div>
+
+  <div class="flow">
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div class="title">Privacy</div><div style="width:24px;"></div></div>
+            <div class="content">
+              <div class="sec-title-uppercase">Profile Visibility</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-eye" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Who can see my profile</div><div class="row-sub">Everyone</div></div><i class="ph ph-caret-right caret"></i></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-envelope" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Who can message me</div><div class="row-sub">People in my games and groups</div></div><i class="ph ph-caret-right caret"></i></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-user-plus" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Who can invite me to games</div><div class="row-sub">Friends and group members</div></div><i class="ph ph-caret-right caret"></i></div>
+              </div>
+
+              <div class="sec-title-uppercase">Location</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-map-pin" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Show approximate location</div><div class="row-sub">Show city only, not exact address</div></div><div style="width:44px;height:24px;border-radius:12px;background:var(--primary);position:relative;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-map-trifold" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Appear in Discover</div><div class="row-sub">Let nearby players find my games</div></div><div style="width:44px;height:24px;border-radius:12px;background:var(--primary);position:relative;flex-shrink:0;"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div></div>
+              </div>
+
+              <div class="sec-title-uppercase">Blocking</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:#fee2e2;display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-prohibit" style="font-size:18px;color:#dc2626;"></i></div><div class="row-body"><div class="row-title">Blocked users</div><div class="row-sub">2 people blocked</div></div><i class="ph ph-caret-right caret"></i></div>
+              </div>
+
+              <div class="sec-title-uppercase">Data</div>
+              <div class="card">
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-download" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Download my data</div><div class="row-sub">Request export (GDPR/CCPA)</div></div><i class="ph ph-caret-right caret"></i></div>
+                <div class="row"><div style="width:36px;height:36px;border-radius:10px;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;"><i class="ph ph-file-text" style="font-size:18px;color:var(--primary);"></i></div><div class="row-body"><div class="row-title">Privacy Policy</div></div><i class="ph ph-caret-right caret"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label">Visibility, location, blocking, data export (GDPR)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ E1-E8: EMPTY & ERROR STATES ============ -->
+<div class="section">
+  <div class="section-hdr">
+    <i class="ph ph-smiley-sticker" style="font-size:24px;color:var(--primary);"></i>
+    <h2>E1–E8: Empty & Error States</h2>
+    <span class="chip">P0 · UX</span>
+  </div>
+  <div class="section-desc">Friendly empty/error screens with clear CTAs.</div>
+
+  <div class="flow">
+
+    <!-- E1: Empty Groups -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><div class="title" style="font-family:'DM Serif Display',serif;font-size:28px;">Groups</div><div style="display:flex;gap:12px;"><i class="ph ph-magnifying-glass" style="font-size:22px;color:var(--text);"></i><i class="ph-bold ph-plus" style="font-size:22px;color:var(--text);"></i></div></div>
+            <div class="empty">
+              <div class="empty-icon"><i class="ph-fill ph-users-three"></i></div>
+              <div class="empty-title">No groups yet</div>
+              <div class="empty-sub">Groups are the easiest way to play with the same people week after week.</div>
+              <button class="btn-primary" style="margin-bottom:10px;"><i class="ph-bold ph-plus"></i> Create a Group</button>
+              <button class="btn-secondary"><i class="ph ph-map-trifold" style="margin-right:4px;"></i> Discover Groups</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>E1.</b> Empty Groups</div>
+    </div>
+
+    <!-- E2: Empty Inbox -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><div class="title" style="font-family:'DM Serif Display',serif;font-size:28px;">Inbox</div><i class="ph ph-note-pencil" style="font-size:22px;color:var(--text);"></i></div>
+            <div class="empty">
+              <div class="empty-icon"><i class="ph-fill ph-chat-circle-dots"></i></div>
+              <div class="empty-title">No messages yet</div>
+              <div class="empty-sub">Your conversations from games and groups will appear here.</div>
+              <button class="btn-secondary"><i class="ph ph-compass" style="margin-right:4px;"></i> Find a Game to Join</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>E2.</b> Empty Inbox</div>
+    </div>
+
+    <!-- E3: Empty Notifications -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><div class="title" style="font-family:'DM Serif Display',serif;font-size:28px;">Activity</div><i class="ph ph-gear" style="font-size:22px;color:var(--text);"></i></div>
+            <div class="empty">
+              <div class="empty-icon" style="background:#dcfce7;border-color:#15803d;"><i class="ph-fill ph-check-circle" style="color:#15803d;"></i></div>
+              <div class="empty-title">All caught up!</div>
+              <div class="empty-sub">When you have new invites, messages, or updates, they'll show up here.</div>
+              <button class="btn-secondary">Back to Dashboard</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>E3.</b> Empty Notifications</div>
+    </div>
+
+    <!-- E4: Empty Search -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="hdr-bar"><i class="ph ph-arrow-left"></i><div style="flex:1;margin:0 10px;"><input class="input" value="veganmahjong99" style="padding:10px 14px;"></div><div style="width:24px;"></div></div>
+            <div class="empty">
+              <div class="empty-icon"><i class="ph-fill ph-magnifying-glass"></i></div>
+              <div class="empty-title">No results for "veganmahjong99"</div>
+              <div class="empty-sub">Try a different name or check spelling.</div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;text-align:left;max-width:320px;margin:0 auto 12px;">
+                <div style="font-size:11px;font-weight:700;color:var(--text);letter-spacing:.5px;margin-bottom:8px;">SEARCH TIPS</div>
+                <div style="font-size:13px;color:var(--muted);line-height:1.6;">• Try first name only<br>• Check spelling<br>• Search by email if you know it</div>
+              </div>
+              <button class="btn-secondary"><i class="ph ph-user-plus" style="margin-right:4px;"></i> Invite by email</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>E4.</b> Empty Search Results + tips</div>
+    </div>
+
+    <!-- E5: Offline Banner -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">✈ ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div style="background:#fef3c7;border-bottom:1px solid #fde68a;padding:10px 16px;display:flex;align-items:center;gap:8px;"><i class="ph-fill ph-cloud-slash" style="font-size:18px;color:#b45309;"></i><div style="flex:1;font-size:12px;font-weight:600;color:#854d0e;">You're offline — some features may not work</div><button style="background:transparent;border:none;color:#b45309;font-size:11px;font-weight:700;text-decoration:underline;cursor:pointer;">Retry</button></div>
+            <div class="hdr-bar"><div class="title" style="font-family:'DM Serif Display',serif;font-size:28px;">My Games</div></div>
+            <div class="content">
+              <div class="card"><div style="padding:20px;text-align:center;"><i class="ph-fill ph-cloud-slash" style="font-size:40px;color:#aaa;"></i><div style="font-size:14px;font-weight:600;color:var(--muted);margin-top:10px;">Showing cached data</div><div style="font-size:12px;color:var(--muted);margin-top:4px;">Last updated: 2 hours ago</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>E5.</b> Offline Banner — top sticky</div>
+    </div>
+
+    <!-- E6: Global Error (500) -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="empty" style="padding-top:120px;">
+              <div class="empty-icon" style="background:#fee2e2;border-color:#dc2626;"><i class="ph-fill ph-warning-octagon" style="color:#dc2626;"></i></div>
+              <div class="empty-title">Something broke</div>
+              <div class="empty-sub">We're looking into it. Try refreshing or come back in a bit.</div>
+              <button class="btn-primary" style="margin-bottom:10px;"><i class="ph-bold ph-arrow-clockwise"></i> Try Again</button>
+              <button class="btn-secondary">Contact Support</button>
+              <div style="font-size:11px;color:var(--muted);margin-top:16px;font-family:'Inter';">Error code: 500 · id: 7a2f</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>E6.</b> 500 Error</div>
+    </div>
+
+    <!-- E7: 404 Not Found -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="empty" style="padding-top:120px;">
+              <div class="empty-icon"><div style="font-family:'DM Serif Display',serif;font-size:48px;color:var(--primary);">4🀄4</div></div>
+              <div class="empty-title">Page not found</div>
+              <div class="empty-sub">The page you're looking for doesn't exist or has been moved.</div>
+              <button class="btn-primary">Back to Dashboard</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>E7.</b> 404 Not Found</div>
+    </div>
+
+    <!-- E8: Account Suspended -->
+    <div class="frame-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+        <div class="inner">
+          <div class="bg-tiles"></div>
+          <div class="scr">
+            <div class="empty" style="padding-top:120px;">
+              <div class="empty-icon" style="background:#fee2e2;border-color:#dc2626;"><i class="ph-fill ph-prohibit" style="color:#dc2626;"></i></div>
+              <div class="empty-title">Account suspended</div>
+              <div class="empty-sub">Your account has been suspended for violating our community guidelines.</div>
+              <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;text-align:left;max-width:320px;margin:0 auto 16px;font-size:12px;color:var(--muted);line-height:1.5;"><b style="color:var(--text);">Reason:</b> Multiple reports of inappropriate messaging<br><b style="color:var(--text);">Duration:</b> 30 days<br><b style="color:var(--text);">Ends:</b> May 18, 2026</div>
+              <button class="btn-primary">Appeal Decision</button>
+              <button class="btn-secondary" style="margin-top:10px;">Contact Support</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-label"><b>E8.</b> Account Suspended</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
