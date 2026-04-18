@@ -51,15 +51,15 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
 /* ============ GREETING ============ */
 .greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.15;}
 
-/* ============ ACTION ROW (3D cream tiles, uniform) ============ */
-.actions{display:flex;gap:10px;padding:0 16px 18px;}
-.act{flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff8ec 0%,#f2e2c8 100%);border-radius:20px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:9px 4px 9px;cursor:pointer;box-shadow:0 4px 0 #dcc8aa,0 6px 12px rgba(0,0,0,.06);transition:transform .1s ease,box-shadow .1s ease;}
-.act:nth-child(2){background:linear-gradient(180deg,#fff5f2 0%,#f5e0dc 100%);box-shadow:0 4px 0 #dcc0b8,0 6px 12px rgba(0,0,0,.06);}
-.act:active{transform:translateY(3px);box-shadow:0 1px 0 #dcc8aa,0 3px 6px rgba(0,0,0,.05);}
-.act-icon-wrap{width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-top:6px;}
+/* ============ ACTION ROW (chunky 3D cream tiles) ============ */
+.actions{display:flex;gap:10px;padding:0 16px 22px;}
+.act{flex:1;height:92px;background:linear-gradient(180deg,#fff4d9 0%,#f5e0b2 100%);border-radius:22px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:12px 4px 8px;cursor:pointer;box-shadow:0 7px 0 #d4ba82,0 10px 16px rgba(0,0,0,.1);transition:transform .1s ease,box-shadow .1s ease;}
+.act:nth-child(2){background:linear-gradient(180deg,#fce7e3 0%,#f0cfc7 100%);box-shadow:0 7px 0 #cfa89e,0 10px 16px rgba(0,0,0,.1);}
+.act:active{transform:translateY(3px);box-shadow:0 3px 0 #d4ba82,0 4px 8px rgba(0,0,0,.06);}
+.act-icon-wrap{width:38px;height:38px;display:flex;align-items:center;justify-content:center;margin-bottom:4px;}
 .act-icon-wrap svg{width:100%;height:100%;}
-.act-lbl{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:-.1px;}
-.act-badge{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2.5px solid #fff8ec;box-shadow:0 2px 4px rgba(201,59,139,.3);z-index:2;}
+.act-lbl{font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:-.1px;}
+.act-badge{position:absolute;top:-5px;right:-5px;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2.5px solid #fff4d9;box-shadow:0 2px 4px rgba(201,59,139,.3);z-index:2;}
 
 /* ============ SPONSORED ============ */
 .sponsor{margin:0 16px 18px;background:linear-gradient(135deg,#fdf2f8 0%,#fce7f3 100%);border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;position:relative;overflow:hidden;border:1px solid #fbcfe8;}
@@ -186,12 +186,11 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
 
       <!-- ACTION ROW (reference-matching 3D cream tiles) -->
       <div class="actions">
-        <!-- 1. Start Game: simple pink play triangle -->
+        <!-- 1. Start Game: bare pink play triangle -->
         <div class="act">
           <div class="act-icon-wrap">
             <svg viewBox="0 0 48 48">
-              <rect x="10" y="9" width="28" height="30" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2"/>
-              <path d="M20 18 L32 24 L20 30 Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M14 10 L38 24 L14 38 Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="act-lbl">Start<br>Game</div>
