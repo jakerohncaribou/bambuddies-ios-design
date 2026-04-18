@@ -600,12 +600,12 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     </div><!-- /gameDetail -->
 
     <!-- ==================== 3. MY GAMES ==================== -->
-    <div class="screen has-tab" data-screen="myGames" id="myGamesScreen">
+    <div class="screen has-tab" data-screen="myGames" id="myGamesScreen" style="padding:0;display:flex;flex-direction:column;">
 
       <div class="v9-bg-tiles"></div>
-      <div class="v9-content">
 
-        <!-- HEADER -->
+      <!-- FIXED HEADER -->
+      <div style="position:relative;z-index:2;background:var(--v9-cream,#fdf8f0);padding-bottom:6px;">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;">
           <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#1a1a1a;">My Games</div>
           <div style="display:flex;gap:8px;">
@@ -613,124 +613,126 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             <div style="width:38px;height:38px;border-radius:50%;background:#fce7f3;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-funnel" style="font-size:17px;color:#9d2467;"></i></div>
           </div>
         </div>
+      </div>
 
-        <!-- FILTER TABS -->
-        <div style="display:flex;gap:8px;padding:0 20px 14px;overflow-x:auto;">
-          <div style="background:#c93b8b;color:#fff;padding:7px 16px;border-radius:99px;font-size:13px;font-weight:700;box-shadow:0 2px 6px rgba(201,59,139,.25);flex-shrink:0;">All</div>
-          <div style="background:#fff;color:#6b7280;padding:7px 16px;border-radius:99px;font-size:13px;font-weight:600;border:1px solid #e8e4e0;flex-shrink:0;">Upcoming</div>
-          <div style="background:#fff;color:#6b7280;padding:7px 16px;border-radius:99px;font-size:13px;font-weight:600;border:1px solid #e8e4e0;flex-shrink:0;">Past</div>
-          <div style="background:#fff;color:#6b7280;padding:7px 16px;border-radius:99px;font-size:13px;font-weight:600;border:1px solid #e8e4e0;flex-shrink:0;">Cancelled</div>
-        </div>
+      <!-- TWO INDEPENDENTLY SCROLLABLE PANES -->
+      <div style="flex:1;display:flex;flex-direction:column;min-height:0;position:relative;z-index:1;">
 
-        <!-- NEEDS YOUR ATTENTION -->
-        <div class="v9-sec-hdr">
-          <div class="v9-sec-hdr-left">
-            <div class="v9-sec-title">Needs Your Attention</div>
-            <div class="v9-sec-count">2</div>
-          </div>
-        </div>
-
-        <div class="v9-att">
-          <div class="v9-att-av"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" alt=""></div>
-          <div class="v9-att-body">
-            <div class="v9-att-kicker">Game Invite</div>
-            <div class="v9-att-name">Amy's Tuesday Game</div>
-            <div class="v9-att-meta">Tue Apr 22 &middot; 6:30 PM &middot; 3 of 4</div>
-          </div>
-          <div class="v9-att-cta">
-            <button class="v9-att-btn">Accept</button>
-            <button class="v9-att-txt">Decline</button>
-          </div>
-        </div>
-
-        <div class="v9-att">
-          <div class="v9-att-av"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" alt=""></div>
-          <div class="v9-att-body">
-            <div class="v9-att-kicker">Game Invite</div>
-            <div class="v9-att-name">Rachel's Open Game</div>
-            <div class="v9-att-meta">Thu Apr 24 &middot; 3:00 PM &middot; Open</div>
-          </div>
-          <div class="v9-att-cta">
-            <button class="v9-att-btn">Accept</button>
-            <button class="v9-att-txt">Decline</button>
-          </div>
-        </div>
-
-        <!-- PAST GAMES (scrollable above today) -->
-        <div class="v9-sec-hdr" style="margin-top:20px;">
-          <div class="v9-sec-hdr-left"><div class="v9-sec-title">Past</div></div>
-        </div>
-
-        <div class="v9-game-card" style="opacity:.6;" onclick="go('gameDetail')">
-          <div class="v9-game-thumb" style="background:linear-gradient(135deg,#e2e8f0,#cbd5e1);"><div class="v9-game-day"><div class="v9-game-day-num" style="color:#64748b;">08</div><div class="v9-game-day-mon">Apr</div></div></div>
-          <div class="v9-game-body"><div class="v9-game-ttl">Monday Night Game</div><div class="v9-game-meta">6:00 PM &middot; Community Center</div></div>
-          <div class="v9-game-right"><div class="v9-game-players">1 of 4</div><div class="v9-game-status" style="background:#fee2e2;color:#991b1b;">Cancelled</div></div>
-        </div>
-
-        <div class="v9-game-card" style="opacity:.8;" onclick="go('gameDetail')">
-          <div class="v9-game-thumb v9-peach"><div class="v9-game-day"><div class="v9-game-day-num">12</div><div class="v9-game-day-mon">Apr</div></div></div>
-          <div class="v9-game-body"><div class="v9-game-ttl">Weekend Warriors</div><div class="v9-game-meta">2:00 PM &middot; Sarah's Home</div></div>
-          <div class="v9-game-right"><div class="v9-game-players">4 of 4</div><div class="v9-game-status" style="background:#dbeafe;color:#1e40af;">Completed</div></div>
-        </div>
-
-        <!-- TODAY DIVIDER -->
-        <div style="display:flex;align-items:center;gap:10px;margin:20px 20px 14px;">
-          <div style="flex:1;height:1px;background:#e8e4e0;"></div>
-          <div style="background:#1a1a1a;color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 12px;border-radius:99px;font-family:'Outfit',sans-serif;">TODAY &middot; APR 17</div>
-          <div style="flex:1;height:1px;background:#e8e4e0;"></div>
-        </div>
-
-        <!-- NEXT UP (HIGHLIGHTED) — Saturday Mahjong 4/19 -->
-        <div class="v9-sec-hdr">
-          <div class="v9-sec-hdr-left"><div class="v9-sec-title">Upcoming</div></div>
-          <div class="v9-sec-hdr-right">
-            <div class="v9-cal-ic" title="Sync to calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div>
-          </div>
-        </div>
-
-        <div id="nextUpGame" style="margin:0 16px 10px;background:linear-gradient(135deg,#fff,#fdf2f8);border:2px solid #c93b8b;border-radius:18px;padding:14px;cursor:pointer;box-shadow:0 6px 20px rgba(201,59,139,.15);position:relative;" onclick="go('gameDetail')">
-          <div style="position:absolute;top:-10px;left:14px;background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;font-size:9px;font-weight:800;letter-spacing:1.5px;padding:4px 10px;border-radius:99px;display:flex;align-items:center;gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;"></span>NEXT UP</div>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
-            <div class="v9-game-thumb" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);"><div class="v9-game-day"><div class="v9-game-day-num" style="color:#9d2467;">19</div><div class="v9-game-day-mon" style="color:#9d2467;">Apr</div></div></div>
-            <div style="flex:1;min-width:0;">
-              <div class="v9-game-ttl">Saturday Mahjong</div>
-              <div style="color:#c93b8b;font-size:12px;font-weight:600;margin-top:1px;">In 2 days &middot; Sat 2:00 PM</div>
-              <div class="v9-game-meta" style="margin-top:1px;">Sarah's Home, Portland</div>
+        <!-- PANE 1: NEEDS YOUR ATTENTION (scrolls independently) -->
+        <div style="flex:0 0 auto;display:flex;flex-direction:column;max-height:44%;">
+          <div class="v9-sec-hdr" style="padding:2px 20px 8px;">
+            <div class="v9-sec-hdr-left">
+              <div class="v9-sec-title">Needs Your Attention</div>
+              <div class="v9-sec-count">2</div>
             </div>
-            <div class="v9-game-right">
-              <div class="v9-game-players">4 of 4</div>
-              <div class="v9-game-status v9-committed">Committed</div>
+          </div>
+          <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;">
+            <div class="v9-att">
+              <div class="v9-att-av"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" alt=""></div>
+              <div class="v9-att-body">
+                <div class="v9-att-kicker">Game Invite</div>
+                <div class="v9-att-name">Amy's Tuesday Game</div>
+                <div class="v9-att-meta">Tue Apr 22 &middot; 6:30 PM &middot; 3 of 4</div>
+              </div>
+              <div class="v9-att-cta">
+                <button class="v9-att-btn">Accept</button>
+                <button class="v9-att-txt">Decline</button>
+              </div>
+            </div>
+            <div class="v9-att">
+              <div class="v9-att-av"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&h=60&fit=crop&crop=face" alt=""></div>
+              <div class="v9-att-body">
+                <div class="v9-att-kicker">Game Invite</div>
+                <div class="v9-att-name">Rachel's Open Game</div>
+                <div class="v9-att-meta">Thu Apr 24 &middot; 3:00 PM &middot; Open</div>
+              </div>
+              <div class="v9-att-cta">
+                <button class="v9-att-btn">Accept</button>
+                <button class="v9-att-txt">Decline</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Amy's Tuesday 4/22 PENDING -->
-        <div class="v9-game-card" onclick="go('gameDetail')">
-          <div class="v9-game-thumb v9-lavender"><div class="v9-game-day"><div class="v9-game-day-num">22</div><div class="v9-game-day-mon">Apr</div></div></div>
-          <div class="v9-game-body"><div class="v9-game-ttl">Amy's Tuesday Game</div><div class="v9-game-meta">Tue 7:00 PM &middot; Amy's Place</div></div>
-          <div class="v9-game-right"><div class="v9-game-players">3 of 4</div><div class="v9-game-status v9-pending">Pending</div></div>
-        </div>
+        <!-- DIVIDER between panes -->
+        <div style="height:1px;background:#e8e4e0;margin:10px 20px 4px;flex-shrink:0;"></div>
 
-        <!-- Rachel's Open Game 4/26 PENDING -->
-        <div class="v9-game-card" onclick="go('gameDetail')">
-          <div class="v9-game-thumb" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);"><div class="v9-game-day"><div class="v9-game-day-num" style="color:#9d2467;">26</div><div class="v9-game-day-mon" style="color:#9d2467;">Apr</div></div></div>
-          <div class="v9-game-body"><div class="v9-game-ttl">Rachel's Open Game</div><div class="v9-game-meta">Sat 1:00 PM &middot; Community Center</div></div>
-          <div class="v9-game-right"><div class="v9-game-players">2 of 4</div><div class="v9-game-status v9-pending">Pending</div></div>
-        </div>
+        <!-- PANE 2: GAMES (single list, scrolls independently, auto-scroll target) -->
+        <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
+          <div class="v9-sec-hdr" style="padding:8px 20px 8px;">
+            <div class="v9-sec-hdr-left"><div class="v9-sec-title">Games</div></div>
+            <div class="v9-sec-hdr-right">
+              <div class="v9-cal-ic" title="Sync to calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div>
+            </div>
+          </div>
+          <div id="gamesScrollPane" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:100px;">
 
-        <!-- Sunday Afternoon 5/03 COMMITTED -->
-        <div class="v9-game-card" onclick="go('gameDetail')">
-          <div class="v9-game-thumb v9-sage"><div class="v9-game-day"><div class="v9-game-day-num">03</div><div class="v9-game-day-mon">May</div></div></div>
-          <div class="v9-game-body"><div class="v9-game-ttl">Sunday Afternoon Session</div><div class="v9-game-meta">Sun 3:00 PM &middot; Lisa's House</div></div>
-          <div class="v9-game-right"><div class="v9-game-players">4 of 4</div><div class="v9-game-status v9-committed">Committed</div></div>
-        </div>
+            <!-- FUTURE games (most distant at top, near-future descending) -->
+            <div class="v9-game-card" onclick="go('gameDetail')">
+              <div class="v9-game-thumb v9-sage"><div class="v9-game-day"><div class="v9-game-day-num">03</div><div class="v9-game-day-mon">May</div></div></div>
+              <div class="v9-game-body"><div class="v9-game-ttl">Sunday Afternoon Session</div><div class="v9-game-meta">Sun 3:00 PM &middot; Lisa's House</div></div>
+              <div class="v9-game-right"><div class="v9-game-players">4 of 4</div><div class="v9-game-status v9-committed">Committed</div></div>
+            </div>
 
-        <!-- FAB (kept) -->
-        <div onclick="go('creation1')" style="position:sticky;bottom:100px;margin-left:auto;margin-right:16px;z-index:88;cursor:pointer;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#ec4fa3,#9d2467);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(201,59,139,.4);">
-          <i class="ph-bold ph-plus" style="font-size:28px;color:#fff;"></i>
+            <div class="v9-game-card" onclick="go('gameDetail')">
+              <div class="v9-game-thumb" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);"><div class="v9-game-day"><div class="v9-game-day-num" style="color:#9d2467;">26</div><div class="v9-game-day-mon" style="color:#9d2467;">Apr</div></div></div>
+              <div class="v9-game-body"><div class="v9-game-ttl">Rachel's Open Game</div><div class="v9-game-meta">Sat 1:00 PM &middot; Community Center</div></div>
+              <div class="v9-game-right"><div class="v9-game-players">2 of 4</div><div class="v9-game-status v9-pending">Pending</div></div>
+            </div>
+
+            <div class="v9-game-card" onclick="go('gameDetail')">
+              <div class="v9-game-thumb v9-lavender"><div class="v9-game-day"><div class="v9-game-day-num">22</div><div class="v9-game-day-mon">Apr</div></div></div>
+              <div class="v9-game-body"><div class="v9-game-ttl">Amy's Tuesday Game</div><div class="v9-game-meta">Tue 7:00 PM &middot; Amy's Place</div></div>
+              <div class="v9-game-right"><div class="v9-game-players">3 of 4</div><div class="v9-game-status v9-pending">Pending</div></div>
+            </div>
+
+            <!-- NEXT UP game (highlighted, right above TODAY divider) -->
+            <div id="nextUpGame" style="margin:0 16px 10px;background:linear-gradient(135deg,#fff,#fdf2f8);border:2px solid #c93b8b;border-radius:18px;padding:14px;cursor:pointer;box-shadow:0 6px 20px rgba(201,59,139,.15);position:relative;" onclick="go('gameDetail')">
+              <div style="position:absolute;top:-10px;left:14px;background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;font-size:9px;font-weight:800;letter-spacing:1.5px;padding:4px 10px;border-radius:99px;display:flex;align-items:center;gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:#fff;"></span>NEXT UP</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+                <div class="v9-game-thumb" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);"><div class="v9-game-day"><div class="v9-game-day-num" style="color:#9d2467;">19</div><div class="v9-game-day-mon" style="color:#9d2467;">Apr</div></div></div>
+                <div style="flex:1;min-width:0;">
+                  <div class="v9-game-ttl">Saturday Mahjong</div>
+                  <div style="color:#c93b8b;font-size:12px;font-weight:600;margin-top:1px;">In 2 days &middot; Sat 2:00 PM</div>
+                  <div class="v9-game-meta" style="margin-top:1px;">Sarah's Home, Portland</div>
+                </div>
+                <div class="v9-game-right">
+                  <div class="v9-game-players">4 of 4</div>
+                  <div class="v9-game-status v9-committed">Committed</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TODAY DIVIDER -->
+            <div id="todayDivider" style="display:flex;align-items:center;gap:10px;margin:16px 20px 14px;">
+              <div style="flex:1;height:1px;background:#e8e4e0;"></div>
+              <div style="background:#1a1a1a;color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 12px;border-radius:99px;font-family:'Outfit',sans-serif;">TODAY &middot; APR 17</div>
+              <div style="flex:1;height:1px;background:#e8e4e0;"></div>
+            </div>
+
+            <!-- PAST games -->
+            <div class="v9-game-card" style="opacity:.8;" onclick="go('gameDetail')">
+              <div class="v9-game-thumb v9-peach"><div class="v9-game-day"><div class="v9-game-day-num">12</div><div class="v9-game-day-mon">Apr</div></div></div>
+              <div class="v9-game-body"><div class="v9-game-ttl">Weekend Warriors</div><div class="v9-game-meta">2:00 PM &middot; Sarah's Home</div></div>
+              <div class="v9-game-right"><div class="v9-game-players">4 of 4</div><div class="v9-game-status" style="background:#dbeafe;color:#1e40af;">Completed</div></div>
+            </div>
+
+            <div class="v9-game-card" style="opacity:.6;" onclick="go('gameDetail')">
+              <div class="v9-game-thumb" style="background:linear-gradient(135deg,#e2e8f0,#cbd5e1);"><div class="v9-game-day"><div class="v9-game-day-num" style="color:#64748b;">08</div><div class="v9-game-day-mon">Apr</div></div></div>
+              <div class="v9-game-body"><div class="v9-game-ttl">Monday Night Game</div><div class="v9-game-meta">6:00 PM &middot; Community Center</div></div>
+              <div class="v9-game-right"><div class="v9-game-players">1 of 4</div><div class="v9-game-status" style="background:#fee2e2;color:#991b1b;">Cancelled</div></div>
+            </div>
+
+          </div>
         </div>
 
       </div>
+
+      <!-- FAB -->
+      <div onclick="go('creation1')" style="position:absolute;bottom:104px;right:16px;z-index:88;cursor:pointer;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,#ec4fa3,#9d2467);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(201,59,139,.4);">
+        <i class="ph-bold ph-plus" style="font-size:28px;color:#fff;"></i>
+      </div>
+
     </div><!-- /myGames -->
 
     <!-- ==================== 4. GAME CREATION ==================== -->
@@ -3014,5 +3016,26 @@ function updateTab(screen) {
 updateTab('dashboard');
 </script>
 
+
+<script>
+// Auto-scroll myGames #gamesScrollPane so the NEXT UP + TODAY divider sits in view
+(function(){
+  function scrollToNext(){
+    var pane = document.getElementById('gamesScrollPane');
+    var next = document.getElementById('nextUpGame');
+    if(pane && next){
+      var top = next.offsetTop - 12;
+      pane.scrollTop = top;
+    }
+  }
+  document.addEventListener('DOMContentLoaded', scrollToNext);
+  // Also run whenever myGames becomes active
+  var obs = new MutationObserver(function(){
+    var s = document.querySelector('[data-screen="myGames"].active');
+    if(s) scrollToNext();
+  });
+  obs.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
+})();
+</script>
 </body>
 </html>
