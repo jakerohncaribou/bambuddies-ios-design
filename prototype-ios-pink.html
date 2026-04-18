@@ -404,15 +404,18 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,transparent 35%,rgba(0,0,0,.7) 100%);"></div>
         <div style="position:absolute;top:10px;left:10px;right:10px;display:flex;align-items:center;justify-content:space-between;">
           <div onclick="goBack()" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-caret-left" style="font-size:20px;color:#fff;"></i></div>
-          <div style="display:flex;gap:8px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-share-network" style="font-size:17px;color:#fff;"></i></div>
-            <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-dots-three" style="font-size:20px;color:#fff;"></i></div>
-          </div>
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-share-network" style="font-size:17px;color:#fff;"></i></div>
         </div>
         <div style="position:absolute;bottom:12px;left:16px;right:16px;color:#fff;">
-          <div style="background:rgba(255,255,255,.95);color:#b45309;font-size:10px;font-weight:800;letter-spacing:1px;display:inline-flex;align-items:center;gap:4px;margin-bottom:6px;padding:3px 10px;border-radius:20px;">
-            <span style="width:6px;height:6px;border-radius:50%;background:#b45309;animation:pulse 2s infinite;"></span>
-            PENDING &middot; NEEDS 1 MORE
+          <div style="display:flex;gap:6px;margin-bottom:6px;">
+            <div style="background:rgba(255,255,255,.95);color:#9d2467;font-size:10px;font-weight:800;letter-spacing:1px;display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;">
+              <i class="ph-fill ph-globe-hemisphere-west" style="font-size:11px;"></i>
+              OPEN
+            </div>
+            <div style="background:rgba(255,255,255,.95);color:#b45309;font-size:10px;font-weight:800;letter-spacing:1px;display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#b45309;animation:pulse 2s infinite;"></span>
+              PENDING &middot; NEEDS 1 MORE
+            </div>
           </div>
           <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.3px;line-height:1.1;">Saturday Mahjong</div>
           <div style="font-size:12px;font-weight:500;opacity:.9;margin-top:3px;display:flex;align-items:center;gap:5px;">
@@ -422,13 +425,13 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
       </div>
 
-      <!-- PRIMARY ACTIONS (Message, Applicants, Review, Invite) -->
+      <!-- PRIMARY ACTIONS (Applicants, Review, Invite, Message last) -->
       <div style="padding:14px 16px 12px;background:#fff;border-bottom:1px solid #e8e4e0;">
         <div style="display:flex;gap:8px;">
-          <div onclick="event.stopPropagation();go('chat')" style="flex:1;background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 4px 12px rgba(201,59,139,.25);"><i class="ph-fill ph-chat-circle-dots" style="font-size:15px;"></i> Message</div>
           <div onclick="event.stopPropagation();go('applicants')" style="flex:1;background:#fff;color:#1a1a1a;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;position:relative;"><i class="ph ph-user-check" style="font-size:15px;color:#c93b8b;"></i> Applicants <span style="background:#c93b8b;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:2px;">3</span></div>
           <div onclick="event.stopPropagation();go('gameReview')" style="flex:1;background:#fff;color:#1a1a1a;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph ph-star" style="font-size:15px;color:#c93b8b;"></i> Review</div>
           <div style="flex:1;background:#fff;color:#1a1a1a;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph ph-user-plus" style="font-size:15px;color:#c93b8b;"></i> Invite</div>
+          <div onclick="event.stopPropagation();go('chat')" style="flex:1;background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 4px 12px rgba(201,59,139,.25);"><i class="ph-fill ph-chat-circle-dots" style="font-size:15px;"></i> Message</div>
         </div>
       </div>
 
