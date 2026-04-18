@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — 4 Tile Concepts (5 Variants)</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Noto+Serif+SC:wght@600&family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --primary:#c93b8b;--primary-dark:#9d2467;--primary-light:#ec4fa3;
+  --primary-tint:#fce7f3;--primary-tint2:#fdf2f8;
+  --cream:#fdf8f0;--cream-dark:#f5ece0;
+  --text:#1a1a1a;--text-mute:#6b7280;--text-soft:#9ca3af;
+}
+body{background:#0a0a0a;font-family:'Outfit',sans-serif;padding:40px 20px;color:#fff;}
+.hdr{text-align:center;margin-bottom:30px;}
+.hdr h1{font-family:'DM Serif Display',serif;font-size:42px;letter-spacing:-.8px;margin-bottom:4px;}
+.hdr h1 span{color:var(--primary);}
+.hdr p{color:#888;font-size:14px;max-width:640px;margin:6px auto 0;line-height:1.5;}
+.row{display:flex;gap:28px;overflow-x:auto;padding:20px 0 40px;max-width:100%;scroll-snap-type:x mandatory;}
+.row::-webkit-scrollbar{height:8px;}
+.row::-webkit-scrollbar-thumb{background:#333;border-radius:4px;}
+
+.wrap{display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0;scroll-snap-align:start;}
+.tag{background:rgba(201,59,139,.12);color:var(--primary);font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;letter-spacing:.8px;text-transform:uppercase;border:1px solid rgba(201,59,139,.3);}
+.tag-title{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.3px;color:#fff;}
+.tag-desc{color:#999;font-size:12px;max-width:393px;text-align:center;line-height:1.4;}
+
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:20px;z-index:100;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:50;font-size:15px;font-weight:600;color:var(--text);}
+.sbar .r{font-size:11px;}
+.phone-inner{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow:hidden;}
+.bg-tiles{position:absolute;inset:0;opacity:.08;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.3'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;z-index:1;padding-bottom:100px;}
+
+/* Shared top bar + greeting (same for all 5) */
+.topbar{display:flex;align-items:center;padding:14px 20px 10px;gap:12px;}
+.topbar-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 3px var(--primary),0 2px 8px rgba(0,0,0,.08);}
+.topbar-avatar img{width:100%;height:100%;object-fit:cover;}
+.topbar-name{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:var(--primary);line-height:1;flex:1;margin-top:4px;}
+.topbar-ic{width:38px;height:38px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;}
+.topbar-ic i{font-size:17px;color:var(--primary-dark);}
+.topbar-icons{display:flex;gap:8px;}
+.greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.15;}
+
+/* Shared sponsor, next game, sections below tiles (simplified to focus attention on tiles) */
+.sponsor-placeholder{margin:0 16px 16px;height:88px;background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #fbcfe8;border-radius:20px;display:flex;align-items:center;gap:10px;padding:14px;opacity:.8;}
+.sponsor-placeholder::before{content:'';width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#8b4513,#a0522d);flex-shrink:0;}
+.sponsor-placeholder::after{content:'SPONSORED';display:flex;flex-direction:column;font-size:10px;font-weight:700;color:var(--primary-dark);letter-spacing:1px;}
+.nxt-placeholder{margin:0 16px 16px;height:120px;border-radius:22px;overflow:hidden;display:flex;border:1px solid #fbcfe8;}
+.nxt-placeholder-l{width:140px;background:linear-gradient(145deg,#fce7f3,#fbcfe8,#f9a8d4);display:flex;flex-direction:column;justify-content:center;align-items:center;color:var(--primary-dark);}
+.nxt-placeholder-l::before{content:'APR';font-size:11px;font-weight:700;letter-spacing:1.5px;}
+.nxt-placeholder-l::after{content:'19';font-family:'DM Serif Display',serif;font-size:48px;line-height:1;}
+.nxt-placeholder-r{flex:1;background:#fff;display:flex;align-items:center;padding:14px;font-size:12px;color:var(--text-mute);font-style:italic;}
+.nxt-placeholder-r::before{content:'Your Next Game · 2:00 PM · All 4 in';font-family:'DM Serif Display',serif;font-size:13px;}
+
+/* =============================================================
+   CONCEPT 1: "iOS Circle Icons"
+   Simple circular gradient buttons — minimal, Apple-native feel
+   ============================================================= */
+.c1-actions{display:flex;justify-content:space-between;gap:8px;padding:10px 24px 26px;}
+.c1-act{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;}
+.c1-ic{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(201,59,139,.3);position:relative;}
+.c1-ic i{font-size:26px;color:#fff;}
+.c1-act:nth-child(2) .c1-ic{background:linear-gradient(135deg,#f97316,#fb923c);box-shadow:0 6px 16px rgba(249,115,22,.3);}
+.c1-act:nth-child(3) .c1-ic{background:linear-gradient(135deg,#10b981,#34d399);box-shadow:0 6px 16px rgba(16,185,129,.3);}
+.c1-act:nth-child(4) .c1-ic{background:linear-gradient(135deg,#8b5cf6,#a78bfa);box-shadow:0 6px 16px rgba(139,92,246,.3);}
+.c1-lbl{font-size:11px;font-weight:700;color:var(--text);text-align:center;line-height:1.15;letter-spacing:-.1px;}
+.c1-badge{position:absolute;top:-3px;right:-3px;min-width:20px;height:20px;border-radius:99px;background:#fff;color:var(--primary);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;box-shadow:0 2px 6px rgba(0,0,0,.2);}
+
+/* =============================================================
+   CONCEPT 2: "2x2 Widget Grid"
+   Wider cards with icon + label + live micro-data
+   ============================================================= */
+.c2-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 22px;}
+.c2-act{background:#fff;border-radius:18px;padding:14px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,.04);border:1px solid #f5e6ef;cursor:pointer;position:relative;}
+.c2-act-ic{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.c2-act-ic i{font-size:22px;}
+.c2-act:nth-child(1) .c2-act-ic{background:linear-gradient(135deg,#fce7f3,#fbcfe8);}
+.c2-act:nth-child(1) .c2-act-ic i{color:var(--primary);}
+.c2-act:nth-child(2) .c2-act-ic{background:linear-gradient(135deg,#fed7aa,#fb923c);}
+.c2-act:nth-child(2) .c2-act-ic i{color:#c2410c;}
+.c2-act:nth-child(3) .c2-act-ic{background:linear-gradient(135deg,#d1fae5,#a7f3d0);}
+.c2-act:nth-child(3) .c2-act-ic i{color:#047857;}
+.c2-act:nth-child(4) .c2-act-ic{background:linear-gradient(135deg,#ede9fe,#ddd6fe);}
+.c2-act:nth-child(4) .c2-act-ic i{color:#6d28d9;}
+.c2-act-body{flex:1;min-width:0;}
+.c2-act-ttl{font-size:13px;font-weight:800;color:var(--text);letter-spacing:-.2px;}
+.c2-act-sub{font-size:10px;color:var(--text-mute);margin-top:1px;font-weight:500;}
+.c2-badge{position:absolute;top:8px;right:8px;min-width:20px;height:20px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;}
+
+/* =============================================================
+   CONCEPT 3: "Mahjong Tile Faces"
+   Vertical mahjong tile shapes showing actual tile characters
+   ============================================================= */
+.c3-actions{display:flex;gap:10px;padding:0 16px 22px;justify-content:center;}
+.c3-act{flex:1;max-width:84px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;position:relative;}
+.c3-tile{width:100%;aspect-ratio:0.72;background:linear-gradient(180deg,#fffef8 0%,#fbf4e1 100%);border-radius:10px;border:2px solid #2a2a2a;box-shadow:0 6px 0 #c5b28e,0 8px 16px rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:8px;}
+.c3-tile::before{content:'';position:absolute;inset:4px;border-radius:6px;border:1px solid rgba(0,0,0,.1);}
+.c3-face{font-family:'Noto Serif SC','DM Serif Display',serif;font-weight:600;font-size:32px;line-height:1;position:relative;z-index:1;}
+.c3-act:nth-child(1) .c3-face{color:#16a34a;}
+.c3-act:nth-child(2) .c3-face{color:#2563eb;}
+.c3-act:nth-child(3) .c3-face{color:#c2410c;}
+.c3-act:nth-child(4) .c3-face{color:var(--primary);}
+.c3-lbl{font-family:'Caveat',cursive;font-weight:700;font-size:18px;color:var(--text);line-height:1;}
+.c3-badge{position:absolute;top:-4px;right:4px;min-width:20px;height:20px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid var(--cream);z-index:2;}
+.c3-dots{display:flex;gap:3px;position:relative;z-index:1;}
+.c3-dots span{width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;}
+
+/* =============================================================
+   CONCEPT 4: "Photo Action Cards"
+   Large cards with photo backgrounds + white label overlay
+   ============================================================= */
+.c4-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 22px;}
+.c4-act{height:110px;border-radius:18px;position:relative;overflow:hidden;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.1);}
+.c4-act-img{position:absolute;inset:0;}
+.c4-act:nth-child(1) .c4-act-img{background:linear-gradient(135deg,#c93b8b,#9d2467);}
+.c4-act:nth-child(2) .c4-act-img{background:url('https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=400') center/cover;}
+.c4-act:nth-child(3) .c4-act-img{background:linear-gradient(135deg,#059669,#047857);}
+.c4-act:nth-child(4) .c4-act-img{background:linear-gradient(135deg,#7c3aed,#5b21b6);}
+.c4-act-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.65));}
+.c4-act-ic{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;}
+.c4-act-ic i{color:#fff;font-size:16px;}
+.c4-act-body{position:absolute;bottom:12px;left:14px;right:14px;color:#fff;}
+.c4-act-ttl{font-family:'DM Serif Display',serif;font-size:18px;line-height:1;margin-bottom:2px;}
+.c4-act-sub{font-size:11px;opacity:.8;font-weight:500;}
+.c4-badge{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.95);color:var(--primary);font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px;}
+
+/* =============================================================
+   CONCEPT 5: "Soft Pill Buttons"
+   Horizontal chat-style pills with icon + label
+   ============================================================= */
+.c5-actions{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 22px;}
+.c5-act{flex:1;min-width:calc(50% - 4px);display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:99px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05);border:1px solid #f3e8ef;cursor:pointer;position:relative;}
+.c5-act-ic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.c5-act-ic i{font-size:18px;color:#fff;}
+.c5-act:nth-child(1) .c5-act-ic{background:linear-gradient(135deg,var(--primary),var(--primary-light));}
+.c5-act:nth-child(2) .c5-act-ic{background:linear-gradient(135deg,#f97316,#fb923c);}
+.c5-act:nth-child(3) .c5-act-ic{background:linear-gradient(135deg,#10b981,#34d399);}
+.c5-act:nth-child(4) .c5-act-ic{background:linear-gradient(135deg,#8b5cf6,#a78bfa);}
+.c5-act-lbl{font-size:13px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
+.c5-badge{position:absolute;top:-4px;right:8px;min-width:20px;height:20px;border-radius:99px;background:#dc2626;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid var(--cream);}
+
+/* Shared mini topbar helper */
+.topbar-mini{padding:14px 20px 10px;display:flex;align-items:center;gap:12px;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Dashboard · <span>4 Tile Concepts</span></h1>
+  <p>5 completely different approaches to the action buttons. Everything else on the dashboard is the same so you can focus on just the tiles. Pick the one that speaks to you.</p>
+</div>
+
+<div class="row">
+
+  <!-- CONCEPT 1 -->
+  <div class="wrap">
+    <div class="tag">Concept 1</div>
+    <div class="tag-title">iOS Circle Icons</div>
+    <div class="tag-desc">Minimal colored-gradient circles, pure Apple-native feel. Each action gets a distinct color for quick recognition.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span class="r">●●●● ▮</span></div>
+      <div class="phone-inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar">
+            <div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div>
+            <div class="topbar-name">Sarah</div>
+            <div class="topbar-icons">
+              <div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div>
+              <div class="topbar-ic"><i class="ph ph-bell"></i></div>
+            </div>
+          </div>
+          <div class="greeting">May the winds be with you.</div>
+
+          <div class="c1-actions">
+            <div class="c1-act"><div class="c1-ic"><i class="ph-fill ph-play"></i></div><div class="c1-lbl">Start<br>Game</div></div>
+            <div class="c1-act"><div class="c1-ic"><i class="ph-fill ph-map-trifold"></i></div><div class="c1-lbl">Find<br>Games</div></div>
+            <div class="c1-act"><div class="c1-ic"><i class="ph-fill ph-users-three"></i></div><div class="c1-lbl">Start<br>Group</div></div>
+            <div class="c1-act"><div class="c1-ic"><i class="ph-fill ph-chat-circle-dots"></i><div class="c1-badge">3</div></div><div class="c1-lbl">Messages</div></div>
+          </div>
+
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 2 -->
+  <div class="wrap">
+    <div class="tag">Concept 2</div>
+    <div class="tag-title">2x2 Widget Grid</div>
+    <div class="tag-desc">Wider cards showing the icon + label side-by-side with room for live data below. More functional, less icon-forward.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span class="r">●●●● ▮</span></div>
+      <div class="phone-inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar">
+            <div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div>
+            <div class="topbar-name">Sarah</div>
+            <div class="topbar-icons">
+              <div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div>
+              <div class="topbar-ic"><i class="ph ph-bell"></i></div>
+            </div>
+          </div>
+          <div class="greeting">May the winds be with you.</div>
+
+          <div class="c2-actions">
+            <div class="c2-act"><div class="c2-act-ic"><i class="ph-fill ph-play-circle"></i></div><div class="c2-act-body"><div class="c2-act-ttl">Start Game</div><div class="c2-act-sub">Your streak: 3 wins</div></div></div>
+            <div class="c2-act"><div class="c2-act-ic"><i class="ph-fill ph-compass"></i></div><div class="c2-act-body"><div class="c2-act-ttl">Find Games</div><div class="c2-act-sub">12 near you</div></div></div>
+            <div class="c2-act"><div class="c2-act-ic"><i class="ph-fill ph-users-three"></i></div><div class="c2-act-body"><div class="c2-act-ttl">Start Group</div><div class="c2-act-sub">2 of your crew</div></div></div>
+            <div class="c2-act"><div class="c2-badge">3</div><div class="c2-act-ic"><i class="ph-fill ph-chat-teardrop-dots"></i></div><div class="c2-act-body"><div class="c2-act-ttl">Messages</div><div class="c2-act-sub">Lisa replied</div></div></div>
+          </div>
+
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 3 -->
+  <div class="wrap">
+    <div class="tag">Concept 3</div>
+    <div class="tag-title">Mahjong Tile Faces</div>
+    <div class="tag-desc">Actual mahjong tile shapes with real tile characters (East, North, Bam, Red Dragon). Most brand-specific — only BamBuddies could do this.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span class="r">●●●● ▮</span></div>
+      <div class="phone-inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar">
+            <div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div>
+            <div class="topbar-name">Sarah</div>
+            <div class="topbar-icons">
+              <div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div>
+              <div class="topbar-ic"><i class="ph ph-bell"></i></div>
+            </div>
+          </div>
+          <div class="greeting">May the winds be with you.</div>
+
+          <div class="c3-actions">
+            <div class="c3-act"><div class="c3-tile"><span class="c3-face">東</span></div><div class="c3-lbl">Start Game</div></div>
+            <div class="c3-act"><div class="c3-tile"><span class="c3-face">發</span></div><div class="c3-lbl">Find Games</div></div>
+            <div class="c3-act"><div class="c3-tile"><div class="c3-dots"><span></span><span></span><span></span></div></div><div class="c3-lbl">Start Group</div></div>
+            <div class="c3-act"><div class="c3-badge">3</div><div class="c3-tile"><span class="c3-face">中</span></div><div class="c3-lbl">Messages</div></div>
+          </div>
+
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 4 -->
+  <div class="wrap">
+    <div class="tag">Concept 4</div>
+    <div class="tag-title">Photo Action Cards</div>
+    <div class="tag-desc">Large cards with photo/gradient backgrounds and white labels. Editorial magazine feel — bold and expressive.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span class="r">●●●● ▮</span></div>
+      <div class="phone-inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar">
+            <div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div>
+            <div class="topbar-name">Sarah</div>
+            <div class="topbar-icons">
+              <div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div>
+              <div class="topbar-ic"><i class="ph ph-bell"></i></div>
+            </div>
+          </div>
+          <div class="greeting">May the winds be with you.</div>
+
+          <div class="c4-actions">
+            <div class="c4-act">
+              <div class="c4-act-img"></div><div class="c4-act-overlay"></div>
+              <div class="c4-act-ic"><i class="ph-fill ph-play"></i></div>
+              <div class="c4-act-body"><div class="c4-act-ttl">Start Game</div><div class="c4-act-sub">Pick a time and place</div></div>
+            </div>
+            <div class="c4-act">
+              <div class="c4-act-img"></div><div class="c4-act-overlay"></div>
+              <div class="c4-act-ic"><i class="ph-fill ph-map-trifold"></i></div>
+              <div class="c4-act-body"><div class="c4-act-ttl">Find Games</div><div class="c4-act-sub">12 near you</div></div>
+            </div>
+            <div class="c4-act">
+              <div class="c4-act-img"></div><div class="c4-act-overlay"></div>
+              <div class="c4-act-ic"><i class="ph-fill ph-users-three"></i></div>
+              <div class="c4-act-body"><div class="c4-act-ttl">Start Group</div><div class="c4-act-sub">Build your crew</div></div>
+            </div>
+            <div class="c4-act">
+              <div class="c4-badge">3 new</div>
+              <div class="c4-act-img"></div><div class="c4-act-overlay"></div>
+              <div class="c4-act-ic"><i class="ph-fill ph-chat-circle-dots"></i></div>
+              <div class="c4-act-body"><div class="c4-act-ttl">Messages</div><div class="c4-act-sub">Lisa · 2m ago</div></div>
+            </div>
+          </div>
+
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT 5 -->
+  <div class="wrap">
+    <div class="tag">Concept 5</div>
+    <div class="tag-title">Soft Pill Buttons</div>
+    <div class="tag-desc">Chat-style horizontal pills with small colored icon + label. Compact, conversational, low visual weight. Lets other content breathe.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span class="r">●●●● ▮</span></div>
+      <div class="phone-inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar">
+            <div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div>
+            <div class="topbar-name">Sarah</div>
+            <div class="topbar-icons">
+              <div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div>
+              <div class="topbar-ic"><i class="ph ph-bell"></i></div>
+            </div>
+          </div>
+          <div class="greeting">May the winds be with you.</div>
+
+          <div class="c5-actions">
+            <div class="c5-act"><div class="c5-act-ic"><i class="ph-fill ph-play"></i></div><div class="c5-act-lbl">Start Game</div></div>
+            <div class="c5-act"><div class="c5-act-ic"><i class="ph-fill ph-map-trifold"></i></div><div class="c5-act-lbl">Find Games</div></div>
+            <div class="c5-act"><div class="c5-act-ic"><i class="ph-fill ph-users-three"></i></div><div class="c5-act-lbl">Start Group</div></div>
+            <div class="c5-act"><div class="c5-badge">3</div><div class="c5-act-ic"><i class="ph-fill ph-chat-circle-dots"></i></div><div class="c5-act-lbl">Messages</div></div>
+          </div>
+
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;color:#555;font-size:13px;margin-top:20px;">Each concept only changes the 4-action area. Greeting/header/sponsor/next game remain the same.</div>
+
+</body>
+</html>
