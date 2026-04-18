@@ -398,12 +398,10 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     <!-- ==================== 2. GAME DETAIL ==================== -->
     <div class="screen has-tab" data-screen="gameDetail" style="padding:0;">
 
-      <!-- Hero Image w/ overlay nav -->
+      <!-- HERO -->
       <div style="position:relative;height:160px;overflow:hidden;">
         <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=800" style="width:100%;height:100%;object-fit:cover;" alt="">
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,transparent 35%,rgba(0,0,0,.7) 100%);"></div>
-
-        <!-- Top nav overlay -->
         <div style="position:absolute;top:10px;left:10px;right:10px;display:flex;align-items:center;justify-content:space-between;">
           <div onclick="goBack()" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-caret-left" style="font-size:20px;color:#fff;"></i></div>
           <div style="display:flex;gap:8px;">
@@ -411,12 +409,9 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
             <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph ph-dots-three" style="font-size:20px;color:#fff;"></i></div>
           </div>
         </div>
-
-        <!-- Title overlay -->
         <div style="position:absolute;bottom:12px;left:16px;right:16px;color:#fff;">
-          <!-- PROMINENT STATUS -->
-          <div class="pill" style="background:rgba(255,255,255,.95);color:#d97706;font-size:10px;font-weight:800;letter-spacing:1px;display:inline-flex;align-items:center;gap:4px;margin-bottom:6px;">
-            <span style="width:6px;height:6px;border-radius:50%;background:#d97706;animation:pulse 2s infinite;"></span>
+          <div style="background:rgba(255,255,255,.95);color:#b45309;font-size:10px;font-weight:800;letter-spacing:1px;display:inline-flex;align-items:center;gap:4px;margin-bottom:6px;padding:3px 10px;border-radius:20px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#b45309;animation:pulse 2s infinite;"></span>
             PENDING &middot; NEEDS 1 MORE
           </div>
           <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.3px;line-height:1.1;">Saturday Mahjong</div>
@@ -427,30 +422,30 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
       </div>
 
-      <!-- ===== PRIMARY ACTIONS (above fold) ===== -->
+      <!-- PRIMARY ACTIONS (Message, Applicants, Review, Invite) -->
       <div style="padding:14px 16px 12px;background:#fff;border-bottom:1px solid #e8e4e0;">
         <div style="display:flex;gap:8px;">
-          <div onclick="event.stopPropagation();go('chat')" style="flex:1;background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 4px 12px rgba(124,58,237,.25);"><i class="ph-fill ph-chat-circle-dots" style="font-size:15px;"></i> Message</div>
-          <div style="flex:1;background:#fff;color:#000;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph ph-calendar-plus" style="font-size:15px;color:#c93b8b;"></i> Add to Cal</div>
-          <div style="flex:1;background:#fff;color:#000;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph ph-navigation-arrow" style="font-size:15px;color:#c93b8b;"></i> Directions</div>
-        </div>
-        <!-- Organizer Actions row -->
-        <div style="display:flex;gap:6px;margin-top:8px;">
-          <div onclick="event.stopPropagation();go('gameEdit')" style="flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#c93b8b;background:#fce7f3;">Edit</div>
-          <div onclick="event.stopPropagation();go('applicants')" style="flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#c93b8b;background:#fce7f3;">Applicants <span style="background:#f43f5e;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:2px;">3</span></div>
-          <div onclick="event.stopPropagation();go('gameReview')" style="flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#c93b8b;background:#fce7f3;">Review</div>
-          <div style="flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;font-weight:600;cursor:pointer;color:#c93b8b;background:#fce7f3;">Invite</div>
+          <div onclick="event.stopPropagation();go('chat')" style="flex:1;background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 4px 12px rgba(201,59,139,.25);"><i class="ph-fill ph-chat-circle-dots" style="font-size:15px;"></i> Message</div>
+          <div onclick="event.stopPropagation();go('applicants')" style="flex:1;background:#fff;color:#1a1a1a;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;position:relative;"><i class="ph ph-user-check" style="font-size:15px;color:#c93b8b;"></i> Applicants <span style="background:#c93b8b;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:2px;">3</span></div>
+          <div onclick="event.stopPropagation();go('gameReview')" style="flex:1;background:#fff;color:#1a1a1a;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph ph-star" style="font-size:15px;color:#c93b8b;"></i> Review</div>
+          <div style="flex:1;background:#fff;color:#1a1a1a;text-align:center;padding:11px 8px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid #e8e4e0;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph ph-user-plus" style="font-size:15px;color:#c93b8b;"></i> Invite</div>
         </div>
       </div>
 
       <div style="padding:16px;">
 
-        <!-- Details Card -->
+        <!-- DETAILS CARD (with inline Add to Cal / Directions) -->
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
+          <!-- Date row with Add to Cal button -->
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
             <i class="ph ph-calendar-blank" style="font-size:20px;color:#c93b8b;"></i>
-            <div><div style="color:#000;font-size:14px;font-weight:600;">Sat, April 19</div><div style="color:#888;font-size:12px;">2:00 PM &ndash; 4:00 PM ET &middot; 2 hours</div></div>
+            <div style="flex:1;">
+              <div style="color:#000;font-size:14px;font-weight:600;">Sat, April 19</div>
+              <div style="color:#888;font-size:12px;">2:00 PM &ndash; 4:00 PM ET &middot; 2 hours</div>
+            </div>
+            <button style="background:#fce7f3;color:#9d2467;border:none;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-family:'Outfit',sans-serif;"><i class="ph-bold ph-calendar-plus" style="font-size:12px;"></i> Add to Cal</button>
           </div>
+          <!-- Location row with Directions button -->
           <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">
             <i class="ph ph-map-pin" style="font-size:20px;color:#c93b8b;margin-top:1px;"></i>
             <div style="flex:1;">
@@ -458,6 +453,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
               <div style="color:#666;font-size:12px;margin-top:1px;">456 Oak Ave, Unit 3B</div>
               <div style="color:#666;font-size:12px;">Portland, OR 97209</div>
             </div>
+            <button style="background:#fce7f3;color:#9d2467;border:none;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-family:'Outfit',sans-serif;align-self:flex-start;"><i class="ph-bold ph-navigation-arrow" style="font-size:12px;"></i> Directions</button>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
             <i class="ph ph-globe-simple" style="font-size:20px;color:#c93b8b;"></i>
@@ -465,113 +461,167 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <i class="ph ph-users" style="font-size:20px;color:#c93b8b;"></i>
-            <div style="color:#000;font-size:14px;font-weight:600;">3 / 4 players <span style="color:#d97706;font-weight:600;font-size:12px;">&middot; 1 invited</span></div>
+            <div style="color:#000;font-size:14px;font-weight:600;">3 / 4 players <span style="color:#b45309;font-weight:600;font-size:12px;">&middot; 1 invited</span></div>
           </div>
         </div>
 
-        <!-- Roster Card -->
+        <!-- PLAYERS (Accepted / Applicants / Invited / Declined) -->
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
-          <div style="color:#000;font-size:15px;font-weight:700;margin-bottom:12px;">Players <span style="color:#888;font-weight:500;">3/4 confirmed</span></div>
+          <div style="font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:#1a1a1a;line-height:1;margin-bottom:14px;">Players</div>
+
+          <!-- ACCEPTED -->
+          <div style="font-size:10px;font-weight:700;color:#15803d;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;">Accepted &middot; 3</div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R. <span style="background:#fef3c7;color:#d97706;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;">HOST</span></div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-            <div class="pill" style="background:#fce7f3;color:#c93b8b;font-size:10px;font-weight:700;letter-spacing:.3px;">ACCEPTED</div>
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Sarah R. <span style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;letter-spacing:.3px;">HOST</span></div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+            <span class="pill" style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;letter-spacing:.3px;">ACCEPTED</span>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Lisa M.</div><div style="color:#888;font-size:11px;">Advanced</div></div>
-            <div class="pill" style="background:#fce7f3;color:#c93b8b;font-size:10px;font-weight:700;letter-spacing:.3px;">ACCEPTED</div>
+            <span class="pill" style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;letter-spacing:.3px;">ACCEPTED</span>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
             <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
             <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Amy T.</div><div style="color:#888;font-size:11px;">Beginner</div></div>
-            <div class="pill" style="background:#fce7f3;color:#c93b8b;font-size:10px;font-weight:700;letter-spacing:.3px;">ACCEPTED</div>
+            <span class="pill" style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;letter-spacing:.3px;">ACCEPTED</span>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;">
+
+          <!-- APPLICANTS -->
+          <div style="font-size:10px;font-weight:700;color:#9d2467;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;">Applicants &middot; 3</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <img src="https://i.pravatar.cc/150?img=52" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Jenny P.</div><div style="color:#888;font-size:11px;">Beginner &middot; "Would love to learn"</div></div>
+            <div style="display:flex;gap:4px;">
+              <button style="background:#c93b8b;color:#fff;border:none;padding:5px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;">Approve</button>
+              <button style="background:#fff;color:#9ca3af;border:1px solid #e8e4e0;padding:5px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;">Decline</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <img src="https://i.pravatar.cc/150?img=33" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Mike C.</div><div style="color:#888;font-size:11px;">Advanced &middot; 24 games played</div></div>
+            <div style="display:flex;gap:4px;">
+              <button style="background:#c93b8b;color:#fff;border:none;padding:5px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;">Approve</button>
+              <button style="background:#fff;color:#9ca3af;border:1px solid #e8e4e0;padding:5px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;">Decline</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <img src="https://i.pravatar.cc/150?img=25" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Carmen V.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
+            <div style="display:flex;gap:4px;">
+              <button style="background:#c93b8b;color:#fff;border:none;padding:5px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;">Approve</button>
+              <button style="background:#fff;color:#9ca3af;border:1px solid #e8e4e0;padding:5px 10px;border-radius:8px;font-size:10px;font-weight:700;cursor:pointer;">Decline</button>
+            </div>
+          </div>
+
+          <!-- INVITED -->
+          <div style="font-size:10px;font-weight:700;color:#b45309;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;">Invited &middot; 2</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" width="36" height="36" class="avatar" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate</div></div>
-            <div class="pill" style="background:#fef3c7;color:#d97706;font-size:10px;font-weight:700;letter-spacing:.3px;">INVITED</div>
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Rachel K.</div><div style="color:#888;font-size:11px;">Intermediate &middot; Invited 2h ago</div></div>
+            <span class="pill" style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;letter-spacing:.3px;">INVITED</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <img src="https://i.pravatar.cc/150?img=16" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Maria G.</div><div style="color:#888;font-size:11px;">Advanced &middot; Invited yesterday</div></div>
+            <span class="pill" style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;letter-spacing:.3px;">INVITED</span>
+          </div>
+
+          <!-- DECLINED -->
+          <div style="font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;">Declined &middot; 1</div>
+          <div style="display:flex;align-items:center;gap:10px;opacity:.6;">
+            <img src="https://i.pravatar.cc/150?img=11" width="36" height="36" class="avatar" alt="">
+            <div style="flex:1;"><div style="color:#000;font-size:14px;font-weight:600;">Kate L.</div><div style="color:#888;font-size:11px;">Beginner &middot; "Out of town"</div></div>
+            <span class="pill" style="background:#f3f4f6;color:#6b7280;font-size:9px;font-weight:700;letter-spacing:.3px;">DECLINED</span>
           </div>
         </div>
 
-        <!-- Bring Items Card -->
+        <!-- WHAT TO BRING -->
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
-          <div style="font-family:\'Caveat\',cursive;font-weight:700;font-size:22px;color:#1a1a1a;line-height:1;margin-bottom:12px;">What to Bring</div>
+          <div style="font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:#1a1a1a;line-height:1;margin-bottom:14px;">What to Bring</div>
+
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-puzzle-piece" style="font-size:16px;color:#c93b8b;"></i> Tile Set</div>
-            <div class="pill" style="background:#d1fae5;color:#065f46;font-size:10px;font-weight:700;letter-spacing:.3px;">COVERED</div>
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-puzzle-piece" style="font-size:18px;color:#c93b8b;"></i> Tile Set</div>
+            <div style="display:flex;align-items:center;gap:6px;"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:20px;height:20px;border-radius:50%;"><span style="color:#c93b8b;font-size:11px;font-weight:700;">I'm Bringing</span></div>
           </div>
+
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-cookie" style="font-size:16px;color:#d97706;"></i> Snacks</div>
-            <div style="background:#c93b8b;color:#fff;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Claim</div>
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-wine" style="font-size:18px;color:#c93b8b;"></i> Drinks</div>
+            <div style="display:flex;align-items:center;gap:6px;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:20px;height:20px;border-radius:50%;"><span style="color:#666;font-size:12px;">Lisa M.</span></div>
           </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-cookie" style="font-size:18px;color:#c93b8b;"></i> Snacks</div>
+            <button style="background:#c93b8b;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;border:none;box-shadow:0 2px 6px rgba(201,59,139,.25);">Claim</button>
+          </div>
+
           <div style="display:flex;align-items:center;justify-content:space-between;">
-            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:6px;"><i class="ph ph-wine" style="font-size:16px;color:#f43f5e;"></i> Drinks</div>
-            <div style="color:#666;font-size:12px;display:flex;align-items:center;gap:4px;"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:18px;height:18px;border-radius:50%;"> Lisa M.</div>
+            <div style="color:#000;font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-fork-knife" style="font-size:18px;color:#c93b8b;"></i> Dessert</div>
+            <button style="background:#c93b8b;color:#fff;padding:5px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;border:none;box-shadow:0 2px 6px rgba(201,59,139,.25);">Claim</button>
           </div>
         </div>
 
-        <!-- Table Visualization -->
+        <!-- TABLE LAYOUT (product-style SVG with pink theme) -->
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-            <div style="font-family:\'Caveat\',cursive;font-weight:700;font-size:22px;color:#1a1a1a;line-height:1;">Table Layout</div>
+            <div style="font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:#1a1a1a;line-height:1;">Table Layout</div>
             <div style="color:#888;font-size:11px;font-weight:600;">1 table &middot; 4 seats</div>
           </div>
-          <!-- SVG Table -->
           <div style="display:flex;justify-content:center;padding:8px 0;">
-            <svg width="220" height="220" viewBox="0 0 220 220">
-              <!-- Table surface -->
-              <circle cx="110" cy="110" r="62" fill="#f5f0eb" stroke="#d4b896" stroke-width="2"/>
-              <circle cx="110" cy="110" r="62" fill="url(#woodGrain)" opacity=".3"/>
-              <defs>
-                <radialGradient id="woodGrain"><stop offset="0%" stop-color="#c9a276"/><stop offset="100%" stop-color="#a67f55"/></radialGradient>
-              </defs>
-              <!-- Center logo area -->
-              <circle cx="110" cy="110" r="20" fill="#fff" stroke="#e8e4e0" stroke-width="1"/>
-              <text x="110" y="108" text-anchor="middle" font-family="DM Serif Display,serif" font-size="10" fill="#c93b8b" font-weight="700">Bam</text>
-              <text x="110" y="120" text-anchor="middle" font-family="DM Serif Display,serif" font-size="9" fill="#ec4fa3">Buddies</text>
-
-              <!-- EAST seat (right) -->
+            <svg width="240" height="240" viewBox="0 0 240 240">
+              <!-- Table base (felt/wood) -->
+              <rect x="40" y="40" width="160" height="160" rx="16" fill="#fce7f3" stroke="#fbcfe8" stroke-width="2"/>
+              <rect x="52" y="52" width="136" height="136" rx="10" fill="#fff" stroke="#f9a8d4" stroke-width="1.5"/>
+              <!-- Compass rose / BamBuddies watermark -->
+              <circle cx="120" cy="120" r="28" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="1.5"/>
+              <text x="120" y="117" text-anchor="middle" font-family="DM Serif Display,serif" font-size="11" fill="#c93b8b" font-weight="700">Bam</text>
+              <text x="120" y="130" text-anchor="middle" font-family="DM Serif Display,serif" font-size="9" fill="#ec4fa3">Buddies</text>
+              <!-- Wind markers -->
+              <text x="120" y="66" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#9d2467" opacity=".45">N</text>
+              <text x="180" y="124" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#9d2467" opacity=".45">E</text>
+              <text x="120" y="184" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#9d2467" opacity=".45">S</text>
+              <text x="60" y="124" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#9d2467" opacity=".45">W</text>
+              <!-- EAST SEAT (Host Sarah) -->
               <g>
-                <circle cx="186" cy="110" r="20" fill="#c93b8b" stroke="#fff" stroke-width="3"/>
-                <text x="186" y="113" text-anchor="middle" font-family="Outfit" font-size="10" fill="#fff" font-weight="700">SR</text>
-                <text x="186" y="145" text-anchor="middle" font-family="Outfit" font-size="8" fill="#666" font-weight="600">East</text>
-                <text x="186" y="155" text-anchor="middle" font-family="Outfit" font-size="9" fill="#1a1a1a" font-weight="700">Sarah</text>
+                <rect x="200" y="100" width="32" height="40" rx="8" fill="#c93b8b" stroke="#fff" stroke-width="2"/>
+                <image href="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop&crop=face" x="200" y="100" width="32" height="40" preserveAspectRatio="xMidYMid slice" clip-path="inset(0 round 8px)"/>
+                <circle cx="230" cy="104" r="7" fill="#d4a017" stroke="#fff" stroke-width="1.5"/>
+                <text x="230" y="108" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">H</text>
+                <text x="216" y="160" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#1a1a1a">Sarah</text>
               </g>
-              <!-- NORTH seat (top) -->
+              <!-- NORTH SEAT (Lisa) -->
               <g>
-                <circle cx="110" cy="34" r="20" fill="#ec4fa3" stroke="#fff" stroke-width="3"/>
-                <text x="110" y="37" text-anchor="middle" font-family="Outfit" font-size="10" fill="#fff" font-weight="700">LM</text>
-                <text x="110" y="10" text-anchor="middle" font-family="Outfit" font-size="8" fill="#666" font-weight="600">North</text>
-                <text x="110" y="20" text-anchor="middle" font-family="Outfit" font-size="9" fill="#1a1a1a" font-weight="700">Lisa</text>
+                <rect x="104" y="8" width="32" height="40" rx="8" fill="#ec4fa3" stroke="#fff" stroke-width="2"/>
+                <image href="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop&crop=face" x="104" y="8" width="32" height="40" preserveAspectRatio="xMidYMid slice" clip-path="inset(0 round 8px)"/>
+                <text x="120" y="66" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#1a1a1a" opacity="0">N</text>
+                <text x="120" y="30" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#1a1a1a" opacity="0">Lisa</text>
+                <text x="120" y="68" text-anchor="middle" font-family="Outfit" font-size="9" font-weight="700" fill="#1a1a1a">Lisa</text>
               </g>
-              <!-- WEST seat (left) -->
+              <!-- WEST SEAT (Amy) -->
               <g>
-                <circle cx="34" cy="110" r="20" fill="#ec4fa3" stroke="#fff" stroke-width="3"/>
-                <text x="34" y="113" text-anchor="middle" font-family="Outfit" font-size="10" fill="#fff" font-weight="700">AT</text>
-                <text x="34" y="145" text-anchor="middle" font-family="Outfit" font-size="8" fill="#666" font-weight="600">West</text>
-                <text x="34" y="155" text-anchor="middle" font-family="Outfit" font-size="9" fill="#1a1a1a" font-weight="700">Amy</text>
+                <rect x="8" y="100" width="32" height="40" rx="8" fill="#ec4fa3" stroke="#fff" stroke-width="2"/>
+                <image href="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop&crop=face" x="8" y="100" width="32" height="40" preserveAspectRatio="xMidYMid slice" clip-path="inset(0 round 8px)"/>
+                <text x="24" y="160" text-anchor="middle" font-family="Outfit" font-size="10" font-weight="700" fill="#1a1a1a">Amy</text>
               </g>
-              <!-- SOUTH seat (bottom) — Rachel (invited, outlined) -->
+              <!-- SOUTH SEAT (Rachel - INVITED, dashed outline) -->
               <g>
-                <circle cx="110" cy="186" r="20" fill="#fff" stroke="#d97706" stroke-width="2" stroke-dasharray="4 3"/>
-                <text x="110" y="189" text-anchor="middle" font-family="Outfit" font-size="10" fill="#d97706" font-weight="700">RK</text>
-                <text x="110" y="213" text-anchor="middle" font-family="Outfit" font-size="8" fill="#666" font-weight="600">South</text>
+                <rect x="104" y="192" width="32" height="40" rx="8" fill="#fff" stroke="#b45309" stroke-width="2" stroke-dasharray="4 3"/>
+                <text x="120" y="215" text-anchor="middle" font-family="Outfit" font-size="11" font-weight="700" fill="#b45309">?</text>
               </g>
             </svg>
           </div>
-          <div style="display:flex;gap:12px;justify-content:center;font-size:10px;color:#888;margin-top:6px;">
+          <div style="display:flex;gap:14px;justify-content:center;font-size:10px;color:#888;margin-top:6px;">
             <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#c93b8b;display:inline-block;"></span>Host</span>
             <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#ec4fa3;display:inline-block;"></span>Confirmed</span>
-            <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#fff;border:1.5px dashed #d97706;display:inline-block;"></span>Invited</span>
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#fff;border:1.5px dashed #b45309;display:inline-block;"></span>Invited</span>
           </div>
         </div>
 
-        <!-- Chat Preview (messageable) -->
+        <!-- GAME CHAT PREVIEW -->
         <div class="card" style="background:#fff;border:1px solid #e8e4e0;padding:16px;margin-bottom:12px;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-            <div style="font-family:\'Caveat\',cursive;font-weight:700;font-size:22px;color:#1a1a1a;line-height:1;">Game Chat</div>
-            <div style="background:#f43f5e;color:#fff;font-size:10px;font-weight:700;min-width:22px;height:22px;border-radius:99px;padding:0 6px;display:flex;align-items:center;justify-content:center;">12</div>
+            <div style="font-family:'Caveat',cursive;font-weight:700;font-size:22px;color:#1a1a1a;line-height:1;">Game Chat</div>
+            <div style="background:#c93b8b;color:#fff;font-size:10px;font-weight:700;min-width:22px;height:22px;border-radius:99px;padding:0 6px;display:flex;align-items:center;justify-content:center;">12</div>
           </div>
           <div onclick="event.stopPropagation();go('chat')" style="cursor:pointer;">
             <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;">
@@ -583,20 +633,22 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
               <div><div style="color:#000;font-size:12px;font-weight:600;">Amy T. <span style="color:#aaa;font-weight:400;">&middot; 2m</span></div><div style="color:#666;font-size:12px;margin-top:1px;">Can't wait, see you all Sat!</div></div>
             </div>
           </div>
-          <!-- Inline composer -->
-          <div onclick="event.stopPropagation();go('chat')" style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:99px;padding:8px 10px 8px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <div onclick="event.stopPropagation();go('chat')" style="background:#fdf8f0;border:1px solid #e8e4e0;border-radius:99px;padding:8px 10px 8px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;">
             <i class="ph ph-smiley" style="font-size:16px;color:#aaa;"></i>
             <span style="flex:1;color:#aaa;font-size:12px;">Message the group...</span>
             <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#c93b8b,#ec4fa3);display:flex;align-items:center;justify-content:center;"><i class="ph-fill ph-paper-plane-tilt" style="font-size:13px;color:#fff;"></i></div>
           </div>
         </div>
 
-        <!-- Secondary Actions -->
-        <div style="display:flex;gap:10px;padding-bottom:8px;">
-          <div style="flex:1;background:#fff;color:#c93b8b;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid #c93b8b;">Complete Game</div>
-          <div style="flex:1;background:transparent;color:#ef4444;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;border:1.5px solid #fecaca;">Cancel Participation</div>
+        <!-- EDIT / CANCEL (small links at bottom) -->
+        <div style="display:flex;justify-content:center;gap:20px;padding:20px 0 12px;">
+          <button onclick="event.stopPropagation();go('gameEdit')" style="background:transparent;border:none;color:#9ca3af;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;font-family:'Outfit',sans-serif;">Edit Game</button>
+          <span style="color:#d1d5db;">&middot;</span>
+          <button style="background:transparent;border:none;color:#dc2626;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;font-family:'Outfit',sans-serif;">Cancel Game</button>
         </div>
+
       </div>
+
     </div><!-- /gameDetail -->
 
     <!-- ==================== 3. MY GAMES ==================== -->
