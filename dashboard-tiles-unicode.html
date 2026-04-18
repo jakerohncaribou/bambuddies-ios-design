@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Unicode Mahjong Tiles (real tiles, no interpretation)</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{--primary:#c93b8b;--primary-dark:#9d2467;--primary-light:#ec4fa3;--primary-tint:#fce7f3;--primary-tint2:#fdf2f8;--cream:#fdf8f0;--text:#1a1a1a;--text-mute:#6b7280;}
+body{background:#0a0a0a;font-family:'Outfit',sans-serif;padding:40px 20px;color:#fff;}
+.hdr{text-align:center;margin-bottom:30px;}
+.hdr h1{font-family:'DM Serif Display',serif;font-size:42px;letter-spacing:-.8px;margin-bottom:4px;}
+.hdr h1 span{color:var(--primary);}
+.hdr p{color:#aaa;font-size:14px;max-width:720px;margin:8px auto 0;line-height:1.5;}
+.hdr .note{color:#fbcfe8;font-size:12px;margin-top:6px;font-style:italic;}
+.row{display:flex;gap:28px;overflow-x:auto;padding:20px 0 40px;scroll-snap-type:x mandatory;}
+.row::-webkit-scrollbar{height:8px;}.row::-webkit-scrollbar-thumb{background:#333;border-radius:4px;}
+.wrap{display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0;scroll-snap-align:start;}
+.tag{background:rgba(201,59,139,.12);color:var(--primary);font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;letter-spacing:.8px;text-transform:uppercase;border:1px solid rgba(201,59,139,.3);}
+.tag-title{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.3px;color:#fff;}
+.tag-desc{color:#999;font-size:12px;max-width:393px;text-align:center;line-height:1.4;}
+
+.phone{width:393px;height:852px;border-radius:52px;border:3px solid #222;background:#000;position:relative;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:126px;height:36px;background:#000;border-radius:20px;z-index:100;}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;padding:16px 28px 0;display:flex;align-items:center;justify-content:space-between;z-index:50;font-size:15px;font-weight:600;color:var(--text);}
+.inner{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--cream);overflow:hidden;}
+.bg-tiles{position:absolute;inset:0;opacity:.08;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23c93b8b' stroke-width='1' opacity='.3'><rect x='8' y='8' width='20' height='26' rx='3'/><rect x='36' y='14' width='20' height='26' rx='3'/><rect x='12' y='44' width='20' height='26' rx='3'/><rect x='44' y='46' width='22' height='26' rx='3'/></g></svg>");}
+.scr{position:absolute;top:54px;left:0;right:0;bottom:0;overflow-y:auto;z-index:1;padding-bottom:100px;}
+
+/* Shared top/greeting */
+.topbar{display:flex;align-items:center;padding:14px 20px 10px;gap:12px;}
+.topbar-avatar{width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 3px var(--primary),0 2px 8px rgba(0,0,0,.08);}
+.topbar-avatar img{width:100%;height:100%;object-fit:cover;}
+.topbar-name{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:var(--primary);line-height:1;flex:1;margin-top:4px;}
+.topbar-icons{display:flex;gap:8px;}
+.topbar-ic{width:38px;height:38px;border-radius:50%;background:var(--primary-tint);display:flex;align-items:center;justify-content:center;}
+.topbar-ic i{font-size:17px;color:var(--primary-dark);}
+.greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.15;}
+.sponsor-placeholder{margin:0 16px 16px;height:88px;background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #fbcfe8;border-radius:20px;display:flex;align-items:center;gap:10px;padding:14px;opacity:.8;}
+.sponsor-placeholder::before{content:'';width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#8b4513,#a0522d);flex-shrink:0;}
+.sponsor-placeholder::after{content:'SPONSORED';display:flex;flex-direction:column;font-size:10px;font-weight:700;color:var(--primary-dark);letter-spacing:1px;}
+.nxt-placeholder{margin:0 16px 16px;height:120px;border-radius:22px;overflow:hidden;display:flex;border:1px solid #fbcfe8;}
+.nxt-placeholder-l{width:140px;background:linear-gradient(145deg,#fce7f3,#fbcfe8,#f9a8d4);display:flex;flex-direction:column;justify-content:center;align-items:center;color:var(--primary-dark);}
+.nxt-placeholder-l::before{content:'APR';font-size:11px;font-weight:700;letter-spacing:1.5px;}
+.nxt-placeholder-l::after{content:'19';font-family:'DM Serif Display',serif;font-size:48px;line-height:1;}
+.nxt-placeholder-r{flex:1;background:#fff;display:flex;align-items:center;padding:14px;font-size:13px;color:var(--text-mute);font-style:italic;font-family:'DM Serif Display',serif;}
+.nxt-placeholder-r::before{content:'Your Next Game · 2:00 PM';}
+
+/* =============================================================
+   UNICODE MAHJONG TILES — rendered by the OS, 100% pixel-consistent
+   ============================================================= */
+
+/* === VARIANT 1: Giant Unicode Tile Only === */
+.v1-actions{display:flex;gap:6px;padding:0 12px 24px;justify-content:space-between;}
+.v1-act{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;position:relative;}
+.v1-tile{font-size:64px;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18));user-select:none;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;}
+.v1-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text);line-height:1.15;text-align:center;letter-spacing:-.1px;}
+.v1-badge{position:absolute;top:-2px;right:0;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2px solid var(--cream);z-index:3;}
+
+/* === VARIANT 2: Tile on Pink Pastel Pedestal === */
+.v2-actions{display:flex;gap:10px;padding:0 16px 24px;}
+.v2-act{flex:1;aspect-ratio:.92;background:linear-gradient(160deg,#fce7f3,#fbcfe8);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 4px;cursor:pointer;box-shadow:0 6px 14px rgba(201,59,139,.15);border:1px solid #fbcfe8;position:relative;}
+.v2-tile{font-size:52px;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.2));user-select:none;}
+.v2-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:10px;color:var(--primary-dark);line-height:1.1;text-align:center;letter-spacing:.3px;text-transform:uppercase;}
+.v2-badge{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2.5px solid var(--cream);}
+
+/* === VARIANT 3: Tile on White Card with Shadow === */
+.v3-actions{display:flex;gap:10px;padding:0 16px 24px;}
+.v3-act{flex:1;aspect-ratio:.92;background:#fff;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 4px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.05),0 8px 20px rgba(0,0,0,.03);border:1px solid #f0ede6;position:relative;}
+.v3-tile{font-size:48px;line-height:1;user-select:none;}
+.v3-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text);line-height:1.1;text-align:center;letter-spacing:-.1px;}
+.v3-badge{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2.5px solid var(--cream);}
+
+/* === VARIANT 4: Tile on Chunky Cream Pedestal (3D) === */
+.v4-actions{display:flex;gap:10px;padding:0 16px 28px;}
+.v4-act{flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff8ec,#f2e2c8);border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 4px;cursor:pointer;box-shadow:0 7px 0 #cfb988,0 10px 18px rgba(0,0,0,.12);border:1px solid #e0cea8;position:relative;}
+.v4-tile{font-size:50px;line-height:1;user-select:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15));}
+.v4-lbl{font-family:'Outfit',sans-serif;font-weight:800;font-size:11px;color:var(--text);line-height:1.1;text-align:center;letter-spacing:-.1px;}
+.v4-badge{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2.5px solid #fff8ec;}
+
+/* === VARIANT 5: Tile + Action Icon overlay === */
+.v5-actions{display:flex;gap:10px;padding:0 16px 24px;}
+.v5-act{flex:1;aspect-ratio:.92;background:#fff;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px 4px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.05);border:1px solid #f0ede6;position:relative;}
+.v5-tile{font-size:46px;line-height:1;user-select:none;position:relative;}
+.v5-overlay{position:absolute;bottom:-4px;right:-6px;width:22px;height:22px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(201,59,139,.4);border:2px solid #fff;}
+.v5-overlay i{color:#fff;font-size:11px;}
+.v5-lbl{font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;color:var(--text);line-height:1.1;text-align:center;letter-spacing:-.1px;}
+.v5-badge{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;border-radius:99px;background:var(--primary);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2.5px solid var(--cream);z-index:3;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>Dashboard · <span>Unicode Mahjong Tiles</span></h1>
+  <p>These tiles use the actual Unicode characters (🀀 🀁 🀄 etc.) — iOS and macOS render them as real colored mahjong tiles natively. No drawing, no interpretation — the OS handles it.</p>
+  <p class="note">Note: these emoji may render differently on Windows/Android — but on iPhone they're perfect tiles. For the iOS app, this is the most consistent approach.</p>
+</div>
+
+<div class="row">
+
+  <!-- VARIANT 1: bare tile -->
+  <div class="wrap">
+    <div class="tag">Variant 1</div>
+    <div class="tag-title">Bare Tile</div>
+    <div class="tag-desc">Just the real mahjong tile, floating. Minimal chrome. Labels below. Most authentic — tiles ARE the tiles.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="v1-actions">
+            <div class="v1-act"><div class="v1-tile">🀀</div><div class="v1-lbl">Start<br>Game</div></div>
+            <div class="v1-act"><div class="v1-tile">🀁</div><div class="v1-lbl">Find<br>Games</div></div>
+            <div class="v1-act"><div class="v1-tile">🀅</div><div class="v1-lbl">Start<br>Group</div></div>
+            <div class="v1-act"><div class="v1-badge">3</div><div class="v1-tile">🀄</div><div class="v1-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT 2: pink pedestal -->
+  <div class="wrap">
+    <div class="tag">Variant 2</div>
+    <div class="tag-title">Pink Pedestal</div>
+    <div class="tag-desc">Real tile sitting on a soft pink gradient card. Label in pink uppercase below. Brand-tied, more playful.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="v2-actions">
+            <div class="v2-act"><div class="v2-tile">🀀</div><div class="v2-lbl">Start Game</div></div>
+            <div class="v2-act"><div class="v2-tile">🀁</div><div class="v2-lbl">Find Games</div></div>
+            <div class="v2-act"><div class="v2-tile">🀅</div><div class="v2-lbl">Start Group</div></div>
+            <div class="v2-act"><div class="v2-badge">3</div><div class="v2-tile">🀄</div><div class="v2-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT 3: white card -->
+  <div class="wrap">
+    <div class="tag">Variant 3</div>
+    <div class="tag-title">White Card</div>
+    <div class="tag-desc">Real tile on a clean white card with soft shadow. Most neutral — lets the tile shine without competing visual elements.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="v3-actions">
+            <div class="v3-act"><div class="v3-tile">🀀</div><div class="v3-lbl">Start Game</div></div>
+            <div class="v3-act"><div class="v3-tile">🀁</div><div class="v3-lbl">Find Games</div></div>
+            <div class="v3-act"><div class="v3-tile">🀅</div><div class="v3-lbl">Start Group</div></div>
+            <div class="v3-act"><div class="v3-badge">3</div><div class="v3-tile">🀄</div><div class="v3-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT 4: chunky cream 3D pedestal -->
+  <div class="wrap">
+    <div class="tag">Variant 4</div>
+    <div class="tag-title">3D Cream Pedestal</div>
+    <div class="tag-desc">Real tile on a warm cream 3D-shadowed pedestal (similar to your existing tile styling but with real tiles on top). Chunky, tactile.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="v4-actions">
+            <div class="v4-act"><div class="v4-tile">🀀</div><div class="v4-lbl">Start<br>Game</div></div>
+            <div class="v4-act"><div class="v4-tile">🀁</div><div class="v4-lbl">Find<br>Games</div></div>
+            <div class="v4-act"><div class="v4-tile">🀅</div><div class="v4-lbl">Start<br>Group</div></div>
+            <div class="v4-act"><div class="v4-badge">3</div><div class="v4-tile">🀄</div><div class="v4-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT 5: tile + action overlay badge -->
+  <div class="wrap">
+    <div class="tag">Variant 5</div>
+    <div class="tag-title">Tile + Action Badge</div>
+    <div class="tag-desc">Real tile on white card with a tiny pink action icon badge in corner (play/map/users/chat). Solves the "what does this DO?" question by pairing tile with action cue.</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="sbar"><span>9:41</span><span style="font-size:12px;">●●●● ▮</span></div>
+      <div class="inner">
+        <div class="bg-tiles"></div>
+        <div class="scr">
+          <div class="topbar"><div class="topbar-avatar"><img src="https://i.pravatar.cc/150?img=47"></div><div class="topbar-name">Sarah</div><div class="topbar-icons"><div class="topbar-ic"><i class="ph ph-magnifying-glass"></i></div><div class="topbar-ic"><i class="ph ph-bell"></i></div></div></div>
+          <div class="greeting">May the winds be with you.</div>
+          <div class="v5-actions">
+            <div class="v5-act"><div class="v5-tile">🀀<span class="v5-overlay"><i class="ph-fill ph-play"></i></span></div><div class="v5-lbl">Start Game</div></div>
+            <div class="v5-act"><div class="v5-tile">🀁<span class="v5-overlay"><i class="ph-fill ph-map-trifold"></i></span></div><div class="v5-lbl">Find Games</div></div>
+            <div class="v5-act"><div class="v5-tile">🀅<span class="v5-overlay"><i class="ph-fill ph-users-three"></i></span></div><div class="v5-lbl">Start Group</div></div>
+            <div class="v5-act"><div class="v5-badge">3</div><div class="v5-tile">🀄<span class="v5-overlay"><i class="ph-fill ph-chat-circle-dots"></i></span></div><div class="v5-lbl">Messages</div></div>
+          </div>
+          <div class="sponsor-placeholder"></div>
+          <div class="nxt-placeholder"><div class="nxt-placeholder-l"></div><div class="nxt-placeholder-r"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;color:#888;font-size:13px;margin-top:20px;max-width:680px;margin:20px auto 0;line-height:1.6;">
+  <b>Tile meanings (in order):</b> 🀀 East Wind (opens the game) · 🀁 South Wind (next player, journey to find) · 🀅 Green Dragon (gather/prosper, group) · 🀄 Red Dragon (center, important messages)<br>
+  These are the actual Unicode mahjong tile characters rendered by iOS/macOS.
+</div>
+
+</body>
+</html>
