@@ -51,13 +51,11 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;padding
 /* ============ GREETING ============ */
 .greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.15;}
 
-/* ============ ACTION ROW (3D cream tiles) ============ */
+/* ============ ACTION ROW (3D cream tiles, uniform) ============ */
 .actions{display:flex;gap:10px;padding:0 16px 18px;}
-.act{flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff8ec 0%,#f7e6d3 100%);border-radius:20px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10px 4px 10px;cursor:pointer;box-shadow:0 5px 0 #e3cfb3,0 8px 16px rgba(0,0,0,.08);transition:transform .1s ease,box-shadow .1s ease;}
-.act:nth-child(2){background:linear-gradient(180deg,#fff0f0 0%,#fad6d4 100%);box-shadow:0 5px 0 #e3b5b2,0 8px 16px rgba(0,0,0,.08);}
-.act:nth-child(3){background:linear-gradient(180deg,#f5f9f4 0%,#e0ebe0 100%);box-shadow:0 5px 0 #c7d3c7,0 8px 16px rgba(0,0,0,.08);}
-.act:nth-child(4){background:linear-gradient(180deg,#fff8ec 0%,#f7e6d3 100%);box-shadow:0 5px 0 #e3cfb3,0 8px 16px rgba(0,0,0,.08);}
-.act:active{transform:translateY(3px);box-shadow:0 2px 0 #e3cfb3,0 3px 6px rgba(0,0,0,.05);}
+.act{flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff8ec 0%,#f2e2c8 100%);border-radius:20px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:9px 4px 9px;cursor:pointer;box-shadow:0 4px 0 #dcc8aa,0 6px 12px rgba(0,0,0,.06);transition:transform .1s ease,box-shadow .1s ease;}
+.act:nth-child(2){background:linear-gradient(180deg,#ffeef0 0%,#f5d6d6 100%);box-shadow:0 4px 0 #e0bab8,0 6px 12px rgba(0,0,0,.06);}
+.act:active{transform:translateY(3px);box-shadow:0 1px 0 #dcc8aa,0 3px 6px rgba(0,0,0,.05);}
 .act-icon-wrap{width:48px;height:48px;display:flex;align-items:center;justify-content:center;margin-top:4px;}
 .act-icon-wrap svg{width:100%;height:100%;}
 .act-lbl{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.1;letter-spacing:-.1px;}
