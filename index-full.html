@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BamBuddies · Full Prototypes</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>BamBuddies · Prototypes</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
@@ -12,197 +12,128 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;color:#fff;padding:60px 20px;}
 .container{max-width:1200px;margin:0 auto;}
-.hero{text-align:center;margin-bottom:60px;}
+.hero{text-align:center;margin-bottom:50px;}
 .hero h1{font-family:'DM Serif Display',serif;font-size:52px;line-height:1.05;letter-spacing:-1px;margin-bottom:8px;}
-.hero h1 .ios{color:#a78bfa;}
-.hero h1 .web{color:#10b981;}
+.hero h1 .sarah{font-family:'Caveat',cursive;color:#c93b8b;font-weight:700;}
 .hero p{color:#888;font-size:16px;font-weight:400;max-width:560px;margin:0 auto;}
 
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-@media (max-width:900px){.grid{grid-template-columns:1fr;}}
+.section{margin-bottom:40px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #222;}
+.section-hdr h2{font-family:'DM Serif Display',serif;font-size:28px;}
+.section-hdr .chip{background:#c93b8b22;color:#c93b8b;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;border:1px solid #c93b8b44;}
+.section-desc{color:#999;font-size:14px;margin-bottom:20px;}
 
-.card{background:#141414;border:1px solid #222;border-radius:24px;padding:36px;position:relative;overflow:hidden;transition:all .25s ease;cursor:pointer;display:block;text-decoration:none;color:inherit;}
-.card:hover{border-color:#333;transform:translateY(-2px);}
-.card-ios{background:linear-gradient(145deg,#1a1324,#0f0819);border-color:#3b2563;}
-.card-ios:hover{border-color:#7c3aed;box-shadow:0 20px 60px rgba(124,58,237,.2);}
-.card-web{background:linear-gradient(145deg,#0d1f19,#08130e);border-color:#1a4d3c;}
-.card-web:hover{border-color:#059669;box-shadow:0 20px 60px rgba(5,150,105,.2);}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.card{background:#151515;border:1px solid #2a2a2a;border-radius:16px;padding:24px;transition:all .15s;text-decoration:none;color:inherit;display:block;position:relative;overflow:hidden;}
+.card:hover{border-color:#c93b8b;transform:translateY(-2px);box-shadow:0 16px 40px rgba(201,59,139,.15);}
+.card .tag{position:absolute;top:14px;right:14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:99px;}
+.card .tag.old{background:#333;color:#aaa;}
+.card .tag.new{background:#c93b8b;color:#fff;}
+.card h3{font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.card h3 i{font-size:22px;color:#c93b8b;}
+.card .color-dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px;}
+.card p{color:#999;font-size:13px;line-height:1.5;margin-bottom:14px;}
+.card .stats{display:flex;gap:16px;font-size:12px;color:#888;}
+.card .stats span strong{color:#fff;}
 
-.card-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:99px;margin-bottom:20px;}
-.card-ios .card-badge{background:rgba(167,139,250,.12);color:#a78bfa;border:1px solid rgba(167,139,250,.2);}
-.card-web .card-badge{background:rgba(16,185,129,.12);color:#10b981;border:1px solid rgba(16,185,129,.2);}
+.single-list{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.small-card{background:#151515;border:1px solid #2a2a2a;border-radius:12px;padding:16px;text-decoration:none;color:inherit;display:flex;align-items:center;gap:14px;transition:all .15s;}
+.small-card:hover{border-color:#c93b8b;}
+.small-card .icon{width:44px;height:44px;border-radius:10px;background:#c93b8b22;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.small-card .icon i{font-size:22px;color:#c93b8b;}
+.small-card h4{font-size:14px;font-weight:700;margin-bottom:2px;}
+.small-card p{font-size:11px;color:#888;}
 
-.card h2{font-family:'DM Serif Display',serif;font-size:34px;letter-spacing:-.5px;line-height:1.1;margin-bottom:6px;}
-.card-ios h2{color:#fff;}
-.card-web h2{color:#fff;}
-.card-desc{color:#888;font-size:14px;line-height:1.5;margin-bottom:24px;}
-
-.card-preview{width:100%;aspect-ratio:16/10;border-radius:14px;overflow:hidden;background:#000;position:relative;margin-bottom:20px;border:1px solid rgba(255,255,255,.04);}
-.card-preview-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
-.preview-phone{width:140px;height:auto;aspect-ratio:9/19.5;border-radius:22px;background:linear-gradient(145deg,#222,#111);border:2px solid #333;position:relative;overflow:hidden;}
-.preview-phone-screen{position:absolute;top:10px;left:6px;right:6px;bottom:10px;border-radius:14px;overflow:hidden;}
-.preview-phone-notch{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:40px;height:10px;background:#000;border-radius:6px;z-index:2;}
-.preview-browser{width:100%;height:100%;background:#fafaf9;position:relative;}
-.preview-browser-chrome{height:24px;background:#fff;border-bottom:1px solid #e5e5e0;display:flex;align-items:center;padding:0 10px;gap:4px;}
-.preview-dot{width:7px;height:7px;border-radius:50%;}
-.preview-mauve{background:linear-gradient(145deg,#ede9fe,#ddd6fe);padding:16px;}
-.preview-emerald{background:#fafaf9;padding:12px;display:flex;gap:8px;}
-.preview-sidebar{width:28%;background:#fff;border-radius:6px;padding:8px 6px;display:flex;flex-direction:column;gap:5px;}
-.preview-sidebar-item{height:8px;background:#e5e5e0;border-radius:3px;}
-.preview-sidebar-item.active{background:#d1fae5;}
-.preview-main{flex:1;display:flex;flex-direction:column;gap:6px;}
-.preview-card{background:#fff;border:1px solid #e5e5e0;border-radius:6px;height:28px;}
-.preview-card.hero{height:50px;background:linear-gradient(135deg,#10b981,#059669);border-color:transparent;}
-
-.preview-ios-content{width:100%;height:100%;background:#faf8f6;padding:8px;display:flex;flex-direction:column;gap:5px;}
-.preview-ios-header{height:20px;background:#fff;border-radius:6px;}
-.preview-ios-hero{height:50px;border-radius:7px;background:linear-gradient(135deg,#7c3aed,#a78bfa);}
-.preview-ios-card{height:24px;background:#fff;border:1px solid #eee;border-radius:6px;}
-
-.stats{display:flex;gap:16px;margin-bottom:20px;}
-.stat{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;text-align:center;}
-.stat-num{font-size:22px;font-weight:800;letter-spacing:-.5px;}
-.card-ios .stat-num{color:#a78bfa;}
-.card-web .stat-num{color:#10b981;}
-.stat-lbl{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
-
-.cta{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:12px;font-weight:700;font-size:14px;letter-spacing:.3px;text-decoration:none;transition:all .2s;}
-.cta-ios{background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;box-shadow:0 4px 20px rgba(124,58,237,.4);}
-.cta-ios:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,58,237,.5);}
-.cta-web{background:linear-gradient(135deg,#059669,#10b981);color:#fff;box-shadow:0 4px 20px rgba(5,150,105,.4);}
-.cta-web:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(5,150,105,.5);}
-.cta i{font-size:16px;}
-
-.footer{text-align:center;margin-top:60px;color:#555;font-size:13px;}
-.footer a{color:#888;text-decoration:none;font-weight:600;margin:0 10px;}
-.footer a:hover{color:#fff;}
-
-.older-section{margin-top:80px;padding-top:40px;border-top:1px solid #222;}
-.older-title{text-align:center;color:#666;font-size:12px;text-transform:uppercase;letter-spacing:3px;margin-bottom:24px;}
-.older-links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;}
-.older-link{background:#141414;border:1px solid #222;padding:10px 16px;border-radius:10px;font-size:12px;color:#aaa;text-decoration:none;transition:all .2s;}
-.older-link:hover{background:#1a1a1a;border-color:#333;color:#fff;}
+.footer{margin-top:60px;text-align:center;color:#555;font-size:12px;}
+.footer a{color:#c93b8b;text-decoration:none;}
 </style>
 </head>
 <body>
+
 <div class="container">
-
   <div class="hero">
-    <h1><span class="ios">iOS</span> &amp; <span class="web">Web</span><br>Full Prototypes</h1>
-    <p>Comprehensive clickable prototypes covering every feature. iOS in mauve. Responsive Web in emerald.</p>
+    <h1>BamBuddies, <span class="sarah">Sarah</span></h1>
+    <p>Full prototypes for iOS app and responsive web. New pink v9 design system alongside original versions for comparison.</p>
   </div>
 
-  <div class="grid">
-
-    <!-- iOS Card -->
-    <a href="./prototype-ios-full.html" class="card card-ios">
-      <div class="card-badge"><i class="ph-fill ph-device-mobile"></i> iOS · Mauve</div>
+  <!-- iOS Section -->
+  <div class="section">
+    <div class="section-hdr">
+      <i class="ph ph-device-mobile" style="font-size:24px;color:#c93b8b;"></i>
       <h2>iOS App</h2>
-      <div class="card-desc">Native iPhone experience. Tap anywhere to navigate between screens.</div>
-
-      <div class="card-preview">
-        <div class="card-preview-img" style="background:linear-gradient(145deg,#1a1324,#2a1f42);">
-          <div class="preview-phone">
-            <div class="preview-phone-notch"></div>
-            <div class="preview-phone-screen">
-              <div class="preview-ios-content">
-                <div class="preview-ios-header"></div>
-                <div class="preview-ios-hero"></div>
-                <div class="preview-ios-card"></div>
-                <div class="preview-ios-card"></div>
-                <div class="preview-ios-card"></div>
-                <div class="preview-ios-card"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="stats">
-        <div class="stat"><div class="stat-num">25+</div><div class="stat-lbl">Screens</div></div>
-        <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Auth Flows</div></div>
-        <div class="stat"><div class="stat-num">#7c3aed</div><div class="stat-lbl">Theme</div></div>
-      </div>
-
-      <div class="cta cta-ios">Open iOS Prototype <i class="ph-bold ph-arrow-right"></i></div>
-    </a>
-
-    <!-- Web Card -->
-    <a href="./prototype-web-full.html" class="card card-web">
-      <div class="card-badge"><i class="ph-fill ph-monitor"></i> Web · Emerald</div>
-      <h2>Responsive Web</h2>
-      <div class="card-desc">Desktop, tablet, mobile. Viewport switcher at top.</div>
-
-      <div class="card-preview">
-        <div class="card-preview-img" style="background:linear-gradient(145deg,#0d1f19,#1a3d2e);">
-          <div style="width:85%;aspect-ratio:16/10;background:#fff;border-radius:10px;overflow:hidden;border:2px solid #333;">
-            <div class="preview-browser">
-              <div class="preview-browser-chrome">
-                <div class="preview-dot" style="background:#f56565;"></div>
-                <div class="preview-dot" style="background:#ed8936;"></div>
-                <div class="preview-dot" style="background:#48bb78;"></div>
-                <div style="flex:1;background:#f5f5f0;margin-left:8px;height:14px;border-radius:3px;"></div>
-              </div>
-              <div class="preview-emerald">
-                <div class="preview-sidebar">
-                  <div class="preview-sidebar-item active"></div>
-                  <div class="preview-sidebar-item"></div>
-                  <div class="preview-sidebar-item"></div>
-                  <div class="preview-sidebar-item"></div>
-                  <div class="preview-sidebar-item"></div>
-                </div>
-                <div class="preview-main">
-                  <div class="preview-card hero"></div>
-                  <div class="preview-card"></div>
-                  <div class="preview-card"></div>
-                  <div class="preview-card"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="stats">
-        <div class="stat"><div class="stat-num">27+</div><div class="stat-lbl">Screens</div></div>
-        <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Breakpoints</div></div>
-        <div class="stat"><div class="stat-num">#059669</div><div class="stat-lbl">Theme</div></div>
-      </div>
-
-      <div class="cta cta-web">Open Web Prototype <i class="ph-bold ph-arrow-right"></i></div>
-    </a>
-
-    <!-- Admin Card -->
-    <a href="./prototype-admin-full.html" class="card" style="grid-column:1/-1;background:linear-gradient(145deg,#0f1524,#1a2540);border:1px solid #334155;">
-      <div class="card-badge" style="background:rgba(100,116,139,.15);color:#94a3b8;border:1px solid rgba(100,116,139,.3);"><i class="ph-fill ph-shield-star"></i> Admin · Platform + Org</div>
-      <h2 style="color:#fff;">Admin Portal</h2>
-      <div class="card-desc">Platform Admin (12 screens · slate) + Org Admin (8 screens · emerald). Role switcher at top.</div>
-
-      <div class="stats">
-        <div class="stat"><div class="stat-num" style="color:#10b981;">20</div><div class="stat-lbl">Screens</div></div>
-        <div class="stat"><div class="stat-num" style="color:#10b981;">2</div><div class="stat-lbl">Roles</div></div>
-        <div class="stat"><div class="stat-num" style="color:#10b981;">Desktop</div><div class="stat-lbl">Only</div></div>
-      </div>
-
-      <div class="cta" style="background:linear-gradient(135deg,#334155,#475569);color:#fff;box-shadow:0 4px 20px rgba(51,65,85,.4);">Open Admin Portal <i class="ph-bold ph-arrow-right"></i></div>
-    </a>
-
+      <span class="chip">Old & New</span>
+    </div>
+    <div class="section-desc">Native iOS prototype with 25+ screens. Compare the new pink v9 design against the original mauve.</div>
+    <div class="compare-grid">
+      <a href="prototype-ios-full.html" class="card">
+        <span class="tag old">Old — Mauve</span>
+        <h3><i class="ph-fill ph-device-mobile"></i><span class="color-dot" style="background:#7c3aed;"></span> iOS · Mauve</h3>
+        <p>Original iOS prototype with mauve theme. 25+ screens including auth, games, groups, messaging, admin.</p>
+        <div class="stats"><span>Theme: <strong>Mauve #7c3aed</strong></span><span>Screens: <strong>25+</strong></span></div>
+      </a>
+      <a href="prototype-ios-pink.html" class="card">
+        <span class="tag new">New — Pink v9</span>
+        <h3><i class="ph-fill ph-device-mobile"></i><span class="color-dot" style="background:#c93b8b;"></span> iOS · Pink v9</h3>
+        <p>New pink v9 design with Caveat cursive, mahjong watermark, updated Needs Your Attention & Your Games patterns. User-changeable theme color.</p>
+        <div class="stats"><span>Theme: <strong>Pink #c93b8b</strong></span><span>Screens: <strong>25+</strong></span></div>
+      </a>
+    </div>
   </div>
 
-  <div class="older-section">
-    <div class="older-title">Earlier Explorations</div>
-    <div class="older-links">
-      <a class="older-link" href="./prototype.html">Original iOS (green)</a>
-      <a class="older-link" href="./theme-mix-v2.html">Theme mix v2 · 5 colors</a>
-      <a class="older-link" href="./dashboard-radical.html">Radical dashboards</a>
-      <a class="older-link" href="./themes.html">Color + font themes</a>
+  <!-- Web Section -->
+  <div class="section">
+    <div class="section-hdr">
+      <i class="ph ph-desktop" style="font-size:24px;color:#c93b8b;"></i>
+      <h2>Responsive Web</h2>
+      <span class="chip">Old & New</span>
+    </div>
+    <div class="section-desc">Responsive web with viewport switcher (Desktop 1280 / Tablet 768 / Mobile 375). 27 screens including admin panel.</div>
+    <div class="compare-grid">
+      <a href="prototype-web-full.html" class="card">
+        <span class="tag old">Old — Emerald</span>
+        <h3><i class="ph-fill ph-desktop"></i><span class="color-dot" style="background:#059669;"></span> Web · Emerald</h3>
+        <p>Original responsive web with emerald theme. Sidebar + 3-col dashboard, auto-reflows to tablet/mobile.</p>
+        <div class="stats"><span>Theme: <strong>Emerald #059669</strong></span><span>Screens: <strong>27</strong></span></div>
+      </a>
+      <a href="prototype-web-pink.html" class="card">
+        <span class="tag new">New — Pink v9</span>
+        <h3><i class="ph-fill ph-desktop"></i><span class="color-dot" style="background:#c93b8b;"></span> Web · Pink v9</h3>
+        <p>New pink v9 design matching iOS. Responsive behavior preserved. User-changeable theme color.</p>
+        <div class="stats"><span>Theme: <strong>Pink #c93b8b</strong></span><span>Screens: <strong>27</strong></span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Admin / Other -->
+  <div class="section">
+    <div class="section-hdr">
+      <i class="ph ph-shield-star" style="font-size:24px;color:#c93b8b;"></i>
+      <h2>Admin &amp; Reference</h2>
+    </div>
+    <div class="single-list">
+      <a href="prototype-admin-full.html" class="small-card">
+        <div class="icon"><i class="ph-fill ph-shield-star"></i></div>
+        <div><h4>Admin + Org Admin</h4><p>Platform admin & org admin dashboards — 20 screens</p></div>
+      </a>
+      <a href="dashboard-v9.html" class="small-card">
+        <div class="icon"><i class="ph-fill ph-star"></i></div>
+        <div><h4>Dashboard v9 (Reference)</h4><p>Latest single-page dashboard iteration</p></div>
+      </a>
+      <a href="BUILD_PLAN.md" class="small-card">
+        <div class="icon"><i class="ph-fill ph-roadmap"></i></div>
+        <div><h4>Build Plan</h4><p>v1/v2 parallel build strategy</p></div>
+      </a>
+      <a href="ENHANCEMENTS.md" class="small-card">
+        <div class="icon"><i class="ph-fill ph-list-checks"></i></div>
+        <div><h4>Enhancements Log</h4><p>Every change tracked for future implementation</p></div>
+      </a>
     </div>
   </div>
 
   <div class="footer">
-    <div>Updated April 2026 &middot; <a href="https://github.com/jakerohncaribou/bambuddies-ios-design" target="_blank">View on GitHub</a></div>
+    Private working repo · <a href="https://github.com/jakerohncaribou/bambuddies-ios-design">github.com/jakerohncaribou/bambuddies-ios-design</a>
   </div>
-
 </div>
+
 </body>
 </html>
