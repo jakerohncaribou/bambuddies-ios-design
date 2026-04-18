@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BamBuddies · Prototypes</title>
+<title>BamBuddies · Design Prototypes</title>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=DM+Serif+Display&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
@@ -12,39 +12,47 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;color:#fff;padding:60px 20px;}
 .container{max-width:1200px;margin:0 auto;}
-.hero{text-align:center;margin-bottom:50px;}
+.hero{text-align:center;margin-bottom:40px;}
 .hero h1{font-family:'DM Serif Display',serif;font-size:52px;line-height:1.05;letter-spacing:-1px;margin-bottom:8px;}
 .hero h1 .sarah{font-family:'Caveat',cursive;color:#c93b8b;font-weight:700;}
 .hero p{color:#888;font-size:16px;font-weight:400;max-width:560px;margin:0 auto;}
 
 .section{margin-bottom:40px;}
-.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #222;}
-.section-hdr h2{font-family:'DM Serif Display',serif;font-size:28px;}
-.section-hdr .chip{background:#c93b8b22;color:#c93b8b;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;border:1px solid #c93b8b44;}
-.section-desc{color:#999;font-size:14px;margin-bottom:20px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #222;}
+.section-hdr h2{font-family:'DM Serif Display',serif;font-size:24px;}
+.section-hdr .chip{background:#c93b8b22;color:#c93b8b;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;border:1px solid #c93b8b44;}
+.section-desc{color:#999;font-size:13px;margin-bottom:16px;}
 
-.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.card{background:#151515;border:1px solid #2a2a2a;border-radius:16px;padding:24px;transition:all .15s;text-decoration:none;color:inherit;display:block;position:relative;overflow:hidden;}
-.card:hover{border-color:#c93b8b;transform:translateY(-2px);box-shadow:0 16px 40px rgba(201,59,139,.15);}
-.card .tag{position:absolute;top:14px;right:14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:99px;}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;}
+.card{background:#151515;border:1px solid #2a2a2a;border-radius:14px;padding:20px;transition:all .15s;text-decoration:none;color:inherit;display:block;position:relative;overflow:hidden;}
+.card:hover{border-color:#c93b8b;transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,59,139,.15);}
+.card .tag{position:absolute;top:12px;right:12px;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:99px;}
 .card .tag.old{background:#333;color:#aaa;}
 .card .tag.new{background:#c93b8b;color:#fff;}
-.card h3{font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
-.card h3 i{font-size:22px;color:#c93b8b;}
-.card .color-dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px;}
-.card p{color:#999;font-size:13px;line-height:1.5;margin-bottom:14px;}
-.card .stats{display:flex;gap:16px;font-size:12px;color:#888;}
-.card .stats span strong{color:#fff;}
+.card h3{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.card h3 i{font-size:20px;color:#c93b8b;}
+.card .color-dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+.card p{color:#999;font-size:12px;line-height:1.4;margin-bottom:8px;}
+.card .stats{display:flex;gap:14px;font-size:11px;color:#666;}
+.card .stats strong{color:#fff;}
 
-.single-list{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-.small-card{background:#151515;border:1px solid #2a2a2a;border-radius:12px;padding:16px;text-decoration:none;color:inherit;display:flex;align-items:center;gap:14px;transition:all .15s;}
-.small-card:hover{border-color:#c93b8b;}
-.small-card .icon{width:44px;height:44px;border-radius:10px;background:#c93b8b22;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.small-card .icon i{font-size:22px;color:#c93b8b;}
-.small-card h4{font-size:14px;font-weight:700;margin-bottom:2px;}
-.small-card p{font-size:11px;color:#888;}
+.sprint-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.sprint-card{background:#151515;border:1px solid #2a2a2a;border-radius:12px;padding:16px;text-decoration:none;color:inherit;display:block;transition:all .15s;}
+.sprint-card:hover{border-color:#c93b8b;background:#1a1a1a;}
+.sprint-card .label{display:inline-block;background:#c93b8b22;color:#c93b8b;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+.sprint-card h4{font-size:15px;font-weight:700;margin-bottom:6px;line-height:1.2;}
+.sprint-card p{font-size:11px;color:#999;line-height:1.4;}
+.sprint-card .count{font-size:10px;color:#666;margin-top:6px;}
 
-.footer{margin-top:60px;text-align:center;color:#555;font-size:12px;}
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+.doc-card{background:#151515;border:1px solid #2a2a2a;border-radius:10px;padding:14px;text-decoration:none;color:inherit;display:flex;align-items:center;gap:12px;transition:all .15s;}
+.doc-card:hover{border-color:#c93b8b;}
+.doc-card .icon{width:36px;height:36px;border-radius:9px;background:#c93b8b22;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.doc-card .icon i{font-size:18px;color:#c93b8b;}
+.doc-card h4{font-size:13px;font-weight:700;margin-bottom:1px;}
+.doc-card p{font-size:10px;color:#888;}
+
+.footer{margin-top:60px;text-align:center;color:#555;font-size:11px;}
 .footer a{color:#c93b8b;text-decoration:none;}
 </style>
 </head>
@@ -53,99 +61,142 @@ body{background:#0a0a0a;min-height:100vh;font-family:'Outfit',sans-serif;color:#
 <div class="container">
   <div class="hero">
     <h1>BamBuddies, <span class="sarah">Sarah</span></h1>
-    <p>Full prototypes for iOS app and responsive web. New pink v9 design system alongside original versions for comparison.</p>
+    <p>Design prototypes for iOS, Web, Admin, and Public Site. Pink v9 design system. All flows from core product through launch-blocker gaps.</p>
   </div>
 
-  <!-- iOS Section -->
+  <!-- ============ CORE PROTOTYPES ============ -->
   <div class="section">
     <div class="section-hdr">
-      <i class="ph ph-device-mobile" style="font-size:24px;color:#c93b8b;"></i>
-      <h2>iOS App</h2>
+      <i class="ph-fill ph-device-mobile" style="font-size:24px;color:#c93b8b;"></i>
+      <h2>Core App Prototypes</h2>
       <span class="chip">Old & New</span>
     </div>
-    <div class="section-desc">Native iOS prototype with 25+ screens. Compare the new pink v9 design against the original mauve.</div>
+    <div class="section-desc">Full app prototypes. New pink v9 design paired with original for comparison.</div>
+
+    <!-- iOS -->
     <div class="compare-grid">
       <a href="prototype-ios-full.html" class="card">
         <span class="tag old">Old — Mauve</span>
         <h3><i class="ph-fill ph-device-mobile"></i><span class="color-dot" style="background:#7c3aed;"></span> iOS · Mauve</h3>
-        <p>Original iOS prototype with mauve theme. 25+ screens including auth, games, groups, messaging, admin.</p>
-        <div class="stats"><span>Theme: <strong>Mauve #7c3aed</strong></span><span>Screens: <strong>25+</strong></span></div>
+        <p>Original iOS with mauve theme.</p>
+        <div class="stats"><span>Theme: <strong>#7c3aed</strong></span><span><strong>30</strong> screens</span></div>
       </a>
       <a href="prototype-ios-pink.html" class="card">
         <span class="tag new">New — Pink v9</span>
         <h3><i class="ph-fill ph-device-mobile"></i><span class="color-dot" style="background:#c93b8b;"></span> iOS · Pink v9</h3>
-        <p>New pink v9 design with Caveat cursive, mahjong watermark, updated Needs Your Attention & Your Games patterns. User-changeable theme color.</p>
-        <div class="stats"><span>Theme: <strong>Pink #c93b8b</strong></span><span>Screens: <strong>25+</strong></span></div>
+        <p>Pink v9 with Caveat cursive, mahjong watermark, v9 invite cards.</p>
+        <div class="stats"><span>Theme: <strong>#c93b8b</strong></span><span><strong>30</strong> screens</span></div>
       </a>
     </div>
-  </div>
 
-  <!-- Web Section -->
-  <div class="section">
-    <div class="section-hdr">
-      <i class="ph ph-desktop" style="font-size:24px;color:#c93b8b;"></i>
-      <h2>Responsive Web</h2>
-      <span class="chip">Old & New</span>
-    </div>
-    <div class="section-desc">Responsive web with viewport switcher (Desktop 1280 / Tablet 768 / Mobile 375). 27 screens including admin panel.</div>
+    <!-- Web -->
     <div class="compare-grid">
       <a href="prototype-web-full.html" class="card">
         <span class="tag old">Old — Emerald</span>
         <h3><i class="ph-fill ph-desktop"></i><span class="color-dot" style="background:#059669;"></span> Web · Emerald</h3>
-        <p>Original responsive web with emerald theme. Sidebar + 3-col dashboard, auto-reflows to tablet/mobile.</p>
-        <div class="stats"><span>Theme: <strong>Emerald #059669</strong></span><span>Screens: <strong>27</strong></span></div>
+        <p>Original responsive web with emerald. Viewport switcher included.</p>
+        <div class="stats"><span>Theme: <strong>#059669</strong></span><span><strong>26</strong> screens</span></div>
       </a>
       <a href="prototype-web-pink.html" class="card">
         <span class="tag new">New — Pink v9</span>
         <h3><i class="ph-fill ph-desktop"></i><span class="color-dot" style="background:#c93b8b;"></span> Web · Pink v9</h3>
-        <p>New pink v9 design matching iOS. Responsive behavior preserved. User-changeable theme color.</p>
-        <div class="stats"><span>Theme: <strong>Pink #c93b8b</strong></span><span>Screens: <strong>27</strong></span></div>
+        <p>Responsive (Desktop/Tablet/Mobile). Matching design to iOS.</p>
+        <div class="stats"><span>Theme: <strong>#c93b8b</strong></span><span><strong>26</strong> screens</span></div>
       </a>
     </div>
-  </div>
 
-  <!-- Admin -->
-  <div class="section">
-    <div class="section-hdr">
-      <i class="ph ph-shield-star" style="font-size:24px;color:#c93b8b;"></i>
-      <h2>Admin (Desktop-Only)</h2>
-      <span class="chip">Old & New</span>
-    </div>
-    <div class="section-desc">Platform Admin (12 screens) + Org Admin (8 screens). Desktop-only 1280px. Compare old emerald vs new pink.</div>
+    <!-- Admin -->
     <div class="compare-grid">
       <a href="prototype-admin-full.html" class="card">
         <span class="tag old">Old — Emerald</span>
         <h3><i class="ph-fill ph-shield-star"></i><span class="color-dot" style="background:#059669;"></span> Admin · Emerald</h3>
-        <p>Original admin with emerald theme. Platform + Org admin panels, 20 screens total.</p>
-        <div class="stats"><span>Theme: <strong>Emerald #059669</strong></span><span>Screens: <strong>20</strong></span></div>
+        <p>Platform + Org admin panels. Desktop-only 1280px.</p>
+        <div class="stats"><span>Theme: <strong>#059669</strong></span><span><strong>20</strong> screens</span></div>
       </a>
       <a href="prototype-admin-pink.html" class="card">
         <span class="tag new">New — Pink v9</span>
         <h3><i class="ph-fill ph-shield-star"></i><span class="color-dot" style="background:#c93b8b;"></span> Admin · Pink v9</h3>
-        <p>New pink v9 admin with Caveat fonts and locked status pills. Matches platform theme direction.</p>
-        <div class="stats"><span>Theme: <strong>Pink #c93b8b</strong></span><span>Screens: <strong>20</strong></span></div>
+        <p>Pink v9 admin with locked status pills + Caveat.</p>
+        <div class="stats"><span>Theme: <strong>#c93b8b</strong></span><span><strong>20</strong> screens</span></div>
       </a>
     </div>
   </div>
 
-  <!-- Reference -->
+  <!-- ============ SPRINT DESIGN ADDITIONS ============ -->
   <div class="section">
     <div class="section-hdr">
-      <i class="ph ph-bookmark" style="font-size:24px;color:#c93b8b;"></i>
-      <h2>Reference</h2>
+      <i class="ph-fill ph-sparkle" style="font-size:24px;color:#c93b8b;"></i>
+      <h2>Gap Analysis Design Sprints</h2>
+      <span class="chip">P0/P1 Gaps Designed</span>
     </div>
-    <div class="single-list">
-      <a href="dashboard-v9.html" class="small-card">
-        <div class="icon"><i class="ph-fill ph-star"></i></div>
-        <div><h4>Dashboard v9 (Reference)</h4><p>Latest single-page dashboard iteration</p></div>
+    <div class="section-desc">Additional flows designed to fill gaps identified in the staging audit. Launch-blocking items prioritized.</div>
+
+    <div class="sprint-grid">
+      <a href="prototype-flows.html" class="sprint-card">
+        <div class="label">Sprint 1</div>
+        <h4><i class="ph ph-link" style="color:#c93b8b;"></i> Deeplinks & Modals</h4>
+        <p>Game/Group invite deeplinks + new user flow + Apple Sign-In + 10 confirmation modals + session expired</p>
+        <div class="count">D1-D7 · A1 · A4 · M1-M10 · 18 screens</div>
       </a>
-      <a href="BUILD_PLAN.md" class="small-card">
+      <a href="prototype-profile-settings.html" class="sprint-card">
+        <div class="label">Sprint 2</div>
+        <h4><i class="ph ph-user" style="color:#c93b8b;"></i> Profile, Settings & Empty States</h4>
+        <p>Public profile + delete account + saved locations + connected accounts + granular notifications + privacy + all empty/error states</p>
+        <div class="count">P1-P2 · S1-S4 · E1-E8 · 18 screens</div>
+      </a>
+      <a href="prototype-moderation-permissions.html" class="sprint-card">
+        <div class="label">Sprint 3</div>
+        <h4><i class="ph ph-shield-check" style="color:#c93b8b;"></i> Moderation & Permissions</h4>
+        <p>Report user (Apple required) + block user + all 5 iOS permission primers (notifications, location, contacts, calendar, photos)</p>
+        <div class="count">MOD1-3 · PR1-5 · 10 screens</div>
+      </a>
+      <a href="prototype-public-site.html" class="sprint-card">
+        <div class="label">Sprint 4</div>
+        <h4><i class="ph ph-globe" style="color:#c93b8b;"></i> Public Marketing Website</h4>
+        <p>Waitlist gate + homepage + features + about + pricing + FAQ + contact + download. 8 pages with switcher.</p>
+        <div class="count">W1-W10 · 8 public pages</div>
+      </a>
+      <a href="prototype-billing.html" class="sprint-card">
+        <div class="label">Sprint 5</div>
+        <h4><i class="ph ph-crown" style="color:#c93b8b;"></i> Subscription & Billing</h4>
+        <p>Tier picker + Apple IAP flow + Face ID + activation + management + billing history + cancel flow with save offer</p>
+        <div class="count">B1-B7 · 8 screens</div>
+      </a>
+      <a href="prototype-advanced.html" class="sprint-card">
+        <div class="label">Sprint 6</div>
+        <h4><i class="ph ph-arrows-clockwise" style="color:#c93b8b;"></i> Advanced Flows</h4>
+        <p>Recurring games + series management + multi-table assignment + share modal + group applications + DM + replace-me + completion prompt</p>
+        <div class="count">G1 · G4-G6 · G9-G10 · GR2 · MS1 · 8 screens</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ REFERENCE DOCS ============ -->
+  <div class="section">
+    <div class="section-hdr">
+      <i class="ph-fill ph-bookmark" style="font-size:24px;color:#c93b8b;"></i>
+      <h2>Reference Docs</h2>
+    </div>
+    <div class="doc-grid">
+      <a href="GAP_ANALYSIS.md" class="doc-card">
+        <div class="icon"><i class="ph-fill ph-list-checks"></i></div>
+        <div><h4>Gap Analysis</h4><p>Running list of remaining gaps</p></div>
+      </a>
+      <a href="GO_LIVE_DEPS.md" class="doc-card">
+        <div class="icon"><i class="ph-fill ph-rocket-launch"></i></div>
+        <div><h4>Go-Live Dependencies</h4><p>23 launch-blocking items tracked</p></div>
+      </a>
+      <a href="BUILD_PLAN.md" class="doc-card">
         <div class="icon"><i class="ph-fill ph-roadmap"></i></div>
         <div><h4>Build Plan</h4><p>v1/v2 parallel build strategy</p></div>
       </a>
-      <a href="ENHANCEMENTS.md" class="small-card">
-        <div class="icon"><i class="ph-fill ph-list-checks"></i></div>
-        <div><h4>Enhancements Log</h4><p>Every change tracked for future implementation</p></div>
+      <a href="ENHANCEMENTS.md" class="doc-card">
+        <div class="icon"><i class="ph-fill ph-note-pencil"></i></div>
+        <div><h4>Enhancements Log</h4><p>Design decisions & change log</p></div>
+      </a>
+      <a href="dashboard-v9.html" class="doc-card">
+        <div class="icon"><i class="ph-fill ph-star"></i></div>
+        <div><h4>Dashboard v9</h4><p>Reference home page iteration</p></div>
       </a>
     </div>
   </div>

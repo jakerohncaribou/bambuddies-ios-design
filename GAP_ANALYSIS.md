@@ -1,7 +1,30 @@
 # BamBuddies Design Gap Analysis
 
 **Running list of features in staging that are NOT yet mocked up in the designs.**
-Last updated: 2026-04-18 (after Jake's answers to open questions)
+Last updated: 2026-04-18 (Sprints 1-6 complete)
+
+## ✅ Status: 60+ P0/P1 gap items designed across 6 sprints
+
+**Designed in sprint files (see index-full.html):**
+- Sprint 1 (`prototype-flows.html`) — D1-D7, A1, A4, M1-M10
+- Sprint 2 (`prototype-profile-settings.html`) — P1-P2, S1-S4, E1-E8
+- Sprint 3 (`prototype-moderation-permissions.html`) — MOD1-3, PR1-5
+- Sprint 4 (`prototype-public-site.html`) — W1-W10 (public marketing site)
+- Sprint 5 (`prototype-billing.html`) — B1-B7 (subscription + Apple IAP)
+- Sprint 6 (`prototype-advanced.html`) — G1, G4-G6, G9-G10, GR2, MS1
+
+**Remaining gaps** (lower priority, can be added post-launch):
+- G2, G3 (bring items picker/claim UI)
+- G7 (player cancellation with reason)
+- G8 (in-progress/started visual states)
+- G11, G12 (cover image upload, image gallery)
+- G13 (invite candidate management)
+- GR1, GR3, GR4, GR5 (apply with message, org dashboard, invite candidates, transfer)
+- MS2, MS3, MS4 (chat photo, mute, quiet hours)
+- AD1-AD5 (admin: recurring series, billing, waitlist, DB reset)
+- X1-X16 (P2 nice-to-haves)
+
+---
 
 This doc compares the full feature inventory of the staging codebase against screens in:
 - `prototype-ios-pink.html` (30 screens)
