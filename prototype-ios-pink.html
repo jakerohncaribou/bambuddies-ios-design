@@ -1297,7 +1297,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <i class="ph ph-magnifying-glass" style="font-size:16px;color:#aaa;"></i>
           <div style="color:#aaa;font-size:14px;">Search groups...</div>
         </div>
-        <div onclick="go('groupDiscovery')" style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:6px;cursor:pointer;">
+        <div onclick="go('groups')" style="background:#fff;border:1px solid #e8e4e0;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:6px;cursor:pointer;">
           <i class="ph ph-compass" style="font-size:16px;color:#c93b8b;"></i>
           <span style="color:#c93b8b;font-size:12px;font-weight:600;">Discover</span>
         </div>
@@ -2232,7 +2232,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
       </div>
 
-      <div onclick="go('groupInviteMembers')" style="background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,58,237,.3);">Create Group</div>
+      <div onclick="go('groupCreation')" style="background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(124,58,237,.3);">Create Group</div>
     </div>
 
     <!-- ==================== GROUP INVITE MEMBERS HUB ==================== -->
@@ -2256,7 +2256,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       <div style="color:#000;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;margin-bottom:10px;">Choose how to invite</div>
 
       <!-- Option: Manual -->
-      <div onclick="go('inviteManual')" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:12px;">
+      <div onclick="go('creation2')" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:12px;">
         <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#fce7f3,#fbcfe8);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-fill ph-pencil-simple-line" style="font-size:22px;color:#c93b8b;"></i></div>
         <div style="flex:1;">
           <div style="color:#000;font-size:14px;font-weight:700;">Manual</div>
@@ -2266,7 +2266,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
 
       <!-- Option: Favorites -->
-      <div onclick="go('inviteFavorites')" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:12px;">
+      <div onclick="go('creation2')" style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:12px;">
         <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-fill ph-star" style="font-size:22px;color:#d97706;"></i></div>
         <div style="flex:1;">
           <div style="color:#000;font-size:14px;font-weight:700;">Favorites <span style="background:#c93b8b;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:99px;margin-left:4px;">12</span></div>
@@ -2291,7 +2291,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     <!-- ==================== INVITE · MANUAL ==================== -->
     <div class="screen" data-screen="inviteManual" style="padding:16px;background:#faf8f6;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div onclick="go('groupInviteMembers')" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:22px;color:#000;"></i></div>
+        <div onclick="go('groupCreation')" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:22px;color:#000;"></i></div>
         <div style="color:#000;font-size:16px;font-weight:700;">Add Manually</div>
         <div onclick="go('groupDetail')" style="color:#c93b8b;font-size:14px;font-weight:700;cursor:pointer;">Done</div>
       </div>
@@ -2353,7 +2353,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     <!-- ==================== INVITE · FAVORITES ==================== -->
     <div class="screen" data-screen="inviteFavorites" style="padding:16px;background:#faf8f6;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div onclick="go('groupInviteMembers')" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:22px;color:#000;"></i></div>
+        <div onclick="go('groupCreation')" style="cursor:pointer;padding:4px;"><i class="ph ph-caret-left" style="font-size:22px;color:#000;"></i></div>
         <div style="color:#000;font-size:16px;font-weight:700;">Your Favorites</div>
         <div onclick="go('groupDetail')" style="color:#c93b8b;font-size:14px;font-weight:700;cursor:pointer;">Done</div>
       </div>
@@ -2719,10 +2719,6 @@ const pageOrder = [
   ['groups','My Groups'],
   ['groupDetail','Group Detail'],
   ['groupCreation','Create Group'],
-  ['groupInviteMembers','Invite Members'],
-  ['inviteManual','Invite · Manual'],
-  ['inviteFavorites','Invite · Favorites'],
-  ['groupDiscovery','Discover Groups'],
   ['inbox','Inbox'],
   ['chat','Chat Thread'],
   ['notifications','Notifications'],
