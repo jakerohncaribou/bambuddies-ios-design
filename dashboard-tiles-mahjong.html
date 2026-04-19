@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Tiles — Mahjong Concepts (5 options)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Noto+Serif+SC:wght@400;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:#fdf8f0;color:#1a1a1a;padding:32px 16px 60px;}
+.wrap{max-width:480px;margin:0 auto;}
+.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:#1a1a1a;margin-bottom:4px;text-align:center;}
+.page-sub{color:#888;font-size:13px;text-align:center;margin-bottom:28px;}
+.concept{background:#fff;border:1px solid #ece8e0;border-radius:20px;padding:18px 16px 20px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+.concept-hdr{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px;}
+.concept-num{font-family:'Outfit',sans-serif;font-weight:800;font-size:10px;letter-spacing:1.5px;color:#c93b8b;}
+.concept-name{font-family:'DM Serif Display',serif;font-size:19px;color:#1a1a1a;}
+.concept-desc{font-size:11px;color:#888;line-height:1.5;margin-bottom:14px;}
+.tiles{display:flex;gap:8px;}
+.tile{flex:1;aspect-ratio:1;background:#fff;border:1px solid #ece8e0;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px;box-shadow:0 2px 6px rgba(0,0,0,.04);position:relative;}
+.tile-ic{width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+.tile-lbl{font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.2;}
+.badge{position:absolute;top:6px;right:6px;background:#c93b8b;color:#fff;font-size:8px;font-weight:800;padding:1px 5px;border-radius:99px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="page-title">Dashboard Tiles</div>
+  <div class="page-sub">5 subtle &amp; modern mahjong interpretations</div>
+
+  <!-- ============ CONCEPT 1: Minimalist Outlined Tiles ============ -->
+  <div class="concept">
+    <div class="concept-hdr">
+      <span class="concept-num">01 · LINE</span>
+      <span class="concept-name">Outline Tiles</span>
+    </div>
+    <div class="concept-desc">Pure line-work. Each icon is an empty mahjong tile silhouette with one thoughtful glyph inside. No fills — airy and editorial.</div>
+    <div class="tiles">
+      <!-- Start Game: tile with play triangle -->
+      <div class="tile">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="1" y="1" width="34" height="42" rx="5" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+            <path d="M14 15 L26 22 L14 29 Z" fill="#c93b8b"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Game</div>
+      </div>
+      <!-- Find: tile with compass/search -->
+      <div class="tile">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="1" y="1" width="34" height="42" rx="5" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="20" r="6" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+            <line x1="21" y1="25" x2="26" y2="31" stroke="#c93b8b" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Find<br>Games</div>
+      </div>
+      <!-- Group: two overlapping tiles -->
+      <div class="tile">
+        <div class="tile-ic">
+          <svg width="40" height="44" viewBox="0 0 40 44" fill="none">
+            <rect x="2" y="6" width="22" height="32" rx="4" stroke="#1a1a1a" stroke-width="1.5" fill="#fff"/>
+            <rect x="14" y="3" width="22" height="32" rx="4" stroke="#1a1a1a" stroke-width="1.5" fill="#fff"/>
+            <circle cx="21" cy="15" r="1.2" fill="#c93b8b"/>
+            <circle cx="27" cy="15" r="1.2" fill="#c93b8b"/>
+            <circle cx="21" cy="21" r="1.2" fill="#c93b8b"/>
+            <circle cx="27" cy="21" r="1.2" fill="#c93b8b"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Group</div>
+      </div>
+      <!-- Messages: tile with speech tail -->
+      <div class="tile">
+        <div class="badge">3</div>
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <path d="M1 6 C1 3 3 1 6 1 L30 1 C33 1 35 3 35 6 L35 28 C35 31 33 33 30 33 L16 33 L10 39 L10 33 L6 33 C3 33 1 31 1 28 Z" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+            <circle cx="12" cy="17" r="1.6" fill="#1a1a1a"/>
+            <circle cx="18" cy="17" r="1.6" fill="#c93b8b"/>
+            <circle cx="24" cy="17" r="1.6" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Messages</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONCEPT 2: Dot-Suit (Circles) ============ -->
+  <div class="concept">
+    <div class="concept-hdr">
+      <span class="concept-num">02 · DOTS</span>
+      <span class="concept-name">Circle Suit</span>
+    </div>
+    <div class="concept-desc">Inspired by the &ldquo;dots/circles&rdquo; suit (筒子). Each tile face uses a minimal circle-count arrangement to convey meaning — 1, 2, 3, 4.</div>
+    <div class="tiles">
+      <!-- Start: 1 dot (pink, centered) -->
+      <div class="tile" style="background:linear-gradient(180deg,#fff,#fdfbf5);">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="2" y="2" width="32" height="40" rx="6" fill="#fff" stroke="#e8e4e0" stroke-width="1"/>
+            <circle cx="18" cy="22" r="8" fill="#fce7f3" stroke="#c93b8b" stroke-width="2"/>
+            <circle cx="18" cy="22" r="2.5" fill="#c93b8b"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Game</div>
+      </div>
+      <!-- Find: 3 dots in triangle (compass) -->
+      <div class="tile" style="background:linear-gradient(180deg,#fff,#fdfbf5);">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="2" y="2" width="32" height="40" rx="6" fill="#fff" stroke="#e8e4e0" stroke-width="1"/>
+            <circle cx="18" cy="12" r="3.8" fill="#fce7f3" stroke="#c93b8b" stroke-width="1.5"/>
+            <circle cx="11" cy="28" r="3.8" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.5"/>
+            <circle cx="25" cy="28" r="3.8" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Find<br>Games</div>
+      </div>
+      <!-- Group: 4 dots cluster -->
+      <div class="tile" style="background:linear-gradient(180deg,#fff,#fdfbf5);">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="2" y="2" width="32" height="40" rx="6" fill="#fff" stroke="#e8e4e0" stroke-width="1"/>
+            <circle cx="13" cy="16" r="3.8" fill="#fce7f3" stroke="#c93b8b" stroke-width="1.5"/>
+            <circle cx="23" cy="16" r="3.8" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+            <circle cx="13" cy="28" r="3.8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+            <circle cx="23" cy="28" r="3.8" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Group</div>
+      </div>
+      <!-- Messages: 3 dots horizontal (typing) -->
+      <div class="tile" style="background:linear-gradient(180deg,#fff,#fdfbf5);">
+        <div class="badge">3</div>
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="2" y="2" width="32" height="40" rx="6" fill="#fff" stroke="#e8e4e0" stroke-width="1"/>
+            <circle cx="10" cy="22" r="3" fill="#c93b8b"/>
+            <circle cx="18" cy="22" r="3" fill="#a78bfa"/>
+            <circle cx="26" cy="22" r="3" fill="#fcd34d"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Messages</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONCEPT 3: Chinese Character Tiles ============ -->
+  <div class="concept">
+    <div class="concept-hdr">
+      <span class="concept-num">03 · HANZI</span>
+      <span class="concept-name">Character Tiles</span>
+    </div>
+    <div class="concept-desc">One tile, one hand-brushed Chinese character per action. Restrained red/green palette true to mahjong. Elegant, literary, unmistakably mahjong.</div>
+    <div class="tiles">
+      <!-- Start: 東 East Wind (start of game) -->
+      <div class="tile" style="background:#fdfbf5;">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="2" y="2" width="32" height="40" rx="5" fill="#fff" stroke="#d6cfbf" stroke-width="1"/>
+            <rect x="5" y="5" width="26" height="34" rx="3" fill="#fdfbf5"/>
+            <text x="18" y="30" text-anchor="middle" font-family="'Ma Shan Zheng',serif" font-size="22" fill="#2d5245">東</text>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Game</div>
+      </div>
+      <!-- Find: 尋 (seek) -->
+      <div class="tile" style="background:#fdfbf5;">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="2" y="2" width="32" height="40" rx="5" fill="#fff" stroke="#d6cfbf" stroke-width="1"/>
+            <rect x="5" y="5" width="26" height="34" rx="3" fill="#fdfbf5"/>
+            <text x="18" y="30" text-anchor="middle" font-family="'Noto Serif SC',serif" font-weight="700" font-size="19" fill="#2d5245">尋</text>
+          </svg>
+        </div>
+        <div class="tile-lbl">Find<br>Games</div>
+      </div>
+      <!-- Group: 友 (friend) -->
+      <div class="tile" style="background:#fdfbf5;">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="2" y="2" width="32" height="40" rx="5" fill="#fff" stroke="#d6cfbf" stroke-width="1"/>
+            <rect x="5" y="5" width="26" height="34" rx="3" fill="#fdfbf5"/>
+            <text x="18" y="30" text-anchor="middle" font-family="'Ma Shan Zheng',serif" font-size="22" fill="#c93b8b">友</text>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Group</div>
+      </div>
+      <!-- Messages: 言 (speech) -->
+      <div class="tile" style="background:#fdfbf5;">
+        <div class="badge">3</div>
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="2" y="2" width="32" height="40" rx="5" fill="#fff" stroke="#d6cfbf" stroke-width="1"/>
+            <rect x="5" y="5" width="26" height="34" rx="3" fill="#fdfbf5"/>
+            <text x="18" y="30" text-anchor="middle" font-family="'Ma Shan Zheng',serif" font-size="22" fill="#b45309">言</text>
+          </svg>
+        </div>
+        <div class="tile-lbl">Messages</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONCEPT 4: Bamboo Strokes ============ -->
+  <div class="concept">
+    <div class="concept-hdr">
+      <span class="concept-num">04 · BAMBOO</span>
+      <span class="concept-name">Bamboo Glyphs</span>
+    </div>
+    <div class="concept-desc">Borrowed from the bamboo suit (索子). Vertical stroke counts (1, 3, 4) become minimal icons — quiet, graphic, with a pink accent on Start.</div>
+    <div class="tiles">
+      <!-- Start: 1-bamboo (often a bird in real tiles, here a clean strand) -->
+      <div class="tile" style="background:#fff;">
+        <div class="tile-ic">
+          <svg width="30" height="44" viewBox="0 0 30 44" fill="none">
+            <rect x="12" y="6" width="6" height="32" rx="3" fill="#c93b8b"/>
+            <line x1="15" y1="14" x2="15" y2="14" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            <rect x="11" y="13" width="8" height="2" fill="#fff"/>
+            <rect x="11" y="22" width="8" height="2" fill="#fff"/>
+            <rect x="11" y="31" width="8" height="2" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Game</div>
+      </div>
+      <!-- Find: magnify over bamboos -->
+      <div class="tile" style="background:#fff;">
+        <div class="tile-ic">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <rect x="8" y="8" width="5" height="24" rx="2.5" fill="#2d5245"/>
+            <rect x="16" y="8" width="5" height="24" rx="2.5" fill="#2d5245"/>
+            <rect x="24" y="8" width="5" height="24" rx="2.5" fill="#2d5245"/>
+            <circle cx="32" cy="30" r="7" fill="#fff" stroke="#c93b8b" stroke-width="2"/>
+            <line x1="36" y1="34" x2="40" y2="38" stroke="#c93b8b" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Find<br>Games</div>
+      </div>
+      <!-- Group: 4 bamboos in 2x2 -->
+      <div class="tile" style="background:#fff;">
+        <div class="tile-ic">
+          <svg width="36" height="44" viewBox="0 0 36 44" fill="none">
+            <rect x="7" y="6" width="5" height="13" rx="2.5" fill="#2d5245"/>
+            <rect x="17" y="6" width="5" height="13" rx="2.5" fill="#2d5245"/>
+            <rect x="27" y="6" width="5" height="13" rx="2.5" fill="#2d5245"/>
+            <rect x="12" y="24" width="5" height="13" rx="2.5" fill="#c93b8b"/>
+            <rect x="22" y="24" width="5" height="13" rx="2.5" fill="#c93b8b"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Group</div>
+      </div>
+      <!-- Messages: bamboos tilt forward like speech lines -->
+      <div class="tile" style="background:#fff;">
+        <div class="badge">3</div>
+        <div class="tile-ic">
+          <svg width="42" height="44" viewBox="0 0 42 44" fill="none">
+            <rect x="9" y="12" width="24" height="3" rx="1.5" fill="#1a1a1a"/>
+            <rect x="9" y="21" width="18" height="3" rx="1.5" fill="#1a1a1a"/>
+            <rect x="9" y="30" width="12" height="3" rx="1.5" fill="#c93b8b"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Messages</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CONCEPT 5: Gradient Tile Faces ============ -->
+  <div class="concept">
+    <div class="concept-hdr">
+      <span class="concept-num">05 · GRADIENT</span>
+      <span class="concept-name">Soft Pastel Tiles</span>
+    </div>
+    <div class="concept-desc">Each action is a rounded tile with a tonal pastel gradient face. Iconography is reduced to a single quiet motif — a wind arrow, a dot cluster, a wreath, a whisper.</div>
+    <div class="tiles">
+      <!-- Start: wind arrow (East wind) -->
+      <div class="tile" style="background:linear-gradient(145deg,#fdf2f8,#fbcfe8);border-color:#fbcfe8;">
+        <div class="tile-ic">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <path d="M6 16 L26 16 M22 10 L28 16 L22 22" stroke="#9d2467" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M6 26 L18 26 M14 22 L20 26 L14 30" stroke="#c93b8b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Game</div>
+      </div>
+      <!-- Find: compass with tile dots around -->
+      <div class="tile" style="background:linear-gradient(145deg,#f0fdf4,#bbf7d0);border-color:#bbf7d0;">
+        <div class="tile-ic">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="13" fill="#fff" stroke="#15803d" stroke-width="1.5"/>
+            <path d="M20 9 L23 20 L20 31 L17 20 Z" fill="#15803d"/>
+            <path d="M9 20 L20 17 L31 20 L20 23 Z" fill="#86efac"/>
+            <circle cx="20" cy="20" r="1.5" fill="#15803d"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Find<br>Games</div>
+      </div>
+      <!-- Group: circle wreath of dots -->
+      <div class="tile" style="background:linear-gradient(145deg,#eff6ff,#bfdbfe);border-color:#bfdbfe;">
+        <div class="tile-ic">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="8" r="3" fill="#1e40af"/>
+            <circle cx="30.4" cy="14" r="3" fill="#3b82f6"/>
+            <circle cx="30.4" cy="26" r="3" fill="#60a5fa"/>
+            <circle cx="20" cy="32" r="3" fill="#1e40af"/>
+            <circle cx="9.6" cy="26" r="3" fill="#3b82f6"/>
+            <circle cx="9.6" cy="14" r="3" fill="#60a5fa"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Start<br>Group</div>
+      </div>
+      <!-- Messages: soft speech bubble with tile dot -->
+      <div class="tile" style="background:linear-gradient(145deg,#fffbeb,#fde68a);border-color:#fde68a;">
+        <div class="badge">3</div>
+        <div class="tile-ic">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <path d="M6 14 C6 10 9 8 13 8 L27 8 C31 8 34 10 34 14 L34 22 C34 26 31 28 27 28 L18 28 L12 33 L14 28 L13 28 C9 28 6 26 6 22 Z" fill="#fff" stroke="#92400e" stroke-width="1.5"/>
+            <circle cx="14" cy="18" r="1.6" fill="#92400e"/>
+            <circle cx="20" cy="18" r="1.6" fill="#b45309"/>
+            <circle cx="26" cy="18" r="1.6" fill="#d97706"/>
+          </svg>
+        </div>
+        <div class="tile-lbl">Messages</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:8px;color:#999;font-size:11px;">
+    Tap to favorite — or tell me which to apply to the dashboard.
+  </div>
+</div>
+</body>
+</html>
