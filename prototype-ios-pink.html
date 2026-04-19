@@ -896,44 +896,9 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0;" alt="">
           <div style="flex:1;">
             <div style="color:#9d2467;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;">Group</div>
-            <div style="color:#000;font-size:13px;font-weight:700;">Saturday Regulars <span style="color:#888;font-weight:500;">· 4 members added</span></div>
+            <div style="color:#000;font-size:13px;font-weight:700;">Saturday Regulars <span style="color:#888;font-weight:500;">· 4 members</span></div>
           </div>
           <div style="color:#c93b8b;font-size:11px;font-weight:700;">Change</div>
-        </div>
-        <div style="font-size:10px;color:#888;margin-top:6px;padding:0 4px;line-height:1.4;"><i class="ph-fill ph-info" style="font-size:11px;color:#c93b8b;margin-right:3px;"></i>Members added directly &mdash; no invite needed. <span style="color:#c93b8b;font-weight:700;cursor:pointer;" onclick="document.getElementById('groupMembersModal').style.display='flex'">Manage</span></div>
-      </div>
-
-      <!-- GROUP MEMBERS MANAGEMENT MODAL -->
-      <div id="groupMembersModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
-        <div style="background:#fff;border-radius:20px;width:100%;max-width:340px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;">
-          <div style="padding:16px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;justify-content:space-between;">
-            <div><div style="font-family:'DM Serif Display',serif;font-size:20px;color:#1a1a1a;line-height:1.1;">Group Members</div><div style="color:#888;font-size:11px;margin-top:2px;">Saturday Regulars &middot; 4 added</div></div>
-            <div onclick="document.getElementById('groupMembersModal').style.display='none'" style="cursor:pointer;"><i class="ph ph-x" style="font-size:22px;color:#9ca3af;"></i></div>
-          </div>
-          <div style="overflow-y:auto;padding:12px;flex:1;display:flex;flex-direction:column;gap:6px;">
-            <div style="background:#fafafa;border:1px solid #e8e4e0;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
-              <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;" alt="">
-              <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Sarah R. <span style="background:#fef3c7;color:#b45309;font-size:8px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;letter-spacing:.3px;">HOST</span></div><div style="color:#888;font-size:10px;">Intermediate</div></div>
-            </div>
-            <div style="background:#fafafa;border:1px solid #e8e4e0;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;" alt="">
-              <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:10px;">Advanced</div></div>
-              <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;padding:4px 10px;border-radius:7px;font-size:10px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Skip</button>
-            </div>
-            <div style="background:#fafafa;border:1px solid #e8e4e0;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
-              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;" alt="">
-              <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:10px;">Beginner</div></div>
-              <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;padding:4px 10px;border-radius:7px;font-size:10px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Skip</button>
-            </div>
-            <div style="background:#fafafa;border:1px solid #e8e4e0;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
-              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;" alt="">
-              <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:10px;">Intermediate</div></div>
-              <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;padding:4px 10px;border-radius:7px;font-size:10px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Skip</button>
-            </div>
-          </div>
-          <div style="padding:12px 16px;border-top:1px solid #f5f3ee;">
-            <button onclick="document.getElementById('groupMembersModal').style.display='none'" style="width:100%;background:#c93b8b;color:#fff;border:none;padding:10px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Done</button>
-          </div>
         </div>
       </div>
 
@@ -980,6 +945,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <button id="tabManual" onclick="setInviteTab('manual')" class="ip-tab active" style="flex:1;min-width:72px;background:#fff;color:#c93b8b;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.05);">Manual</button>
           <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
           <button id="tabContacts" onclick="setInviteTab('contacts')" class="ip-tab" style="flex:1;min-width:90px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Contacts</button>
+          <button id="tabGroup" onclick="setInviteTab('group')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:none;">Group</button>
           <button id="tabLink" onclick="setInviteTab('link')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Link</button>
         </div>
 
