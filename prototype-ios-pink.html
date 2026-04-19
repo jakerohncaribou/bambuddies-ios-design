@@ -945,6 +945,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <button id="tabManual" onclick="setInviteTab('manual')" class="ip-tab active" style="flex:1;min-width:72px;background:#fff;color:#c93b8b;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.05);">Manual</button>
           <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
           <button id="tabContacts" onclick="setInviteTab('contacts')" class="ip-tab" style="flex:1;min-width:90px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Contacts</button>
+          <button id="tabGroup" onclick="setInviteTab('group')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:none;">Group</button>
           <button id="tabLink" onclick="setInviteTab('link')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Link</button>
         </div>
 
@@ -965,6 +966,19 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
               <input type="tel" placeholder="(555) 123-4567" oninput="formatPhone(this)" maxlength="14" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
             </div>
             <button style="background:#c93b8b;color:#fff;border:none;padding:10px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:2px;">+ Add Player</button>
+          </div>
+          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:6px;">Invited (2)</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 10px 4px 4px;display:flex;align-items:center;gap:6px;">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;" alt="">
+              <span style="color:#000;font-size:12px;font-weight:600;">Lisa M.</span>
+              <i class="ph ph-x" style="font-size:12px;color:#c93b8b;cursor:pointer;"></i>
+            </div>
+            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 10px 4px 4px;display:flex;align-items:center;gap:6px;">
+              <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;color:#d97706;font-size:10px;font-weight:700;">ML</div>
+              <span style="color:#000;font-size:12px;font-weight:600;">Marcus L.</span>
+              <i class="ph ph-x" style="font-size:12px;color:#c93b8b;cursor:pointer;"></i>
+            </div>
           </div>
         </div>
 
@@ -1030,42 +1044,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;">
             <i class="ph-fill ph-link" style="font-size:20px;color:#c93b8b;"></i>
             <div style="flex:1;font-size:11px;color:#9d2467;line-height:1.4;">Share this link to invite anyone. They'll see the game details and can request to join.</div>
-
-        <!-- UNIFIED INVITED LIST (accumulates from all sources) -->
-        <div style="margin-top:14px;padding-top:14px;border-top:1px solid #f5f3ee;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-            <div style="color:#000;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">Invited <span style="color:#c93b8b;">(5)</span></div>
-            <span style="color:#888;font-size:10px;">From Manual · Favorites · Contacts</span>
-          </div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 10px 4px 4px;display:flex;align-items:center;gap:6px;">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;" alt="">
-              <span style="color:#000;font-size:12px;font-weight:600;">Lisa M.</span>
-              <i class="ph ph-x" style="font-size:12px;color:#c93b8b;cursor:pointer;"></i>
-            </div>
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 10px 4px 4px;display:flex;align-items:center;gap:6px;">
-              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:22px;height:22px;border-radius:50%;" alt="">
-              <span style="color:#000;font-size:12px;font-weight:600;">Amy T.</span>
-              <i class="ph ph-x" style="font-size:12px;color:#c93b8b;cursor:pointer;"></i>
-            </div>
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 10px 4px 4px;display:flex;align-items:center;gap:6px;">
-              <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;color:#d97706;font-size:10px;font-weight:700;">ML</div>
-              <span style="color:#000;font-size:12px;font-weight:600;">Marcus L.</span>
-              <i class="ph ph-x" style="font-size:12px;color:#c93b8b;cursor:pointer;"></i>
-            </div>
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 10px 4px 4px;display:flex;align-items:center;gap:6px;">
-              <img src="https://i.pravatar.cc/80?img=16" style="width:22px;height:22px;border-radius:50%;" alt="">
-              <span style="color:#000;font-size:12px;font-weight:600;">Maria G.</span>
-              <i class="ph ph-x" style="font-size:12px;color:#c93b8b;cursor:pointer;"></i>
-            </div>
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 10px 4px 4px;display:flex;align-items:center;gap:6px;">
-              <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:10px;font-weight:700;">JB</div>
-              <span style="color:#000;font-size:12px;font-weight:600;">Jordan B.</span>
-              <i class="ph ph-x" style="font-size:12px;color:#c93b8b;cursor:pointer;"></i>
-            </div>
-          </div>
-        </div>
-
           </div>
           <div style="background:#fff;border:1.5px solid #e8e4e0;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
             <i class="ph ph-link-simple" style="font-size:14px;color:#9d2467;flex-shrink:0;"></i>
@@ -1080,6 +1058,10 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           </div>
           <div style="font-size:10px;color:#888;text-align:center;">Link expires in 7 days &middot; <span style="color:#c93b8b;font-weight:600;cursor:pointer;">Change</span></div>
         </div>
+
+        <!-- Group members panel (only for group type) — Add Player vs Invite distinction -->
+        <div id="panelGroup" class="ip-panel" style="display:none;">
+          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:8px;">Saturday Regulars &middot; 4 members</div>
 
           <!-- Info banner explaining Add Player vs Invite -->
           <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:10px;color:#9d2467;line-height:1.5;">
