@@ -145,14 +145,16 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 .v9-topbar-ic svg{width:17px;height:17px;stroke:#9d2467;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
 .v9-topbar-ic .v9-dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:#c93b8b;border:1.5px solid #fdf8f0;}
 .v9-greeting{padding:6px 20px 18px;font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:#1a1a1a;letter-spacing:-.5px;line-height:1.15;}
-.v9-actions{display:flex;gap:10px;padding:0 16px 20px;}
-.v9-act{flex:1;aspect-ratio:1;background:linear-gradient(180deg,#fff0d0 0%,#f0d9a0 100%);border-radius:22px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10px 4px 10px;cursor:pointer;box-shadow:0 8px 0 #b89556,0 12px 18px rgba(0,0,0,.12);}
-.v9-act:nth-child(2){background:linear-gradient(180deg,#fce2dc 0%,#ebc4bb 100%);box-shadow:0 8px 0 #a6857a,0 12px 18px rgba(0,0,0,.12);}
-.v9-act:active{transform:translateY(4px);}
-.v9-act-ic{width:28px;height:28px;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.v9-actions{display:flex;gap:8px;padding:0 28px 20px;}
+.v9-act{flex:1;aspect-ratio:.82;background:linear-gradient(145deg,#fdf2f8,#fbcfe8);border:1px solid #fbcfe8;border-radius:18px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.05);}
+.v9-act:nth-child(2){background:linear-gradient(145deg,#f0fdf4,#bbf7d0);border-color:#bbf7d0;}
+.v9-act:nth-child(3){background:linear-gradient(145deg,#eff6ff,#bfdbfe);border-color:#bfdbfe;}
+.v9-act:nth-child(4){background:linear-gradient(145deg,#fffbeb,#fde68a);border-color:#fde68a;}
+.v9-act:active{transform:translateY(2px);box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.v9-act-ic{width:34px;height:34px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
 .v9-act-ic svg{width:100%;height:100%;}
-.v9-act-lbl{font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;color:#1a1a1a;text-align:center;line-height:1.1;margin-bottom:2px;}
-.v9-act-badge{position:absolute;top:-5px;right:-5px;min-width:22px;height:22px;border-radius:99px;background:#c93b8b;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;border:2.5px solid #fff0d0;box-shadow:0 2px 4px rgba(201,59,139,.3);z-index:2;}
+.v9-act-lbl{font-family:'Outfit',sans-serif;font-size:10px;font-weight:800;color:#1a1a1a;text-align:center;line-height:1.15;}
+.v9-act-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:99px;background:#c93b8b;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid #fffbeb;box-shadow:0 2px 4px rgba(201,59,139,.3);z-index:2;}
 .v9-sponsor{margin:0 16px 18px;background:linear-gradient(135deg,#fdf2f8 0%,#fce7f3 100%);border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;border:1px solid #fbcfe8;}
 .v9-sponsor-img{width:80px;height:80px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#8b4513;}
 .v9-sponsor-img img{width:100%;height:100%;object-fit:cover;}
@@ -274,23 +276,43 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         <!-- GREETING -->
         <div class="v9-greeting">May the winds be with you.</div>
 
-        <!-- ACTION TILES (not final per Jake) -->
+        <!-- ACTION TILES (Concept 5: Soft Pastel Tiles) -->
         <div class="v9-actions">
           <div class="v9-act" onclick="go('creation1')">
-            <div class="v9-act-ic"><svg viewBox="0 0 48 48"><path d="M14 10 L38 24 L14 38 Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+            <div class="v9-act-ic"><svg viewBox="0 0 40 40" fill="none">
+              <path d="M6 16 L26 16 M22 10 L28 16 L22 22" stroke="#9d2467" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <path d="M6 26 L18 26 M14 22 L20 26 L14 30" stroke="#c93b8b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg></div>
             <div class="v9-act-lbl">Start<br>Game</div>
           </div>
           <div class="v9-act" onclick="go('discover')">
-            <div class="v9-act-ic"><svg viewBox="0 0 48 48"><path d="M7 13 L18 9 L30 14 L41 10 L41 37 L30 41 L18 36 L7 40 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/><line x1="18" y1="9" x2="18" y2="36" stroke="#5a8dce" stroke-width="1.5" stroke-dasharray="2 2"/><line x1="30" y1="14" x2="30" y2="41" stroke="#5a8dce" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M24 18 C21 18 19 20 19 23 C19 27 24 32 24 32 C24 32 29 27 29 23 C29 20 27 18 24 18 Z" fill="#c93b8b" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/><path d="M22 23 C22 21.5 23 21.5 24 22.5 C25 21.5 26 21.5 26 23 C26 25 24 26.5 24 26.5 C24 26.5 22 25 22 23 Z" fill="#fff"/></svg></div>
+            <div class="v9-act-ic"><svg viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="13" fill="#fff" stroke="#15803d" stroke-width="1.5"/>
+              <path d="M20 9 L23 20 L20 31 L17 20 Z" fill="#15803d"/>
+              <path d="M9 20 L20 17 L31 20 L20 23 Z" fill="#86efac"/>
+              <circle cx="20" cy="20" r="1.5" fill="#15803d"/>
+            </svg></div>
             <div class="v9-act-lbl">Find<br>Games</div>
           </div>
           <div class="v9-act" onclick="go('groupCreation')">
-            <div class="v9-act-ic"><svg viewBox="0 0 48 48"><rect x="6" y="14" width="22" height="26" rx="5" fill="#bbead3" stroke="#1a1a1a" stroke-width="2.2"/><rect x="20" y="8" width="22" height="26" rx="5" fill="#fbcfe8" stroke="#1a1a1a" stroke-width="2.2"/><circle cx="27" cy="18" r="1.4" fill="#1a1a1a"/><circle cx="35" cy="18" r="1.4" fill="#1a1a1a"/><path d="M27 24 Q31 27 35 24" stroke="#1a1a1a" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+            <div class="v9-act-ic"><svg viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="8" r="3" fill="#1e40af"/>
+              <circle cx="30.4" cy="14" r="3" fill="#3b82f6"/>
+              <circle cx="30.4" cy="26" r="3" fill="#60a5fa"/>
+              <circle cx="20" cy="32" r="3" fill="#1e40af"/>
+              <circle cx="9.6" cy="26" r="3" fill="#3b82f6"/>
+              <circle cx="9.6" cy="14" r="3" fill="#60a5fa"/>
+            </svg></div>
             <div class="v9-act-lbl">Start<br>Group</div>
           </div>
           <div class="v9-act" onclick="go('inbox')">
             <div class="v9-act-badge">3</div>
-            <div class="v9-act-ic"><svg viewBox="0 0 48 48"><path d="M8 14 C8 10 11 8 15 8 L33 8 C37 8 40 10 40 14 L40 28 C40 32 37 34 33 34 L22 34 L14 40 L16 34 L15 34 C11 34 8 32 8 28 Z" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" stroke-linejoin="round"/><circle cx="17" cy="21" r="2.4" fill="#c93b8b"/><circle cx="24" cy="21" r="2.4" fill="#a78bfa"/><circle cx="31" cy="21" r="2.4" fill="#fcd34d"/></svg></div>
+            <div class="v9-act-ic"><svg viewBox="0 0 40 40" fill="none">
+              <path d="M6 14 C6 10 9 8 13 8 L27 8 C31 8 34 10 34 14 L34 22 C34 26 31 28 27 28 L18 28 L12 33 L14 28 L13 28 C9 28 6 26 6 22 Z" fill="#fff" stroke="#92400e" stroke-width="1.5"/>
+              <circle cx="14" cy="18" r="1.6" fill="#92400e"/>
+              <circle cx="20" cy="18" r="1.6" fill="#b45309"/>
+              <circle cx="26" cy="18" r="1.6" fill="#d97706"/>
+            </svg></div>
             <div class="v9-act-lbl">Messages</div>
           </div>
         </div>
