@@ -1256,7 +1256,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
       <div style="display:flex;gap:10px;">
         <div onclick="go('creation2')" style="flex:1;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;color:#888;">&larr; Back</div>
-        <div onclick="go('dashboard')" style="flex:2;background:#c93b8b;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Create Game &#10003;</div>
+        <div onclick="go('modalPostCreate')" style="flex:2;background:#c93b8b;color:#fff;text-align:center;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;">Create Game &#10003;</div>
       </div>
     </div><!-- /creation3 -->
 
@@ -2708,6 +2708,63 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
 
     </div>
 
+    <!-- ==================== MODAL · POST CREATE GAME ==================== -->
+    <div class="screen" data-screen="modalPostCreate" style="padding:0;position:relative;overflow:hidden;">
+
+      <!-- Faux Game Detail behind modal -->
+      <div style="position:absolute;inset:0;background:#faf8f6;overflow:hidden;">
+        <div class="v9-bg-tiles" style="position:absolute;inset:0;opacity:.5;"></div>
+        <div style="position:relative;z-index:1;opacity:.55;pointer-events:none;padding:16px;">
+          <div style="color:#2d5245;font-size:13px;margin-bottom:16px;">&larr; Back to Dashboard</div>
+          <div style="height:22px;width:60%;background:#e8e4e0;border-radius:6px;margin-bottom:12px;"></div>
+          <div style="height:14px;width:80%;background:#ece8e0;border-radius:6px;margin-bottom:20px;"></div>
+          <div style="height:120px;background:#fff;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.06);margin-bottom:14px;"></div>
+          <div style="height:180px;background:#fff;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.06);"></div>
+        </div>
+      </div>
+
+      <!-- Dimming overlay -->
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,.45);"></div>
+
+      <!-- Modal (center) -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:14px;z-index:2;">
+        <div style="background:#faf8f6;border-radius:18px;padding:24px 20px 20px;max-width:360px;width:100%;max-height:92%;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center;">
+
+          <!-- Mahjong tile emoji -->
+          <div style="font-size:40px;margin-bottom:4px;">🀄</div>
+
+          <!-- Celebration saying -->
+          <div style="font-family:'DM Serif Display',serif;font-size:22px;color:#2d5245;line-height:1.2;margin-bottom:4px;">May the winds blow favorably!</div>
+
+          <!-- Optional: series summary -->
+          <!-- <div style="font-size:14px;font-weight:600;color:#1a1a1a;margin-top:10px;margin-bottom:2px;">3 Games Created — Apr 19 &amp; Apr 26 &amp; May 3</div> -->
+
+          <!-- Game details card -->
+          <div style="background:#f8f7f3;border-radius:10px;padding:14px 16px;margin-top:16px;text-align:left;font-size:13px;line-height:1.6;">
+            <div style="font-weight:700;color:#1a1a1a;">Saturday Game Night</div>
+            <div style="color:#6b7280;">Sat, Apr 19 · 2:00 PM ET · 2 hrs</div>
+            <div style="color:#6b7280;">Home — 123 Main St, Portland OR</div>
+            <div style="color:#6b7280;margin-top:4px;">Group Game · Auto-confirm at 4 · 4–4 players</div>
+            <div style="color:#9ca3af;font-size:12px;margin-top:6px;">Players: Sarah, Amy</div>
+            <div style="color:#9ca3af;font-size:12px;margin-top:2px;">Invited: Lisa M., Marcus L., Maria G., Jordan B.</div>
+          </div>
+
+          <!-- What to expect -->
+          <div style="font-size:12px;color:#9ca3af;margin-top:14px;line-height:1.5;text-align:left;">
+            All group members have been notified of the game. They can accept or decline from their dashboard. You can always invite more players from this page.
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:18px;">
+            <div onclick="go('dashboard')" style="background:#fff;border:1.5px solid #e8e4e0;color:#1a1a1a;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Back to Dashboard</div>
+            <div onclick="go('gameDetail')" style="background:#2d5245;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;flex:1;">View Game Details</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
     <!-- ==================== TAB BAR ==================== -->
     <div class="tab-bar" id="tabBar">
       <div class="tab-item" onclick="go('dashboard')" data-tab="dashboard">
@@ -2878,7 +2935,7 @@ const history = ['dashboard'];
 const tabMap = {dashboard:'dashboard',dashboardEmpty:'dashboard',discover:'discover',myGames:'myGames',groups:'groups',
   gameDetail:'myGames',creation1:'myGames',creation2:'myGames',creation3:'myGames',groupDetail:'groups',inbox:'dashboard',
   chat:'dashboard',notifications:'dashboard'};
-const noTabScreens = ['creation1','creation2','creation3','chat','login','register','forgotPassword','resetPassword','verifyPhone','completeProfile','gameEdit','applicants','applicantProfile','gameReview','groupCreation','groupDiscovery','modalFirstGame','groupInviteMembers','inviteManual','inviteFavorites','profileSettings'];
+const noTabScreens = ['creation1','creation2','creation3','chat','login','register','forgotPassword','resetPassword','verifyPhone','completeProfile','gameEdit','applicants','applicantProfile','gameReview','groupCreation','groupDiscovery','modalFirstGame','modalPostCreate','groupInviteMembers','inviteManual','inviteFavorites','profileSettings'];
 
 // Page numbering — ordered by logical user flow
 const pageOrder = [
@@ -2907,7 +2964,8 @@ const pageOrder = [
   ['chat','Chat Thread'],
   ['notifications','Notifications'],
   ['profileSettings','Profile & Settings'],
-  ['modalFirstGame','Modal · First Game']
+  ['modalFirstGame','Modal · First Game'],
+  ['modalPostCreate','Modal · Post Create Game']
 ];
 const pageMap = {};
 pageOrder.forEach((p,i)=>{ pageMap[p[0]] = {num:i+1, name:p[1]}; });
