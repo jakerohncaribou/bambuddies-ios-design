@@ -890,15 +890,45 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
       <div id="gtHint" style="color:#888;font-size:11px;margin-bottom:16px;">Players in your area can Discover your game and apply to join.</div>
 
-      <!-- GROUP SELECTED CHIP (compact — full picker is a modal) -->
+      <!-- GROUP SELECTED CHIP + AUTO-ADDED MEMBERS (only when Group type) -->
       <div id="groupPickerBlock" style="display:none;margin-bottom:16px;">
-        <div onclick="document.getElementById('groupPickerModal').style.display='flex'" style="background:#fff;border:1.5px solid #c93b8b;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
+        <!-- Chip -->
+        <div onclick="document.getElementById('groupPickerModal').style.display='flex'" style="background:#fff;border:1.5px solid #c93b8b;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:10px;">
           <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0;" alt="">
           <div style="flex:1;">
             <div style="color:#9d2467;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;">Group</div>
             <div style="color:#000;font-size:13px;font-weight:700;">Saturday Regulars <span style="color:#888;font-weight:500;">· 4 members</span></div>
           </div>
           <div style="color:#c93b8b;font-size:11px;font-weight:700;">Change</div>
+        </div>
+
+        <!-- Auto-added group members section -->
+        <div style="background:#fff;border:1px solid #e8e4e0;border-radius:14px;padding:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <div style="color:#000;font-size:14px;font-weight:800;font-family:'Outfit',sans-serif;">Group Members</div>
+            <span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;letter-spacing:.3px;">AUTO-ADDED</span>
+          </div>
+          <div style="color:#888;font-size:11px;margin-bottom:10px;line-height:1.4;">All members are added directly — no invite needed. Tap × to skip anyone for this game.</div>
+
+          <div style="background:#fafafa;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
+            <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Sarah R. <span style="background:#fef3c7;color:#b45309;font-size:8px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;letter-spacing:.3px;">HOST</span></div><div style="color:#888;font-size:10px;">Intermediate</div></div>
+          </div>
+          <div style="background:#fafafa;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
+            <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:10px;">Advanced</div></div>
+            <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'Outfit',sans-serif;"><i class="ph-bold ph-x" style="font-size:11px;"></i></button>
+          </div>
+          <div style="background:#fafafa;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
+            <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:10px;">Beginner</div></div>
+            <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:11px;"></i></button>
+          </div>
+          <div style="background:#fafafa;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
+            <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:10px;">Intermediate</div></div>
+            <button style="background:#fff;border:1px solid #e8e4e0;color:#9ca3af;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:11px;"></i></button>
+          </div>
         </div>
       </div>
 
@@ -938,14 +968,13 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="color:#000;font-size:15px;font-weight:800;font-family:'Outfit',sans-serif;">Invite Players</div>
           <span class="pill" style="background:linear-gradient(135deg,#c93b8b,#ec4fa3);color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 7px;">RECOMMENDED</span>
         </div>
-        <div id="invitePlayersHint" style="color:#666;font-size:11px;margin-bottom:12px;line-height:1.4;">Add friends who've played with you before or who you've favorited.</div>
+        <div id="invitePlayersHint" style="color:#666;font-size:11px;margin-bottom:12px;line-height:1.4;">Send invites to players — they'll be asked to accept or decline.</div>
 
         <!-- Invite method tabs -->
         <div id="inviteTabs" style="display:flex;gap:4px;background:#f5f3ee;border-radius:10px;padding:3px;margin-bottom:12px;overflow-x:auto;">
           <button id="tabManual" onclick="setInviteTab('manual')" class="ip-tab active" style="flex:1;min-width:72px;background:#fff;color:#c93b8b;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.05);">Manual</button>
           <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
           <button id="tabContacts" onclick="setInviteTab('contacts')" class="ip-tab" style="flex:1;min-width:90px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Contacts</button>
-          <button id="tabGroup" onclick="setInviteTab('group')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:none;">Group</button>
           <button id="tabLink" onclick="setInviteTab('link')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Link</button>
         </div>
 
@@ -1058,10 +1087,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           </div>
           <div style="font-size:10px;color:#888;text-align:center;">Link expires in 7 days &middot; <span style="color:#c93b8b;font-weight:600;cursor:pointer;">Change</span></div>
         </div>
-
-        <!-- Group members panel (only for group type) — Add Player vs Invite distinction -->
-        <div id="panelGroup" class="ip-panel" style="display:none;">
-          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:8px;">Saturday Regulars &middot; 4 members</div>
 
           <!-- Info banner explaining Add Player vs Invite -->
           <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:10px;color:#9d2467;line-height:1.5;">
