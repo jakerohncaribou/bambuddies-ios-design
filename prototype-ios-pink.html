@@ -867,9 +867,14 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
       </div>
       <div style="height:4px;background:#e8e4e0;border-radius:4px;margin-bottom:12px;"><div style="width:66%;height:100%;background:#c93b8b;border-radius:4px;"></div></div>
 
-      <!-- Summary of Step 1 -->
+      <!-- Summary of Step 1 (+ group chip when Group type selected) -->
       <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:12px;padding:10px 14px;margin-bottom:16px;">
         <div style="color:#c93b8b;font-size:11px;font-weight:600;">&#10003; Sat, Apr 19 &middot; 2:00 PM ET &middot; 2 hrs &middot; My Home</div>
+        <div id="summaryGroupLine" style="display:none;margin-top:6px;padding-top:6px;border-top:1px dashed #f9a8d4;align-items:center;gap:6px;cursor:pointer;" onclick="document.getElementById('groupPickerModal').style.display='flex'">
+          <i class="ph-fill ph-users-three" style="font-size:13px;color:#9d2467;"></i>
+          <span style="color:#9d2467;font-size:11px;font-weight:700;flex:1;">Saturday Regulars <span style="color:#c93b8b;font-weight:500;">· 4 members</span></span>
+          <span style="color:#c93b8b;font-size:11px;font-weight:700;">Change</span>
+        </div>
       </div>
 
       <!-- Game Type Selector (order: Invite Only, Group, Open) -->
@@ -889,18 +894,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
       </div>
       <div id="gtHint" style="color:#888;font-size:11px;margin-bottom:16px;">Players in your area can Discover your game and apply to join.</div>
-
-      <!-- GROUP SELECTED CHIP (compact — full picker is a modal) -->
-      <div id="groupPickerBlock" style="display:none;margin-bottom:16px;">
-        <div onclick="document.getElementById('groupPickerModal').style.display='flex'" style="background:#fff;border:1.5px solid #c93b8b;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-          <img src="https://images.pexels.com/photos/5477851/pexels-photo-5477851.jpeg?auto=compress&cs=tinysrgb&w=100" style="width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0;" alt="">
-          <div style="flex:1;">
-            <div style="color:#9d2467;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;">Group</div>
-            <div style="color:#000;font-size:13px;font-weight:700;">Saturday Regulars <span style="color:#888;font-weight:500;">· 4 members</span></div>
-          </div>
-          <div style="color:#c93b8b;font-size:11px;font-weight:700;">Change</div>
-        </div>
-      </div>
 
       <!-- GROUP PICKER MODAL -->
       <div id="groupPickerModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:999;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
@@ -960,42 +953,41 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
 
         <!-- Quick picker buttons -->
-        <div style="display:flex;gap:6px;flex-wrap:wrap;">
-          <button onclick="openInviteModal('favorites')" style="flex:1;min-width:92px;background:#fdf2f8;color:#9d2467;border:1px solid #fbcfe8;padding:8px 6px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-star" style="font-size:13px;"></i>Favorites</button>
-          <button onclick="openInviteModal('contacts')" style="flex:1;min-width:92px;background:#fdf2f8;color:#9d2467;border:1px solid #fbcfe8;padding:8px 6px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-address-book" style="font-size:13px;"></i>Contacts</button>
-          <button id="shareLinkBtn" onclick="openInviteModal('link')" style="flex:1;min-width:92px;background:#fdf2f8;color:#9d2467;border:1px solid #fbcfe8;padding:8px 6px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-link" style="font-size:13px;"></i>Share Link</button>
+        <div style="display:flex;gap:8px;">
+          <button onclick="openInviteModal('favorites')" style="flex:1;background:#fdf2f8;color:#9d2467;border:1px solid #fbcfe8;padding:9px 6px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-star" style="font-size:14px;"></i>Favorites</button>
+          <button onclick="openInviteModal('contacts')" style="flex:1;background:#fdf2f8;color:#9d2467;border:1px solid #fbcfe8;padding:9px 6px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-address-book" style="font-size:14px;"></i>Contacts</button>
         </div>
 
         <!-- UNIFIED INVITED LIST with statuses (matches product: invited, accepted, declined) -->
         <div style="margin-top:14px;padding-top:14px;border-top:1px solid #f5f3ee;">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-            <div style="color:#000;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">Invited <span style="color:#c93b8b;">(5)</span></div>
+            <div style="color:#000;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">Invite <span style="color:#c93b8b;">(5)</span></div>
             <span style="color:#888;font-size:10px;">Manual · Favorites · Contacts</span>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px;">
 
-            <!-- Lisa M. — INVITED (group member) -->
+            <!-- Lisa M. — Already on App -->
             <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
               <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
               <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:10px;">Favorites</div></div>
-              <span style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">INVITED</span>
+              <span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;white-space:nowrap;">ALREADY ON APP</span>
               <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
             </div>
 
-            <!-- Amy T. — ACCEPTED -->
+            <!-- Amy T. — Already on App -->
             <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
               <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
               <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:10px;">Favorites</div></div>
-              <span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">ACCEPTED</span>
+              <span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;white-space:nowrap;">ALREADY ON APP</span>
               <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
             </div>
 
-            <!-- Marcus L. — DECLINED, not in group -->
+            <!-- Marcus L. — New to the App, not in group -->
             <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;">
               <div style="display:flex;align-items:center;gap:8px;">
                 <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:11px;font-weight:700;">ML</div>
                 <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Marcus L.</div><div style="color:#888;font-size:10px;">Manual entry</div></div>
-                <span style="background:#fee2e2;color:#b91c1c;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">DECLINED</span>
+                <span style="background:#dbeafe;color:#1e40af;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;white-space:nowrap;">NEW TO APP</span>
                 <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
               </div>
               <div class="groupInviteToggle" style="display:none;margin-top:7px;padding-top:7px;border-top:1px dashed #e8e4e0;align-items:center;justify-content:space-between;gap:6px;">
@@ -1008,20 +1000,20 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
               </div>
             </div>
 
-            <!-- Maria G. — INVITED -->
+            <!-- Maria G. — Already on App -->
             <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
               <img src="https://i.pravatar.cc/80?img=16" style="width:28px;height:28px;border-radius:50%;" alt="">
               <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Maria G.</div><div style="color:#888;font-size:10px;">Contacts</div></div>
-              <span style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">INVITED</span>
+              <span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;white-space:nowrap;">ALREADY ON APP</span>
               <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
             </div>
 
-            <!-- Jordan B. — INVITED, not in group -->
+            <!-- Jordan B. — New to the App, not in group -->
             <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;">
               <div style="display:flex;align-items:center;gap:8px;">
                 <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;color:#6d28d9;font-size:11px;font-weight:700;">JB</div>
                 <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Jordan B.</div><div style="color:#888;font-size:10px;">Contacts</div></div>
-                <span style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">INVITED</span>
+                <span style="background:#dbeafe;color:#1e40af;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;white-space:nowrap;">NEW TO APP</span>
                 <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
               </div>
               <div class="groupInviteToggle" style="display:none;margin-top:7px;padding-top:7px;border-top:1px dashed #e8e4e0;align-items:center;justify-content:space-between;gap:6px;">
@@ -3149,34 +3141,30 @@ function setGameType(type){
   }
   // Update hint + context
   const hint = document.getElementById('gtHint');
-  const groupPicker = document.getElementById('groupPickerBlock');
+  const summaryGroupLine = document.getElementById('summaryGroupLine');
   const joinMode = document.getElementById('joinModeBlock');
   const invitePlayersHint = document.getElementById('invitePlayersHint');
-  const shareLinkBtn = document.getElementById('shareLinkBtn');
   const addPlayersBlock = document.getElementById('addPlayersBlock');
   const groupInviteToggles = document.querySelectorAll('.groupInviteToggle');
   if(type === 'open'){
     if(hint) hint.textContent = 'Players in your area can Discover your game and apply to join.';
-    if(groupPicker) groupPicker.style.display = 'none';
+    if(summaryGroupLine) summaryGroupLine.style.display = 'none';
     if(joinMode) joinMode.style.display = 'block';
     if(invitePlayersHint) invitePlayersHint.innerHTML = 'Games with invited players fill <b>3× faster</b>. Add your crew below.';
-    if(shareLinkBtn) shareLinkBtn.style.display = 'flex';
     if(addPlayersBlock) addPlayersBlock.style.display = 'none';
     groupInviteToggles.forEach(el => { el.style.display = 'none'; });
   } else if(type === 'group'){
     if(hint) hint.textContent = 'Only members of the selected group can see and join.';
-    if(groupPicker) groupPicker.style.display = 'block';
+    if(summaryGroupLine) summaryGroupLine.style.display = 'flex';
     if(joinMode) joinMode.style.display = 'none';
     if(invitePlayersHint) invitePlayersHint.innerHTML = 'Invite <b>Saturday Regulars</b> members or add people manually. Non-members can also be invited.';
-    if(shareLinkBtn) shareLinkBtn.style.display = 'none';
     if(addPlayersBlock) addPlayersBlock.style.display = 'block';
     groupInviteToggles.forEach(el => { el.style.display = 'flex'; });
   } else { // invite
     if(hint) hint.textContent = 'Private game. Only the people you invite can join.';
-    if(groupPicker) groupPicker.style.display = 'none';
+    if(summaryGroupLine) summaryGroupLine.style.display = 'none';
     if(joinMode) joinMode.style.display = 'none';
     if(invitePlayersHint) invitePlayersHint.innerHTML = '<b>Required:</b> invite your players below. No one can join unless invited.';
-    if(shareLinkBtn) shareLinkBtn.style.display = 'none';
     if(addPlayersBlock) addPlayersBlock.style.display = 'none';
     groupInviteToggles.forEach(el => { el.style.display = 'none'; });
   }
