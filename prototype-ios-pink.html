@@ -945,6 +945,7 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <button id="tabManual" onclick="setInviteTab('manual')" class="ip-tab active" style="flex:1;min-width:72px;background:#fff;color:#c93b8b;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.05);">Manual</button>
           <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
           <button id="tabContacts" onclick="setInviteTab('contacts')" class="ip-tab" style="flex:1;min-width:90px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Contacts</button>
+          <button id="tabGroup" onclick="setInviteTab('group')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:none;">Group</button>
           <button id="tabLink" onclick="setInviteTab('link')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Link</button>
         </div>
 
@@ -1058,6 +1059,10 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
           <div style="font-size:10px;color:#888;text-align:center;">Link expires in 7 days &middot; <span style="color:#c93b8b;font-weight:600;cursor:pointer;">Change</span></div>
         </div>
 
+        <!-- Group members panel (only for group type) — Add Player vs Invite distinction -->
+        <div id="panelGroup" class="ip-panel" style="display:none;">
+          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:8px;">Saturday Regulars &middot; 4 members</div>
+
           <!-- Info banner explaining Add Player vs Invite -->
           <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:10px;color:#9d2467;line-height:1.5;">
             <b>Add Player</b> seats them directly &middot; <b>Invite</b> lets them accept/decline
@@ -1094,51 +1099,6 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
               <button style="background:#c93b8b;color:#fff;border:none;padding:4px 8px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Add</button>
               <button style="background:#fff;color:#c93b8b;border:1px solid #f9a8d4;padding:4px 8px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Invite</button>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ADD PLAYERS (collapsible — bypasses invite for group members) -->
-      <div id="addPlayersBlock" style="background:#fff;border:1px solid #e8e4e0;border-radius:16px;padding:14px;margin-bottom:16px;display:none;">
-        <div id="addPlayersHeader" onclick="var p=document.getElementById('addPlayersContent');var c=document.getElementById('addPlayersCaret');if(p.style.display==='none'){p.style.display='block';c.className='ph-bold ph-caret-up';}else{p.style.display='none';c.className='ph-bold ph-caret-down';}" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <i class="ph-fill ph-user-plus" style="font-size:18px;color:#c93b8b;"></i>
-            <div>
-              <div style="color:#000;font-size:14px;font-weight:800;font-family:'Outfit',sans-serif;">Add Players</div>
-              <div style="color:#888;font-size:11px;margin-top:1px;">Skip the invite for group members you know will play</div>
-            </div>
-          </div>
-          <i id="addPlayersCaret" class="ph-bold ph-caret-down" style="font-size:16px;color:#888;"></i>
-        </div>
-
-        <div id="addPlayersContent" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid #f5f3ee;">
-          <!-- Explanation -->
-          <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:10px 12px;margin-bottom:12px;display:flex;align-items:flex-start;gap:8px;">
-            <i class="ph-fill ph-info" style="font-size:16px;color:#c93b8b;flex-shrink:0;margin-top:1px;"></i>
-            <div style="font-size:11px;color:#9d2467;line-height:1.5;">Using this bypasses the invite. Players you add are automatically on the game roster — they won't need to accept anything. Use this when you know your group friends are playing.</div>
-          </div>
-
-          <!-- Group member list -->
-          <div style="color:#000;font-size:11px;font-weight:700;margin-bottom:6px;">Saturday Regulars &middot; 4 members</div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
-            <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:10px;">Advanced</div></div>
-            <button style="background:#c93b8b;color:#fff;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Add</button>
-          </div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
-            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
-            <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:10px;">Beginner</div></div>
-            <span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;padding:4px 10px;border-radius:7px;letter-spacing:.3px;">ADDED</span>
-          </div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
-            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:30px;height:30px;border-radius:50%;" alt="">
-            <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:10px;">Intermediate</div></div>
-            <button style="background:#c93b8b;color:#fff;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Add</button>
-          </div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
-            <img src="https://i.pravatar.cc/80?img=33" style="width:30px;height:30px;border-radius:50%;" alt="">
-            <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Mike C.</div><div style="color:#888;font-size:10px;">Intermediate</div></div>
-            <button style="background:#c93b8b;color:#fff;border:none;padding:5px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Add</button>
           </div>
         </div>
       </div>
@@ -3069,7 +3029,6 @@ function formatPhoneUS(input){
 
 // ============== GAME TYPE (Step 2) ==============
 function setGameType(type){
-  var ap=document.getElementById("addPlayersBlock");if(ap)ap.style.display=(type==='group')?'block':'none';
   // Clear all
   ['gtOpen','gtGroup','gtInvite'].forEach(id=>{
     const el = document.getElementById(id);
