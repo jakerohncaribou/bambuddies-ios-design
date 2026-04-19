@@ -940,142 +940,134 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
         </div>
         <div id="invitePlayersHint" style="color:#666;font-size:11px;margin-bottom:12px;line-height:1.4;">Add friends who've played with you before or who you've favorited.</div>
 
-        <!-- Invite method tabs -->
-        <div id="inviteTabs" style="display:flex;gap:4px;background:#f5f3ee;border-radius:10px;padding:3px;margin-bottom:12px;overflow-x:auto;">
-          <button id="tabManual" onclick="setInviteTab('manual')" class="ip-tab active" style="flex:1;min-width:72px;background:#fff;color:#c93b8b;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.05);">Manual</button>
-          <button id="tabFavorites" onclick="setInviteTab('favorites')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Favorites</button>
-          <button id="tabContacts" onclick="setInviteTab('contacts')" class="ip-tab" style="flex:1;min-width:90px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Contacts</button>
-          <button id="tabLink" onclick="setInviteTab('link')" class="ip-tab" style="flex:1;min-width:72px;background:transparent;color:#888;border:none;padding:7px 4px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;">Link</button>
+        <!-- REMOVED: tabs and panels - replaced with always-visible manual form + picker buttons -->
+        <!-- Manual form (always visible - 3 independent fields) -->
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
+            <i class="ph ph-user" style="font-size:15px;color:#c93b8b;width:16px;"></i>
+            <input type="text" placeholder="Name" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
+          </div>
+          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
+            <i class="ph ph-envelope" style="font-size:15px;color:#c93b8b;width:16px;"></i>
+            <input type="email" placeholder="Email" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
+          </div>
+          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
+            <i class="ph ph-phone" style="font-size:15px;color:#c93b8b;width:16px;"></i>
+            <span style="color:#666;font-size:13px;font-weight:500;font-family:'Outfit',sans-serif;">🇺🇸 +1</span>
+            <input type="tel" placeholder="(555) 123-4567" oninput="formatPhone(this)" maxlength="14" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
+          </div>
+          <button style="background:#c93b8b;color:#fff;border:none;padding:10px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:2px;">+ Add Player</button>
         </div>
 
-        <!-- Manual panel (default) - 3 independent fields -->
-        <div id="panelManual" class="ip-panel">
-          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
-            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
-              <i class="ph ph-user" style="font-size:15px;color:#c93b8b;width:16px;"></i>
-              <input type="text" placeholder="Name" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
-            </div>
-            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
-              <i class="ph ph-envelope" style="font-size:15px;color:#c93b8b;width:16px;"></i>
-              <input type="email" placeholder="Email" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
-            </div>
-            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:8px;">
-              <i class="ph ph-phone" style="font-size:15px;color:#c93b8b;width:16px;"></i>
-              <span style="color:#666;font-size:13px;font-weight:500;font-family:'Outfit',sans-serif;">🇺🇸 +1</span>
-              <input type="tel" placeholder="(555) 123-4567" oninput="formatPhone(this)" maxlength="14" style="flex:1;border:none;outline:none;font-size:13px;font-family:'Outfit',sans-serif;color:#000;background:transparent;">
-            </div>
-            <button style="background:#c93b8b;color:#fff;border:none;padding:10px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:2px;">+ Add Player</button>
-          </div>
+        <!-- Quick picker buttons -->
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button onclick="openInviteModal('favorites')" style="flex:1;min-width:92px;background:#fdf2f8;color:#9d2467;border:1px solid #fbcfe8;padding:8px 6px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-star" style="font-size:13px;"></i>Favorites</button>
+          <button onclick="openInviteModal('contacts')" style="flex:1;min-width:92px;background:#fdf2f8;color:#9d2467;border:1px solid #fbcfe8;padding:8px 6px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-address-book" style="font-size:13px;"></i>Contacts</button>
+          <button id="shareLinkBtn" onclick="openInviteModal('link')" style="flex:1;min-width:92px;background:#fdf2f8;color:#9d2467;border:1px solid #fbcfe8;padding:8px 6px;border-radius:10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ph-fill ph-link" style="font-size:13px;"></i>Share Link</button>
         </div>
 
-        <!-- Favorites panel (hidden by default) -->
-        <div id="panelFavorites" class="ip-panel" style="display:none;">
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-            <i class="ph ph-magnifying-glass" style="font-size:14px;color:#aaa;"></i>
-            <span style="color:#aaa;font-size:12px;">Search favorites...</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div style="color:#000;font-size:11px;font-weight:700;">2 selected &middot; 12 favorites</div><div style="color:#c93b8b;font-size:11px;font-weight:700;cursor:pointer;">Select All</div></div>
-          <div style="background:#fce7f3;border:1.5px solid #c93b8b;border-radius:10px;padding:7px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:10px;">8 games together</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;background:#c93b8b;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:10px;color:#fff;"></i></div>
-          </div>
-          <div style="background:#fce7f3;border:1.5px solid #c93b8b;border-radius:10px;padding:7px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:10px;">4 games together</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;background:#c93b8b;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:10px;color:#fff;"></i></div>
-          </div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:10px;">5 games together</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
-          </div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Jessica W.</div><div style="color:#888;font-size:10px;">3 games together</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
-          </div>
-        </div>
-
-        <!-- Import Contacts panel -->
-        <div id="panelContacts" class="ip-panel" style="display:none;">
-          <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
-            <i class="ph-fill ph-address-book" style="font-size:18px;color:#c93b8b;"></i>
-            <div style="flex:1;font-size:11px;color:#9d2467;line-height:1.4;">Match your contacts with existing players.</div>
-          </div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-            <i class="ph ph-magnifying-glass" style="font-size:14px;color:#aaa;"></i>
-            <span style="color:#aaa;font-size:12px;">Search contacts...</span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;"><div style="color:#000;font-size:11px;font-weight:700;">1 selected &middot; 247 contacts</div><div style="color:#c93b8b;font-size:11px;font-weight:700;cursor:pointer;">On BamBuddies</div></div>
-          <div style="background:#fce7f3;border:1.5px solid #c93b8b;border-radius:10px;padding:7px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <img src="https://i.pravatar.cc/80?img=16" style="width:28px;height:28px;border-radius:50%;" alt="">
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Maria G. <span style="background:#dcfce7;color:#15803d;font-size:8px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;letter-spacing:.3px;">ON BAMBUDDIES</span></div><div style="color:#888;font-size:10px;">+1 (415) 555-0107</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;background:#c93b8b;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:10px;color:#fff;"></i></div>
-          </div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;margin-bottom:4px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:11px;font-weight:700;">JB</div>
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Jordan B.</div><div style="color:#888;font-size:10px;">+1 (212) 555-0142 &middot; Not on BamBuddies</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
-          </div>
-          <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;">
-            <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;color:#6d28d9;font-size:11px;font-weight:700;">KM</div>
-            <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Kim M.</div><div style="color:#888;font-size:10px;">+1 (503) 555-0118 &middot; Not on BamBuddies</div></div>
-            <div style="width:18px;height:18px;border-radius:50%;border:1.5px solid #d1d5db;"></div>
-          </div>
-        </div>
-
-        <!-- Invite Link panel -->
-        <div id="panelLink" class="ip-panel" style="display:none;">
-          <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;">
-            <i class="ph-fill ph-link" style="font-size:20px;color:#c93b8b;"></i>
-            <div style="flex:1;font-size:11px;color:#9d2467;line-height:1.4;">Share this link to invite anyone. They'll see the game details and can request to join.</div>
-          </div>
-          <div style="background:#fff;border:1.5px solid #e8e4e0;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-            <i class="ph ph-link-simple" style="font-size:14px;color:#9d2467;flex-shrink:0;"></i>
-            <div style="flex:1;color:#1a1a1a;font-size:12px;font-family:'Inter',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">bambuddies.com/share/xG7k2p</div>
-            <button style="background:#c93b8b;color:#fff;border:none;padding:5px 10px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;"><i class="ph-bold ph-copy" style="font-size:11px;margin-right:3px;"></i>Copy</button>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;">
-            <div style="background:#22c55e;color:#fff;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><i class="ph-fill ph-whatsapp-logo" style="font-size:16px;"></i><span style="font-size:9px;font-weight:700;">WhatsApp</span></div>
-            <div style="background:#007aff;color:#fff;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><i class="ph-fill ph-chat-circle" style="font-size:16px;"></i><span style="font-size:9px;font-weight:700;">Messages</span></div>
-            <div style="background:#dc2626;color:#fff;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><i class="ph-fill ph-envelope" style="font-size:16px;"></i><span style="font-size:9px;font-weight:700;">Email</span></div>
-            <div style="background:#f5f3ee;color:#6b7280;padding:8px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><i class="ph-fill ph-dots-three" style="font-size:16px;"></i><span style="font-size:9px;font-weight:700;">More</span></div>
-          </div>
-          <div style="font-size:10px;color:#888;text-align:center;">Link expires in 7 days &middot; <span style="color:#c93b8b;font-weight:600;cursor:pointer;">Change</span></div>
-        </div>
-
-        <!-- UNIFIED INVITED LIST (accumulates players from Manual · Favorites · Contacts) -->
+        <!-- UNIFIED INVITED LIST with statuses (matches product: invited, accepted, declined) -->
         <div style="margin-top:14px;padding-top:14px;border-top:1px solid #f5f3ee;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
             <div style="color:#000;font-size:12px;font-weight:800;font-family:'Outfit',sans-serif;">Invited <span style="color:#c93b8b;">(5)</span></div>
-            <span style="color:#888;font-size:10px;">From Manual · Favorites · Contacts</span>
+            <span style="color:#888;font-size:10px;">Manual · Favorites · Contacts</span>
           </div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 8px 4px 4px;display:flex;align-items:center;gap:5px;">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:20px;height:20px;border-radius:50%;" alt="">
-              <span style="color:#9d2467;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Lisa M.</span>
-              <i class="ph-bold ph-x" style="font-size:10px;color:#9d2467;cursor:pointer;"></i>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+
+            <!-- Lisa M. — INVITED (group member) -->
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
+              <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:10px;">Favorites</div></div>
+              <span style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">INVITED</span>
+              <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
             </div>
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 8px 4px 4px;display:flex;align-items:center;gap:5px;">
-              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:20px;height:20px;border-radius:50%;" alt="">
-              <span style="color:#9d2467;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Amy T.</span>
-              <i class="ph-bold ph-x" style="font-size:10px;color:#9d2467;cursor:pointer;"></i>
+
+            <!-- Amy T. — ACCEPTED -->
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
+              <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:10px;">Favorites</div></div>
+              <span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">ACCEPTED</span>
+              <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
             </div>
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 8px 4px 4px;display:flex;align-items:center;gap:5px;">
-              <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:9px;font-weight:700;">ML</div>
-              <span style="color:#9d2467;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Marcus L.</span>
-              <i class="ph-bold ph-x" style="font-size:10px;color:#9d2467;cursor:pointer;"></i>
+
+            <!-- Marcus L. — DECLINED, not in group -->
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:11px;font-weight:700;">ML</div>
+                <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Marcus L.</div><div style="color:#888;font-size:10px;">Manual entry</div></div>
+                <span style="background:#fee2e2;color:#b91c1c;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">DECLINED</span>
+                <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
+              </div>
+              <div class="groupInviteToggle" style="display:none;margin-top:7px;padding-top:7px;border-top:1px dashed #e8e4e0;align-items:center;justify-content:space-between;gap:6px;">
+                <span style="color:#9d2467;font-size:10px;line-height:1.3;flex:1;">Not in <b>Saturday Regulars</b> — include group invite?</span>
+                <label style="position:relative;display:inline-block;width:32px;height:18px;flex-shrink:0;cursor:pointer;">
+                  <input type="checkbox" checked style="opacity:0;width:0;height:0;">
+                  <span style="position:absolute;inset:0;background:#c93b8b;border-radius:99px;"></span>
+                  <span style="position:absolute;height:14px;width:14px;left:16px;top:2px;background:#fff;border-radius:50%;"></span>
+                </label>
+              </div>
             </div>
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 8px 4px 4px;display:flex;align-items:center;gap:5px;">
-              <img src="https://i.pravatar.cc/80?img=16" style="width:20px;height:20px;border-radius:50%;" alt="">
-              <span style="color:#9d2467;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Maria G.</span>
-              <i class="ph-bold ph-x" style="font-size:10px;color:#9d2467;cursor:pointer;"></i>
+
+            <!-- Maria G. — INVITED -->
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
+              <img src="https://i.pravatar.cc/80?img=16" style="width:28px;height:28px;border-radius:50%;" alt="">
+              <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Maria G.</div><div style="color:#888;font-size:10px;">Contacts</div></div>
+              <span style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">INVITED</span>
+              <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
             </div>
-            <div style="background:#fce7f3;border:1px solid #f9a8d4;border-radius:99px;padding:4px 8px 4px 4px;display:flex;align-items:center;gap:5px;">
-              <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;color:#6d28d9;font-size:9px;font-weight:700;">JB</div>
-              <span style="color:#9d2467;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;">Jordan B.</span>
-              <i class="ph-bold ph-x" style="font-size:10px;color:#9d2467;cursor:pointer;"></i>
+
+            <!-- Jordan B. — INVITED, not in group -->
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;color:#6d28d9;font-size:11px;font-weight:700;">JB</div>
+                <div style="flex:1;min-width:0;"><div style="color:#000;font-size:12px;font-weight:700;">Jordan B.</div><div style="color:#888;font-size:10px;">Contacts</div></div>
+                <span style="background:#fef3c7;color:#b45309;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">INVITED</span>
+                <i class="ph-bold ph-x" style="font-size:11px;color:#888;cursor:pointer;margin-left:2px;"></i>
+              </div>
+              <div class="groupInviteToggle" style="display:none;margin-top:7px;padding-top:7px;border-top:1px dashed #e8e4e0;align-items:center;justify-content:space-between;gap:6px;">
+                <span style="color:#9d2467;font-size:10px;line-height:1.3;flex:1;">Not in <b>Saturday Regulars</b> — include group invite?</span>
+                <label style="position:relative;display:inline-block;width:32px;height:18px;flex-shrink:0;cursor:pointer;">
+                  <input type="checkbox" style="opacity:0;width:0;height:0;">
+                  <span style="position:absolute;inset:0;background:#d1d5db;border-radius:99px;"></span>
+                  <span style="position:absolute;height:14px;width:14px;left:2px;top:2px;background:#fff;border-radius:50%;"></span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD PLAYERS (Group games only) - bypasses invite, seats directly -->
+      <div id="addPlayersBlock" style="display:none;background:#fff;border:1.5px solid #e8e4e0;border-radius:16px;margin-bottom:16px;overflow:hidden;">
+        <div onclick="toggleAddPlayers()" style="padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;">
+          <i class="ph-fill ph-user-plus" style="font-size:18px;color:#c93b8b;"></i>
+          <div style="flex:1;">
+            <div style="color:#000;font-size:14px;font-weight:800;font-family:'Outfit',sans-serif;">Add Players <span style="color:#888;font-size:11px;font-weight:500;">(skip invite)</span></div>
+            <div style="color:#888;font-size:10px;margin-top:2px;">Seat group members directly — no RSVP needed</div>
+          </div>
+          <i id="addPlayersChevron" class="ph ph-caret-down" style="font-size:14px;color:#888;"></i>
+        </div>
+        <div id="addPlayersBody" style="display:none;padding:0 14px 14px;">
+          <div style="background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:10px;color:#9d2467;line-height:1.5;">
+            <b>Saturday Regulars</b> members will be auto-seated and bypass the invite process entirely.
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
+              <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:10px;">Intermediate</div></div>
+              <button style="background:#c93b8b;color:#fff;border:none;padding:5px 11px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">+ Add</button>
+            </div>
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
+              <img src="https://i.pravatar.cc/80?img=33" style="width:28px;height:28px;border-radius:50%;" alt="">
+              <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Mike C.</div><div style="color:#888;font-size:10px;">Intermediate</div></div>
+              <span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:700;padding:3px 7px;border-radius:99px;letter-spacing:.3px;">ADDED</span>
+              <span style="color:#888;font-size:10px;cursor:pointer;text-decoration:underline;">undo</span>
+            </div>
+            <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:7px 10px;display:flex;align-items:center;gap:8px;">
+              <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;" alt="">
+              <div style="flex:1;"><div style="color:#000;font-size:12px;font-weight:700;">Linda F.</div><div style="color:#888;font-size:10px;">Advanced</div></div>
+              <button style="background:#c93b8b;color:#fff;border:none;padding:5px 11px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">+ Add</button>
             </div>
           </div>
         </div>
@@ -2755,6 +2747,136 @@ body { background:#1a1a1a; min-height:100vh; display:flex; flex-direction:column
     </div>
 
   </div><!-- /phone-inner -->
+  <!-- ========== INVITE PICKER MODALS (scoped to phone frame) ========== -->
+
+  <!-- Favorites Modal (multi-select) -->
+  <div id="modalFavorites" style="display:none;position:absolute;inset:0;z-index:200;background:rgba(0,0,0,.45);">
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;max-height:82%;display:flex;flex-direction:column;">
+      <div style="padding:14px 16px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;">
+        <div style="flex:1;">
+          <div style="color:#000;font-size:15px;font-weight:800;font-family:'Outfit',sans-serif;">Invite from Favorites</div>
+          <div style="color:#888;font-size:11px;margin-top:2px;">Select multiple &middot; tap again to deselect</div>
+        </div>
+        <button onclick="closeInviteModal()" style="width:28px;height:28px;border-radius:50%;background:#f5f3ee;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:12px;color:#666;"></i></button>
+      </div>
+      <div style="padding:12px 16px;border-bottom:1px solid #f5f3ee;">
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;display:flex;align-items:center;gap:8px;">
+          <i class="ph ph-magnifying-glass" style="font-size:14px;color:#aaa;"></i>
+          <span style="color:#aaa;font-size:12px;">Search favorites...</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+          <div style="color:#000;font-size:11px;font-weight:700;">2 selected &middot; 12 favorites</div>
+          <div style="color:#c93b8b;font-size:11px;font-weight:700;cursor:pointer;">Select All</div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:10px 16px;">
+        <div style="background:#fce7f3;border:1.5px solid #c93b8b;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Lisa M.</div><div style="color:#888;font-size:10px;">8 games together</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;background:#c93b8b;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:12px;color:#fff;"></i></div>
+        </div>
+        <div style="background:#fce7f3;border:1.5px solid #c93b8b;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Amy T.</div><div style="color:#888;font-size:10px;">4 games together</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;background:#c93b8b;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:12px;color:#fff;"></i></div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Rachel K.</div><div style="color:#888;font-size:10px;">5 games together</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #d1d5db;"></div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=60&h=60&fit=crop&crop=face" style="width:32px;height:32px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Jessica W.</div><div style="color:#888;font-size:10px;">3 games together</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #d1d5db;"></div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <img src="https://i.pravatar.cc/80?img=47" style="width:32px;height:32px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Grace H.</div><div style="color:#888;font-size:10px;">6 games together</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #d1d5db;"></div>
+        </div>
+      </div>
+      <div style="padding:12px 16px;border-top:1px solid #f5f3ee;">
+        <button onclick="closeInviteModal()" style="width:100%;background:#c93b8b;color:#fff;border:none;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Add 2 Selected</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contacts Modal -->
+  <div id="modalContacts" style="display:none;position:absolute;inset:0;z-index:200;background:rgba(0,0,0,.45);">
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;max-height:82%;display:flex;flex-direction:column;">
+      <div style="padding:14px 16px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;">
+        <div style="flex:1;">
+          <div style="color:#000;font-size:15px;font-weight:800;font-family:'Outfit',sans-serif;">Invite from Contacts</div>
+          <div style="color:#888;font-size:11px;margin-top:2px;">Select multiple &middot; tap again to deselect</div>
+        </div>
+        <button onclick="closeInviteModal()" style="width:28px;height:28px;border-radius:50%;background:#f5f3ee;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:12px;color:#666;"></i></button>
+      </div>
+      <div style="padding:12px 16px;border-bottom:1px solid #f5f3ee;">
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;display:flex;align-items:center;gap:8px;">
+          <i class="ph ph-magnifying-glass" style="font-size:14px;color:#aaa;"></i>
+          <span style="color:#aaa;font-size:12px;">Search contacts...</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+          <div style="color:#000;font-size:11px;font-weight:700;">1 selected &middot; 247 contacts</div>
+          <div style="color:#c93b8b;font-size:11px;font-weight:700;cursor:pointer;">On BamBuddies</div>
+        </div>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:10px 16px;">
+        <div style="background:#fce7f3;border:1.5px solid #c93b8b;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <img src="https://i.pravatar.cc/80?img=16" style="width:32px;height:32px;border-radius:50%;" alt="">
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Maria G. <span style="background:#dcfce7;color:#15803d;font-size:8px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;letter-spacing:.3px;">ON BAMBUDDIES</span></div><div style="color:#888;font-size:10px;">+1 (415) 555-0107</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;background:#c93b8b;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="font-size:12px;color:#fff;"></i></div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:12px;font-weight:700;">JB</div>
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Jordan B.</div><div style="color:#888;font-size:10px;">+1 (212) 555-0142 &middot; Not on BamBuddies</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #d1d5db;"></div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;color:#6d28d9;font-size:12px;font-weight:700;">KM</div>
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Kim M.</div><div style="color:#888;font-size:10px;">+1 (503) 555-0118 &middot; Not on BamBuddies</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #d1d5db;"></div>
+        </div>
+        <div style="background:#faf8f6;border:1px solid #e8e4e0;border-radius:10px;padding:8px 11px;margin-bottom:6px;display:flex;align-items:center;gap:9px;cursor:pointer;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;color:#92400e;font-size:12px;font-weight:700;">TN</div>
+          <div style="flex:1;"><div style="color:#000;font-size:13px;font-weight:700;">Tom N. <span style="background:#dcfce7;color:#15803d;font-size:8px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;letter-spacing:.3px;">ON BAMBUDDIES</span></div><div style="color:#888;font-size:10px;">+1 (646) 555-0199</div></div>
+          <div style="width:20px;height:20px;border-radius:6px;border:1.5px solid #d1d5db;"></div>
+        </div>
+      </div>
+      <div style="padding:12px 16px;border-top:1px solid #f5f3ee;">
+        <button onclick="closeInviteModal()" style="width:100%;background:#c93b8b;color:#fff;border:none;padding:12px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;">Add 1 Selected</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Link Modal -->
+  <div id="modalLink" style="display:none;position:absolute;inset:0;z-index:200;background:rgba(0,0,0,.45);">
+    <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;">
+      <div style="padding:14px 16px;border-bottom:1px solid #f5f3ee;display:flex;align-items:center;gap:10px;">
+        <div style="flex:1;">
+          <div style="color:#000;font-size:15px;font-weight:800;font-family:'Outfit',sans-serif;">Share Invite Link</div>
+          <div style="color:#888;font-size:11px;margin-top:2px;">Anyone with the link can request to join</div>
+        </div>
+        <button onclick="closeInviteModal()" style="width:28px;height:28px;border-radius:50%;background:#f5f3ee;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i class="ph-bold ph-x" style="font-size:12px;color:#666;"></i></button>
+      </div>
+      <div style="padding:16px;">
+        <div style="background:#fff;border:1.5px solid #e8e4e0;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <i class="ph ph-link-simple" style="font-size:14px;color:#9d2467;flex-shrink:0;"></i>
+          <div style="flex:1;color:#1a1a1a;font-size:12px;font-family:'Inter',sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">bambuddies.com/share/xG7k2p</div>
+          <button style="background:#c93b8b;color:#fff;border:none;padding:6px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;"><i class="ph-bold ph-copy" style="font-size:11px;margin-right:3px;"></i>Copy</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+          <div style="background:#22c55e;color:#fff;padding:10px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;"><i class="ph-fill ph-whatsapp-logo" style="font-size:20px;"></i><span style="font-size:10px;font-weight:700;">WhatsApp</span></div>
+          <div style="background:#007aff;color:#fff;padding:10px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;"><i class="ph-fill ph-chat-circle" style="font-size:20px;"></i><span style="font-size:10px;font-weight:700;">Messages</span></div>
+          <div style="background:#dc2626;color:#fff;padding:10px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;"><i class="ph-fill ph-envelope" style="font-size:20px;"></i><span style="font-size:10px;font-weight:700;">Email</span></div>
+          <div style="background:#f5f3ee;color:#6b7280;padding:10px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;"><i class="ph-fill ph-dots-three" style="font-size:20px;"></i><span style="font-size:10px;font-weight:700;">More</span></div>
+        </div>
+        <div style="font-size:11px;color:#888;text-align:center;padding-bottom:8px;">Link expires in 7 days &middot; <span style="color:#c93b8b;font-weight:600;cursor:pointer;">Change</span></div>
+      </div>
+    </div>
+  </div>
+
 </div><!-- /phone-frame -->
 
 <div class="screen-indicator" style="color:#666;">Screen: <span id="screenLabel" style="color:#aaa;">dashboard</span></div>
@@ -3030,28 +3152,52 @@ function setGameType(type){
   const groupPicker = document.getElementById('groupPickerBlock');
   const joinMode = document.getElementById('joinModeBlock');
   const invitePlayersHint = document.getElementById('invitePlayersHint');
-  const tabGroup = document.getElementById('tabGroup');
+  const shareLinkBtn = document.getElementById('shareLinkBtn');
+  const addPlayersBlock = document.getElementById('addPlayersBlock');
+  const groupInviteToggles = document.querySelectorAll('.groupInviteToggle');
   if(type === 'open'){
     if(hint) hint.textContent = 'Players in your area can Discover your game and apply to join.';
     if(groupPicker) groupPicker.style.display = 'none';
     if(joinMode) joinMode.style.display = 'block';
     if(invitePlayersHint) invitePlayersHint.innerHTML = 'Games with invited players fill <b>3× faster</b>. Add your crew below.';
-    if(tabGroup) tabGroup.style.display = 'none';
-    setInviteTab('manual');
+    if(shareLinkBtn) shareLinkBtn.style.display = 'flex';
+    if(addPlayersBlock) addPlayersBlock.style.display = 'none';
+    groupInviteToggles.forEach(el => { el.style.display = 'none'; });
   } else if(type === 'group'){
     if(hint) hint.textContent = 'Only members of the selected group can see and join.';
     if(groupPicker) groupPicker.style.display = 'block';
     if(joinMode) joinMode.style.display = 'none';
-    if(invitePlayersHint) invitePlayersHint.innerHTML = 'Invite members of <b>Saturday Regulars</b> or add people manually.';
-    setInviteTab('manual');
+    if(invitePlayersHint) invitePlayersHint.innerHTML = 'Invite <b>Saturday Regulars</b> members or add people manually. Non-members can also be invited.';
+    if(shareLinkBtn) shareLinkBtn.style.display = 'none';
+    if(addPlayersBlock) addPlayersBlock.style.display = 'block';
+    groupInviteToggles.forEach(el => { el.style.display = 'flex'; });
   } else { // invite
     if(hint) hint.textContent = 'Private game. Only the people you invite can join.';
     if(groupPicker) groupPicker.style.display = 'none';
     if(joinMode) joinMode.style.display = 'none';
     if(invitePlayersHint) invitePlayersHint.innerHTML = '<b>Required:</b> invite your players below. No one can join unless invited.';
-    if(tabGroup) tabGroup.style.display = 'none';
-    setInviteTab('manual');
+    if(shareLinkBtn) shareLinkBtn.style.display = 'none';
+    if(addPlayersBlock) addPlayersBlock.style.display = 'none';
+    groupInviteToggles.forEach(el => { el.style.display = 'none'; });
   }
+}
+
+function openInviteModal(which){
+  const m = document.getElementById('modal' + which.charAt(0).toUpperCase() + which.slice(1));
+  if(m) m.style.display = 'block';
+}
+function closeInviteModal(){
+  ['modalFavorites','modalContacts','modalLink'].forEach(id => {
+    const m = document.getElementById(id); if(m) m.style.display = 'none';
+  });
+}
+function toggleAddPlayers(){
+  const body = document.getElementById('addPlayersBody');
+  const chev = document.getElementById('addPlayersChevron');
+  if(!body) return;
+  const isOpen = body.style.display === 'block';
+  body.style.display = isOpen ? 'none' : 'block';
+  if(chev) chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
 }
 
 function formatPhone(el){
